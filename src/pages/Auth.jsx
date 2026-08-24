@@ -335,6 +335,16 @@ export function Auth() {
                     </>
                   )}
                 </button>
+                
+                <button 
+                  type="button"
+                  onClick={() => { setStep(1); }} 
+                  className="button-secondary" 
+                  style={{ width: '100%', justifyContent: 'center', padding: '0.75rem' }}
+                >
+                  <ArrowLeft size={18} />
+                  Use a different email
+                </button>
               </form>
             )}
           </div>
