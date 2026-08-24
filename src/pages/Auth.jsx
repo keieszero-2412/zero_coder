@@ -22,15 +22,52 @@ export function Auth() {
 
   const from = location.state?.from?.pathname || "/";
 
+  const [prefetchedStatus, setPrefetchedStatus] = useState(null);
+  const prefetchTimeoutRef = React.useRef(null);
+
   React.useEffect(() => {
     if (currentUser) {
       navigate(from, { replace: true });
     }
   }, [currentUser, navigate, from]);
 
+  // Optimistic Prefetch Algorithm
+  React.useEffect(() => {
+    if (prefetchTimeoutRef.current) {
+      clearTimeout(prefetchTimeoutRef.current);
+    }
+    
+    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (isValidEmail) {
+      prefetchTimeoutRef.current = setTimeout(async () => {
+        try {
+          const status = await checkEmailStatus(email);
+          setPrefetchedStatus({ email, status });
+        } catch (e) {
+          // ignore background errors
+        }
+      }, 400); // 400ms debounce
+    }
+    
+    return () => {
+      if (prefetchTimeoutRef.current) {
+        clearTimeout(prefetchTimeoutRef.current);
+      }
+    };
+  }, [email, checkEmailStatus]);
+
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    
+    // Use prefetched data if available (Instantaneous UX)
+    if (prefetchedStatus && prefetchedStatus.email === email) {
+      setEmailStatus(prefetchedStatus.status);
+      setRequestSent(false);
+      setStep(2);
+      return;
+    }
+    
     setIsLoading(true);
     
     try {
