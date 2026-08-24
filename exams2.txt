@@ -1,0 +1,2563 @@
+Midterm
+Midterm Practice II
+TIN314(2526-2)GD1.02 - LẬP TRÌNH PYTHON - Minh
+Status	Finished
+Started	Tuesday, 12 May 2026, 12:58 AM
+Completed	Friday, 15 May 2026, 6:48 AM
+Duration	3 days 5 hours
+Marks	3250.00/3400.00
+Grade	9.56 out of 10.00 (95.59%)
+Question 1
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Trong bài toán này, bạn cần kiểm tra số nghiệm của phương trình:
+
+a x^2 + b x + c = 0
+
+với a, b, c là các số thực.
+
+Yêu cầu
+Hãy viết hàm check_quadratic_equation(a, b, c) để xác định phương trình trên có nghiệm hay không, và có bao nhiêu nghiệm.
+
+Hàm cần xét đầy đủ mọi trường hợp có thể xảy ra, bao gồm cả trường hợp phương trình không còn là phương trình bậc hai.
+
+Kết quả cần trả về
+Trả về "No solution" nếu phương trình không có nghiệm
+
+Trả về "Infinitely many solution" nếu phương trình có vô số nghiệm
+
+Nếu phương trình có số nghiệm hữu hạn, trả về một số nguyên dương biểu thị số nghiệm của phương trình
+
+Ví dụ
+Input: a = 1, b = -2, c = 1
+Output: 1
+
+Input: a = 1, b = 1, c = 1
+Output: No solution
+
+Input: a = 0, b = 0, c = 0
+Output: Infinitely many solution
+
+Answer:(penalty regime: 0 %)
+Ace editor not ready. Perhaps reload page?
+Falling back to raw text area.
+def check_quadratic_equation(a, b, c):
+    if a != 0:
+        delta = b**2 - 4*a*c
+        if delta < 0:
+            return "No solution"
+        elif delta == 0:
+            return 1
+        else:
+            return 2
+    else:
+        if b != 0:
+            return 1
+        else:
+            if c != 0:
+                return "No solution"
+            else:
+                return "Infinitely many solution"
+                
+            
+Feedback
+Test	Expected	Got	
+print(check_quadratic_equation(1, -3, 2))
+2
+2
+print(check_quadratic_equation(1, 2, 1))
+1
+1
+print(check_quadratic_equation(1, 1, 1))
+No solution
+No solution
+print(check_quadratic_equation(0, 5, -10))
+1
+1
+print(check_quadratic_equation(0, 0, 7))
+No solution
+No solution
+print(check_quadratic_equation(0, 0, 0))
+Infinitely many solution
+Infinitely many solution
+print(check_quadratic_equation(-1, 2, -1))
+1
+1
+print(check_quadratic_equation(4, -20, 25))
+1
+1
+print(check_quadratic_equation(-2, -4, -6))
+No solution
+No solution
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 2
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Bạn được cung cấp một danh sách gồm các số nguyên dương đôi một phân biệt (không có hai số nào giống nhau).
+
+Một số nguyên dương được gọi là nguyên tố nếu nó lớn hơn 1 và chỉ chia hết cho đúng hai số nguyên dương là 1 và chính nó. 
+
+Viết hàm largest_prime(nums) với:
+
+nums là danh sách các số nguyên dương đôi một phân biệt.
+
+Hàm phải tìm số nguyên tố lớn nhất trong danh sách.
+
+Nếu không tồn tại số nguyên tố, hàm trả về -1.
+
+Answer:(penalty regime: 10, 20, ... %)
+Ace editor not ready. Perhaps reload page?
+Falling back to raw text area.
+def is_prime(n):
+    if n <= 1:
+        return False
+    for i in range (2, int(n**0.5)+1):
+        if n % i == 0:
+            return False
+    return True
+
+def largest_prime(nums):
+    largest = -1
+    for num in nums:
+        if is_prime(num):
+            if num > largest:
+                largest = num
+    return largest
+
+Feedback
+Test	Expected	Got	
+print(largest_prime([4, 6, 8, 10]))
+-1
+-1
+print(largest_prime([2, 3, 5, 7, 11]))
+11
+11
+print(largest_prime([15, 21, 29, 14, 22]))
+29
+29
+print(largest_prime([97, 89, 83, 79]))
+97
+97
+print(largest_prime([1, 2]))
+2
+2
+print(largest_prime([12, 15, 17, 19, 23, 24, 29, 31, 37, 41, 43]))
+43
+43
+print(largest_prime([100, 200, 300, 400, 500, 997, 991, 983, 977]))
+997
+997
+print(largest_prime([2, 4, 6, 8, 10, 12, 14, 16, 18, 20]))
+2
+2
+print(largest_prime([1, 22, 33, 44, 55, 66, 77, 88, 99]))
+-1
+-1
+print(largest_prime([742, 83, 915, 112, 367, 529, 991, 456, 178, 643, 219, 587, 331, 917, 431, 802, 233, 761, 59, 277, 841, 953, 749, 691, 23, 389, 967, 128, 701, 929, 349, 604, 157, 317, 887, 271, 19, 839, 613, 509, 223, 457, 821, 643, 97, 106, 863, 487, 43, 379, 607, 293, 101, 569, 829, 683, 151, 461, 241, 773, 887, 991, 563, 31, 157, 211, 79, 917, 433, 601, 223, 71, 373, 907, 761, 137, 193, 359, 727, 97, 271, 491, 643, 571, 41, 673, 463, 227, 523, 229, 787, 919, 607, 199, 347, 941, 787, 613, 967, 983, 997, 191, 619, 499, 19, 281, 877, 419, 877, 991, 653, 523, 337, 463, 757, 953, 823, 743, 313, 661, 503, 673, 283, 709, 839, 233, 617, 563, 331, 911, 577, 947, 419, 383, 281, 491, 487, 641, 463, 823, 953, 547, 857, 631, 991, 983, 673, 223, 213, 433, 881, 907, 743, 863, 673, 503, 859, 991, 917, 19, 641, 431, 419, 683, 661, 829, 769, 421, 613, 587, 773, 859, 941, 773, 602, 641, 431, 673, 223, 919, 881, 991, 383, 827, 839, 877, 983, 991, 947, 811, 773, 641, 547, 673, 823, 919, 947, 991, 983, 839, 887, 911, 967, 983, 991, 997, 881, 859]))
+997
+997
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 3
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Viết hàm compare_lists(list1, list2) nhận vào hai danh sách các số nguyên và trả về True nếu hai danh sách “giống nhau”, và False nếu không giống nhau. Hai danh sách được coi là giống nhau nếu chúng chứa các phần tử giống hệt nhau và số lần xuất hiện của mỗi phần tử trong hai danh sách là như nhau, không phụ thuộc vào thứ tự các phần tử.
+
+Ví dụ:
+
+list1 = [1, 2, 2, 3], list2 = [3, 2, 1, 2] → True
+
+list1 = [1, 2, 3], list2 = [1, 2, 2, 3] → False
+
+list1 = [4, 5, 6], list2 = [6, 5, 4] → True
+
+Answer:(penalty regime: 0 %)
+Ace editor not ready. Perhaps reload page?
+Falling back to raw text area.
+def compare_lists(list1, list2):
+    return sorted(list1) == sorted(list2)
+    
+    
+Feedback
+Test	Expected	Got	
+print(compare_lists([1, 2, 2, 3], [3, 2, 1, 2]))
+True
+True
+print(compare_lists([1, 2, 3], [1, 2, 2, 3]))
+False
+False
+print(compare_lists([4, 5, 6], [6, 5, 4]))
+True
+True
+print(compare_lists([], []))
+True
+True
+print(compare_lists([1], [1, 1]))
+False
+False
+print(compare_lists([1,2,3,4,5,5,6,7,8,9,10,10,9,8,7,6,5,4,3,2], [10,9,8,7,6,5,4,3,2,1,2,3,4,5,6,7,8,9,10,5]))
+True
+True
+print(compare_lists([-1,-1,-2,-3,-3,-3,-4,-5,-5,-6], [-6,-5,-5,-4,-3,-3,-3,-2,-1,-1]))
+True
+True
+print(compare_lists([10,10,20,20,20,30,30,40,50,60], [10,10,20,20,30,30,40,50,60,60]))
+False
+False
+print(compare_lists([1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10], [10,9,8,7,6,5,4,3,2,1,10,9,8,7,6,5,4,3,2,1,10,9,8,7,6,5,4,3,2,1]))
+True
+True
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 4
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Viết hàm filter_list(lst) nhận vào một danh sách các số nguyên, và đếm xem trong danh sách ban đầu có bao nhiêu số thoả mãn chia hết cho 2 nhưng không chia hết cho 3. Hàm trả về số lượng các số thỏa mãn điều kiện. Nếu như không có số nào thoả mãn, hãy trả về số 0.
+
+Answer:(penalty regime: 0 %)
+Ace editor not ready. Perhaps reload page?
+Falling back to raw text area.
+def filter_list(lst):
+    count = 0
+    for num in lst:
+        if num % 2 == 0 and num % 3 != 0:
+            count +=1
+    return count
+
+Feedback
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 5
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Viết một hàm có tên process_list(lst) nhận vào một danh sách gồm các số nguyên.
+
+Yêu cầu của hàm:
+
+Lọc và giữ lại các số lẻ trong danh sách đầu vào.
+
+Tạo một danh sách mới, trong đó mỗi phần tử là bình phương của các số lẻ vừa chọn.
+
+Trả về danh sách mới đó, nếu như trong danh sách đầu vào không có số nào thoả mãn thì hãy trả lại danh sách rỗng
+
+For example:
+
+Test	Result
+print(process_list([1, 2, 3, 4, 5]))
+[1, 9, 25]
+Answer:(penalty regime: 0 %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(process_list([1, 2, 3, 4, 5]))
+[1, 9, 25]
+[1, 9, 25]
+print(process_list([10, 11, 12, 13, 14, 15]))
+[121, 169, 225]
+[121, 169, 225]
+print(process_list([-5, -4, -3, -2, -1, 0, 1]))
+[25, 9, 1, 1]
+[25, 9, 1, 1]
+print(process_list([]))
+[]
+[]
+print(process_list([2, 4, 6, 8]))
+[]
+[]
+print(process_list([1, 3, 5, 7, 9]))
+[1, 9, 25, 49, 81]
+[1, 9, 25, 49, 81]
+print(process_list([100, 99, 77, 55, 22, 33]))
+[9801, 5929, 3025, 1089]
+[9801, 5929, 3025, 1089]
+print(process_list([0, 1, 2, 3, 4, 5, 6, 7]))
+[1, 9, 25, 49]
+[1, 9, 25, 49]
+print(process_list([i for i in range(-15, 16)]))
+[225, 169, 121, 81, 49, 25, 9, 1, 1, 9, 25, 49, 81, 121, 169, 225]
+[225, 169, 121, 81, 49, 25, 9, 1, 1, 9, 25, 49, 81, 121, 169, 225]
+print(process_list([-11, -10, -9, -8, -7, -6]))
+[121, 81, 49]
+[121, 81, 49]
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 6
+Correct
+Mark 70.00 out of 100.00
+Flag question
+Question text
+Bạn Trường có hai đoạn dây, đoạn thứ nhất dài N mét và đoạn thứ hai dài M mét (N và M là các số nguyên dương).
+
+Trường muốn cắt hai đoạn dây này thành các đoạn dây nhỏ sao cho:
+
+Tất cả các đoạn dây nhỏ đều có cùng một độ dài.
+
+Không có phần dây thừa.
+
+Độ dài mỗi đoạn dây nhỏ là lớn nhất có thể.
+
+Khi đó, hỏi Trường có thể cắt được tổng cộng bao nhiêu đoạn dây nhỏ từ hai đoạn dây ban đầu.
+
+Viết hàm count_segments(N, M) nhận vào hai số nguyên dương N và M, và trả về một số nguyên là tổng số đoạn dây nhỏ có thể cắt được theo quy tắc trên.
+
+Answer:(penalty regime: 10, 20, ... %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(count_segments(6, 9))
+5
+5.0
+print(count_segments(12, 18))
+5
+5.0
+print(count_segments(10, 25))
+7
+7.0
+print(count_segments(100, 80))
+9
+9.0
+print(count_segments(7, 13))
+20
+20.0
+print(count_segments(756840, 1234560))
+16595
+16595.0
+print(count_segments(49896, 87372))
+1271
+1271.0
+print(count_segments(1000000000000, 999000000000))
+1999
+1999.0
+print(count_segments(1000000007, 1000000009))
+2000000016
+2000000016.0
+print(count_segments(608351, 996971))
+1605322
+1605322.0
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00. Accounting for previous tries, this gives 70.00/100.00.
+Question 7
+Correct
+Mark 90.00 out of 100.00
+Flag question
+Question text
+Cho một dãy các số nguyên. Người ta được phép đặt dấu + hoặc dấu - trước mỗi số trong dãy.
+
+Lưu ý: nếu đặt dấu - trước một số âm thì ví dụ -(-3) sẽ trở thành +3.
+
+Viết hàm: def max_signed_sum(arr):
+
+Trong đó:
+
+arr là một danh sách (list) các số nguyên.
+
+Hàm trả về giá trị tổng lớn nhất có thể đạt được bằng cách đặt dấu + hoặc - trước mỗi phần tử.
+
+Ví dụ:
+Nếu arr = [1, -2, 3] thì kết quả lớn nhất là 1 + 2 + 3 = 6.
+
+Answer:(penalty regime: 10, 20, ... %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(max_signed_sum([1, -2, 3]))
+6
+6
+print(max_signed_sum([-5, -10, 7]))
+22
+22
+print(max_signed_sum([0, -1, 2, -3, 4]))
+10
+10
+print(max_signed_sum([-1, -1, -1, -1]))
+4
+4
+print(max_signed_sum([10, -20, 30, -40, 50]))
+150
+150
+print(max_signed_sum([-8, 5, -3, 2, -9, 4]))
+31
+31
+print(max_signed_sum([1, -1, 1, -1, 1, -1]))
+6
+6
+print(max_signed_sum([1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15]))
+120
+120
+print(max_signed_sum([-5, -15, 25, -35, 45, -55, 65, -75, 85, -95, 105]))
+605
+605
+print(max_signed_sum([10, -20, 30, -40, 50, -60, 70, -80, 90, -100]))
+550
+550
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00. Accounting for previous tries, this gives 90.00/100.00.
+Question 8
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Bạn Việt được cho một tấm bìa hình chữ nhật kích thước N x M, trong đó N và M là hai số nguyên dương, biểu diễn chiều dài và chiều rộng của tấm bìa (theo cùng một đơn vị đo).
+
+Bạn Việt muốn cắt tấm bìa này thành các hình vuông giống hệt nhau, sao cho:
+
+Mỗi hình vuông đều có cạnh là số nguyên dương.
+
+Không có phần bìa nào bị bỏ đi (tức là tấm bìa được chia hết hoàn toàn bởi các hình vuông đó).
+
+Diện tích của mỗi hình vuông là lớn nhất có thể.
+
+Viết hàm max_square_area(N, M) với:
+
+N, M là hai số nguyên dương (kích thước tấm bìa).
+
+Hàm trả về diện tích của hình vuông lớn nhất (tính theo đơn vị diện tích) mà bạn có thể dùng để cắt tấm bìa N x M thành các hình vuông giống hệt nhau, không thừa.
+
+Answer:(penalty regime: 10, 20, ... %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(max_square_area(12, 18))
+36
+36
+print(max_square_area(5, 3))
+1
+1
+print(max_square_area(7, 13))
+1
+1
+print(max_square_area(100, 80))
+400
+400
+print(max_square_area(6, 9))
+9
+9
+print(max_square_area(999983, 46339))
+1
+1
+print(max_square_area(123456, 789012))
+144
+144
+print(max_square_area(2000000000, 1999999999))
+1
+1
+print(max_square_area(1234567890,9876543210))
+8100
+8100
+print(max_square_area(1987654320, 1246913580))
+3600
+3600
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 9
+Correct
+Mark 90.00 out of 100.00
+Flag question
+Question text
+Viết một hàm count(lst) nhận vào một danh sách lst chỉ chứa các số nguyên.
+Hàm trả về phần tử xuất hiện nhiều nhất trong danh sách.
+
+Nếu có nhiều phần tử có cùng số lần xuất hiện cao nhất, trả về phần tử có giá trị nhỏ nhất trong số đó.
+
+Answer:(penalty regime: 10, 20, ... %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(count([1, 2, 2, 3, 4, 4, 4, 5]))
+4
+4
+print(count([10, 10, 20, 20, 30, 30]))
+10
+10
+print(count([5]))
+5
+5
+print(count([-1, -1, -2, -2, -2, -3]))
+-2
+-2
+print(count([1]*30 + [2]*50 + [3]*20))
+2
+2
+print(count([5]*40 + [10]*40 + [3]*10))
+5
+5
+print(count([i for i in range(-50, 50)] + [-5, -5, -3, -3]))
+-5
+-5
+print(count([i % 25 for i in range(200)]))
+0
+0
+print(count([i for i in range(120)] + [42, 42, 42]))
+42
+42
+print(count([i for i in range(100)] + [10, 10, 20, 20, 30, 30]))
+10
+10
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00. Accounting for previous tries, this gives 90.00/100.00.
+Question 10
+Correct
+Mark 90.00 out of 100.00
+Flag question
+Question text
+Bạn được cung cấp một danh sách prices, trong đó prices[i] là giá của một loại đá quý vào ngày thứ i.
+
+Bạn chỉ được phép thực hiện đúng một lần giao dịch, bao gồm:
+
+Mua vào một ngày bất kỳ
+
+Bán vào một ngày phía sau ngày mua (không được bán trước khi mua)
+
+Mục tiêu của bạn là tính lợi nhuận tối đa có thể đạt được.
+
+Lợi nhuận được tính bằng  giá bán - giá mua
+
+Nếu không thể thu được lợi nhuận (giá luôn giảm), trả về 0. Viết hàm  max_profit(prices). Hàm nhận vào một list prices và trả về một số nguyên là lợi nhuận lớn nhất có thể đạt được.
+
+Answer:(penalty regime: 10, 20, ... %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(max_profit([7, 1, 5, 3, 6, 4]))
+5
+5
+print(max_profit([1, 2, 3, 4, 5]))
+4
+4
+print(max_profit([7, 6, 4, 3, 1]))
+0
+0
+print(max_profit([3, 3, 3, 3, 3]))
+0
+0
+print(max_profit([2, 4, 1]))
+2
+2
+print(max_profit([i for i in range(1, 100001)]))
+99999
+99999
+print(max_profit([i for i in range(100000, 0, -1)]))
+0
+0
+print(max_profit([(37 * i) % 100000 for i in range(1, 100001)]))
+99996
+99996
+print(max_profit([100000 - i if i % 2 == 0 else i for i in range(1, 100001)]))
+99998
+99998
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00. Accounting for previous tries, this gives 90.00/100.00.
+Question 11
+Correct
+Mark 90.00 out of 100.00
+Flag question
+Question text
+Viết hàm mirror_message(x) với yêu cầu như sau:
+
+Nếu x là chuỗi (string), hàm trả về chuỗi đảo ngược của x.
+(Ví dụ: hello → olleh)
+
+Nếu x là số nguyên (int) hoặc số thực (float), hàm trả về số đối của x.
+(Ví dụ: 5 → -5, -3.2 → 3.2)
+
+Nếu x thuộc kiểu dữ liệu khác, hàm trả về chuỗi Unsupported.
+
+Answer:(penalty regime: 10, 20, ... %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(mirror_message("hello"))
+olleh
+olleh
+print(mirror_message("madam"))
+madam
+madam
+print(mirror_message(25))
+-25
+-25
+print(mirror_message(-100))
+100
+100
+print(mirror_message(12.75))
+-12.75
+-12.75
+print(mirror_message(True))
+Unsupported
+Unsupported
+print(mirror_message([1, 2, 3]))
+Unsupported
+Unsupported
+print(mirror_message((1, 2)))
+Unsupported
+Unsupported
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00. Accounting for previous tries, this gives 90.00/100.00.
+Question 12
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Cho một số nguyên dương N.
+
+Hãy viết hàm nearest_prime(N) để tìm số nguyên tố nhỏ nhất p thoả mãn p ≥ N.
+
+Ví dụ
+nearest_prime(10)
+→ trả về: 11
+
+nearest_prime(17)
+→ trả về: 17
+
+nearest_prime(1)
+→ trả về: 2
+
+Answer:(penalty regime: 0 %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(nearest_prime(10))
+11
+11
+print(nearest_prime(17))
+17
+17
+print(nearest_prime(1))
+2
+2
+print(nearest_prime(14))
+17
+17
+print(nearest_prime(100))
+101
+101
+print(nearest_prime(25))
+29
+29
+print(nearest_prime(48))
+53
+53
+print(nearest_prime(1000))
+1009
+1009
+print(nearest_prime(1000000))
+1000003
+1000003
+print(nearest_prime(10000))
+10007
+10007
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 13
+Correct
+Mark 90.00 out of 100.00
+Flag question
+Question text
+Bạn Nam có một danh sách list gồm các số nguyên. Nam chơi một trò như sau:
+
+Ở mỗi bước, Nam chọn ngẫu nhiên hai số a và b trong list, xóa chúng khỏi list, sau đó thêm vào cuối list một số mới có giá trị bằng a + b + 1.
+
+Nam lặp lại quá trình này cho đến khi list chỉ còn lại đúng một số duy nhất.
+
+Hỏi: Số cuối cùng còn lại trong list là bao nhiêu?
+
+Viết hàm: final_number(lst)
+
+Hàm nhận vào một list các số nguyên và trả về số cuối cùng còn lại trong list sau khi thực hiện trò chơi nêu trên.
+
+Answer:(penalty regime: 10, 20, ... %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(final_number([5]))
+5
+5
+print(final_number([1, 2]))
+4
+4
+print(final_number([1, 2, 3]))
+8
+8
+print(final_number([1, 3, 5, 7]))
+19
+19
+print(final_number(list(range(1, 101))))
+5149
+5149
+print(final_number(list(range(1, 10001))))
+50014999
+50014999
+print(final_number(
+[92, 14, 37, 70, 64, 51, 30, 48, 3, 39, 63, 18, 58, 12, 72, 44, 6, 55, 19, 33, 27, 97, 90, 81, 13, 8, 75, 42, 20, 95, 56, 5, 40, 84, 46, 26, 78, 9, 66, 28, 7, 52, 22, 31, 10, 25, 79, 53, 34, 17, 60, 21, 45, 83, 62, 87, 98, 2, 69, 11, 24, 41, 54, 57, 76, 50, 32, 29, 61, 15, 43, 73, 96, 23, 35, 49, 68, 16, 4, 38, 71, 47, 1, 59, 65, 88, 85, 89, 82, 77, 94, 93, 91, 67, 80, 86, 36, 74, 100, 14] * 10
+))
+50649
+50649
+print(final_number(
+[7, 14, 28, 35, 42, 56, 63, 70, 77, 84] * 100
+))
+48599
+48599
+print(final_number([10] * 1000))
+10999
+10999
+print(final_number(list(range(1, 1001))))
+501499
+501499
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00. Accounting for previous tries, this gives 90.00/100.00.
+Question 14
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Bạn An là một người rất yêu thích những con số. Bạn An đang có một danh sách gồm N số nguyên dương. Bạn An chơi một trò chơi như sau:
+
+Mỗi lượt, bạn An chọn ngẫu nhiên hai số a và b trong danh sách.
+
+Xóa hai số này khỏi danh sách.
+
+Thêm vào cuối danh sách một số mới có giá trị:
+    a + b + ab
+
+Trò chơi tiếp tục cho đến khi danh sách chỉ còn lại duy nhất một số.
+
+Hãy viết hàm final_number(nums) để tính và trả về giá trị của số cuối cùng còn lại trong danh sách, sau khi trò chơi kết thúc.
+
+Answer:(penalty regime: 10, 20, ... %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(final_number([5]))
+5
+5
+print(final_number([2, 3]))
+11
+11
+print(final_number([1, 2, 3]))
+23
+23
+print(final_number([5, 5, 5]))
+215
+215
+print(final_number([10, 20, 30, 40, 50]))
+14973650
+14973650
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 15
+Correct
+Mark 80.00 out of 100.00
+Flag question
+Question text
+Một số nguyên được gọi là số hoàn hảo nếu nó chia hết cho tổng các chữ số của chính nó. Số 0 không được coi là số hoàn hảo. 
+
+Ví dụ:
+
+18 có tổng các chữ số là 1 + 8 = 9, và 18 % 9 == 0 → là số hoàn hảo
+
+23 có tổng chữ số là 2 + 3 = 5, nhưng 23 % 5 != 0 → không phải số hoàn hảo
+
+-12 có tổng chữ số là 1 + 2 = 3, và -12 % 3 == 0 → là số hoàn hảo
+Viết hàm find_perfect_numbers(lst) nhận vào một danh sách các số nguyên.
+
+Hàm trả về một danh sách mới gồm các phần tử trong danh sách ban đầu là số hoàn hảo (dựa theo định nghĩa trên).
+
+Answer:(penalty regime: 10, 20, ... %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(find_perfect_numbers([12, 15, 18, 20]))
+[12, 18, 20]
+[12, 18, 20]
+print(find_perfect_numbers([-12, -18, 0, 21, 30]))
+[-12, -18, 21, 30]
+[-12, -18, 21, 30]
+print(find_perfect_numbers([11, 13, 17, 19]))
+[]
+[]
+print(find_perfect_numbers([10, 20, 30, 40]))
+[10, 20, 30, 40]
+[10, 20, 30, 40]
+print(find_perfect_numbers([i for i in range(1, 101)]))
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 18, 20, 21, 24, 27, 30, 36, 40, 42, 45, 48, 50, 54, 60, 63, 70, 72, 80, 81, 84, 90, 100]
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 18, 20, 21, 24, 27, 30, 36, 40, 42, 45, 48, 50, 54, 60, 63, 70, 72, 80, 81, 84, 90, 100]
+print(find_perfect_numbers([i for i in range(-50, 101)]))
+[-50, -48, -45, -42, -40, -36, -30, -27, -24, -21, -20, -18, -12, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 18, 20, 21, 24, 27, 30, 36, 40, 42, 45, 48, 50, 54, 60, 63, 70, 72, 80, 81, 84, 90, 100]
+[-50, -48, -45, -42, -40, -36, -30, -27, -24, -21, -20, -18, -12, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 18, 20, 21, 24, 27, 30, 36, 40, 42, 45, 48, 50, 54, 60, 63, 70, 72, 80, 81, 84, 90, 100]
+print(find_perfect_numbers([i * 9 for i in range(1, 101)]))
+[9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 108, 117, 126, 135, 144, 153, 162, 171, 180, 198, 207, 216, 225, 234, 243, 252, 261, 270, 288, 306, 315, 324, 333, 342, 351, 360, 378, 396, 405, 414, 423, 432, 441, 450, 468, 486, 504, 513, 522, 531, 540, 558, 576, 594, 603, 612, 621, 630, 648, 666, 684, 702, 711, 720, 738, 756, 774, 792, 801, 810, 828, 846, 864, 882, 900]
+[9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 108, 117, 126, 135, 144, 153, 162, 171, 180, 198, 207, 216, 225, 234, 243, 252, 261, 270, 288, 306, 315, 324, 333, 342, 351, 360, 378, 396, 405, 414, 423, 432, 441, 450, 468, 486, 504, 513, 522, 531, 540, 558, 576, 594, 603, 612, 621, 630, 648, 666, 684, 702, 711, 720, 738, 756, 774, 792, 801, 810, 828, 846, 864, 882, 900]
+print(find_perfect_numbers([i for i in range(1000)]))
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 18, 20, 21, 24, 27, 30, 36, 40, 42, 45, 48, 50, 54, 60, 63, 70, 72, 80, 81, 84, 90, 100, 102, 108, 110, 111, 112, 114, 117, 120, 126, 132, 133, 135, 140, 144, 150, 152, 153, 156, 162, 171, 180, 190, 192, 195, 198, 200, 201, 204, 207, 209, 210, 216, 220, 222, 224, 225, 228, 230, 234, 240, 243, 247, 252, 261, 264, 266, 270, 280, 285, 288, 300, 306, 308, 312, 315, 320, 322, 324, 330, 333, 336, 342, 351, 360, 364, 370, 372, 375, 378, 392, 396, 399, 400, 402, 405, 407, 408, 410, 414, 420, 423, 432, 440, 441, 444, 448, 450, 460, 465, 468, 476, 480, 481, 486, 500, 504, 506, 510, 511, 512, 513, 516, 518, 522, 531, 540, 550, 552, 555, 558, 576, 588, 592, 594, 600, 603, 605, 612, 621, 624, 629, 630, 640, 644, 645, 648, 660, 666, 684, 690, 700, 702, 704, 711, 715, 720, 730, 732, 735, 736, 738, 756, 770, 774, 777, 780, 782, 792, 800, 801, 803, 804, 810, 820, 825, 828, 832, 840, 846, 864, 870, 874, 880, 882, 888, 900, 902, 910, 912, 915, 918, 935, 936, 954, 960, 966, 972, 990, 999]
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 18, 20, 21, 24, 27, 30, 36, 40, 42, 45, 48, 50, 54, 60, 63, 70, 72, 80, 81, 84, 90, 100, 102, 108, 110, 111, 112, 114, 117, 120, 126, 132, 133, 135, 140, 144, 150, 152, 153, 156, 162, 171, 180, 190, 192, 195, 198, 200, 201, 204, 207, 209, 210, 216, 220, 222, 224, 225, 228, 230, 234, 240, 243, 247, 252, 261, 264, 266, 270, 280, 285, 288, 300, 306, 308, 312, 315, 320, 322, 324, 330, 333, 336, 342, 351, 360, 364, 370, 372, 375, 378, 392, 396, 399, 400, 402, 405, 407, 408, 410, 414, 420, 423, 432, 440, 441, 444, 448, 450, 460, 465, 468, 476, 480, 481, 486, 500, 504, 506, 510, 511, 512, 513, 516, 518, 522, 531, 540, 550, 552, 555, 558, 576, 588, 592, 594, 600, 603, 605, 612, 621, 624, 629, 630, 640, 644, 645, 648, 660, 666, 684, 690, 700, 702, 704, 711, 715, 720, 730, 732, 735, 736, 738, 756, 770, 774, 777, 780, 782, 792, 800, 801, 803, 804, 810, 820, 825, 828, 832, 840, 846, 864, 870, 874, 880, 882, 888, 900, 902, 910, 912, 915, 918, 935, 936, 954, 960, 966, 972, 990, 999]
+print(find_perfect_numbers([i for i in range(-50,50)]))
+[-50, -48, -45, -42, -40, -36, -30, -27, -24, -21, -20, -18, -12, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 18, 20, 21, 24, 27, 30, 36, 40, 42, 45, 48]
+[-50, -48, -45, -42, -40, -36, -30, -27, -24, -21, -20, -18, -12, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 18, 20, 21, 24, 27, 30, 36, 40, 42, 45, 48]
+print(find_perfect_numbers([18, 18, 18] * 10 + [21, 21] * 20))
+[18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21]
+[18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21]
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00. Accounting for previous tries, this gives 80.00/100.00.
+Question 16
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Viết hàm count_three_sum(lst) nhận vào một danh sách các số nguyên đôi một phân biệt và trả về số lượng cách có thể chọn ra 3 phần tử trong danh sách sao cho tổng của chúng bằng 0.
+
+Answer:(penalty regime: 0 %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(count_three_sum([-10, -5, -2, 0, 1, 3, 5, 7, 10]))
+4
+4
+print(count_three_sum([-2, 0, 1, 1, 2]))
+2
+2
+print(count_three_sum([5, 7, 11, 13, 17, 19]))
+0
+0
+print(count_three_sum([-8, -3, -2, -1, 0, 1, 2, 3, 4, 5, -5, 6, -6, 7, -7]))
+23
+23
+print(count_three_sum([-5, -1, 0, 1, 2, 4, 5, -4, 3, -2]))
+9
+9
+print(count_three_sum(list(range(-50, 50))))
+1225
+1225
+print(count_three_sum(list(range(-75, 75))))
+2775
+2775
+print(count_three_sum(list(range(-500, 500))))
+124750
+124750
+print(count_three_sum(list(range(-1000, 1000))))
+499500
+499500
+print(count_three_sum([
+-6571, 5196, 2463, -8567, -8122, -4910, 4574, -7359, 5460, -1735,
+5688, 3152, 995, -5891, -5751, 4264, 6929, -708, 9507, -6087,
+-2218, 9369, -728, 1100, -9971, 6408, 9526, -8154, 7415, 3557,
+-3150, -1493, -7330, 3066, 6987, -4286, 8548, -2920, -9817, -8623,
+-2314, -3644, 4374, -9530, -2668, -5909, 3867, -7516, 8387, 9920,
+-5403, -8870, 5896, 2197, -378, 7945, 1874, -4887, 4555, 7054,
+-2563, 12, 9417, -6897, 9222, 8475, -1936, -4527, -3526, -8201,
+2704, 2219, 8812, -1031, 3372, -9941, -7440, 3457, -352, -6009,
+9662, -8955, 6158, -1467, -7667, 4182, 7633, -5681, -3348, 5920,
+9011, 7058, 4768, -6495, 2845, -4226, -5808, -5760, 9049, -7537,
+3849, 8496, 162, -7083, 8452, -8515, -5104, -7103, 7520, 5512,
+-6662, -9495, 7491, -8102, 7093, 5339, 2448, -7680, 8695, -9917,
+466, -4873, -8411, 9650, 3816, 9017, 6665, -2907, 3882, -6309,
+7421, -5694, -3642, -9417, 5875, -7744, 3898, -5127, -5735, 7284,
+8510, -5982, 5635, -3743, -7389, 418, -9518, -8351, 9600, 187,
+-8865, -7286, 2955, -718, -5533, 2518, -7023, -438, 3654, -9411,
+7999, 5824, -3005, 8714, -3428, -3361, 8745, -6297, -8277, -7610,
+-8639, -6988, -9110, 8237, 5604, -2681, -9334, 3566, -5743, -6632,
+-8327, 5385, -8660, 8516, 8323, 6028, -7659, 5471, -1051, -2554,
+-9805, 1277, 3149, 8800, -1894, 6952, -5055, -4376, -7740, -3758,
+-7612, -9475, 4368, 1158, 7646, -4669, -5161, -6499, -2029, -9412,
+-6674, -5332 ]))
+53
+53
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 17
+Correct
+Mark 90.00 out of 100.00
+Flag question
+Question text
+Viết hàm binomial_coefficient(n, k) nhận vào hai số nguyên không âm n và k (với 0 ≤ k ≤ n) và trả về giá trị của số tổ hợp chập k của tập n phần tử: nCk.
+
+TnCk được định nghĩa là số cách chọn k phần tử từ n phần tử khác nhau mà không quan tâm đến thứ tự. Giá trị này có thể được tính bằng công thức:
+
+nCk = n! / (k! * (n - k)!)
+
+Ví dụ:
+
+binomial_coefficient(5, 2) → 10
+
+binomial_coefficient(6, 0) → 1
+
+binomial_coefficient(6, 6) → 1
+
+binomial_coefficient(10, 3) → 120
+
+Answer:(penalty regime: 10, 20, ... %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(binomial_coefficient(5, 2))
+10
+10
+print(binomial_coefficient(6, 0))
+1
+1
+print(binomial_coefficient(6, 6))
+1
+1
+print(binomial_coefficient(7, 1))
+7
+7
+print(binomial_coefficient(8, 2))
+28
+28
+print(binomial_coefficient(9, 3))
+84
+84
+print(binomial_coefficient(10, 4))
+210
+210
+print(binomial_coefficient(12, 2))
+66
+66
+print(binomial_coefficient(12, 6))
+924
+924
+print(binomial_coefficient(15, 4))
+1365
+1365
+print(binomial_coefficient(18, 5))
+8568
+8568
+print(binomial_coefficient(17, 8))
+24310
+24310
+print(binomial_coefficient(20, 15))
+15504
+15504
+print(binomial_coefficient(30, 10))
+30045015
+30045015
+print(binomial_coefficient(28, 14))
+40116600
+40116600
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00. Accounting for previous tries, this gives 90.00/100.00.
+Question 18
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Cho một danh sách a gồm N số nguyên dương đôi một phân biệt, và một số nguyên dương x.
+
+Hãy viết hàm count_sum(a, x) để tìm xem có bao nhiêu bộ chỉ số (i, j, k) thỏa mãn:
+
+1 <= i < j < k <= N
+
+a[i] + a[j] + a[k] = x
+
+Hàm count_sum(a, x) nhận vào danh sách a (các số nguyên dương phân biệt) và số nguyên dương x, trả về một số nguyên là số bộ ba phần tử có tổng bằng x.
+
+Answer:(penalty regime: 0 %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(count_sum([1, 2, 3, 4, 5], 6))
+1
+1
+print(count_sum([1, 2, 3, 4, 5], 10))
+2
+2
+print(count_sum([2, 4, 6, 8, 10], 18))
+2
+2
+print(count_sum([1, 4, 7, 10, 13, 16], 21))
+3
+3
+print(count_sum(list(range(1, 51)), 50))
+184
+184
+print(count_sum(list(range(1, 31)), 20))
+24
+24
+print(count_sum(list(range(1, 2001, 2)), 301))
+1850
+1850
+print(count_sum(list(range(1, 5001)), 6000))
+2748000
+2748000
+print(count_sum(list(range(1, 1001)), 1500))
+124750
+124750
+print(count_sum(list(range(1, 3001)), 4000))
+1082333
+1082333
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 19
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Danh sách các công việc được biểu diễn dưới dạng một list các dictionary, mỗi phần tử có cấu trúc:
+
+{'name': 'Gia sư', 'hours': 10, 'pay': 150}
+
+Trong đó:
+
+name: tên công việc (string)
+
+hours: số giờ cần để hoàn thành công việc (số nguyên dương)
+
+pay: tổng tiền nhận được khi hoàn thành công việc (số thực hoặc số nguyên)
+
+Giả sử rằng mỗi công việc phải được làm trọn gói, không được chia nhỏ số giờ. 
+
+Yêu cầu
+Sinh viên có tối đa 40 giờ làm việc mỗi tuần.
+
+Hãy viết hàm max_income(jobs) để lựa chọn một tập con các công việc sao cho:
+
+Tổng số giờ làm không vượt quá 40
+
+Tổng thu nhập nhận được là lớn nhất có thể
+
+Giá trị trả về
+Hàm chỉ trả về một giá trị duy nhất
+
+Giá trị đó là tổng thu nhập lớn nhất mà sinh viên có thể kiếm được
+
+Kết quả là một số thực hoặc số nguyên, tùy dữ liệu đầu vào
+
+Ví dụ
+Input:
+jobs = [{'name': 'Gia sư', 'hours': 10, 'pay': 150}, {'name': 'Bán hàng', 'hours': 15, 'pay': 180}, {'name': 'Giao hàng', 'hours': 8, 'pay': 120}, {'name': 'Phục vụ', 'hours': 20, 'pay': 200}]
+
+Output:
+450
+
+Answer:(penalty regime: 0 %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(max_income([
+ {'name':'Gia sư','hours':10,'pay':150},
+ {'name':'Bán hàng','hours':15,'pay':180},
+ {'name':'Giao hàng','hours':8,'pay':120},
+ {'name':'Phục vụ','hours':20,'pay':200}
+]))
+470
+470
+print(max_income([
+ {'name':'A','hours':10,'pay':100},
+ {'name':'B','hours':40,'pay':380}
+]))
+380
+380
+print(max_income([
+ {'name':'A','hours':5,'pay':60},
+ {'name':'B','hours':5,'pay':70},
+ {'name':'C','hours':5,'pay':80},
+ {'name':'D','hours':5,'pay':90},
+ {'name':'E','hours':5,'pay':100}
+]))
+400
+400
+print(max_income([
+ {'name':'A','hours':35,'pay':400},
+ {'name':'B','hours':10,'pay':150},
+ {'name':'C','hours':5,'pay':80}
+]))
+480
+480
+print(max_income([
+ {'name':'A','hours':25,'pay':200},
+ {'name':'B','hours':20,'pay':190},
+ {'name':'C','hours':15,'pay':160}
+]))
+360
+360
+print(max_income([
+ {'name':'Gia sư Toán','hours':12,'pay':240},
+ {'name':'Gia sư Anh','hours':10,'pay':300},
+ {'name':'Phục vụ','hours':18,'pay':270},
+ {'name':'Giao hàng','hours':9,'pay':162},
+ {'name':'Thiết kế','hours':6,'pay':180},
+ {'name':'Nhập liệu','hours':20,'pay':260},
+ {'name':'SEO','hours':15,'pay':375},
+ {'name':'Video','hours':12,'pay':360}
+]))
+1080
+1080
+print(max_income([
+ {'name':'A','hours':7,'pay':140},
+ {'name':'B','hours':14,'pay':280},
+ {'name':'C','hours':21,'pay':400},
+ {'name':'D','hours':10,'pay':190},
+ {'name':'E','hours':9,'pay':170},
+ {'name':'F','hours':20,'pay':360},
+ {'name':'G','hours':8,'pay':150},
+ {'name':'H','hours':6,'pay':120},
+ {'name':'I','hours':5,'pay':100}
+]))
+790
+790
+print(max_income([
+ {'name':'Job1','hours':5,'pay':90},
+ {'name':'Job2','hours':10,'pay':140},
+ {'name':'Job3','hours':8,'pay':120},
+ {'name':'Job4','hours':20,'pay':300},
+ {'name':'Job5','hours':15,'pay':210},
+ {'name':'Job6','hours':6,'pay':84},
+ {'name':'Job7','hours':12,'pay':180},
+ {'name':'Job8','hours':9,'pay':135},
+ {'name':'Job9','hours':25,'pay':350},
+ {'name':'Job10','hours':7,'pay':98}
+]))
+609
+609
+jobs = [
+ {'name':'Gia sư Toán','hours':10,'pay':250},
+ {'name':'Gia sư Anh văn','hours':8,'pay':240},
+ {'name':'Gia sư IELTS','hours':6,'pay':300},
+ {'name':'Phục vụ quán cà phê','hours':18,'pay':270},
+ {'name':'Pha chế','hours':14,'pay':252},
+ {'name':'Thu ngân','hours':16,'pay':240},
+ {'name':'Bán hàng siêu thị','hours':20,'pay':300},
+ {'name':'Giao đồ ăn','hours':9,'pay':162},
+ {'name':'Giao hàng nhanh','hours':11,'pay':187},
+ {'name':'Nhập liệu','hours':25,'pay':300},
+ {'name':'Viết content','hours':10,'pay':250},
+ {'name':'Quản lý fanpage','hours':15,'pay':330},
+ {'name':'Chăm sóc khách hàng','hours':18,'pay':342},
+ {'name':'Thiết kế banner','hours':7,'pay':189},
+ {'name':'Thiết kế logo','hours':8,'pay':320},
+ {'name':'Chỉnh sửa video','hours':12,'pay':360},
+ {'name':'SEO website','hours':20,'pay':500},
+ {'name':'Lập trình web','hours':24,'pay':960},
+ {'name':'Test phần mềm','hours':16,'pay':400},
+ {'name':'Phân tích dữ liệu','hours':10,'pay':500}
+]
+print(max_income(jobs))
+1760
+1760
+jobs = [
+ {'name':'Gia sư Toán cấp 2','hours':8,'pay':240},
+ {'name':'Gia sư Anh văn','hours':10,'pay':300},
+ {'name':'Gia sư IELTS','hours':6,'pay':360},
+ {'name':'Phục vụ quán cà phê','hours':18,'pay':270},
+ {'name':'Pha chế','hours':14,'pay':280},
+ {'name':'Thu ngân cửa hàng','hours':16,'pay':256},
+ {'name':'Bán hàng siêu thị','hours':20,'pay':320},
+ {'name':'Giao đồ ăn','hours':9,'pay':162},
+ {'name':'Giao hàng nhanh','hours':11,'pay':187},
+ {'name':'Nhập liệu văn phòng','hours':25,'pay':325},
+ {'name':'Viết content fanpage','hours':10,'pay':250},
+ {'name':'Quản lý fanpage','hours':15,'pay':330},
+ {'name':'Chăm sóc khách hàng','hours':18,'pay':342},
+ {'name':'Thiết kế banner','hours':7,'pay':210},
+ {'name':'Thiết kế logo','hours':8,'pay':360},
+ {'name':'Chỉnh sửa video','hours':12,'pay':420},
+ {'name':'Quay video TikTok','hours':9,'pay':225},
+ {'name':'SEO website','hours':20,'pay':500},
+ {'name':'Lập trình website','hours':24,'pay':960},
+ {'name':'Test phần mềm','hours':16,'pay':400},
+ {'name':'Phân tích dữ liệu','hours':10,'pay':500},
+ {'name':'Trực tổng đài','hours':18,'pay':306},
+ {'name':'Bảo vệ ca đêm','hours':24,'pay':360},
+ {'name':'Giữ xe','hours':20,'pay':260},
+ {'name':'Rửa xe','hours':8,'pay':136},
+ {'name':'Phát tờ rơi','hours':6,'pay':90},
+ {'name':'Trông trẻ','hours':10,'pay':220},
+ {'name':'Kho vận','hours':22,'pay':330},
+ {'name':'Livestream bán hàng','hours':16,'pay':480},
+ {'name':'Chạy quảng cáo Facebook','hours':12,'pay':480}
+]
+print(max_income(jobs))
+1820
+1820
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 20
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Danh sách các công việc được biểu diễn dưới dạng một list các dictionary, mỗi phần tử có cấu trúc:
+
+{'name': 'Gia sư', 'hours': 10, 'pay': 150}
+
+Trong đó:
+
+name: tên công việc (string)
+
+hours: số giờ cần để hoàn thành toàn bộ công việc
+
+pay: tổng tiền nhận được nếu hoàn thành toàn bộ công việc
+
+Sinh viên có tối đa 40 giờ làm việc mỗi tuần.
+
+Sinh viên không bắt buộc phải hoàn thành toàn bộ một công việc.
+Nếu chỉ làm x giờ của một công việc (với 0 < x ≤ hours), thì số tiền nhận được tỷ lệ thuận với số giờ đã làm.
+
+Yêu cầu
+Hãy viết hàm max_income(jobs) để xác định:
+
+Tổng thu nhập lớn nhất có thể đạt được làm tròn đến 1 chữ số thập phân
+
+Với điều kiện tổng số giờ làm không vượt quá 40
+
+Giá trị trả về
+Hàm chỉ trả về một giá trị duy nhất
+
+Giá trị đó là tổng thu nhập lớn nhất
+
+Kết quả là một số thực hoặc số nguyên, tuỳ dữ liệu đầu vào
+
+Ví dụ
+Input:
+jobs = [{'name': 'Gia sư', 'hours': 10, 'pay': 150}, {'name': 'Bán hàng', 'hours': 20, 'pay': 180}]
+
+Output:
+330
+
+Answer:(penalty regime: 0 %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(max_income([
+ {'name':'Gia sư','hours':10,'pay':150},
+ {'name':'Bán hàng','hours':20,'pay':180}
+]))
+330.0
+330
+print(max_income([
+ {'name':'A','hours':30,'pay':300},
+ {'name':'B','hours':20,'pay':200}
+]))
+400.0
+400.0
+print(max_income([
+ {'name':'A','hours':5,'pay':200},
+ {'name':'B','hours':40,'pay':400}
+]))
+550.0
+550.0
+print(max_income([
+ {'name':'A','hours':5,'pay':60},
+ {'name':'B','hours':5,'pay':70},
+ {'name':'C','hours':5,'pay':80},
+ {'name':'D','hours':5,'pay':90},
+ {'name':'E','hours':5,'pay':100}
+]))
+400.0
+400
+print(max_income([
+ {'name':'A','hours':10,'pay':100},
+ {'name':'B','hours':12,'pay':144}
+]))
+244.0
+244
+print(max_income([
+ {'name':'Gia sư Toán','hours':12,'pay':240},
+ {'name':'Gia sư Anh','hours':10,'pay':300},
+ {'name':'Phục vụ','hours':18,'pay':270},
+ {'name':'Giao hàng','hours':9,'pay':162},
+ {'name':'Thiết kế','hours':6,'pay':180},
+ {'name':'Nhập liệu','hours':20,'pay':260},
+ {'name':'SEO','hours':15,'pay':375},
+ {'name':'Video','hours':12,'pay':360}
+]))
+1140.0
+1140.0
+print(max_income([
+ {'name':'A','hours':7,'pay':140},
+ {'name':'B','hours':14,'pay':280},
+ {'name':'C','hours':21,'pay':400},
+ {'name':'D','hours':10,'pay':190},
+ {'name':'E','hours':9,'pay':170},
+ {'name':'F','hours':20,'pay':360},
+ {'name':'G','hours':8,'pay':150},
+ {'name':'H','hours':6,'pay':120},
+ {'name':'I','hours':5,'pay':100}
+]))
+792.4
+792.4
+print(max_income([
+ {'name':'Gia sư Toán','hours':10,'pay':250},
+ {'name':'Gia sư Anh văn','hours':8,'pay':240},
+ {'name':'Gia sư IELTS','hours':6,'pay':360},
+ {'name':'Phục vụ quán cà phê','hours':18,'pay':270},
+ {'name':'Pha chế','hours':14,'pay':280},
+ {'name':'Thu ngân cửa hàng','hours':16,'pay':256},
+ {'name':'Bán hàng siêu thị','hours':20,'pay':320},
+ {'name':'Giao đồ ăn','hours':9,'pay':162},
+ {'name':'Giao hàng nhanh','hours':11,'pay':187},
+ {'name':'Nhập liệu văn phòng','hours':25,'pay':325},
+ {'name':'Viết content','hours':10,'pay':250},
+ {'name':'Quản lý fanpage','hours':15,'pay':330},
+ {'name':'Chăm sóc khách hàng','hours':18,'pay':342},
+ {'name':'Thiết kế banner','hours':7,'pay':210},
+ {'name':'Thiết kế logo','hours':8,'pay':360},
+ {'name':'Chỉnh sửa video','hours':12,'pay':420},
+ {'name':'Quay video TikTok','hours':9,'pay':225},
+ {'name':'SEO website','hours':20,'pay':500},
+ {'name':'Lập trình web','hours':24,'pay':960},
+ {'name':'Test phần mềm','hours':16,'pay':400},
+ {'name':'Phân tích dữ liệu','hours':10,'pay':500},
+ {'name':'Trực tổng đài','hours':18,'pay':306},
+ {'name':'Bảo vệ ca đêm','hours':24,'pay':360},
+ {'name':'Giữ xe','hours':20,'pay':260},
+ {'name':'Rửa xe','hours':8,'pay':136}
+]))
+1860.0
+1860.0
+print(max_income([
+ {'name':'Gia sư SAT','hours':7,'pay':350},
+ {'name':'Gia sư Hóa','hours':9,'pay':405},
+ {'name':'Gia sư Lý','hours':10,'pay':480},
+ {'name':'Gia sư Văn','hours':14,'pay':630},
+ {'name':'Gia sư Sinh','hours':11,'pay':495},
+ {'name':'Gia sư Tin học','hours':12,'pay':540},
+ {'name':'Viết báo','hours':15,'pay':375},
+ {'name':'Viết kịch bản','hours':11,'pay':308},
+ {'name':'Biên tập nội dung','hours':18,'pay':450},
+ {'name':'Chạy quảng cáo','hours':12,'pay':420},
+ {'name':'Phân tích dữ liệu','hours':10,'pay':500},
+ {'name':'Lập trình Python','hours':20,'pay':900},
+ {'name':'Lập trình Frontend','hours':18,'pay':810},
+ {'name':'Thiết kế UI/UX','hours':16,'pay':720},
+ {'name':'Tester','hours':14,'pay':350},
+ {'name':'SEO nâng cao','hours':22,'pay':660},
+ {'name':'Marketing online','hours':20,'pay':600},
+ {'name':'Livestream bán hàng','hours':16,'pay':480},
+ {'name':'Quản lý dự án','hours':25,'pay':875},
+ {'name':'Chăm sóc khách VIP','hours':18,'pay':540},
+ {'name':'Bán hàng online','hours':22,'pay':330},
+ {'name':'Kho hàng','hours':24,'pay':360},
+ {'name':'Giao hàng nhanh','hours':10,'pay':170},
+ {'name':'Pha chế cao cấp','hours':12,'pay':288},
+ {'name':'Thu ngân ca tối','hours':16,'pay':256},
+ {'name':'Rửa xe','hours':8,'pay':136},
+ {'name':'Giữ xe','hours':20,'pay':260},
+ {'name':'Bảo vệ văn phòng','hours':24,'pay':360},
+ {'name':'Trực tổng đài','hours':18,'pay':342},
+ {'name':'Nhập liệu','hours':25,'pay':325}
+]))
+1915.0
+1915.0
+print(max_income([
+ {'name':'Gia sư Toán THPT','hours':10,'pay':300},
+ {'name':'Gia sư Anh giao tiếp','hours':8,'pay':240},
+ {'name':'Gia sư IELTS','hours':6,'pay':360},
+ {'name':'Trợ giảng','hours':12,'pay':360},
+ {'name':'Phục vụ nhà hàng','hours':18,'pay':288},
+ {'name':'Pha chế','hours':14,'pay':294},
+ {'name':'Thu ngân siêu thị','hours':16,'pay':256},
+ {'name':'Bán hàng cửa hàng tiện lợi','hours':20,'pay':320},
+ {'name':'Giao đồ ăn','hours':9,'pay':162},
+ {'name':'Giao hàng nhanh','hours':11,'pay':187},
+ {'name':'Nhập liệu','hours':25,'pay':325},
+ {'name':'Viết content SEO','hours':10,'pay':280},
+ {'name':'Quản lý fanpage','hours':15,'pay':345},
+ {'name':'Chăm sóc khách hàng','hours':18,'pay':342},
+ {'name':'Thiết kế banner','hours':7,'pay':210},
+ {'name':'Thiết kế logo','hours':8,'pay':360},
+ {'name':'Chỉnh sửa video','hours':12,'pay':420},
+ {'name':'Quay video TikTok','hours':9,'pay':225},
+ {'name':'SEO website','hours':20,'pay':520},
+ {'name':'Lập trình web','hours':24,'pay':960},
+ {'name':'Test phần mềm','hours':16,'pay':400},
+ {'name':'Phân tích dữ liệu','hours':10,'pay':500},
+ {'name':'Trực tổng đài','hours':18,'pay':306},
+ {'name':'Bảo vệ ca đêm','hours':24,'pay':360},
+ {'name':'Giữ xe','hours':20,'pay':260},
+ {'name':'Rửa xe','hours':8,'pay':136},
+ {'name':'Phát tờ rơi','hours':6,'pay':90},
+ {'name':'Trông trẻ','hours':10,'pay':220},
+ {'name':'Kho vận','hours':22,'pay':330},
+ {'name':'Livestream bán hàng','hours':16,'pay':480},
+ {'name':'Chạy quảng cáo Facebook','hours':12,'pay':480},
+ {'name':'Biên tập video','hours':14,'pay':392},
+ {'name':'Marketing online','hours':20,'pay':600},
+ {'name':'Thiết kế UI/UX','hours':16,'pay':720},
+ {'name':'Lập trình Python','hours':18,'pay':810}
+]))
+1940.0
+1940.0
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 21
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Viết hàm cal_perimeter(a,b) thực hiện tính chu vi hình chữ nhật, với chiều dài và chiều rộng lần lượt là a và b (số thực). Hàm trả về kết quả chu vi hình chữ nhật đó.
+
+Answer:(penalty regime: 0 %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(cal_perimeter(5,6))
+22
+22
+print(cal_perimeter(7,6.3))
+26.6
+26.6
+print(cal_perimeter(9.5,2.3))
+23.6
+23.6
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 22
+Correct
+Mark 90.00 out of 100.00
+Flag question
+Question text
+Bạn Nam có một danh sách các đồ vật, mỗi đồ vật có một giá trị (value) tương ứng.
+Danh sách này được lưu dưới dạng dictionary, với key là tên đồ vật (string), và value là giá trị (số nguyên). Các value là đôi một phân biệt.
+
+Nam muốn mang theo chính xác 3 đồ vật sao cho tổng giá trị của 3 đồ vật này là lớn nhất. Viết hàm select_items(items) nhận vào một dictionary items và trả về một danh sách gồm đúng 3 tên đồ vật (key) có giá trị cao nhất, sắp xếp theo thứ tự giảm dần của value.
+
+Answer:(penalty regime: 10, 20, ... %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(select_items({"A": 10, "B": 20, "C": 5, "D": 15}))
+['B', 'D', 'A']
+['B', 'D', 'A']
+print(select_items({"Pen": 11, "Book": 25, "Bag": 40, "Watch": 30}))
+['Bag', 'Watch', 'Book']
+['Bag', 'Watch', 'Book']
+print(select_items({"A": 1, "B": 99, "C": 50, "D": 25, "E": 75}))
+['B', 'E', 'C']
+['B', 'E', 'C']
+print(select_items({"Laptop": 500, "Phone": 320, "Watch": 150, "Camera": 420, "Headphone": 200, "Tablet": 350}))
+['Laptop', 'Camera', 'Tablet']
+['Laptop', 'Camera', 'Tablet']
+print(select_items({"A": 3, "B": 8, "C": 1, "D": 6}))
+['B', 'D', 'A']
+['B', 'D', 'A']
+print(select_items({"Item1": 55, "Item2": 10, "Item3": 75, "Item4": 60, "Item5": 30}))
+['Item3', 'Item4', 'Item1']
+['Item3', 'Item4', 'Item1']
+print(select_items({"X": 100, "Y": 90, "Z": 80, "T": 70}))
+['X', 'Y', 'Z']
+['X', 'Y', 'Z']
+print(select_items({"Gold": 1000, "Silver": 450, "Bronze": 300, "Iron": 700, "Copper": 650}))
+['Gold', 'Iron', 'Copper']
+['Gold', 'Iron', 'Copper']
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00. Accounting for previous tries, this gives 90.00/100.00.
+Question 23
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Hãy viết hàm count_distinct(a)
+
+trong đó:
+
+a là một danh sách (list) các số nguyên dương: a = [a₁, a₂, …, a_N]. 
+
+để đếm số các giá trị đôi một phân biệt trong danh sách a.
+
+Ví dụ:
+
+count_distinct([1, 2, 2, 3, 1]) → 3
+
+count_distinct([5, 5, 5]) → 1
+
+count_distinct([1, 2, 3, 4]) → 4
+
+Answer:(penalty regime: 0 %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(count_distinct([1,2,2,3,1]))
+3
+3
+print(count_distinct([5,5,5,5,5]))
+1
+1
+print(count_distinct([1,2,3,4,5]))
+5
+5
+print(count_distinct([100,1,100,2,100,3,100,4,100,5]))
+6
+6
+print(count_distinct([1,1,2,3,3,4,4,4,5,6,6,7]))
+7
+7
+print(count_distinct([1,2,3,4,5,6,7,8,9,10,
+                      1,2,3,4,5,6,7,8,9,10,
+                      11,12,13,14,15,16,17,18,19,20]))
+20
+20
+print(count_distinct([42]))
+1
+1
+print(count_distinct([3,3,3,2,2,1,1,4,4,5,5,6,6,6]))
+6
+6
+print(count_distinct([5,7,5,7,5,7,5,7,5,7,
+                      1,2,3,4,5,6,7,8,9,10,
+                      10,9,8,7,6,5,4,3,2,1]))
+10
+10
+print(count_distinct([1,1,1,2,2,3,4,4,4,4,5]))
+5
+5
+print(count_distinct([7,7,7,7,7,7,7,7,7,7,
+                      8,8,8,8,8,8,8,8,8,8,
+                      9,9,9,9,9,9,9,9,9,9]))
+3
+3
+print(count_distinct([4,1,3,4,2,1,6,9,9,8,7,2,4]))
+8
+8
+print(count_distinct([5,12,7,12,3,5,9,9,8,2,
+                      11,13,14,15,16,17,18,19,20,21,
+                      22,23,24,25,26,27,28,29,30,31]))
+27
+27
+print(count_distinct([1000,2000,3000,1000,5000,6000,7000,3000]))
+6
+6
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 24
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Hãy viết hàm list_distinct(a)
+
+trong đó:
+
+a là một danh sách (list) các số nguyên dương: a = [a₁, a₂, …, a_N]. 
+
+để trả lại danh sách các giá trị đôi một phân biệt trong danh sách a theo thứ tự tăng dần.
+
+Ví dụ:
+
+list_distinct([1, 2, 2, 3, 1]) → [1, 2, 3]
+
+list_distinct([5, 5, 5]) → [5]
+
+list_distinct([1, 2, 3, 4]) → [1, 2, 3, 4]
+
+Answer:(penalty regime: 0 %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(list_distinct([1, 1, 1, 1]))
+[1]
+[1]
+print(list_distinct([2, 1, 2, 1]))
+[1, 2]
+[1, 2]
+print(list_distinct([3, 2, 1]))
+[1, 2, 3]
+[1, 2, 3]
+print(list_distinct([10, 9, 8, 9, 10]))
+[8, 9, 10]
+[8, 9, 10]
+print(list_distinct([7, 3, 7, 3, 7, 3]))
+[3, 7]
+[3, 7]
+print(list_distinct([5] * 120))
+[5]
+[5]
+print(list_distinct([100, 50, 100, 75]))
+[50, 75, 100]
+[50, 75, 100]
+print(list_distinct([15, 14, 13, 14, 12]))
+[12, 13, 14, 15]
+[12, 13, 14, 15]
+print(list_distinct([5, 3, 8, 3, 5, 9]))
+[3, 5, 8, 9]
+[3, 5, 8, 9]
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 25
+Correct
+Mark 90.00 out of 100.00
+Flag question
+Question text
+Trong hệ mã Vigenère, việc mã hóa sử dụng từ khóa key để dịch chuyển từng chữ cái trong bản rõ plaintext. Nếu key ngắn hơn plaintext, thì phải lặp lại tuần hoàn để đủ độ dài. Ví dụ: plaintext = HELLOWORLD, key = KEY → lặp thành KEYKEYKEYK.
+
+Cách mã hóa từng chữ cái:
+
+Chuyển mỗi chữ cái sang vị trí số trong bảng chữ cái: A = 0, B = 1, ..., Z = 25
+
+Dùng công thức: Ci = (Pi + Ki) % 26
+
+Pi: vị trí chữ cái của plaintext
+
+Ki: vị trí chữ cái của key (đã lặp lại)
+
+Ci: vị trí chữ cái kết quả (ciphertext)
+
+Cuối cùng chuyển Ci thành chữ cái IN HOA
+
+% là phép chia lấy dư, ví dụ: 7 % 3 = 1
+
+Viết hàm: def vigenere_encrypt(plaintext, key):
+
+Trong đó:
+
+plaintext là chuỗi chữ cái, không chứa khoảng trắng, không phân biệt chữ hoa/thường
+
+key là chuỗi chữ cái, không chứa khoảng trắng, không phân biệt chữ hoa/thường
+
+Hàm trả về chuỗi ciphertext viết IN HOA
+
+Ví dụ mã hóa cụ thể với plaintext = HELLO và key = KEY:
+
+Lặp key: KEYKE
+
+Đổi sang số:
+H = 7, E = 4, L = 11, L = 11, O = 14
+K = 10, E = 4, Y = 24, K = 10, E = 4
+
+Áp dụng công thức Ci = (Pi + Ki) % 26:
+(7 + 10) % 26 = 17 → R
+(4 + 4) % 26 = 8 → I
+(11 + 24) % 26 = 9 → J
+(11 + 10) % 26 = 21 → V
+(14 + 4) % 26 = 18 → S
+
+Kết quả cuối cùng: RIJVS.
+
+Answer:(penalty regime: 10, 20, ... %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(vigenere_encrypt("HELLO", "KEY"))
+RIJVS
+RIJVS
+print(vigenere_encrypt("ATTACKATDAWN", "LEMON"))
+LXFOPVEFRNHR
+LXFOPVEFRNHR
+print(vigenere_encrypt("PROGRAMMING", "CODE"))
+RFRKTOPQKBJ
+RFRKTOPQKBJ
+print(vigenere_encrypt("INFORMATION", "DATA"))
+LNYOUMTTLOG
+LNYOUMTTLOG
+print(vigenere_encrypt("COMPUTERSCIENCE", "PYTHON"))
+RMFWIGTPLJWRCAX
+RMFWIGTPLJWRCAX
+print(vigenere_encrypt("CRYPTOGRAPHY", "SECRET"))
+UVAGXHYVCGLR
+UVAGXHYVCGLR
+print(vigenere_encrypt("KNOWLEDGE", "LEARN"))
+VRONYPHGV
+VRONYPHGV
+print(vigenere_encrypt("STANISNOTWHATHESEEMS", "MYSTERY"))
+ERSGMJLAROAEKFQQWXQJ
+ERSGMJLAROAEKFQQWXQJ
+print(vigenere_encrypt("TRUSTNOONE", "CIPHER"))
+VZJZXEQWCL
+VZJZXEQWCL
+print(vigenere_encrypt("FIDDLEFORDHADITRIGHTALLALONG", "BILL"))
+GQOOMMQZSLSLEQECJOSEBTWLMWYR
+GQOOMMQZSLSLEQECJOSEBTWLMWYR
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00. Accounting for previous tries, this gives 90.00/100.00.
+Question 26
+Correct
+Mark 80.00 out of 100.00
+Flag question
+Question text
+Ông An đi làm N ngày liên tiếp rồi nghỉ 1 ngày, sau đó lặp lại chu kỳ đó đều đặn.
+
+Ông Bình đi làm M ngày liên tiếp rồi nghỉ 1 ngày, sau đó cũng lặp lại đều đặn.
+
+Biết rằng cả hai đều bắt đầu đi làm từ ngày 01/01/2024, và lịch làm việc lặp lại đúng theo chu kỳ của mỗi người.
+
+Hỏi: Trong khoảng từ ngày 01/01/2024 đến ngày A (tính cả ngày A), có bao nhiêu ngày mà cả ông An và ông Bình cùng đi làm?
+
+Viết hàm:
+
+def count_working_days(N, M, A):
+
+Hàm trả về một số nguyên là số ngày cả hai người cùng đi làm trong khoảng từ ngày 01/01/2024 cho đến ngày A. Bạn được cung cấp mốc thời gian A dưới dạng đối tượng datetime.date của Python.
+
+Answer:(penalty regime: 10, 20, ... %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(count_working_days(1, 1, date(2024, 1, 10)))
+5
+5
+print(count_working_days(2, 2, date(2024, 1, 10)))
+7
+7
+print(count_working_days(2, 3, date(2024, 1, 15)))
+8
+8
+print(count_working_days(2, 3, date(2024, 1, 31)))
+16
+16
+print(count_working_days(3, 5, date(2024, 2, 29)))
+40
+40
+print(count_working_days(5, 5, date(2024, 12, 31)))
+305
+305
+print(count_working_days(3, 4, date(3000, 1, 1)))
+213887
+213887
+print(count_working_days(48, 60, date(5000, 1, 1)))
+1047325
+1047325
+print(count_working_days(10, 15, date(8000, 12, 31)))
+1860559
+1860559
+print(count_working_days(17, 23, date(9999, 12, 31)))
+2670409
+2670409
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00. Accounting for previous tries, this gives 80.00/100.00.
+Question 27
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Trong hệ mã A1Z26, mỗi chữ cái tương ứng với một số: A = 1, B = 2, C = 3, ..., Z = 26. Việc mã hoá được thực hiện theo từng chữ cái của một từ, và các số được nối với nhau bằng dấu gạch ngang -.
+
+Viết hàm: def encode_a1z26(word):
+
+Trong đó:
+
+word là một chuỗi ký tự (string), chỉ gồm 1 từ, không chứa khoảng trắng và không phân biệt chữ hoa hay chữ thường.
+
+Hàm trả về một chuỗi là kết quả mã hoá từ word theo hệ A1Z26, với các số tương ứng của từng chữ cái được nối với nhau bằng dấu -.
+
+Ví dụ: nếu word = "HAPPY" thì hàm phải trả về: 8-1-16-16-25.
+
+Answer:(penalty regime: 0 %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(encode_a1z26("HAPPY"))
+8-1-16-16-25
+8-1-16-16-25
+print(encode_a1z26("A"))
+1
+1
+print(encode_a1z26("Z"))
+26
+26
+print(encode_a1z26("HELLO"))
+8-5-12-12-15
+8-5-12-12-15
+print(encode_a1z26("ENCYCLOPEDIA"))
+5-14-3-25-3-12-15-16-5-4-9-1
+5-14-3-25-3-12-15-16-5-4-9-1
+print(encode_a1z26("MATHEMATICS"))
+13-1-20-8-5-13-1-20-9-3-19
+13-1-20-8-5-13-1-20-9-3-19
+print(encode_a1z26("INFORMATION"))
+9-14-6-15-18-13-1-20-9-15-14
+9-14-6-15-18-13-1-20-9-15-14
+print(encode_a1z26("PROGRAMMING"))
+16-18-15-7-18-1-13-13-9-14-7
+16-18-15-7-18-1-13-13-9-14-7
+print(encode_a1z26("TECHNOLOGICAL"))
+20-5-3-8-14-15-12-15-7-9-3-1-12
+20-5-3-8-14-15-12-15-7-9-3-1-12
+print(encode_a1z26("TECHNOLOGICAL"))
+20-5-3-8-14-15-12-15-7-9-3-1-12
+20-5-3-8-14-15-12-15-7-9-3-1-12
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 28
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Xét các đồ thị có hướng được biểu diễn bằng một dictionary Python, trong đó:
+
+Mỗi key là một đỉnh (vertex).
+
+Giá trị tương ứng là một dictionary chứa các đỉnh kề và trọng số của cạnh nối đến những đỉnh đó
+
+Hãy viết hàm find_adjacency_list(graph).
+
+Trong đó:
+
+graph là một dictionary mô tả đồ thị như ở trên.
+
+Hàm phải trả về adjacency list, tức là một dictionary mới ánh xạ mỗi đỉnh sang danh sách các đỉnh kề với nó (không xét trọng số).
+
+Ví dụ, xét đồ thị được biểu diễn bằng dictionary graph = {'A': {'B': 5, 'C': 10}, 'B': {'C': 3, 'D': 8}, 'C': {'D': 2}, 'D': {}}
+
+thì hàm phải trả về:
+
+{'A': ['B', 'C'], 'B': ['C', 'D'], 'C': ['D'], 'D': []}
+
+Answer:(penalty regime: 0 %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(find_adjacency_list({'A': {'B': 5, 'C': 10}, 'B': {'C': 3}, 'C': {}}))
+{'A': ['B', 'C'], 'B': ['C'], 'C': []}
+{'A': ['B', 'C'], 'B': ['C'], 'C': []}
+print(find_adjacency_list({'A': {}}))
+{'A': []}
+{'A': []}
+print(find_adjacency_list({'A': {'B': 1}, 'B': {}}))
+{'A': ['B'], 'B': []}
+{'A': ['B'], 'B': []}
+print(find_adjacency_list({'A': {'B': 2}, 'B': {'A': 4}}))
+{'A': ['B'], 'B': ['A']}
+{'A': ['B'], 'B': ['A']}
+print(find_adjacency_list({'A': {'B': 1}, 'B': {'C': 1}, 'C': {}}))
+{'A': ['B'], 'B': ['C'], 'C': []}
+{'A': ['B'], 'B': ['C'], 'C': []}
+print(find_adjacency_list({'A': {'C': 1}, 'B': {'C': 2}, 'C': {}}))
+{'A': ['C'], 'B': ['C'], 'C': []}
+{'A': ['C'], 'B': ['C'], 'C': []}
+print(find_adjacency_list({'A': {'B': 1, 'C': 1}, 'B': {}, 'C': {}}))
+{'A': ['B', 'C'], 'B': [], 'C': []}
+{'A': ['B', 'C'], 'B': [], 'C': []}
+print(find_adjacency_list({'A': {'B': 1, 'D': 5}, 'B': {'C': 2}, 'C': {'D': 3}, 'D': {'E': 1}, 'E': {}}))
+{'A': ['B', 'D'], 'B': ['C'], 'C': ['D'], 'D': ['E'], 'E': []}
+{'A': ['B', 'D'], 'B': ['C'], 'C': ['D'], 'D': ['E'], 'E': []}
+print(find_adjacency_list({}))
+{}
+{}
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 29
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Trong hệ mã Atbash, mỗi chữ cái được mã hóa bằng cách ánh xạ với chữ cái đối xứng trong bảng chữ cái tiếng Anh:
+
+A ↔ Z, B ↔ Y, C ↔ X, ..., M ↔ N
+
+Do đó, mã Atbash là loại mã đối xứng, nghĩa là quá trình mã hóa và giải mã đều dùng chung một quy tắc chuyển đổi.
+
+Viết hàm: def atbash_decode(code):
+
+Trong đó:
+
+code là một chuỗi ký tự (string), chỉ gồm các chữ cái A–Z hoặc a–z, không có khoảng trắng hay ký tự đặc biệt.
+
+Không phân biệt chữ hoa hay chữ thường.
+
+Kết quả trả về là chuỗi chữ cái in hoa, là bản giải mã (decode) Atbash của chuỗi code.
+
+Ví dụ: nếu code = "SVOOL" thì hàm phải trả về: HELLO.
+
+Answer:(penalty regime: 10, 20, ... %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(atbash_decode("SVOOL"))
+HELLO
+HELLO
+print(atbash_decode("VMXBXOLKVWRZ"))
+ENCYCLOPEDIA
+ENCYCLOPEDIA
+print(atbash_decode("NZGSVNZGRXH"))
+MATHEMATICS
+MATHEMATICS
+print(atbash_decode("RMULINZGRLM"))
+INFORMATION
+INFORMATION
+print(atbash_decode("RMEVIHV"))
+INVERSE
+INVERSE
+print(atbash_decode("XLNNFMRXZGRLM"))
+COMMUNICATION
+COMMUNICATION
+print(atbash_decode("KILTIZNNRMT"))
+PROGRAMMING
+PROGRAMMING
+print(atbash_decode("VKOFIRYFHGIVNYOVB"))
+EPLURIBUSTREMBLEY
+EPLURIBUSTREMBLEY
+print(atbash_decode("HLIIBWRKKVIYFGBLFIDVMWBRHRMZMLGSVIXZHGOV"))
+SORRYDIPPERBUTYOURWENDYISINANOTHERCASTLE
+SORRYDIPPERBUTYOURWENDYISINANOTHERCASTLE
+print(atbash_decode("GSVRMERHRYOVDRAZIWRHDZGXSRMT"))
+THEINVISIBLEWIZARDISWATCHING
+THEINVISIBLEWIZARDISWATCHING
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 30
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Trong hệ mã Atbash, mỗi chữ cái trong bảng chữ cái tiếng Anh được mã hóa bằng cách ánh xạ với chữ cái đối xứng trong bảng chữ cái. Quy tắc như sau:
+
+A ↔ Z, B ↔ Y, C ↔ X, ..., M ↔ N
+
+Nói cách khác, chữ cái thứ 1 đổi thành chữ thứ 26, chữ thứ 2 đổi thành chữ thứ 25, ..., chữ thứ 26 đổi thành chữ thứ 1.
+
+Viết hàm: def atbash_cipher(word):
+
+Trong đó:
+
+word là một chuỗi ký tự (string), chỉ gồm các chữ cái tiếng Anh (A–Z hoặc a–z), không chứa khoảng trắng hoặc ký tự đặc biệt.
+
+Không phân biệt chữ hoa hay chữ thường, và kết quả trả về là chữ in hoa.
+
+Hàm trả về một chuỗi là kết quả mã hóa Atbash của từ word.
+
+Ví dụ: nếu word = "HELLO" thì hàm phải trả về: SVOOL.
+
+Answer:(penalty regime: 10, 20, ... %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(atbash_cipher("ENCYCLOPEDIA"))
+VMXBXOLKVWRZ
+VMXBXOLKVWRZ
+print(atbash_cipher("MATHEMATICS"))
+NZGSVNZGRXH
+NZGSVNZGRXH
+print(atbash_cipher("INFORMATION"))
+RMULINZGRLM
+RMULINZGRLM
+print(atbash_cipher("COMMUNICATION"))
+XLNNFMRXZGRLM
+XLNNFMRXZGRLM
+print(atbash_cipher("PROGRAMMING"))
+KILTIZNNRMT
+KILTIZNNRMT
+print(atbash_cipher("TECHNOLOGICAL"))
+GVXSMLOLTRXZO
+GVXSMLOLTRXZO
+print(atbash_cipher("DEMONSTRATION"))
+WVNLMHGIZGRLM
+WVNLMHGIZGRLM
+print(atbash_cipher("BROUGHTTOYOUBYHOMEWORKTHECANDY"))
+YILFTSGGLBLFYBSLNVDLIPGSVXZMWB
+YILFTSGGLBLFYBSLNVDLIPGSVXZMWB
+print(atbash_cipher("TRUSTNOONE"))
+GIFHGMLLMV
+GIFHGMLLMV
+print(atbash_cipher("BILLCIPHER"))
+YROOXRKSVI
+YROOXRKSVI
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 31
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Hãy viết hàm compute_area(s, x).
+
+Trong đó:
+
+s là một ký tự (string), dùng để xác định loại phép tính:
+
+Nếu s = 'p' → tính chu vi hình tròn
+
+Nếu s = 'a' → tính diện tích hình tròn
+
+Nếu s có giá trị khác → in ra "Invalid"
+
+x là bán kính của hình tròn (số thực hoặc số nguyên dương).
+
+Trong bài này, ta lấy π = 3.14.
+
+Yêu cầu
+Nếu s = 'p' hoặc s = 'a':
+
+Hàm trả về giá trị chu vi hoặc diện tích tương ứng
+
+Giá trị trả về là số thực, đã được làm tròn đến 2 chữ số thập phân
+
+Nếu s không hợp lệ:
+
+Hàm trả về chuỗi "Invalid"
+
+Answer:(penalty regime: 0 %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(compute_area('p', 2))
+12.56
+12.56
+print(compute_area('p', 3))
+18.84
+18.84
+print(compute_area('p', 1.55))
+9.73
+9.73
+print(compute_area('p', 1.3333))
+8.37
+8.37
+print(compute_area('a', 1.5678))
+7.72
+7.72
+print(compute_area('a', 10.75))
+362.87
+362.87
+print(compute_area('p', 2.5555))
+16.05
+16.05
+print(compute_area('x', 4.1234))
+Invalid
+Invalid
+print(compute_area('a', 1.414213))
+6.28
+6.28
+print(compute_area('p', 0.795))
+4.99
+4.99
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 32
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Danh sách nhà trọ được biểu diễn dưới dạng một list các dictionary, mỗi phần tử có cấu trúc:
+
+{'name': 'A', 'price': 1.5, 'distance': 2.0, 'rating': 4.5}
+
+Trong đó:
+
+name: tên nhà trọ (string)
+
+price: giá thuê (số thực, đơn vị triệu/tháng)
+
+distance: khoảng cách đến trường (km)
+
+rating: điểm đánh giá (từ 0 đến 5)
+
+Để đánh giá tổng thể mức độ “đáng ở” của mỗi nhà trọ, ta định nghĩa value score theo công thức:
+
+score = rating / price − distance * 0.1
+
+Hãy viết hàm top_value_hostels(hostels).
+
+Trong đó:
+
+hostels là danh sách các nhà trọ như mô tả ở trên.
+
+Hàm cần thực hiện:
+
+Tính value score cho từng nhà trọ theo công thức đã cho
+
+Sắp xếp các nhà trọ theo score giảm dần
+
+Trả về 03 nhà trọ có score cao nhất
+
+Giá trị trả về 
+Hàm trả về một list gồm đúng 03 phần tử
+
+Mỗi phần tử là một dictionary đại diện cho nhà trọ, có cấu trúc giống hệt các phần tử trong danh sách ban đầu
+
+Giả sử danh sách đầu vào luôn có ít nhất 03 nhà trọ.
+
+For example:
+
+Test	Result
+print(top_value_hostels([
+ {'name':'A','price':1.5,'distance':2.0,'rating':4.5},
+ {'name':'B','price':1.8,'distance':1.5,'rating':4.2},
+ {'name':'C','price':1.2,'distance':2.5,'rating':4.0},
+ {'name':'D','price':2.0,'distance':1.0,'rating':4.8},
+ {'name':'E','price':1.6,'distance':2.2,'rating':4.1},
+ {'name':'F','price':2.2,'distance':0.8,'rating':4.6},
+ {'name':'G','price':1.9,'distance':1.9,'rating':4.3},
+ {'name':'H','price':1.4,'distance':2.8,'rating':3.9},
+ {'name':'I','price':2.5,'distance':0.5,'rating':4.7},
+ {'name':'J','price':1.7,'distance':1.7,'rating':4.0}
+]))
+[{'name': 'C', 'price': 1.2, 'distance': 2.5, 'rating': 4.0}, {'name': 'A', 'price': 1.5, 'distance': 2.0, 'rating': 4.5}, {'name': 'H', 'price': 1.4, 'distance': 2.8, 'rating': 3.9}]
+Answer:(penalty regime: 0 %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(top_value_hostels([
+ {'name':'A','price':1.5,'distance':2.0,'rating':4.5},
+ {'name':'B','price':1.8,'distance':1.5,'rating':4.2},
+ {'name':'C','price':1.2,'distance':2.5,'rating':4.0},
+ {'name':'D','price':2.0,'distance':1.0,'rating':4.8},
+ {'name':'E','price':1.6,'distance':2.2,'rating':4.1},
+ {'name':'F','price':2.2,'distance':0.8,'rating':4.6},
+ {'name':'G','price':1.9,'distance':1.9,'rating':4.3},
+ {'name':'H','price':1.4,'distance':2.8,'rating':3.9},
+ {'name':'I','price':2.5,'distance':0.5,'rating':4.7},
+ {'name':'J','price':1.7,'distance':1.7,'rating':4.0}
+]))
+[{'name': 'C', 'price': 1.2, 'distance': 2.5, 'rating': 4.0}, {'name': 'A', 'price': 1.5, 'distance': 2.0, 'rating': 4.5}, {'name': 'H', 'price': 1.4, 'distance': 2.8, 'rating': 3.9}]
+[{'name': 'C', 'price': 1.2, 'distance': 2.5, 'rating': 4.0}, {'name': 'A', 'price': 1.5, 'distance': 2.0, 'rating': 4.5}, {'name': 'H', 'price': 1.4, 'distance': 2.8, 'rating': 3.9}]
+print(top_value_hostels([
+ {'name':'A','price':1.0,'distance':3.0,'rating':3.8},
+ {'name':'B','price':1.1,'distance':2.5,'rating':4.0},
+ {'name':'C','price':1.2,'distance':2.0,'rating':4.2},
+ {'name':'D','price':1.3,'distance':1.8,'rating':4.1},
+ {'name':'E','price':1.4,'distance':1.5,'rating':4.3},
+ {'name':'F','price':1.5,'distance':1.2,'rating':4.5},
+ {'name':'G','price':1.6,'distance':1.0,'rating':4.4},
+ {'name':'H','price':1.7,'distance':0.8,'rating':4.6},
+ {'name':'I','price':1.8,'distance':0.6,'rating':4.7},
+ {'name':'J','price':1.9,'distance':0.5,'rating':4.8}
+]))
+[{'name': 'A', 'price': 1.0, 'distance': 3.0, 'rating': 3.8}, {'name': 'B', 'price': 1.1, 'distance': 2.5, 'rating': 4.0}, {'name': 'C', 'price': 1.2, 'distance': 2.0, 'rating': 4.2}]
+[{'name': 'A', 'price': 1.0, 'distance': 3.0, 'rating': 3.8}, {'name': 'B', 'price': 1.1, 'distance': 2.5, 'rating': 4.0}, {'name': 'C', 'price': 1.2, 'distance': 2.0, 'rating': 4.2}]
+print(top_value_hostels([
+ {'name':'A','price':1.5,'distance':4.0,'rating':4.8},
+ {'name':'B','price':1.6,'distance':3.5,'rating':4.7},
+ {'name':'C','price':1.7,'distance':3.0,'rating':4.6},
+ {'name':'D','price':1.8,'distance':2.5,'rating':4.5},
+ {'name':'E','price':1.9,'distance':2.0,'rating':4.4},
+ {'name':'F','price':2.0,'distance':1.5,'rating':4.3},
+ {'name':'G','price':2.1,'distance':1.0,'rating':4.2},
+ {'name':'H','price':2.2,'distance':0.8,'rating':4.1},
+ {'name':'I','price':2.3,'distance':0.6,'rating':4.0},
+ {'name':'J','price':2.4,'distance':0.5,'rating':3.9}
+]))
+[{'name': 'A', 'price': 1.5, 'distance': 4.0, 'rating': 4.8}, {'name': 'B', 'price': 1.6, 'distance': 3.5, 'rating': 4.7}, {'name': 'C', 'price': 1.7, 'distance': 3.0, 'rating': 4.6}]
+[{'name': 'A', 'price': 1.5, 'distance': 4.0, 'rating': 4.8}, {'name': 'B', 'price': 1.6, 'distance': 3.5, 'rating': 4.7}, {'name': 'C', 'price': 1.7, 'distance': 3.0, 'rating': 4.6}]
+print(top_value_hostels([
+ {'name':'A','price':1.5,'distance':2.0,'rating':4.0},
+ {'name':'B','price':1.6,'distance':1.9,'rating':4.1},
+ {'name':'C','price':1.7,'distance':1.8,'rating':4.2},
+ {'name':'D','price':1.8,'distance':1.7,'rating':4.3},
+ {'name':'E','price':1.9,'distance':1.6,'rating':4.4},
+ {'name':'F','price':2.0,'distance':1.5,'rating':4.5},
+ {'name':'G','price':2.1,'distance':1.4,'rating':4.6},
+ {'name':'H','price':2.2,'distance':1.3,'rating':4.7},
+ {'name':'I','price':2.3,'distance':1.2,'rating':4.8},
+ {'name':'J','price':2.4,'distance':1.1,'rating':4.9}
+]))
+[{'name': 'A', 'price': 1.5, 'distance': 2.0, 'rating': 4.0}, {'name': 'B', 'price': 1.6, 'distance': 1.9, 'rating': 4.1}, {'name': 'C', 'price': 1.7, 'distance': 1.8, 'rating': 4.2}]
+[{'name': 'A', 'price': 1.5, 'distance': 2.0, 'rating': 4.0}, {'name': 'B', 'price': 1.6, 'distance': 1.9, 'rating': 4.1}, {'name': 'C', 'price': 1.7, 'distance': 1.8, 'rating': 4.2}]
+print(top_value_hostels([
+ {'name':'H1','price':1.2,'distance':2.5,'rating':4.0},
+ {'name':'H2','price':1.3,'distance':2.4,'rating':4.1},
+ {'name':'H3','price':1.4,'distance':2.3,'rating':4.2},
+ {'name':'H4','price':1.5,'distance':2.2,'rating':4.3},
+ {'name':'H5','price':1.6,'distance':2.1,'rating':4.4},
+ {'name':'H6','price':1.7,'distance':2.0,'rating':4.5},
+ {'name':'H7','price':1.8,'distance':1.9,'rating':4.6},
+ {'name':'H8','price':1.9,'distance':1.8,'rating':4.7},
+ {'name':'H9','price':2.0,'distance':1.7,'rating':4.8},
+ {'name':'H10','price':2.1,'distance':1.6,'rating':4.9},
+ {'name':'H11','price':2.2,'distance':1.5,'rating':4.8},
+ {'name':'H12','price':2.3,'distance':1.4,'rating':4.7},
+ {'name':'H13','price':2.4,'distance':1.3,'rating':4.6},
+ {'name':'H14','price':2.5,'distance':1.2,'rating':4.5},
+ {'name':'H15','price':2.6,'distance':1.1,'rating':4.4},
+ {'name':'H16','price':2.7,'distance':1.0,'rating':4.3},
+ {'name':'H17','price':2.8,'distance':0.9,'rating':4.2},
+ {'name':'H18','price':2.9,'distance':0.8,'rating':4.1},
+ {'name':'H19','price':3.0,'distance':0.7,'rating':4.0},
+ {'name':'H20','price':3.1,'distance':0.6,'rating':3.9}
+]))
+[{'name': 'H1', 'price': 1.2, 'distance': 2.5, 'rating': 4.0}, {'name': 'H2', 'price': 1.3, 'distance': 2.4, 'rating': 4.1}, {'name': 'H3', 'price': 1.4, 'distance': 2.3, 'rating': 4.2}]
+[{'name': 'H1', 'price': 1.2, 'distance': 2.5, 'rating': 4.0}, {'name': 'H2', 'price': 1.3, 'distance': 2.4, 'rating': 4.1}, {'name': 'H3', 'price': 1.4, 'distance': 2.3, 'rating': 4.2}]
+print(top_value_hostels([
+ {'name':f'R{i}','price':1.0+0.1*i,'distance':3.0-0.05*i,'rating':4.0+0.02*i}
+ for i in range(1,26)
+]))
+[{'name': 'R1', 'price': 1.1, 'distance': 2.95, 'rating': 4.02}, {'name': 'R2', 'price': 1.2, 'distance': 2.9, 'rating': 4.04}, {'name': 'R3', 'price': 1.3, 'distance': 2.85, 'rating': 4.06}]
+[{'name': 'R1', 'price': 1.1, 'distance': 2.95, 'rating': 4.02}, {'name': 'R2', 'price': 1.2, 'distance': 2.9, 'rating': 4.04}, {'name': 'R3', 'price': 1.3, 'distance': 2.85, 'rating': 4.06}]
+print(top_value_hostels([
+ {'name':'H1','price':1.7,'distance':2.3,'rating':4.1},
+ {'name':'H2','price':2.4,'distance':0.9,'rating':4.7},
+ {'name':'H3','price':1.1,'distance':3.2,'rating':3.8},
+ {'name':'H4','price':1.9,'distance':1.4,'rating':4.5},
+ {'name':'H5','price':2.8,'distance':0.6,'rating':4.9},
+ {'name':'H6','price':1.3,'distance':2.9,'rating':4.0},
+ {'name':'H7','price':2.1,'distance':1.8,'rating':4.3},
+ {'name':'H8','price':1.6,'distance':2.1,'rating':4.2},
+ {'name':'H9','price':2.6,'distance':0.8,'rating':4.6},
+ {'name':'H10','price':1.4,'distance':2.6,'rating':4.1},
+ {'name':'H11','price':2.0,'distance':1.1,'rating':4.4},
+ {'name':'H12','price':1.8,'distance':1.9,'rating':4.3},
+ {'name':'H13','price':2.3,'distance':0.7,'rating':4.8},
+ {'name':'H14','price':1.5,'distance':2.4,'rating':4.0},
+ {'name':'H15','price':2.7,'distance':0.5,'rating':4.9},
+ {'name':'H16','price':1.2,'distance':3.0,'rating':3.9},
+ {'name':'H17','price':2.2,'distance':1.3,'rating':4.5},
+ {'name':'H18','price':1.9,'distance':1.6,'rating':4.2},
+ {'name':'H19','price':2.5,'distance':0.9,'rating':4.6},
+ {'name':'H20','price':1.4,'distance':2.8,'rating':4.0}
+]))
+[{'name': 'H3', 'price': 1.1, 'distance': 3.2, 'rating': 3.8}, {'name': 'H16', 'price': 1.2, 'distance': 3.0, 'rating': 3.9}, {'name': 'H6', 'price': 1.3, 'distance': 2.9, 'rating': 4.0}]
+[{'name': 'H3', 'price': 1.1, 'distance': 3.2, 'rating': 3.8}, {'name': 'H16', 'price': 1.2, 'distance': 3.0, 'rating': 3.9}, {'name': 'H6', 'price': 1.3, 'distance': 2.9, 'rating': 4.0}]
+print(top_value_hostels([
+ {'name':'A1','price':0.9,'distance':4.5,'rating':4.8},
+ {'name':'A2','price':3.0,'distance':0.4,'rating':5.0},
+ {'name':'A3','price':1.8,'distance':2.2,'rating':4.3},
+ {'name':'A4','price':2.6,'distance':0.6,'rating':4.7},
+ {'name':'A5','price':1.2,'distance':3.1,'rating':3.9},
+ {'name':'A6','price':2.1,'distance':1.5,'rating':4.4},
+ {'name':'A7','price':1.7,'distance':2.7,'rating':4.0},
+ {'name':'A8','price':2.9,'distance':0.5,'rating':4.8},
+ {'name':'A9','price':1.4,'distance':2.9,'rating':4.1},
+ {'name':'A10','price':2.4,'distance':1.1,'rating':4.6},
+ {'name':'A11','price':1.6,'distance':2.0,'rating':4.2},
+ {'name':'A12','price':2.2,'distance':1.8,'rating':4.3},
+ {'name':'A13','price':1.3,'distance':3.3,'rating':3.8},
+ {'name':'A14','price':2.7,'distance':0.7,'rating':4.9},
+ {'name':'A15','price':1.9,'distance':1.6,'rating':4.2},
+ {'name':'A16','price':2.5,'distance':0.9,'rating':4.7},
+ {'name':'A17','price':1.1,'distance':3.5,'rating':3.7},
+ {'name':'A18','price':2.0,'distance':1.4,'rating':4.4},
+ {'name':'A19','price':1.5,'distance':2.4,'rating':4.1},
+ {'name':'A20','price':2.8,'distance':0.6,'rating':4.8},
+ {'name':'A21','price':1.8,'distance':2.1,'rating':4.3},
+ {'name':'A22','price':2.3,'distance':1.2,'rating':4.5}
+]))
+[{'name': 'A1', 'price': 0.9, 'distance': 4.5, 'rating': 4.8}, {'name': 'A17', 'price': 1.1, 'distance': 3.5, 'rating': 3.7}, {'name': 'A5', 'price': 1.2, 'distance': 3.1, 'rating': 3.9}]
+[{'name': 'A1', 'price': 0.9, 'distance': 4.5, 'rating': 4.8}, {'name': 'A17', 'price': 1.1, 'distance': 3.5, 'rating': 3.7}, {'name': 'A5', 'price': 1.2, 'distance': 3.1, 'rating': 3.9}]
+print(top_value_hostels([
+ {'name':'R1','price':2.1,'distance':1.9,'rating':4.3},
+ {'name':'R2','price':1.3,'distance':3.2,'rating':3.9},
+ {'name':'R3','price':2.7,'distance':0.7,'rating':4.8},
+ {'name':'R4','price':1.8,'distance':2.4,'rating':4.1},
+ {'name':'R5','price':2.4,'distance':1.2,'rating':4.6},
+ {'name':'R6','price':1.1,'distance':3.4,'rating':3.8},
+ {'name':'R7','price':2.9,'distance':0.5,'rating':4.9},
+ {'name':'R8','price':1.5,'distance':2.7,'rating':4.0},
+ {'name':'R9','price':2.0,'distance':1.6,'rating':4.4},
+ {'name':'R10','price':1.7,'distance':2.2,'rating':4.2},
+ {'name':'R11','price':2.6,'distance':0.8,'rating':4.7},
+ {'name':'R12','price':1.4,'distance':2.9,'rating':4.0},
+ {'name':'R13','price':2.3,'distance':1.1,'rating':4.5},
+ {'name':'R14','price':1.9,'distance':1.8,'rating':4.3},
+ {'name':'R15','price':2.8,'distance':0.6,'rating':4.9},
+ {'name':'R16','price':1.2,'distance':3.0,'rating':3.9},
+ {'name':'R17','price':2.5,'distance':0.9,'rating':4.6},
+ {'name':'R18','price':1.6,'distance':2.5,'rating':4.1},
+ {'name':'R19','price':2.2,'distance':1.3,'rating':4.4},
+ {'name':'R20','price':1.8,'distance':2.0,'rating':4.2}
+]))
+[{'name': 'R6', 'price': 1.1, 'distance': 3.4, 'rating': 3.8}, {'name': 'R16', 'price': 1.2, 'distance': 3.0, 'rating': 3.9}, {'name': 'R2', 'price': 1.3, 'distance': 3.2, 'rating': 3.9}]
+[{'name': 'R6', 'price': 1.1, 'distance': 3.4, 'rating': 3.8}, {'name': 'R16', 'price': 1.2, 'distance': 3.0, 'rating': 3.9}, {'name': 'R2', 'price': 1.3, 'distance': 3.2, 'rating': 3.9}]
+print(top_value_hostels([
+ {'name':f'X{i}','price':round(0.9+0.17*(i%7),2),'distance':round(0.5+0.23*(i%9),2),'rating':round(3.8+0.19*(i%6),2)}
+ for i in range(1,31)
+]))
+[{'name': 'X28', 'price': 0.9, 'distance': 0.73, 'rating': 4.56}, {'name': 'X21', 'price': 0.9, 'distance': 1.19, 'rating': 4.37}, {'name': 'X14', 'price': 0.9, 'distance': 1.65, 'rating': 4.18}]
+[{'name': 'X28', 'price': 0.9, 'distance': 0.73, 'rating': 4.56}, {'name': 'X21', 'price': 0.9, 'distance': 1.19, 'rating': 4.37}, {'name': 'X14', 'price': 0.9, 'distance': 1.65, 'rating': 4.18}]
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 33
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Danh sách sinh viên được biểu diễn dưới dạng một list các dictionary, mỗi phần tử có cấu trúc:
+
+{'name': 'Minh', 'height': 168}
+
+Trong đó:
+
+name: tên sinh viên (string)
+
+height: chiều cao của sinh viên (số nguyên, đơn vị cm)
+
+Yêu cầu
+Hãy viết hàm sort_students_by_height(students) để:
+
+Sắp xếp danh sách sinh viên theo height tăng dần
+
+Giá trị trả về
+Hàm trả về danh sách sinh viên đã được sắp xếp
+
+Mỗi phần tử trong danh sách kết quả là một dictionary có cấu trúc giống hệt phần tử ban đầu
+
+Ví dụ
+Input:
+students = [{'name': 'Minh', 'height': 168}, {'name': 'Huy', 'height': 175}, {'name': 'Lan', 'height': 160}]
+
+Output:
+[{'name': 'Lan', 'height': 160}, {'name': 'Minh', 'height': 168}, {'name': 'Huy', 'height': 175}]
+
+Answer:(penalty regime: 0 %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(sort_students_by_height([
+ {'name':'Minh','height':168},
+ {'name':'Huy','height':175},
+ {'name':'Lan','height':160}
+]))
+[{'name': 'Lan', 'height': 160}, {'name': 'Minh', 'height': 168}, {'name': 'Huy', 'height': 175}]
+[{'name': 'Lan', 'height': 160}, {'name': 'Minh', 'height': 168}, {'name': 'Huy', 'height': 175}]
+print(sort_students_by_height([
+ {'name':'An','height':155},
+ {'name':'Binh','height':160},
+ {'name':'Chi','height':165},
+ {'name':'Dung','height':170}
+]))
+[{'name': 'An', 'height': 155}, {'name': 'Binh', 'height': 160}, {'name': 'Chi', 'height': 165}, {'name': 'Dung', 'height': 170}]
+[{'name': 'An', 'height': 155}, {'name': 'Binh', 'height': 160}, {'name': 'Chi', 'height': 165}, {'name': 'Dung', 'height': 170}]
+print(sort_students_by_height([
+ {'name':'Nam','height':170},
+ {'name':'Long','height':165},
+ {'name':'Tuan','height':170},
+ {'name':'Phong','height':160}
+]))
+[{'name': 'Phong', 'height': 160}, {'name': 'Long', 'height': 165}, {'name': 'Nam', 'height': 170}, {'name': 'Tuan', 'height': 170}]
+[{'name': 'Phong', 'height': 160}, {'name': 'Long', 'height': 165}, {'name': 'Nam', 'height': 170}, {'name': 'Tuan', 'height': 170}]
+print(sort_students_by_height([
+ {'name':'Mai','height':158},
+ {'name':'Hoa','height':162},
+ {'name':'Nga','height':155},
+ {'name':'Lien','height':160},
+ {'name':'Yen','height':165},
+ {'name':'Trang','height':168}
+]))
+[{'name': 'Nga', 'height': 155}, {'name': 'Mai', 'height': 158}, {'name': 'Lien', 'height': 160}, {'name': 'Hoa', 'height': 162}, {'name': 'Yen', 'height': 165}, {'name': 'Trang', 'height': 168}]
+[{'name': 'Nga', 'height': 155}, {'name': 'Mai', 'height': 158}, {'name': 'Lien', 'height': 160}, {'name': 'Hoa', 'height': 162}, {'name': 'Yen', 'height': 165}, {'name': 'Trang', 'height': 168}]
+print(sort_students_by_height([
+ {'name':'Minh','height':168},
+ {'name':'Huy','height':175},
+ {'name':'Lan','height':160},
+ {'name':'An','height':155},
+ {'name':'Binh','height':172},
+ {'name':'Chi','height':162},
+ {'name':'Dung','height':170},
+ {'name':'Giang','height':158},
+ {'name':'Khanh','height':180},
+ {'name':'Phong','height':165}
+]))
+[{'name': 'An', 'height': 155}, {'name': 'Giang', 'height': 158}, {'name': 'Lan', 'height': 160}, {'name': 'Chi', 'height': 162}, {'name': 'Phong', 'height': 165}, {'name': 'Minh', 'height': 168}, {'name': 'Dung', 'height': 170}, {'name': 'Binh', 'height': 172}, {'name': 'Huy', 'height': 175}, {'name': 'Khanh', 'height': 180}]
+[{'name': 'An', 'height': 155}, {'name': 'Giang', 'height': 158}, {'name': 'Lan', 'height': 160}, {'name': 'Chi', 'height': 162}, {'name': 'Phong', 'height': 165}, {'name': 'Minh', 'height': 168}, {'name': 'Dung', 'height': 170}, {'name': 'Binh', 'height': 172}, {'name': 'Huy', 'height': 175}, {'name': 'Khanh', 'height': 180}]
+print(sort_students_by_height([
+ {'name':'Anh','height':164},
+ {'name':'Bao','height':170},
+ {'name':'Cuong','height':176},
+ {'name':'Dao','height':158},
+ {'name':'Em','height':162},
+ {'name':'Phuc','height':168},
+ {'name':'Giang','height':160},
+ {'name':'Hien','height':155},
+ {'name':'Khoa','height':180},
+ {'name':'Lam','height':172},
+ {'name':'Mai','height':165},
+ {'name':'Nam','height':169},
+ {'name':'Oanh','height':157},
+ {'name':'Quang','height':174},
+ {'name':'Son','height':178}
+]))
+[{'name': 'Hien', 'height': 155}, {'name': 'Oanh', 'height': 157}, {'name': 'Dao', 'height': 158}, {'name': 'Giang', 'height': 160}, {'name': 'Em', 'height': 162}, {'name': 'Anh', 'height': 164}, {'name': 'Mai', 'height': 165}, {'name': 'Phuc', 'height': 168}, {'name': 'Nam', 'height': 169}, {'name': 'Bao', 'height': 170}, {'name': 'Lam', 'height': 172}, {'name': 'Quang', 'height': 174}, {'name': 'Cuong', 'height': 176}, {'name': 'Son', 'height': 178}, {'name': 'Khoa', 'height': 180}]
+[{'name': 'Hien', 'height': 155}, {'name': 'Oanh', 'height': 157}, {'name': 'Dao', 'height': 158}, {'name': 'Giang', 'height': 160}, {'name': 'Em', 'height': 162}, {'name': 'Anh', 'height': 164}, {'name': 'Mai', 'height': 165}, {'name': 'Phuc', 'height': 168}, {'name': 'Nam', 'height': 169}, {'name': 'Bao', 'height': 170}, {'name': 'Lam', 'height': 172}, {'name': 'Quang', 'height': 174}, {'name': 'Cuong', 'height': 176}, {'name': 'Son', 'height': 178}, {'name': 'Khoa', 'height': 180}]
+print(sort_students_by_height([
+ {'name':'An','height':156},
+ {'name':'Binh','height':170},
+ {'name':'Chi','height':162},
+ {'name':'Dung','height':168},
+ {'name':'Em','height':160},
+ {'name':'Phuong','height':175},
+ {'name':'Giang','height':158},
+ {'name':'Hanh','height':165},
+ {'name':'Khanh','height':180},
+ {'name':'Lam','height':172},
+ {'name':'Mai','height':159},
+ {'name':'Nam','height':167},
+ {'name':'Oanh','height':155},
+ {'name':'Phong','height':174},
+ {'name':'Quynh','height':163},
+ {'name':'Son','height':178},
+ {'name':'Trang','height':161},
+ {'name':'Tuan','height':169},
+ {'name':'Vinh','height':176},
+ {'name':'Yen','height':157}
+]))
+[{'name': 'Oanh', 'height': 155}, {'name': 'An', 'height': 156}, {'name': 'Yen', 'height': 157}, {'name': 'Giang', 'height': 158}, {'name': 'Mai', 'height': 159}, {'name': 'Em', 'height': 160}, {'name': 'Trang', 'height': 161}, {'name': 'Chi', 'height': 162}, {'name': 'Quynh', 'height': 163}, {'name': 'Hanh', 'height': 165}, {'name': 'Nam', 'height': 167}, {'name': 'Dung', 'height': 168}, {'name': 'Tuan', 'height': 169}, {'name': 'Binh', 'height': 170}, {'name': 'Lam', 'height': 172}, {'name': 'Phong', 'height': 174}, {'name': 'Phuong', 'height': 175}, {'name': 'Vinh', 'height': 176}, {'name': 'Son', 'height': 178}, {'name': 'Khanh', 'height': 180}]
+[{'name': 'Oanh', 'height': 155}, {'name': 'An', 'height': 156}, {'name': 'Yen', 'height': 157}, {'name': 'Giang', 'height': 158}, {'name': 'Mai', 'height': 159}, {'name': 'Em', 'height': 160}, {'name': 'Trang', 'height': 161}, {'name': 'Chi', 'height': 162}, {'name': 'Quynh', 'height': 163}, {'name': 'Hanh', 'height': 165}, {'name': 'Nam', 'height': 167}, {'name': 'Dung', 'height': 168}, {'name': 'Tuan', 'height': 169}, {'name': 'Binh', 'height': 170}, {'name': 'Lam', 'height': 172}, {'name': 'Phong', 'height': 174}, {'name': 'Phuong', 'height': 175}, {'name': 'Vinh', 'height': 176}, {'name': 'Son', 'height': 178}, {'name': 'Khanh', 'height': 180}]
+print(sort_students_by_height([
+ {'name':'An','height':156},
+ {'name':'Binh','height':170},
+ {'name':'Chi','height':162},
+ {'name':'Dung','height':168},
+ {'name':'Em','height':160},
+ {'name':'Phuc','height':175},
+ {'name':'Giang','height':158},
+ {'name':'Hanh','height':165},
+ {'name':'Khanh','height':180},
+ {'name':'Lam','height':172},
+ {'name':'Mai','height':159},
+ {'name':'Nam','height':167},
+ {'name':'Oanh','height':155},
+ {'name':'Phong','height':174},
+ {'name':'Quynh','height':163},
+ {'name':'Son','height':178},
+ {'name':'Trang','height':161},
+ {'name':'Tuan','height':169},
+ {'name':'Vinh','height':176},
+ {'name':'Yen','height':157},
+ {'name':'Anh','height':164},
+ {'name':'Bao','height':171},
+ {'name':'Cuong','height':177},
+ {'name':'Dao','height':158},
+ {'name':'Ha','height':162},
+ {'name':'Hung','height':173},
+ {'name':'Khoa','height':181},
+ {'name':'Linh','height':166},
+ {'name':'My','height':160},
+ {'name':'Ngoc','height':168},
+ {'name':'Phuong','height':174},
+ {'name':'Quang','height':179},
+ {'name':'Thanh','height':172},
+ {'name':'Thao','height':159},
+ {'name':'Tien','height':167},
+ {'name':'Trung','height':175},
+ {'name':'Van','height':163},
+ {'name':'Xuan','height':170},
+ {'name':'Y','height':158},
+ {'name':'Zung','height':165}
+]))
+[{'name': 'Oanh', 'height': 155}, {'name': 'An', 'height': 156}, {'name': 'Yen', 'height': 157}, {'name': 'Giang', 'height': 158}, {'name': 'Dao', 'height': 158}, {'name': 'Y', 'height': 158}, {'name': 'Mai', 'height': 159}, {'name': 'Thao', 'height': 159}, {'name': 'Em', 'height': 160}, {'name': 'My', 'height': 160}, {'name': 'Trang', 'height': 161}, {'name': 'Chi', 'height': 162}, {'name': 'Ha', 'height': 162}, {'name': 'Quynh', 'height': 163}, {'name': 'Van', 'height': 163}, {'name': 'Anh', 'height': 164}, {'name': 'Hanh', 'height': 165}, {'name': 'Zung', 'height': 165}, {'name': 'Linh', 'height': 166}, {'name': 'Nam', 'height': 167}, {'name': 'Tien', 'height': 167}, {'name': 'Dung', 'height': 168}, {'name': 'Ngoc', 'height': 168}, {'name': 'Tuan', 'height': 169}, {'name': 'Binh', 'height': 170}, {'name': 'Xuan', 'height': 170}, {'name': 'Bao', 'height': 171}, {'name': 'Lam', 'height': 172}, {'name': 'Thanh', 'height': 172}, {'name': 'Hung', 'height': 173}, {'name': 'Phong', 'height': 174}, {'name': 'Phuong', 'height': 174}, {'name': 'Phuc', 'height': 175}, {'name': 'Trung', 'height': 175}, {'name': 'Vinh', 'height': 176}, {'name': 'Cuong', 'height': 177}, {'name': 'Son', 'height': 178}, {'name': 'Quang', 'height': 179}, {'name': 'Khanh', 'height': 180}, {'name': 'Khoa', 'height': 181}]
+[{'name': 'Oanh', 'height': 155}, {'name': 'An', 'height': 156}, {'name': 'Yen', 'height': 157}, {'name': 'Giang', 'height': 158}, {'name': 'Dao', 'height': 158}, {'name': 'Y', 'height': 158}, {'name': 'Mai', 'height': 159}, {'name': 'Thao', 'height': 159}, {'name': 'Em', 'height': 160}, {'name': 'My', 'height': 160}, {'name': 'Trang', 'height': 161}, {'name': 'Chi', 'height': 162}, {'name': 'Ha', 'height': 162}, {'name': 'Quynh', 'height': 163}, {'name': 'Van', 'height': 163}, {'name': 'Anh', 'height': 164}, {'name': 'Hanh', 'height': 165}, {'name': 'Zung', 'height': 165}, {'name': 'Linh', 'height': 166}, {'name': 'Nam', 'height': 167}, {'name': 'Tien', 'height': 167}, {'name': 'Dung', 'height': 168}, {'name': 'Ngoc', 'height': 168}, {'name': 'Tuan', 'height': 169}, {'name': 'Binh', 'height': 170}, {'name': 'Xuan', 'height': 170}, {'name': 'Bao', 'height': 171}, {'name': 'Lam', 'height': 172}, {'name': 'Thanh', 'height': 172}, {'name': 'Hung', 'height': 173}, {'name': 'Phong', 'height': 174}, {'name': 'Phuong', 'height': 174}, {'name': 'Phuc', 'height': 175}, {'name': 'Trung', 'height': 175}, {'name': 'Vinh', 'height': 176}, {'name': 'Cuong', 'height': 177}, {'name': 'Son', 'height': 178}, {'name': 'Quang', 'height': 179}, {'name': 'Khanh', 'height': 180}, {'name': 'Khoa', 'height': 181}]
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Question 34
+Correct
+Mark 100.00 out of 100.00
+Flag question
+Question text
+Cho một dictionary lưu thông tin của các thành viên trong nhóm lập trình, với cấu trúc như sau:
+
+{'Minh': {'lines': 150, 'commits': 12}, 'Huy': {'lines': 200, 'commits': 15}, ...}
+
+Mỗi phần tử có dạng:
+
+Tên thành viên (string)
+
+Một dictionary gồm:
+
+lines: số dòng code
+
+commits: số lần commit
+
+Hãy viết hàm count_commits(group) để tính tổng số lần commit của tất cả thành viên trong nhóm.
+
+Kết quả trả về là một số nguyên (integer), thể hiện tổng commits của toàn bộ nhóm.
+
+Ví dụ:
+Nếu group = {'Minh': {'lines':150, 'commits':12}, 'Huy': {'lines':200, 'commits':15}}
+thì kết quả phải là 27.
+
+Answer:(penalty regime: 0 %)
+Full screen
+Feedback
+Test	Expected	Got	
+print(count_commits({'Minh': {'lines': 150, 'commits': 12}, 'Huy': {'lines': 200, 'commits': 15}}))
+27
+27
+print(count_commits({'Minh': {'lines': 150, 'commits': 12}, 'Huy': {'lines': 200, 'commits': 15}, 'Lan': {'lines': 180, 'commits': 9}}))
+36
+36
+print(count_commits({'A': {'lines': 10, 'commits': 1}, 'B': {'lines': 20, 'commits': 2}, 'C': {'lines': 30, 'commits': 3}, 'D': {'lines': 40, 'commits': 4}, 'E': {'lines': 50, 'commits': 5}}))
+15
+15
+print(count_commits({'X': {'lines': 10, 'commits': 0}, 'Y': {'lines': 0, 'commits': 0}, 'Z': {'lines': 100, 'commits': 7}}))
+7
+7
+print(count_commits({'Leader': {'lines': 3000, 'commits': 100}, 'Assistant': {'lines': 2500, 'commits': 80}, 'Intern': {'lines': 500, 'commits': 12}}))
+192
+192
+print(count_commits({'UserA': {'lines': 5, 'commits': 1}, 'UserB': {'lines': 6, 'commits': 3}, 'UserC': {'lines': 7, 'commits': 5}, 'UserD': {'lines': 8, 'commits': 10}, 'UserE': {'lines': 9, 'commits': 2}, 'UserF': {'lines': 1, 'commits': 3}, 'UserG': {'lines': 2, 'commits': 4}}))
+28
+28
+print(count_commits({'Alpha': {'lines': 1000, 'commits': 250}, 'Beta': {'lines': 900, 'commits': 180}, 'Gamma': {'lines': 800, 'commits': 120}, 'Delta': {'lines': 750, 'commits': 90}}))
+640
+640
+print(count_commits({'Team1': {'lines': 100, 'commits': 7}, 'Team2': {'lines': 150, 'commits': 9}, 'Team3': {'lines': 200, 'commits': 11}, 'Team4': {'lines': 250, 'commits': 13}, 'Team5': {'lines': 50, 'commits': 3}}))
+43
+43
+print(count_commits({'P1': {'lines': 3, 'commits': 4}, 'P2': {'lines': 3, 'commits': 4}, 'P3': {'lines': 3, 'commits': 4}, 'P4': {'lines': 3, 'commits': 4}, 'P5': {'lines': 3, 'commits': 4}, 'P6': {'lines': 3, 'commits': 4}}))
+24
+24
+print(count_commits({'U1': {'lines': 120, 'commits': 10}, 'U2': {'lines': 130, 'commits': 5}, 'U3': {'lines': 140, 'commits': 15}, 'U4': {'lines': 150, 'commits': 20}, 'U5': {'lines': 160, 'commits': 8}, 'U6': {'lines': 170, 'commits': 11}, 'U7': {'lines': 180, 'commits': 14}, 'U8': {'lines': 190, 'commits': 3}}))
+86
+86
+Passed all tests!  
+
+Correct
+Marks for this submission: 100.00/100.00.
+Finish review
+Copyright © 2022 Designed by
+themesalmond.com. All rights reserved.
+Beta
+0 / 0
+used queries

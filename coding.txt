@@ -1,0 +1,22 @@
+1.Viết hàm cal_perimeter(a,b) thực hiện tính chu vi hình chữ nhật, với chiều dài và chiều rộng lần lượt là a và b (số thực). Hàm trả về kết quả chu vi hình chữ nhật đó.
+2. Viết hàm filter_list(lst) nhận vào một danh sách các số nguyên, và đếm xem trong danh sách ban đầu có bao nhiêu số thoả mãn chia hết cho 2 nhưng không chia hết cho 3. Hàm trả về số lượng các số thỏa mãn điều kiện. Nếu như không có số nào thoả mãn, hãy trả về số 0.
+3. Viết hàm reverse_string(a)
+
+a là chuỗi ký tự (tiếng Việt hoặc tiếng Anh)
+
+Đảo thứ tự các từ, không đảo ký tự trong từ
+
+Các từ cách nhau bởi khoảng trắng
+
+Ví dụ: reverse_string("Tôi đang học TIN314")
+return: "TIN314 học đang Tôi"
+4. Cho một danh sách a gồm N số nguyên dương, các phần tử được đánh chỉ số từ 1 đến N.
+
+Hãy viết hàm count_similar(a) để đếm số lượng bộ chỉ số (i, j) thỏa mãn:
+
+1 <= i < j <= N
+
+a[i] = a[j]
+
+Hàm count_similar(a) nhận vào một danh sách các số nguyên dương và trả về một số nguyên là số lượng cặp (i, j) như mô tả ở trên.
+5. 
