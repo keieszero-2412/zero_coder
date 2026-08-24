@@ -16,7 +16,7 @@ export function Auth() {
   
   const [isLoading, setIsLoading] = useState(false);
   
-  const { checkEmailStatus, login, register, currentUser } = useAuth();
+  const { checkEmailStatus, login, register, currentUser, loading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -86,6 +86,12 @@ export function Auth() {
       window.alert("Failed to send request. Please try again later.");
     }
   };
+
+  if (loading) {
+    return <div className="app-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: 'var(--bg-base)' }}>
+      <div style={{ width: '40px', height: '40px', border: '3px solid rgba(255,255,255,0.1)', borderTopColor: 'var(--accent-primary)', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+    </div>;
+  }
 
   return (
     <div className="app-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-base)' }}>
