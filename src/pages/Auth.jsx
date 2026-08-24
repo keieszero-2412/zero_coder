@@ -16,11 +16,17 @@ export function Auth() {
   
   const [isLoading, setIsLoading] = useState(false);
   
-  const { checkEmailStatus, login, register } = useAuth();
+  const { checkEmailStatus, login, register, currentUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
   const from = location.state?.from?.pathname || "/";
+
+  React.useEffect(() => {
+    if (currentUser) {
+      navigate(from, { replace: true });
+    }
+  }, [currentUser, navigate, from]);
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
@@ -54,7 +60,7 @@ export function Auth() {
         // Register
         await register(username, email, password);
       }
-      navigate(from, { replace: true });
+      // Do not navigate here, the useEffect will trigger when AuthContext updates currentUser
     } catch (err) {
       setError(err.message);
       setIsLoading(false);
