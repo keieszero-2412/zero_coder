@@ -54,12 +54,24 @@ export function Auth() {
     }
   };
 
-  const handleRequestAccess = () => {
-    // Mock sending request
-    setTimeout(() => {
+  const handleRequestAccess = async () => {
+    try {
+      const { db } = await import('../config/firebase');
+      const { doc, setDoc, serverTimestamp } = await import('firebase/firestore');
+      
+      const requestRef = doc(db, 'access_requests', email);
+      await setDoc(requestRef, {
+        email: email,
+        requestedAt: serverTimestamp(),
+        status: 'pending'
+      });
+      
       setRequestSent(true);
       window.alert("Your request for access has been sent to the admin. You will be notified once approved.");
-    }, 500);
+    } catch (err) {
+      console.error("Failed to send request:", err);
+      window.alert("Failed to send request. Please try again later.");
+    }
   };
 
   return (
