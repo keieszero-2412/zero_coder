@@ -5,7 +5,7 @@ export const problems = [
     title: "1. Tính chu vi hình chữ nhật",
     description: "<p>Viết hàm <code>cal_perimeter(a, b)</code> thực hiện tính chu vi hình chữ nhật, với chiều dài và chiều rộng lần lượt là <code>a</code> và <code>b</code> (số thực).</p><p>Hàm trả về kết quả chu vi hình chữ nhật đó.</p>",
     hint: "Chu vi hình chữ nhật bằng (chiều dài + chiều rộng) * 2. Nhớ dùng lệnh return để trả về kết quả thay vì dùng lệnh print nhé.",
-    initialCode: "def cal_perimeter(a, b):\n    # Write your code here\n    pass\n",
+    initialCode: "def cal_perimeter(a, b):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -25,7 +25,7 @@ export const problems = [
     title: "2. Lọc danh sách",
     description: "<p>Viết hàm <code>filter_list(lst)</code> nhận vào một danh sách các số nguyên, và đếm xem trong danh sách ban đầu có bao nhiêu số thoả mãn <strong>chia hết cho 2 nhưng không chia hết cho 3</strong>.</p><p>Hàm trả về số lượng các số thỏa mãn điều kiện. Nếu như không có số nào thoả mãn, hãy trả về số <code>0</code>.</p>",
     hint: "Sử dụng vòng lặp duyệt qua list. Dùng toán tử chia lấy dư (%) để kiểm tra: x % 2 == 0 và x % 3 != 0. Tạo một biến đếm và cộng thêm 1 nếu phần tử thỏa mãn điều kiện.",
-    initialCode: "def filter_list(lst):\n    # Write your code here\n    pass\n",
+    initialCode: "def filter_list(lst):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -50,7 +50,7 @@ export const problems = [
     title: "3. Đảo ngược chuỗi",
     description: "<p>Viết hàm <code>reverse_string(a)</code> trong đó <code>a</code> là chuỗi ký tự (tiếng Việt hoặc tiếng Anh).</p><p>Yêu cầu: Đảo thứ tự các từ, <strong>không</strong> đảo ký tự trong từ. Các từ cách nhau bởi khoảng trắng.</p>",
     hint: "Bạn có thể dùng a.split() để tách chuỗi thành danh sách các từ. Sau đó đảo ngược danh sách này (dùng [::-1] hoặc .reverse()) và nối lại thành chuỗi bằng \" \".join(danh_sach).",
-    initialCode: "def reverse_string(a):\n    # Write your code here\n    pass\n",
+    initialCode: "def reverse_string(a):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -75,7 +75,7 @@ export const problems = [
     title: "4. Đếm số cặp bằng nhau",
     description: "<p>Cho một danh sách <code>a</code> gồm N số nguyên dương, các phần tử được đánh chỉ số từ 0 đến N-1.</p><p>Hãy viết hàm <code>count_similar(a)</code> để đếm số lượng bộ chỉ số (i, j) thỏa mãn <code>0 <= i < j < N</code> và <code>a[i] == a[j]</code>.</p>",
     hint: "Sử dụng 2 vòng lặp lồng nhau. Vòng lặp ngoài duyệt i từ 0 đến len(a)-1, vòng lặp trong duyệt j từ i+1 đến len(a)-1. Nếu a[i] == a[j] thì tăng biến đếm.",
-    initialCode: "def count_similar(a):\n    # Write your code here\n    pass\n",
+    initialCode: "def count_similar(a):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -99,7 +99,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 1",
     description: "<p>Trong bài toán này, bạn cần kiểm tra số nghiệm của phương trình:</p><p>a x^2 + b x + c = 0</p><p>với a, b, c là các số thực.</p><p>Yêu cầu<br/>Hãy viết hàm check_quadratic_equation(a, b, c) để xác định phương trình trên có nghiệm hay không, và có bao nhiêu nghiệm.</p><p>Hàm cần xét đầy đủ mọi trường hợp có thể xảy ra, bao gồm cả trường hợp phương trình không còn là phương trình bậc hai.</p><p>Kết quả cần trả về<br/>Trả về \"No solution\" nếu phương trình không có nghiệm</p><p>Trả về \"Infinitely many solution\" nếu phương trình có vô số nghiệm</p><p>Nếu phương trình có số nghiệm hữu hạn, trả về một số nguyên dương biểu thị số nghiệm của phương trình</p><p>Ví dụ<br/>Input: a = 1, b = -2, c = 1<br/>Output: 1</p><p>Input: a = 1, b = 1, c = 1<br/>Output: No solution</p><p>Input: a = 0, b = 0, c = 0<br/>Output: Infinitely many solution</p>",
-    initialCode: "def check_quadratic_equation(a, b, c):\n    # Write your code here\n    pass\n",
+    initialCode: "def check_quadratic_equation(a, b, c):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -153,7 +153,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 2",
     description: "<p>Bạn được cung cấp một danh sách gồm các số nguyên dương đôi một phân biệt (không có hai số nào giống nhau).</p><p>Một số nguyên dương được gọi là nguyên tố nếu nó lớn hơn 1 và chỉ chia hết cho đúng hai số nguyên dương là 1 và chính nó.</p><p>Viết hàm largest_prime(nums) với:</p><p>nums là danh sách các số nguyên dương đôi một phân biệt.</p><p>Hàm phải tìm số nguyên tố lớn nhất trong danh sách.</p><p>Nếu không tồn tại số nguyên tố, hàm trả về -1.</p>",
-    initialCode: "def largest_prime(nums):\n    # Write your code here\n    pass\n",
+    initialCode: "def largest_prime(nums):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -212,7 +212,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 3",
     description: "<p>Viết hàm compare_lists(list1, list2) nhận vào hai danh sách các số nguyên và trả về True nếu hai danh sách “giống nhau”, và False nếu không giống nhau. Hai danh sách được coi là giống nhau nếu chúng chứa các phần tử giống hệt nhau và số lần xuất hiện của mỗi phần tử trong hai danh sách là như nhau, không phụ thuộc vào thứ tự các phần tử.</p><p>Ví dụ:</p><p>list1 = [1, 2, 2, 3], list2 = [3, 2, 1, 2] → True</p><p>list1 = [1, 2, 3], list2 = [1, 2, 2, 3] → False</p><p>list1 = [4, 5, 6], list2 = [6, 5, 4] → True</p>",
-    initialCode: "def compare_lists(list1, list2):\n    # Write your code here\n    pass\n",
+    initialCode: "def compare_lists(list1, list2):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -266,7 +266,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 5",
     description: "<p>Viết một hàm có tên process_list(lst) nhận vào một danh sách gồm các số nguyên.</p><p>Yêu cầu của hàm:</p><p>Lọc và giữ lại các số lẻ trong danh sách đầu vào.</p><p>Tạo một danh sách mới, trong đó mỗi phần tử là bình phương của các số lẻ vừa chọn.</p><p>Trả về danh sách mới đó, nếu như trong danh sách đầu vào không có số nào thoả mãn thì hãy trả lại danh sách rỗng</p><p>For example:</p><p>Test\tResult<br/>print(process_list([1, 2, 3, 4, 5]))<br/>[1, 9, 25]</p>",
-    initialCode: "def process_list(lst):\n    # Write your code here\n    pass\n",
+    initialCode: "def process_list(lst):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -325,7 +325,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 6",
     description: "<p>Bạn Trường có hai đoạn dây, đoạn thứ nhất dài N mét và đoạn thứ hai dài M mét (N và M là các số nguyên dương).</p><p>Trường muốn cắt hai đoạn dây này thành các đoạn dây nhỏ sao cho:</p><p>Tất cả các đoạn dây nhỏ đều có cùng một độ dài.</p><p>Không có phần dây thừa.</p><p>Độ dài mỗi đoạn dây nhỏ là lớn nhất có thể.</p><p>Khi đó, hỏi Trường có thể cắt được tổng cộng bao nhiêu đoạn dây nhỏ từ hai đoạn dây ban đầu.</p><p>Viết hàm count_segments(N, M) nhận vào hai số nguyên dương N và M, và trả về một số nguyên là tổng số đoạn dây nhỏ có thể cắt được theo quy tắc trên.</p>",
-    initialCode: "def count_segments(N, M):\n    # Write your code here\n    pass\n",
+    initialCode: "def count_segments(N, M):\n    # Write your code here\n",
     testCases: [
     ]
   },
@@ -334,7 +334,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 7",
     description: "<p>Cho một dãy các số nguyên. Người ta được phép đặt dấu + hoặc dấu - trước mỗi số trong dãy.</p><p>Lưu ý: nếu đặt dấu - trước một số âm thì ví dụ -(-3) sẽ trở thành +3.</p><p>Viết hàm: def max_signed_sum(arr):</p><p>Trong đó:</p><p>arr là một danh sách (list) các số nguyên.</p><p>Hàm trả về giá trị tổng lớn nhất có thể đạt được bằng cách đặt dấu + hoặc - trước mỗi phần tử.</p><p>Ví dụ:<br/>Nếu arr = [1, -2, 3] thì kết quả lớn nhất là 1 + 2 + 3 = 6.</p>",
-    initialCode: "def max_signed_sum(arr):\n    # Write your code here\n    pass\n",
+    initialCode: "def max_signed_sum(arr):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -393,7 +393,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 8",
     description: "<p>Bạn Việt được cho một tấm bìa hình chữ nhật kích thước N x M, trong đó N và M là hai số nguyên dương, biểu diễn chiều dài và chiều rộng của tấm bìa (theo cùng một đơn vị đo).</p><p>Bạn Việt muốn cắt tấm bìa này thành các hình vuông giống hệt nhau, sao cho:</p><p>Mỗi hình vuông đều có cạnh là số nguyên dương.</p><p>Không có phần bìa nào bị bỏ đi (tức là tấm bìa được chia hết hoàn toàn bởi các hình vuông đó).</p><p>Diện tích của mỗi hình vuông là lớn nhất có thể.</p><p>Viết hàm max_square_area(N, M) với:</p><p>N, M là hai số nguyên dương (kích thước tấm bìa).</p><p>Hàm trả về diện tích của hình vuông lớn nhất (tính theo đơn vị diện tích) mà bạn có thể dùng để cắt tấm bìa N x M thành các hình vuông giống hệt nhau, không thừa.</p>",
-    initialCode: "def max_square_area(N, M):\n    # Write your code here\n    pass\n",
+    initialCode: "def max_square_area(N, M):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -452,7 +452,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 9",
     description: "<p>Viết một hàm count(lst) nhận vào một danh sách lst chỉ chứa các số nguyên.<br/>Hàm trả về phần tử xuất hiện nhiều nhất trong danh sách.</p><p>Nếu có nhiều phần tử có cùng số lần xuất hiện cao nhất, trả về phần tử có giá trị nhỏ nhất trong số đó.</p>",
-    initialCode: "def count(lst):\n    # Write your code here\n    pass\n",
+    initialCode: "def count(lst):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -511,7 +511,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 10",
     description: "<p>Bạn được cung cấp một danh sách prices, trong đó prices[i] là giá của một loại đá quý vào ngày thứ i.</p><p>Bạn chỉ được phép thực hiện đúng một lần giao dịch, bao gồm:</p><p>Mua vào một ngày bất kỳ</p><p>Bán vào một ngày phía sau ngày mua (không được bán trước khi mua)</p><p>Mục tiêu của bạn là tính lợi nhuận tối đa có thể đạt được.</p><p>Lợi nhuận được tính bằng  giá bán - giá mua</p><p>Nếu không thể thu được lợi nhuận (giá luôn giảm), trả về 0. Viết hàm  max_profit(prices). Hàm nhận vào một list prices và trả về một số nguyên là lợi nhuận lớn nhất có thể đạt được.</p>",
-    initialCode: "def max_profit(prices):\n    # Write your code here\n    pass\n",
+    initialCode: "def max_profit(prices):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -565,7 +565,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 11",
     description: "<p>Viết hàm mirror_message(x) với yêu cầu như sau:</p><p>Nếu x là chuỗi (string), hàm trả về chuỗi đảo ngược của x.<br/>(Ví dụ: hello → olleh)</p><p>Nếu x là số nguyên (int) hoặc số thực (float), hàm trả về số đối của x.<br/>(Ví dụ: 5 → -5, -3.2 → 3.2)</p><p>Nếu x thuộc kiểu dữ liệu khác, hàm trả về chuỗi Unsupported.</p>",
-    initialCode: "def mirror_message(x):\n    # Write your code here\n    pass\n",
+    initialCode: "def mirror_message(x):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -614,7 +614,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 12",
     description: "<p>Cho một số nguyên dương N.</p><p>Hãy viết hàm nearest_prime(N) để tìm số nguyên tố nhỏ nhất p thoả mãn p ≥ N.</p><p>Ví dụ<br/>nearest_prime(10)<br/>→ trả về: 11</p><p>nearest_prime(17)<br/>→ trả về: 17</p><p>nearest_prime(1)<br/>→ trả về: 2</p>",
-    initialCode: "def nearest_prime(N):\n    # Write your code here\n    pass\n",
+    initialCode: "def nearest_prime(N):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -673,7 +673,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 13",
     description: "<p>Bạn Nam có một danh sách list gồm các số nguyên. Nam chơi một trò như sau:</p><p>Ở mỗi bước, Nam chọn ngẫu nhiên hai số a và b trong list, xóa chúng khỏi list, sau đó thêm vào cuối list một số mới có giá trị bằng a + b + 1.</p><p>Nam lặp lại quá trình này cho đến khi list chỉ còn lại đúng một số duy nhất.</p><p>Hỏi: Số cuối cùng còn lại trong list là bao nhiêu?</p><p>Viết hàm: final_number(lst)</p><p>Hàm nhận vào một list các số nguyên và trả về số cuối cùng còn lại trong list sau khi thực hiện trò chơi nêu trên.</p>",
-    initialCode: "def final_number(lst):\n    # Write your code here\n    pass\n",
+    initialCode: "def final_number(lst):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -732,7 +732,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 15",
     description: "<p>Một số nguyên được gọi là số hoàn hảo nếu nó chia hết cho tổng các chữ số của chính nó. Số 0 không được coi là số hoàn hảo.</p><p>Ví dụ:</p><p>18 có tổng các chữ số là 1 + 8 = 9, và 18 % 9 == 0 → là số hoàn hảo</p><p>23 có tổng chữ số là 2 + 3 = 5, nhưng 23 % 5 != 0 → không phải số hoàn hảo</p><p>-12 có tổng chữ số là 1 + 2 = 3, và -12 % 3 == 0 → là số hoàn hảo<br/>Viết hàm find_perfect_numbers(lst) nhận vào một danh sách các số nguyên.</p><p>Hàm trả về một danh sách mới gồm các phần tử trong danh sách ban đầu là số hoàn hảo (dựa theo định nghĩa trên).</p>",
-    initialCode: "def find_perfect_numbers(lst):\n    # Write your code here\n    pass\n",
+    initialCode: "def find_perfect_numbers(lst):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -791,7 +791,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 16",
     description: "<p>Viết hàm count_three_sum(lst) nhận vào một danh sách các số nguyên đôi một phân biệt và trả về số lượng cách có thể chọn ra 3 phần tử trong danh sách sao cho tổng của chúng bằng 0.</p>",
-    initialCode: "def count_three_sum(lst):\n    # Write your code here\n    pass\n",
+    initialCode: "def count_three_sum(lst):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -850,7 +850,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 17",
     description: "<p>Viết hàm binomial_coefficient(n, k) nhận vào hai số nguyên không âm n và k (với 0 ≤ k ≤ n) và trả về giá trị của số tổ hợp chập k của tập n phần tử: nCk.</p><p>TnCk được định nghĩa là số cách chọn k phần tử từ n phần tử khác nhau mà không quan tâm đến thứ tự. Giá trị này có thể được tính bằng công thức:</p><p>nCk = n! / (k! * (n - k)!)</p><p>Ví dụ:</p><p>binomial_coefficient(5, 2) → 10</p><p>binomial_coefficient(6, 0) → 1</p><p>binomial_coefficient(6, 6) → 1</p><p>binomial_coefficient(10, 3) → 120</p>",
-    initialCode: "def binomial_coefficient(n, k):\n    # Write your code here\n    pass\n",
+    initialCode: "def binomial_coefficient(n, k):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -934,7 +934,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 18",
     description: "<p>Cho một danh sách a gồm N số nguyên dương đôi một phân biệt, và một số nguyên dương x.</p><p>Hãy viết hàm count_sum(a, x) để tìm xem có bao nhiêu bộ chỉ số (i, j, k) thỏa mãn:</p><p>1 <= i < j < k <= N</p><p>a[i] + a[j] + a[k] = x</p><p>Hàm count_sum(a, x) nhận vào danh sách a (các số nguyên dương phân biệt) và số nguyên dương x, trả về một số nguyên là số bộ ba phần tử có tổng bằng x.</p>",
-    initialCode: "def count_sum(a, x):\n    # Write your code here\n    pass\n",
+    initialCode: "def count_sum(a, x):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -993,7 +993,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 19",
     description: "<p>Danh sách các công việc được biểu diễn dưới dạng một list các dictionary, mỗi phần tử có cấu trúc:</p><p>{'name': 'Gia sư', 'hours': 10, 'pay': 150}</p><p>Trong đó:</p><p>name: tên công việc (string)</p><p>hours: số giờ cần để hoàn thành công việc (số nguyên dương)</p><p>pay: tổng tiền nhận được khi hoàn thành công việc (số thực hoặc số nguyên)</p><p>Giả sử rằng mỗi công việc phải được làm trọn gói, không được chia nhỏ số giờ.</p><p>Yêu cầu<br/>Sinh viên có tối đa 40 giờ làm việc mỗi tuần.</p><p>Hãy viết hàm max_income(jobs) để lựa chọn một tập con các công việc sao cho:</p><p>Tổng số giờ làm không vượt quá 40</p><p>Tổng thu nhập nhận được là lớn nhất có thể</p><p>Giá trị trả về<br/>Hàm chỉ trả về một giá trị duy nhất</p><p>Giá trị đó là tổng thu nhập lớn nhất mà sinh viên có thể kiếm được</p><p>Kết quả là một số thực hoặc số nguyên, tùy dữ liệu đầu vào</p><p>Ví dụ<br/>Input:<br/>jobs = [{'name': 'Gia sư', 'hours': 10, 'pay': 150}, {'name': 'Bán hàng', 'hours': 15, 'pay': 180}, {'name': 'Giao hàng', 'hours': 8, 'pay': 120}, {'name': 'Phục vụ', 'hours': 20, 'pay': 200}]</p><p>Output:<br/>450</p>",
-    initialCode: "def max_income(jobs):\n    # Write your code here\n    pass\n",
+    initialCode: "def max_income(jobs):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -1052,7 +1052,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 22",
     description: "<p>Bạn Nam có một danh sách các đồ vật, mỗi đồ vật có một giá trị (value) tương ứng.<br/>Danh sách này được lưu dưới dạng dictionary, với key là tên đồ vật (string), và value là giá trị (số nguyên). Các value là đôi một phân biệt.</p><p>Nam muốn mang theo chính xác 3 đồ vật sao cho tổng giá trị của 3 đồ vật này là lớn nhất. Viết hàm select_items(items) nhận vào một dictionary items và trả về một danh sách gồm đúng 3 tên đồ vật (key) có giá trị cao nhất, sắp xếp theo thứ tự giảm dần của value.</p>",
-    initialCode: "def select_items(items):\n    # Write your code here\n    pass\n",
+    initialCode: "def select_items(items):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -1101,7 +1101,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 23",
     description: "<p>Hãy viết hàm count_distinct(a)</p><p>trong đó:</p><p>a là một danh sách (list) các số nguyên dương: a = [a₁, a₂, …, a_N].</p><p>để đếm số các giá trị đôi một phân biệt trong danh sách a.</p><p>Ví dụ:</p><p>count_distinct([1, 2, 2, 3, 1]) → 3</p><p>count_distinct([5, 5, 5]) → 1</p><p>count_distinct([1, 2, 3, 4]) → 4</p>",
-    initialCode: "def count_distinct(a):\n    # Write your code here\n    pass\n",
+    initialCode: "def count_distinct(a):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -1180,7 +1180,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 24",
     description: "<p>Hãy viết hàm list_distinct(a)</p><p>trong đó:</p><p>a là một danh sách (list) các số nguyên dương: a = [a₁, a₂, …, a_N].</p><p>để trả lại danh sách các giá trị đôi một phân biệt trong danh sách a theo thứ tự tăng dần.</p><p>Ví dụ:</p><p>list_distinct([1, 2, 2, 3, 1]) → [1, 2, 3]</p><p>list_distinct([5, 5, 5]) → [5]</p><p>list_distinct([1, 2, 3, 4]) → [1, 2, 3, 4]</p>",
-    initialCode: "def list_distinct(a):\n    # Write your code here\n    pass\n",
+    initialCode: "def list_distinct(a):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -1234,7 +1234,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 25",
     description: "<p>Trong hệ mã Vigenère, việc mã hóa sử dụng từ khóa key để dịch chuyển từng chữ cái trong bản rõ plaintext. Nếu key ngắn hơn plaintext, thì phải lặp lại tuần hoàn để đủ độ dài. Ví dụ: plaintext = HELLOWORLD, key = KEY → lặp thành KEYKEYKEYK.</p><p>Cách mã hóa từng chữ cái:</p><p>Chuyển mỗi chữ cái sang vị trí số trong bảng chữ cái: A = 0, B = 1, ..., Z = 25</p><p>Dùng công thức: Ci = (Pi + Ki) % 26</p><p>Pi: vị trí chữ cái của plaintext</p><p>Ki: vị trí chữ cái của key (đã lặp lại)</p><p>Ci: vị trí chữ cái kết quả (ciphertext)</p><p>Cuối cùng chuyển Ci thành chữ cái IN HOA</p><p>% là phép chia lấy dư, ví dụ: 7 % 3 = 1</p><p>Viết hàm: def vigenere_encrypt(plaintext, key):</p><p>Trong đó:</p><p>plaintext là chuỗi chữ cái, không chứa khoảng trắng, không phân biệt chữ hoa/thường</p><p>key là chuỗi chữ cái, không chứa khoảng trắng, không phân biệt chữ hoa/thường</p><p>Hàm trả về chuỗi ciphertext viết IN HOA</p><p>Ví dụ mã hóa cụ thể với plaintext = HELLO và key = KEY:</p><p>Lặp key: KEYKE</p><p>Đổi sang số:<br/>H = 7, E = 4, L = 11, L = 11, O = 14<br/>K = 10, E = 4, Y = 24, K = 10, E = 4</p><p>Áp dụng công thức Ci = (Pi + Ki) % 26:<br/>(7 + 10) % 26 = 17 → R<br/>(4 + 4) % 26 = 8 → I<br/>(11 + 24) % 26 = 9 → J<br/>(11 + 10) % 26 = 21 → V<br/>(14 + 4) % 26 = 18 → S</p><p>Kết quả cuối cùng: RIJVS.</p>",
-    initialCode: "def vigenere_encrypt(plaintext, key):\n    # Write your code here\n    pass\n",
+    initialCode: "def vigenere_encrypt(plaintext, key):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -1293,7 +1293,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 26",
     description: "<p>Ông An đi làm N ngày liên tiếp rồi nghỉ 1 ngày, sau đó lặp lại chu kỳ đó đều đặn.</p><p>Ông Bình đi làm M ngày liên tiếp rồi nghỉ 1 ngày, sau đó cũng lặp lại đều đặn.</p><p>Biết rằng cả hai đều bắt đầu đi làm từ ngày 01/01/2024, và lịch làm việc lặp lại đúng theo chu kỳ của mỗi người.</p><p>Hỏi: Trong khoảng từ ngày 01/01/2024 đến ngày A (tính cả ngày A), có bao nhiêu ngày mà cả ông An và ông Bình cùng đi làm?</p><p>Viết hàm:</p><p>def count_working_days(N, M, A):</p><p>Hàm trả về một số nguyên là số ngày cả hai người cùng đi làm trong khoảng từ ngày 01/01/2024 cho đến ngày A. Bạn được cung cấp mốc thời gian A dưới dạng đối tượng datetime.date của Python.</p>",
-    initialCode: "def count_working_days(N, M, A):\n    # Write your code here\n    pass\n",
+    initialCode: "def count_working_days(N, M, A):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -1352,7 +1352,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 27",
     description: "<p>Trong hệ mã A1Z26, mỗi chữ cái tương ứng với một số: A = 1, B = 2, C = 3, ..., Z = 26. Việc mã hoá được thực hiện theo từng chữ cái của một từ, và các số được nối với nhau bằng dấu gạch ngang -.</p><p>Viết hàm: def encode_a1z26(word):</p><p>Trong đó:</p><p>word là một chuỗi ký tự (string), chỉ gồm 1 từ, không chứa khoảng trắng và không phân biệt chữ hoa hay chữ thường.</p><p>Hàm trả về một chuỗi là kết quả mã hoá từ word theo hệ A1Z26, với các số tương ứng của từng chữ cái được nối với nhau bằng dấu -.</p><p>Ví dụ: nếu word = \"HAPPY\" thì hàm phải trả về: 8-1-16-16-25.</p>",
-    initialCode: "def encode_a1z26(word):\n    # Write your code here\n    pass\n",
+    initialCode: "def encode_a1z26(word):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -1411,7 +1411,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 28",
     description: "<p>Xét các đồ thị có hướng được biểu diễn bằng một dictionary Python, trong đó:</p><p>Mỗi key là một đỉnh (vertex).</p><p>Giá trị tương ứng là một dictionary chứa các đỉnh kề và trọng số của cạnh nối đến những đỉnh đó</p><p>Hãy viết hàm find_adjacency_list(graph).</p><p>Trong đó:</p><p>graph là một dictionary mô tả đồ thị như ở trên.</p><p>Hàm phải trả về adjacency list, tức là một dictionary mới ánh xạ mỗi đỉnh sang danh sách các đỉnh kề với nó (không xét trọng số).</p><p>Ví dụ, xét đồ thị được biểu diễn bằng dictionary graph = {'A': {'B': 5, 'C': 10}, 'B': {'C': 3, 'D': 8}, 'C': {'D': 2}, 'D': {}}</p><p>thì hàm phải trả về:</p><p>{'A': ['B', 'C'], 'B': ['C', 'D'], 'C': ['D'], 'D': []}</p>",
-    initialCode: "def find_adjacency_list(graph):\n    # Write your code here\n    pass\n",
+    initialCode: "def find_adjacency_list(graph):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -1465,7 +1465,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 29",
     description: "<p>Trong hệ mã Atbash, mỗi chữ cái được mã hóa bằng cách ánh xạ với chữ cái đối xứng trong bảng chữ cái tiếng Anh:</p><p>A ↔ Z, B ↔ Y, C ↔ X, ..., M ↔ N</p><p>Do đó, mã Atbash là loại mã đối xứng, nghĩa là quá trình mã hóa và giải mã đều dùng chung một quy tắc chuyển đổi.</p><p>Viết hàm: def atbash_decode(code):</p><p>Trong đó:</p><p>code là một chuỗi ký tự (string), chỉ gồm các chữ cái A–Z hoặc a–z, không có khoảng trắng hay ký tự đặc biệt.</p><p>Không phân biệt chữ hoa hay chữ thường.</p><p>Kết quả trả về là chuỗi chữ cái in hoa, là bản giải mã (decode) Atbash của chuỗi code.</p><p>Ví dụ: nếu code = \"SVOOL\" thì hàm phải trả về: HELLO.</p>",
-    initialCode: "def atbash_decode(code):\n    # Write your code here\n    pass\n",
+    initialCode: "def atbash_decode(code):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -1524,7 +1524,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 30",
     description: "<p>Trong hệ mã Atbash, mỗi chữ cái trong bảng chữ cái tiếng Anh được mã hóa bằng cách ánh xạ với chữ cái đối xứng trong bảng chữ cái. Quy tắc như sau:</p><p>A ↔ Z, B ↔ Y, C ↔ X, ..., M ↔ N</p><p>Nói cách khác, chữ cái thứ 1 đổi thành chữ thứ 26, chữ thứ 2 đổi thành chữ thứ 25, ..., chữ thứ 26 đổi thành chữ thứ 1.</p><p>Viết hàm: def atbash_cipher(word):</p><p>Trong đó:</p><p>word là một chuỗi ký tự (string), chỉ gồm các chữ cái tiếng Anh (A–Z hoặc a–z), không chứa khoảng trắng hoặc ký tự đặc biệt.</p><p>Không phân biệt chữ hoa hay chữ thường, và kết quả trả về là chữ in hoa.</p><p>Hàm trả về một chuỗi là kết quả mã hóa Atbash của từ word.</p><p>Ví dụ: nếu word = \"HELLO\" thì hàm phải trả về: SVOOL.</p>",
-    initialCode: "def atbash_cipher(word):\n    # Write your code here\n    pass\n",
+    initialCode: "def atbash_cipher(word):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -1583,7 +1583,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 31",
     description: "<p>Hãy viết hàm compute_area(s, x).</p><p>Trong đó:</p><p>s là một ký tự (string), dùng để xác định loại phép tính:</p><p>Nếu s = 'p' → tính chu vi hình tròn</p><p>Nếu s = 'a' → tính diện tích hình tròn</p><p>Nếu s có giá trị khác → in ra \"Invalid\"</p><p>x là bán kính của hình tròn (số thực hoặc số nguyên dương).</p><p>Trong bài này, ta lấy π = 3.14.</p><p>Yêu cầu<br/>Nếu s = 'p' hoặc s = 'a':</p><p>Hàm trả về giá trị chu vi hoặc diện tích tương ứng</p><p>Giá trị trả về là số thực, đã được làm tròn đến 2 chữ số thập phân</p><p>Nếu s không hợp lệ:</p><p>Hàm trả về chuỗi \"Invalid\"</p>",
-    initialCode: "def compute_area(s, x):\n    # Write your code here\n    pass\n",
+    initialCode: "def compute_area(s, x):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -1642,7 +1642,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 32",
     description: "<p>Danh sách nhà trọ được biểu diễn dưới dạng một list các dictionary, mỗi phần tử có cấu trúc:</p><p>{'name': 'A', 'price': 1.5, 'distance': 2.0, 'rating': 4.5}</p><p>Trong đó:</p><p>name: tên nhà trọ (string)</p><p>price: giá thuê (số thực, đơn vị triệu/tháng)</p><p>distance: khoảng cách đến trường (km)</p><p>rating: điểm đánh giá (từ 0 đến 5)</p><p>Để đánh giá tổng thể mức độ “đáng ở” của mỗi nhà trọ, ta định nghĩa value score theo công thức:</p><p>score = rating / price − distance * 0.1</p><p>Hãy viết hàm top_value_hostels(hostels).</p><p>Trong đó:</p><p>hostels là danh sách các nhà trọ như mô tả ở trên.</p><p>Hàm cần thực hiện:</p><p>Tính value score cho từng nhà trọ theo công thức đã cho</p><p>Sắp xếp các nhà trọ theo score giảm dần</p><p>Trả về 03 nhà trọ có score cao nhất</p><p>Giá trị trả về <br/>Hàm trả về một list gồm đúng 03 phần tử</p><p>Mỗi phần tử là một dictionary đại diện cho nhà trọ, có cấu trúc giống hệt các phần tử trong danh sách ban đầu</p><p>Giả sử danh sách đầu vào luôn có ít nhất 03 nhà trọ.</p><p>For example:</p><p>Test\tResult<br/>print(top_value_hostels([<br/> {'name':'A','price':1.5,'distance':2.0,'rating':4.5},<br/> {'name':'B','price':1.8,'distance':1.5,'rating':4.2},<br/> {'name':'C','price':1.2,'distance':2.5,'rating':4.0},<br/> {'name':'D','price':2.0,'distance':1.0,'rating':4.8},<br/> {'name':'E','price':1.6,'distance':2.2,'rating':4.1},<br/> {'name':'F','price':2.2,'distance':0.8,'rating':4.6},<br/> {'name':'G','price':1.9,'distance':1.9,'rating':4.3},<br/> {'name':'H','price':1.4,'distance':2.8,'rating':3.9},<br/> {'name':'I','price':2.5,'distance':0.5,'rating':4.7},<br/> {'name':'J','price':1.7,'distance':1.7,'rating':4.0}<br/>]))<br/>[{'name': 'C', 'price': 1.2, 'distance': 2.5, 'rating': 4.0}, {'name': 'A', 'price': 1.5, 'distance': 2.0, 'rating': 4.5}, {'name': 'H', 'price': 1.4, 'distance': 2.8, 'rating': 3.9}]</p>",
-    initialCode: "def top_value_hostels(hostels):\n    # Write your code here\n    pass\n",
+    initialCode: "def top_value_hostels(hostels):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -1701,7 +1701,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 33",
     description: "<p>Danh sách sinh viên được biểu diễn dưới dạng một list các dictionary, mỗi phần tử có cấu trúc:</p><p>{'name': 'Minh', 'height': 168}</p><p>Trong đó:</p><p>name: tên sinh viên (string)</p><p>height: chiều cao của sinh viên (số nguyên, đơn vị cm)</p><p>Yêu cầu<br/>Hãy viết hàm sort_students_by_height(students) để:</p><p>Sắp xếp danh sách sinh viên theo height tăng dần</p><p>Giá trị trả về<br/>Hàm trả về danh sách sinh viên đã được sắp xếp</p><p>Mỗi phần tử trong danh sách kết quả là một dictionary có cấu trúc giống hệt phần tử ban đầu</p><p>Ví dụ<br/>Input:<br/>students = [{'name': 'Minh', 'height': 168}, {'name': 'Huy', 'height': 175}, {'name': 'Lan', 'height': 160}]</p><p>Output:<br/>[{'name': 'Lan', 'height': 160}, {'name': 'Minh', 'height': 168}, {'name': 'Huy', 'height': 175}]</p>",
-    initialCode: "def sort_students_by_height(students):\n    # Write your code here\n    pass\n",
+    initialCode: "def sort_students_by_height(students):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -1750,7 +1750,7 @@ export const problems = [
     category: "Mid-term practice",
     title: "Question 34",
     description: "<p>Cho một dictionary lưu thông tin của các thành viên trong nhóm lập trình, với cấu trúc như sau:</p><p>{'Minh': {'lines': 150, 'commits': 12}, 'Huy': {'lines': 200, 'commits': 15}, ...}</p><p>Mỗi phần tử có dạng:</p><p>Tên thành viên (string)</p><p>Một dictionary gồm:</p><p>lines: số dòng code</p><p>commits: số lần commit</p><p>Hãy viết hàm count_commits(group) để tính tổng số lần commit của tất cả thành viên trong nhóm.</p><p>Kết quả trả về là một số nguyên (integer), thể hiện tổng commits của toàn bộ nhóm.</p><p>Ví dụ:<br/>Nếu group = {'Minh': {'lines':150, 'commits':12}, 'Huy': {'lines':200, 'commits':15}}<br/>thì kết quả phải là 27.</p>",
-    initialCode: "def count_commits(group):\n    # Write your code here\n    pass\n",
+    initialCode: "def count_commits(group):\n    # Write your code here\n",
     testCases: [
       {
         id: 1,
@@ -1809,7 +1809,7 @@ export const problems = [
     category: "FTDS coding practice",
     title: "5. Đếm từ hợp lệ",
     description: "<p>Viết hàm <code>count_words(sentence)</code> để đếm xem trong câu sentence có bao nhiêu từ hợp lệ. Một từ được định nghĩa là một chuỗi ký tự liên tiếp không chứa dấu cách.</p>",
-    initialCode: "def count_words(sentence):\n    pass\n",
+    initialCode: "def count_words(sentence):\n",
     testCases: [
       {
         id: 1,
@@ -1833,7 +1833,7 @@ export const problems = [
     category: "FTDS coding practice",
     title: "6. Tìm nhà trọ rẻ nhất",
     description: "<p>Viết hàm <code>find_cheapest(hostels)</code>. Chỉ xét nhà trọ có distance ≤ 3. Sắp xếp các nhà trọ thỏa mãn điều kiện theo price tăng dần. Trả về 03 nhà trọ rẻ nhất trong phạm vi này (hoặc trả về mảng rỗng nếu không có).</p>",
-    initialCode: "def find_cheapest(hostels):\n    pass\n",
+    initialCode: "def find_cheapest(hostels):\n",
     testCases: [
       {
         id: 1,
