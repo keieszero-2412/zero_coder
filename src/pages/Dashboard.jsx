@@ -35,23 +35,35 @@ export function Dashboard() {
   }, [currentUser]);
 
   const [showAdminPanel, setShowAdminPanel] = useState(false);
-  const [pendingCount, setPendingCount] = useState(0);
+  const [pendingAccessCount, setPendingAccessCount] = useState(0);
+  const [pendingResetCount, setPendingResetCount] = useState(0);
 
   useEffect(() => {
-    let unsubscribe = () => {};
+    let unsubscribeAccess = () => {};
+    let unsubscribeReset = () => {};
     if (currentUser && currentUser.role === 'Admin') {
       import('firebase/firestore').then(({ collection, query, where, onSnapshot }) => {
         import('../config/firebase').then(({ db }) => {
-          const q = query(collection(db, 'access_requests'), where('status', '==', 'pending'));
-          unsubscribe = onSnapshot(q, (snapshot) => {
-            setPendingCount(snapshot.docs.length);
+          const qAccess = query(collection(db, 'access_requests'), where('status', '==', 'pending'));
+          unsubscribeAccess = onSnapshot(qAccess, (snapshot) => {
+            setPendingAccessCount(snapshot.docs.length);
           }, (err) => {
-            console.error("Failed to listen to requests:", err);
+            console.error("Failed to listen to access requests:", err);
+          });
+          
+          const qReset = query(collection(db, 'password_reset_requests'), where('status', '==', 'pending'));
+          unsubscribeReset = onSnapshot(qReset, (snapshot) => {
+            setPendingResetCount(snapshot.docs.length);
+          }, (err) => {
+            console.error("Failed to listen to reset requests:", err);
           });
         });
       });
     }
-    return () => unsubscribe();
+    return () => {
+      unsubscribeAccess();
+      unsubscribeReset();
+    };
   }, [currentUser]);
 
   const categories = useMemo(() => {
@@ -110,27 +122,28 @@ export function Dashboard() {
             
             {currentUser.role === 'Admin' && (
               <button 
-                onClick={() => setShowAdminPanel(true)} 
-                className="button-secondary" 
-                style={{ padding: '0.5rem', position: 'relative' }} 
-                title="Admin Panel"
+                onClick={() => setShowAdminPanel(true)}
+                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: '0.5rem', borderRadius: 'var(--radius-md)', position: 'relative' }}
+                title="Admin Dashboard"
               >
                 <Bell size={20} />
-                {pendingCount > 0 && (
+                <span className="hide-on-mobile">Admin</span>
+                {(pendingAccessCount > 0 || pendingResetCount > 0) && (
                   <span style={{
                     position: 'absolute',
-                    top: '-5px', right: '-5px',
+                    top: '2px', right: '2px',
                     backgroundColor: 'var(--error)',
                     color: 'white',
                     fontSize: '0.7rem',
                     fontWeight: 'bold',
-                    width: '18px', height: '18px',
+                    width: '16px', height: '16px',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    border: '2px solid var(--bg-surface)'
                   }}>
-                    {pendingCount}
+                    {pendingAccessCount + pendingResetCount}
                   </span>
                 )}
               </button>

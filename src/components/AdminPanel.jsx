@@ -5,28 +5,45 @@ import { X, Check, Trash2, Mail, Plus } from 'lucide-react';
 import '../index.css';
 
 export function AdminPanel({ onClose }) {
-  const [requests, setRequests] = useState([]);
+  const [accessRequests, setAccessRequests] = useState([]);
+  const [resetRequests, setResetRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [manualEmail, setManualEmail] = useState('');
 
   useEffect(() => {
-    const q = query(collection(db, 'access_requests'), where('status', '==', 'pending'));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
+    const qAccess = query(collection(db, 'access_requests'), where('status', '==', 'pending'));
+    const unsubscribeAccess = onSnapshot(qAccess, (snapshot) => {
       const reqs = [];
       snapshot.forEach((doc) => {
         reqs.push({ id: doc.id, ...doc.data() });
       });
-      // Sort by requestedAt descending
       reqs.sort((a, b) => {
         if (!a.requestedAt) return 1;
         if (!b.requestedAt) return -1;
         return b.requestedAt.toMillis() - a.requestedAt.toMillis();
       });
-      setRequests(reqs);
+      setAccessRequests(reqs);
+    });
+
+    const qReset = query(collection(db, 'password_reset_requests'), where('status', '==', 'pending'));
+    const unsubscribeReset = onSnapshot(qReset, (snapshot) => {
+      const rReqs = [];
+      snapshot.forEach((doc) => {
+        rReqs.push({ id: doc.id, ...doc.data() });
+      });
+      rReqs.sort((a, b) => {
+        if (!a.requestedAt) return 1;
+        if (!b.requestedAt) return -1;
+        return b.requestedAt.toMillis() - a.requestedAt.toMillis();
+      });
+      setResetRequests(rReqs);
       setLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribeAccess();
+      unsubscribeReset();
+    };
   }, []);
 
   const handleApprove = async (email, requestId) => {
@@ -50,6 +67,26 @@ export function AdminPanel({ onClose }) {
         await deleteDoc(doc(db, 'access_requests', requestId));
       } catch (err) {
         console.error("Failed to reject:", err);
+      }
+    }
+  };
+
+  const handleResolveReset = async (requestId) => {
+    if (window.confirm("Did you manually change their password in Firebase Authentication? Click OK to clear this request.")) {
+      try {
+        await deleteDoc(doc(db, 'password_reset_requests', requestId));
+      } catch (err) {
+        console.error("Failed to resolve:", err);
+      }
+    }
+  };
+
+  const handleRejectReset = async (requestId) => {
+    if (window.confirm("Are you sure you want to deny and delete this password reset request?")) {
+      try {
+        await deleteDoc(doc(db, 'password_reset_requests', requestId));
+      } catch (err) {
+        console.error("Failed to reject reset:", err);
       }
     }
   };
@@ -128,61 +165,135 @@ export function AdminPanel({ onClose }) {
           </form>
         </div>
 
-        <div style={{ padding: '1.5rem', overflowY: 'auto', flex: 1 }}>
+        <div style={{ padding: '1.5rem', overflowY: 'auto', flex: 1, display: 'flex', flexDirection: 'column', gap: '2rem' }}>
           {loading ? (
             <p style={{ color: 'var(--text-secondary)', textAlign: 'center' }}>Loading requests...</p>
-          ) : requests.length === 0 ? (
-            <div style={{ textAlign: 'center', color: 'var(--text-secondary)', padding: '2rem 0' }}>
-              <Check size={48} style={{ opacity: 0.2, margin: '0 auto 1rem auto' }} />
-              <p>No pending access requests.</p>
-            </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {requests.map(req => (
-                <div key={req.id} style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: '1rem',
-                  backgroundColor: 'var(--bg-surface-elevated)',
-                  borderRadius: 'var(--radius-md)',
-                  border: '1px solid var(--border-color)'
-                }}>
-                  <div>
-                    <div style={{ fontWeight: 500, color: 'var(--text-primary)' }}>{req.email}</div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '0.25rem' }}>
-                      {req.requestedAt ? new Date(req.requestedAt.toMillis()).toLocaleString() : 'Just now'}
-                    </div>
+            <>
+              {/* Access Requests Section */}
+              <div>
+                <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <span>Access Requests</span>
+                  <span style={{ fontSize: '0.75rem', padding: '0.2rem 0.5rem', backgroundColor: 'var(--bg-surface-elevated)', borderRadius: '1rem' }}>{accessRequests.length}</span>
+                </h3>
+                {accessRequests.length === 0 ? (
+                  <div style={{ textAlign: 'center', color: 'var(--text-secondary)', padding: '1rem 0' }}>
+                    <Check size={32} style={{ opacity: 0.2, margin: '0 auto 0.5rem auto' }} />
+                    <p style={{ fontSize: '0.875rem' }}>No pending access requests.</p>
                   </div>
-                  <div style={{ display: 'flex', gap: '0.5rem' }}>
-                    <button 
-                      onClick={() => handleReject(req.id)}
-                      style={{
-                        padding: '0.5rem',
-                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
-                        color: 'var(--error)',
-                        border: 'none',
-                        borderRadius: 'var(--radius-sm)',
-                        cursor: 'pointer',
+                ) : (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    {accessRequests.map(req => (
+                      <div key={req.id} style={{
                         display: 'flex',
+                        justifyContent: 'space-between',
                         alignItems: 'center',
-                        justifyContent: 'center'
-                      }}
-                      title="Reject"
-                    >
-                      <Trash2 size={18} />
-                    </button>
-                    <button 
-                      onClick={() => handleApprove(req.email, req.id)}
-                      className="button-primary"
-                      style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}
-                    >
-                      Approve
-                    </button>
+                        padding: '1rem',
+                        backgroundColor: 'var(--bg-surface-elevated)',
+                        borderRadius: 'var(--radius-md)',
+                        border: '1px solid var(--border-color)'
+                      }}>
+                        <div>
+                          <div style={{ fontWeight: 500, color: 'var(--text-primary)' }}>{req.email}</div>
+                          <div style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '0.25rem' }}>
+                            {req.requestedAt ? new Date(req.requestedAt.toMillis()).toLocaleString() : 'Just now'}
+                          </div>
+                        </div>
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                          <button 
+                            onClick={() => handleReject(req.id)}
+                            style={{
+                              padding: '0.5rem',
+                              backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                              color: 'var(--error)',
+                              border: 'none',
+                              borderRadius: 'var(--radius-sm)',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center'
+                            }}
+                            title="Reject"
+                          >
+                            <Trash2 size={18} />
+                          </button>
+                          <button 
+                            onClick={() => handleApprove(req.email, req.id)}
+                            className="button-primary"
+                            style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}
+                          >
+                            Approve
+                          </button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </div>
-              ))}
-            </div>
+                )}
+              </div>
+
+              {/* Password Reset Requests Section */}
+              <div>
+                <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <span>Password Reset Requests</span>
+                  <span style={{ fontSize: '0.75rem', padding: '0.2rem 0.5rem', backgroundColor: 'var(--bg-surface-elevated)', borderRadius: '1rem' }}>{resetRequests.length}</span>
+                </h3>
+                {resetRequests.length === 0 ? (
+                  <div style={{ textAlign: 'center', color: 'var(--text-secondary)', padding: '1rem 0' }}>
+                    <Check size={32} style={{ opacity: 0.2, margin: '0 auto 0.5rem auto' }} />
+                    <p style={{ fontSize: '0.875rem' }}>No pending password resets.</p>
+                  </div>
+                ) : (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    {resetRequests.map(req => (
+                      <div key={req.id} style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '1rem',
+                        backgroundColor: 'rgba(239, 68, 68, 0.05)',
+                        borderRadius: 'var(--radius-md)',
+                        border: '1px solid rgba(239, 68, 68, 0.2)'
+                      }}>
+                        <div>
+                          <div style={{ fontWeight: 500, color: 'var(--text-primary)' }}>{req.email}</div>
+                          <div style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '0.25rem' }}>
+                            {req.requestedAt ? new Date(req.requestedAt.toMillis()).toLocaleString() : 'Just now'}
+                          </div>
+                        </div>
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                          <button 
+                            onClick={() => handleRejectReset(req.id)}
+                            style={{
+                              padding: '0.5rem',
+                              backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                              color: 'var(--error)',
+                              border: 'none',
+                              borderRadius: 'var(--radius-sm)',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center'
+                            }}
+                            title="Deny / Reject"
+                          >
+                            <Trash2 size={18} />
+                          </button>
+                          <button 
+                            onClick={() => handleResolveReset(req.id)}
+                            className="button-primary"
+                            style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}
+                            title="Mark as resolved (clears request)"
+                          >
+                            <Check size={16} style={{ marginRight: '0.25rem' }} />
+                            Resolved
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </>
           )}
         </div>
       </div>
