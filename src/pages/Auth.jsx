@@ -160,7 +160,7 @@ export function Auth() {
         
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <h1 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', fontSize: '1.75rem', marginBottom: '0.5rem' }}>
-            <img src="/zerocoder-logo.png" alt="Logo" style={{ width: '40px', height: '40px' }} />
+            <img src="/zerocoder-logo-transparent.png" alt="Logo" style={{ width: '36px', height: '36px', marginTop: '2px' }} />
             zerocoder
           </h1>
           <p style={{ color: 'var(--text-secondary)' }}>

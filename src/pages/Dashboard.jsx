@@ -70,15 +70,17 @@ export function Dashboard() {
   return (
     <div className="app-container" style={{ overflow: 'auto' }}>
       <header className="header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div className="header-title" style={{ fontSize: '1.75rem', fontWeight: 'bold' }}>
+        <div className="header-title" style={{ fontSize: '1.75rem', fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
           <img 
-            src="/zerocoder-logo.png" 
+            src="/zerocoder-logo-transparent.png" 
             alt="zerocoder Logo" 
             style={{ 
-              width: '52px', 
-              height: '52px', 
+              width: '36px', 
+              height: '36px', 
               objectFit: 'contain', 
-              marginRight: '0.5rem'
+              marginRight: '0.5rem',
+              marginTop: '2px',
+              borderRadius: '8px'
             }} 
           />
           zerocoder
