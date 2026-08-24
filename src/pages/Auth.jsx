@@ -129,7 +129,10 @@ export function Auth() {
               disabled={isLoading}
             >
               {isLoading ? (
-                <div style={{ width: '20px', height: '20px', border: '2px solid rgba(255,255,255,0.3)', borderTopColor: 'white', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+                <>
+                  <div style={{ width: '20px', height: '20px', border: '2px solid rgba(255,255,255,0.3)', borderTopColor: 'white', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+                  Checking Permission...
+                </>
               ) : (
                 <>
                   Continue <ArrowRight size={20} />
@@ -261,7 +264,10 @@ export function Auth() {
                   disabled={isLoading}
                 >
                   {isLoading ? (
-                    <div style={{ width: '20px', height: '20px', border: '2px solid rgba(255,255,255,0.3)', borderTopColor: 'white', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+                    <>
+                      <div style={{ width: '20px', height: '20px', border: '2px solid rgba(255,255,255,0.3)', borderTopColor: 'white', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+                      Authenticating...
+                    </>
                   ) : (
                     <>
                       {emailStatus.accountExists ? <LogIn size={20} /> : <UserPlus size={20} />}

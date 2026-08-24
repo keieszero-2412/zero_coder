@@ -78,23 +78,27 @@ export const AuthProvider = ({ children }) => {
   };
 
   const checkEmailStatus = async (email) => {
-    const { role, colorCode } = await determineRole(email);
     let accountExists = false;
     
     try {
-      const usersRef = collection(db, 'users');
-      const q = query(usersRef, where('email', '==', email));
-      const querySnapshot = await getDocs(q);
-      accountExists = !querySnapshot.empty;
-    } catch (error) {
-      console.error("Error checking email status", error);
+      // Run Firestore check and Firebase Auth check in parallel for double speed!
+      const [roleData, methods] = await Promise.all([
+        determineRole(email),
+        fetchSignInMethodsForEmail(auth, email).catch(error => {
+          console.error("Auth fetch error:", error);
+          return [];
+        })
+      ]);
+      
+      if (methods && methods.length > 0) {
+        accountExists = true;
+      }
+      
+      return { role: roleData.role, colorCode: roleData.colorCode, accountExists };
+    } catch (e) {
+      console.error(e);
+      return { role: 'Unauthorized', colorCode: 'Red', accountExists: false };
     }
-    
-    return {
-      isAuthorized: role !== 'Unauthorized',
-      colorCode,
-      accountExists
-    };
   };
 
   const register = async (username, email, password) => {
