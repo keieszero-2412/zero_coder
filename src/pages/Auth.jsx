@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Mail, KeyRound, User, ArrowRight, ShieldAlert, LogIn, UserPlus, ArrowLeft, Send } from 'lucide-react';
+import { Mail, KeyRound, User, ArrowRight, ShieldAlert, LogIn, UserPlus, ArrowLeft, Send, CheckCircle2, XCircle } from 'lucide-react';
 import '../index.css';
 
 export function Auth() {
@@ -146,49 +146,36 @@ export function Auth() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <div style={{ 
               display: 'flex', 
-              justifyContent: 'space-between', 
-              alignItems: 'center', 
-              padding: '0.75rem', 
-              backgroundColor: 'var(--bg-surface-elevated)', 
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--border-color)'
-            }}>
-              <span style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>{email}</span>
-              <button 
-                onClick={() => { setStep(1); setPassword(''); setUsername(''); }} 
-                style={{ background: 'none', border: 'none', color: 'var(--accent-primary)', cursor: 'pointer', display: 'flex', alignItems: 'center', fontSize: '0.875rem' }}
-              >
-                Edit
-              </button>
-            </div>
-
-            {/* Clearance Code Display */}
-            <div style={{ 
-              display: 'flex', 
+              flexDirection: 'column',
               alignItems: 'center', 
               justifyContent: 'center', 
               gap: '0.5rem', 
-              padding: '0.5rem', 
+              padding: '0.75rem', 
               borderRadius: 'var(--radius-md)',
-              backgroundColor: emailStatus.colorCode === 'Green' ? 'rgba(34, 197, 94, 0.1)' :
-                               emailStatus.colorCode === 'Blue' ? 'rgba(59, 130, 246, 0.1)' : 
-                               'rgba(239, 68, 68, 0.1)',
-              color: emailStatus.colorCode === 'Green' ? '#22c55e' :
-                     emailStatus.colorCode === 'Blue' ? '#3b82f6' : 
-                     'var(--error)'
+              backgroundColor: emailStatus.colorCode !== 'Red' ? 'rgba(34, 197, 94, 0.1)' : 'rgba(239, 68, 68, 0.1)',
+              color: emailStatus.colorCode !== 'Red' ? '#22c55e' : 'var(--error)'
             }}>
-              <div style={{ 
-                width: '10px', 
-                height: '10px', 
-                borderRadius: '50%', 
-                backgroundColor: emailStatus.colorCode === 'Green' ? '#22c55e' :
-                                 emailStatus.colorCode === 'Blue' ? '#3b82f6' : 
-                                 'var(--error)'
-              }} />
-              <span style={{ fontWeight: 600 }}>Access Code: {emailStatus.colorCode}</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <div style={{ 
+                  width: '10px', 
+                  height: '10px', 
+                  borderRadius: '50%', 
+                  backgroundColor: emailStatus.colorCode === 'Green' ? '#22c55e' :
+                                   emailStatus.colorCode === 'Blue' ? '#3b82f6' : 
+                                   'var(--error)'
+                }} />
+                <span style={{ fontWeight: 600 }}>Access Code: {emailStatus.colorCode}</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', fontWeight: 500 }}>
+                {emailStatus.colorCode !== 'Red' ? (
+                  <><CheckCircle2 size={16} /> Access Authorized</>
+                ) : (
+                  <><XCircle size={16} /> Access Denied</>
+                )}
+              </div>
             </div>
 
-            {!emailStatus.isAuthorized ? (
+            {emailStatus.colorCode === 'Red' ? (
               <div style={{ textAlign: 'center', marginTop: '0.5rem' }}>
                 <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', fontSize: '0.875rem' }}>
                   This email is not authorized to access the workspace.
