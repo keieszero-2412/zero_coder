@@ -20,29 +20,33 @@ export function Auth() {
 
   const from = location.state?.from?.pathname || "/";
 
-  const handleEmailSubmit = (e) => {
+  const handleEmailSubmit = async (e) => {
     e.preventDefault();
     setError('');
     
-    const status = checkEmailStatus(email);
-    setEmailStatus(status);
-    setRequestSent(false); // reset request status
-    
-    // Proceed to Step 2 to show color code and request password (if authorized)
-    // If not authorized, we still go to step 2 to show the Red Code and "Request Access" button
-    setStep(2);
+    try {
+      const status = await checkEmailStatus(email);
+      setEmailStatus(status);
+      setRequestSent(false); // reset request status
+      
+      // Proceed to Step 2 to show color code and request password (if authorized)
+      // If not authorized, we still go to step 2 to show the Red Code and "Request Access" button
+      setStep(2);
+    } catch (err) {
+      setError("Error checking email status. Please try again.");
+    }
   };
 
-  const handleAuthSubmit = (e) => {
+  const handleAuthSubmit = async (e) => {
     e.preventDefault();
     try {
       setError('');
       if (emailStatus.accountExists) {
         // Log in
-        login(email, password);
+        await login(email, password);
       } else {
         // Register
-        register(username, email, password);
+        await register(username, email, password);
       }
       navigate(from, { replace: true });
     } catch (err) {

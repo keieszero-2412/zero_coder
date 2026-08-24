@@ -1,5 +1,21 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { authorizedEmails } from '../data/email_access';
+import { auth, db } from '../config/firebase';
+import { 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  signOut, 
+  onAuthStateChanged 
+} from 'firebase/auth';
+import { 
+  doc, 
+  setDoc, 
+  getDoc, 
+  collection, 
+  query, 
+  where, 
+  getDocs 
+} from 'firebase/firestore';
 
 const AuthContext = createContext();
 
@@ -10,12 +26,38 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is logged in
-    const session = localStorage.getItem('zerocoder_session');
-    if (session) {
-      setCurrentUser(JSON.parse(session));
-    }
-    setLoading(false);
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        // Fetch extended user info from Firestore
+        try {
+          const userDoc = await getDoc(doc(db, 'users', user.uid));
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            
+            // Re-verify role just in case email access changed
+            const { role, colorCode } = determineRole(user.email);
+            
+            setCurrentUser({
+              uid: user.uid,
+              email: user.email,
+              username: userData.username,
+              role: role,
+              colorCode: colorCode
+            });
+          } else {
+            setCurrentUser(user);
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+          setCurrentUser(user);
+        }
+      } else {
+        setCurrentUser(null);
+      }
+      setLoading(false);
+    });
+
+    return unsubscribe;
   }, []);
 
   // Determine user role and code color based on email
@@ -29,10 +71,18 @@ export const AuthProvider = ({ children }) => {
     return { role: 'Unauthorized', colorCode: 'Red' };
   };
 
-  const checkEmailStatus = (email) => {
+  const checkEmailStatus = async (email) => {
     const { role, colorCode } = determineRole(email);
-    const users = JSON.parse(localStorage.getItem('zerocoder_users') || '[]');
-    const accountExists = users.some(u => u.email === email);
+    let accountExists = false;
+    
+    try {
+      const usersRef = collection(db, 'users');
+      const q = query(usersRef, where('email', '==', email));
+      const querySnapshot = await getDocs(q);
+      accountExists = !querySnapshot.empty;
+    } catch (error) {
+      console.error("Error checking email status", error);
+    }
     
     return {
       isAuthorized: role !== 'Unauthorized',
@@ -41,52 +91,40 @@ export const AuthProvider = ({ children }) => {
     };
   };
 
-  const register = (username, email, password) => {
-    const users = JSON.parse(localStorage.getItem('zerocoder_users') || '[]');
-    
-    // Check if email already exists
-    if (users.find(u => u.email === email)) {
-      throw new Error('Email already registered');
-    }
-    
+  const register = async (username, email, password) => {
     // Check if username already exists
-    if (users.find(u => u.username === username)) {
+    const usersRef = collection(db, 'users');
+    const q = query(usersRef, where('username', '==', username));
+    const snapshot = await getDocs(q);
+    
+    if (!snapshot.empty) {
       throw new Error('Username already taken');
     }
 
     const { role, colorCode } = determineRole(email);
-    const newUser = { username, email, password, role, colorCode };
     
-    users.push(newUser);
-    localStorage.setItem('zerocoder_users', JSON.stringify(users));
+    // Create user in Firebase Auth
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
     
-    // Auto login after register
-    setCurrentUser(newUser);
-    localStorage.setItem('zerocoder_session', JSON.stringify(newUser));
-    return newUser;
-  };
-
-  const login = (email, password) => {
-    const users = JSON.parse(localStorage.getItem('zerocoder_users') || '[]');
-    const user = users.find(u => u.email === email && u.password === password);
+    // Save additional data in Firestore
+    await setDoc(doc(db, 'users', user.uid), {
+      username,
+      email,
+      role,
+      colorCode
+    });
     
-    if (!user) {
-      throw new Error('Invalid email or password');
-    }
-
-    // Refresh role in case email_access.js has changed since last login
-    const { role, colorCode } = determineRole(user.email);
-    user.role = role;
-    user.colorCode = colorCode;
-    
-    setCurrentUser(user);
-    localStorage.setItem('zerocoder_session', JSON.stringify(user));
     return user;
   };
 
-  const logout = () => {
-    setCurrentUser(null);
-    localStorage.removeItem('zerocoder_session');
+  const login = async (email, password) => {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    return userCredential.user;
+  };
+
+  const logout = async () => {
+    await signOut(auth);
   };
 
   const value = {

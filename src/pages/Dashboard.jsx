@@ -10,18 +10,27 @@ export function Dashboard() {
   const { currentUser, logout } = useAuth();
 
   useEffect(() => {
-    try {
-      if (currentUser) {
-        const saved = localStorage.getItem(`zerocoder_progress_${currentUser.email}`);
-        if (saved) {
-          setCompletedProblems(JSON.parse(saved));
-        } else {
-          setCompletedProblems({});
-        }
-      }
-    } catch (e) {
-      console.error(e);
+    let unsubscribe = () => {};
+    
+    if (currentUser) {
+      import('firebase/firestore').then(({ doc, onSnapshot }) => {
+        import('../config/firebase').then(({ db }) => {
+          unsubscribe = onSnapshot(doc(db, 'user_progress', currentUser.uid), (docSnap) => {
+            if (docSnap.exists()) {
+              setCompletedProblems(docSnap.data());
+            } else {
+              setCompletedProblems({});
+            }
+          }, (err) => {
+            console.error("Failed to listen to progress:", err);
+          });
+        });
+      });
+    } else {
+      setCompletedProblems({});
     }
+    
+    return () => unsubscribe();
   }, [currentUser]);
 
   const categories = useMemo(() => {

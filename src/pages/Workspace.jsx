@@ -8,6 +8,8 @@ import { usePython } from '../hooks/usePython';
 import { problems } from '../data/problems';
 import { Play, CheckCircle, ArrowLeft, Trophy, RotateCcw, LogOut } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { db } from '../config/firebase';
 import '../index.css';
 
 export function Workspace() {
@@ -28,23 +30,41 @@ export function Workspace() {
 
   // Initialize code when problem changes
   useEffect(() => {
-    if (currentProblem && currentUser) {
-      const savedCode = localStorage.getItem(`zerocoder_code_${currentUser.email}_${id}`);
-      setCode(savedCode !== null ? savedCode : currentProblem.initialCode);
-      setTestResults([]);
-      setFailedAttempts(0);
-      clearOutput();
-    } else if (!currentProblem) {
-      // If problem not found, go to dashboard
-      navigate('/');
-    }
+    const loadCode = async () => {
+      if (currentProblem && currentUser) {
+        try {
+          const draftRef = doc(db, 'code_drafts', `${currentUser.uid}_${id}`);
+          const draftSnap = await getDoc(draftRef);
+          if (draftSnap.exists()) {
+            setCode(draftSnap.data().code);
+          } else {
+            setCode(currentProblem.initialCode);
+          }
+        } catch (err) {
+          console.error("Failed to load draft:", err);
+          setCode(currentProblem.initialCode);
+        }
+        setTestResults([]);
+        setFailedAttempts(0);
+        clearOutput();
+      } else if (!currentProblem) {
+        // If problem not found, go to dashboard
+        navigate('/');
+      }
+    };
+    loadCode();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentProblem, navigate, currentUser]);
+  }, [currentProblem, navigate, currentUser, id]);
 
-  // Auto-save code
+  // Auto-save code (debounced)
   useEffect(() => {
     if (currentUser && code && currentProblem && code !== currentProblem.initialCode) {
-      localStorage.setItem(`zerocoder_code_${currentUser.email}_${id}`, code);
+      const timeoutId = setTimeout(() => {
+        const draftRef = doc(db, 'code_drafts', `${currentUser.uid}_${id}`);
+        setDoc(draftRef, { code, problemId: id, uid: currentUser.uid }, { merge: true })
+          .catch(console.error);
+      }, 1000);
+      return () => clearTimeout(timeoutId);
     }
   }, [code, currentUser, id, currentProblem]);
 
@@ -64,6 +84,13 @@ export function Workspace() {
     const hasFailure = results.some(r => !r.passed);
     if (hasFailure) {
       setFailedAttempts(prev => prev + 1);
+    } else if (results.length > 0) {
+      // Perfect score! Save to firestore
+      if (currentUser) {
+        const progressRef = doc(db, 'user_progress', currentUser.uid);
+        setDoc(progressRef, { [currentProblem.id]: true }, { merge: true })
+          .catch(console.error);
+      }
     }
     
     setIsRunning(false);
@@ -73,27 +100,8 @@ export function Workspace() {
     if (!testResults || testResults.length === 0) return { passed: 0, total: 0 };
     const passedCount = testResults.filter(r => r.passed).length;
     const totalCount = testResults.length;
-    
-    // Save progress to local storage
-    if (passedCount === totalCount && totalCount > 0 && currentProblem && currentUser) {
-      try {
-        const progressKey = `zerocoder_progress_${currentUser.email}`;
-        const saved = localStorage.getItem(progressKey);
-        const progress = saved ? JSON.parse(saved) : {};
-        if (!progress[currentProblem.id]) {
-          progress[currentProblem.id] = true;
-          localStorage.setItem(progressKey, JSON.stringify(progress));
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    }
-    
-    return {
-      passed: passedCount,
-      total: totalCount
-    };
-  }, [testResults, currentProblem]);
+    return { passed: passedCount, total: totalCount };
+  }, [testResults]);
 
   let scoreClass = 'none';
   if (score && score.total > 0) {
@@ -130,7 +138,8 @@ export function Workspace() {
               if (window.confirm('Are you sure you want to reset your code? This will erase your current progress.')) {
                 setCode(currentProblem.initialCode);
                 if (currentUser) {
-                  localStorage.removeItem(`zerocoder_code_${currentUser.email}_${id}`);
+                  const draftRef = doc(db, 'code_drafts', `${currentUser.uid}_${id}`);
+                  setDoc(draftRef, { code: currentProblem.initialCode }, { merge: true }).catch(console.error);
                 }
               }
             }}
