@@ -14,6 +14,8 @@ export function Auth() {
   const [error, setError] = useState('');
   const [requestSent, setRequestSent] = useState(false);
   
+  const [isLoading, setIsLoading] = useState(false);
+  
   const { checkEmailStatus, login, register } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,6 +25,7 @@ export function Auth() {
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
     
     try {
       const status = await checkEmailStatus(email);
@@ -34,11 +37,14 @@ export function Auth() {
       setStep(2);
     } catch (err) {
       setError("Error checking email status. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleAuthSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       setError('');
       if (emailStatus.accountExists) {
@@ -51,6 +57,7 @@ export function Auth() {
       navigate(from, { replace: true });
     } catch (err) {
       setError(err.message);
+      setIsLoading(false);
     }
   };
 
@@ -115,9 +122,19 @@ export function Auth() {
               </div>
             </div>
             
-            <button type="submit" className="button-primary" style={{ marginTop: '0.5rem', justifyContent: 'center', padding: '0.75rem' }}>
-              Continue
-              <ArrowRight size={18} />
+            <button 
+              type="submit" 
+              className="button-primary" 
+              style={{ padding: '0.875rem', fontSize: '1rem', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <div style={{ width: '20px', height: '20px', border: '2px solid rgba(255,255,255,0.3)', borderTopColor: 'white', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+              ) : (
+                <>
+                  Continue <ArrowRight size={20} />
+                </>
+              )}
             </button>
           </form>
         )}
@@ -237,11 +254,19 @@ export function Auth() {
                   </div>
                 </div>
 
-                <button type="submit" className="button-primary" style={{ marginTop: '0.5rem', justifyContent: 'center', padding: '0.75rem' }}>
-                  {emailStatus.accountExists ? (
-                    <><LogIn size={18} /> Log In</>
+                <button 
+                  type="submit" 
+                  className="button-primary" 
+                  style={{ padding: '0.875rem', fontSize: '1rem', width: '100%', marginTop: '0.5rem', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem' }}
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <div style={{ width: '20px', height: '20px', border: '2px solid rgba(255,255,255,0.3)', borderTopColor: 'white', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
                   ) : (
-                    <><UserPlus size={18} /> Create Account</>
+                    <>
+                      {emailStatus.accountExists ? <LogIn size={20} /> : <UserPlus size={20} />}
+                      {emailStatus.accountExists ? 'Sign In' : 'Create Account'}
+                    </>
                   )}
                 </button>
               </form>
