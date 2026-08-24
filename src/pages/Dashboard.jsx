@@ -1,8 +1,9 @@
 import { useMemo, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { problems } from '../data/problems';
-import { Code2, ChevronRight, BookOpen, CheckCircle, Circle, LogOut, User } from 'lucide-react';
+import { Code2, ChevronRight, BookOpen, CheckCircle, Circle, LogOut, User, Bell } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { AdminPanel } from '../components/AdminPanel';
 import '../index.css';
 
 export function Dashboard() {
@@ -30,6 +31,26 @@ export function Dashboard() {
       setCompletedProblems({});
     }
     
+    return () => unsubscribe();
+  }, [currentUser]);
+
+  const [showAdminPanel, setShowAdminPanel] = useState(false);
+  const [pendingCount, setPendingCount] = useState(0);
+
+  useEffect(() => {
+    let unsubscribe = () => {};
+    if (currentUser && currentUser.role === 'Admin') {
+      import('firebase/firestore').then(({ collection, query, where, onSnapshot }) => {
+        import('../config/firebase').then(({ db }) => {
+          const q = query(collection(db, 'access_requests'), where('status', '==', 'pending'));
+          unsubscribe = onSnapshot(q, (snapshot) => {
+            setPendingCount(snapshot.docs.length);
+          }, (err) => {
+            console.error("Failed to listen to requests:", err);
+          });
+        });
+      });
+    }
     return () => unsubscribe();
   }, [currentUser]);
 
@@ -85,12 +106,42 @@ export function Dashboard() {
               </div>
             </div>
             
+            {currentUser.role === 'Admin' && (
+              <button 
+                onClick={() => setShowAdminPanel(true)} 
+                className="button-secondary" 
+                style={{ padding: '0.5rem', position: 'relative' }} 
+                title="Admin Panel"
+              >
+                <Bell size={20} />
+                {pendingCount > 0 && (
+                  <span style={{
+                    position: 'absolute',
+                    top: '-5px', right: '-5px',
+                    backgroundColor: 'var(--error)',
+                    color: 'white',
+                    fontSize: '0.7rem',
+                    fontWeight: 'bold',
+                    width: '18px', height: '18px',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    {pendingCount}
+                  </span>
+                )}
+              </button>
+            )}
+
             <button onClick={logout} className="button-secondary" style={{ padding: '0.5rem 0.75rem' }} title="Sign Out">
               <LogOut size={16} />
             </button>
           </div>
         )}
       </header>
+
+      {showAdminPanel && <AdminPanel onClose={() => setShowAdminPanel(false)} />}
 
       <main style={{ padding: '3rem 2rem', maxWidth: '1000px', margin: '0 auto', width: '100%' }}>
         <h1 style={{ marginBottom: '0.5rem', fontSize: '2.5rem' }}>Your Exams</h1>

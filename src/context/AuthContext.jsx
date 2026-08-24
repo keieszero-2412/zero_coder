@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { authorizedEmails } from '../data/email_access';
+// import removed
 import { auth, db } from '../config/firebase';
 import { 
   createUserWithEmailAndPassword, 
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
             const userData = userDoc.data();
             
             // Re-verify role just in case email access changed
-            const { role, colorCode } = determineRole(user.email);
+            const { role, colorCode } = await determineRole(user.email);
             
             setCurrentUser({
               uid: user.uid,
@@ -61,18 +61,24 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // Determine user role and code color based on email
-  const determineRole = (email) => {
+  const determineRole = async (email) => {
     if (email === 'keieszero2412@gmail.com') {
       return { role: 'Admin', colorCode: 'Green' };
     }
-    if (authorizedEmails.includes(email)) {
-      return { role: 'User', colorCode: 'Blue' };
+    try {
+      const authRef = doc(db, 'authorized_emails', email);
+      const snap = await getDoc(authRef);
+      if (snap.exists()) {
+        return { role: 'User', colorCode: 'Blue' };
+      }
+    } catch (e) {
+      console.error(e);
     }
     return { role: 'Unauthorized', colorCode: 'Red' };
   };
 
   const checkEmailStatus = async (email) => {
-    const { role, colorCode } = determineRole(email);
+    const { role, colorCode } = await determineRole(email);
     let accountExists = false;
     
     try {
@@ -101,7 +107,7 @@ export const AuthProvider = ({ children }) => {
       throw new Error('Username already taken');
     }
 
-    const { role, colorCode } = determineRole(email);
+    const { role, colorCode } = await determineRole(email);
     
     // Create user in Firebase Auth
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
