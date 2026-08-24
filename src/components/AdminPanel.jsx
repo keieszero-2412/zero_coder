@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../config/firebase';
 import { collection, query, where, getDocs, doc, setDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
-import { X, Check, Trash2, Mail } from 'lucide-react';
+import { X, Check, Trash2, Mail, Plus } from 'lucide-react';
 import '../index.css';
 
 export function AdminPanel({ onClose }) {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [manualEmail, setManualEmail] = useState('');
 
   useEffect(() => {
     const q = query(collection(db, 'access_requests'), where('status', '==', 'pending'));
@@ -53,6 +54,22 @@ export function AdminPanel({ onClose }) {
     }
   };
 
+  const handleManualAdd = async (e) => {
+    e.preventDefault();
+    if (!manualEmail.trim()) return;
+    try {
+      await setDoc(doc(db, 'authorized_emails', manualEmail.trim().toLowerCase()), {
+        addedAt: new Date(),
+        addedBy: 'Admin (Manual)'
+      });
+      setManualEmail('');
+      alert("Email authorized successfully!");
+    } catch (err) {
+      console.error("Failed to authorize email:", err);
+      alert("Error authorizing email.");
+    }
+  };
+
   return (
     <div style={{
       position: 'fixed',
@@ -91,6 +108,24 @@ export function AdminPanel({ onClose }) {
           >
             <X size={24} />
           </button>
+        </div>
+
+        <div style={{ padding: '1.5rem 1.5rem 0', borderBottom: '1px solid var(--border-color)' }}>
+          <h3 style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>Manual Authorization</h3>
+          <form onSubmit={handleManualAdd} style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
+            <input 
+              type="email" 
+              value={manualEmail}
+              onChange={(e) => setManualEmail(e.target.value)}
+              placeholder="Enter email to grant Blue Code..."
+              style={{ flex: 1, padding: '0.625rem 0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-base)', color: 'var(--text-primary)', outline: 'none' }}
+              required
+            />
+            <button type="submit" className="button-primary" style={{ padding: '0.5rem 1rem' }}>
+              <Plus size={18} />
+              Authorize
+            </button>
+          </form>
         </div>
 
         <div style={{ padding: '1.5rem', overflowY: 'auto', flex: 1 }}>
