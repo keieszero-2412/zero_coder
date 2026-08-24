@@ -95,7 +95,31 @@ export function Auth() {
         await login(email, password);
       } else {
         // Register
-        await register(username, email, password);
+        try {
+          await register(username, email, password);
+        } catch (regErr) {
+          // If Auth account exists but Firestore doc was missing (due to previous partial failures)
+          if (regErr.code === 'auth/email-already-in-use') {
+            // Try to log them in instead
+            await login(email, password);
+            // The AuthContext onAuthStateChanged will handle the missing Firestore doc by creating it? 
+            // Actually let's manually heal it here to be safe.
+            const { db } = await import('../config/firebase');
+            const { doc, setDoc } = await import('firebase/firestore');
+            const { getAuth } = await import('firebase/auth');
+            const auth = getAuth();
+            if (auth.currentUser) {
+              await setDoc(doc(db, 'users', auth.currentUser.uid), {
+                username: username || email.split('@')[0],
+                email: email,
+                role: emailStatus.role,
+                colorCode: emailStatus.colorCode
+              });
+            }
+          } else {
+            throw regErr; // rethrow other errors
+          }
+        }
       }
       // Do not navigate here, the useEffect will trigger when AuthContext updates currentUser
     } catch (err) {
