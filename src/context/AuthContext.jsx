@@ -5,7 +5,8 @@ import {
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 
   signOut, 
-  onAuthStateChanged 
+  onAuthStateChanged,
+  fetchSignInMethodsForEmail
 } from 'firebase/auth';
 import { 
   doc, 
