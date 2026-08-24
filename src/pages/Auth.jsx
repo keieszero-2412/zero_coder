@@ -13,10 +13,13 @@ export function Auth() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [requestSent, setRequestSent] = useState(false);
+  const [rememberMe, setRememberMe] = useState(true);
+  const [showForgotPwd, setShowForgotPwd] = useState(false);
+  const [resetStatus, setResetStatus] = useState(null); // 'email', 'admin', or null
   
   const [isLoading, setIsLoading] = useState(false);
   
-  const { checkEmailStatus, login, register, currentUser, loading } = useAuth();
+  const { checkEmailStatus, login, register, resetPassword, currentUser, loading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -92,16 +95,16 @@ export function Auth() {
       setError('');
       if (emailStatus.accountExists) {
         // Log in
-        await login(email, password);
+        await login(email, password, rememberMe);
       } else {
         // Register
         try {
-          await register(username, email, password);
+          await register(username, email, password, rememberMe);
         } catch (regErr) {
           // If Auth account exists but Firestore doc was missing (due to previous partial failures)
           if (regErr.code === 'auth/email-already-in-use') {
             // Try to log them in instead
-            await login(email, password);
+            await login(email, password, rememberMe);
             // The AuthContext onAuthStateChanged will handle the missing Firestore doc by creating it? 
             // Actually let's manually heal it here to be safe.
             const { db } = await import('../config/firebase');
@@ -123,7 +126,13 @@ export function Auth() {
       }
       // Do not navigate here, the useEffect will trigger when AuthContext updates currentUser
     } catch (err) {
-      setError(err.message);
+      if (err.code === 'auth/invalid-credential') {
+        setError('Incorrect email or password. Please try again.');
+      } else if (err.code === 'auth/too-many-requests') {
+        setError('Too many failed login attempts. Please reset your password or try again later.');
+      } else {
+        setError(err.message);
+      }
       setIsLoading(false);
     }
   };
@@ -145,6 +154,43 @@ export function Auth() {
     } catch (err) {
       console.error("Failed to send request:", err);
       window.alert("Failed to send request. Please try again later.");
+    }
+  };
+
+  const handlePasswordReset = async () => {
+    setIsLoading(true);
+    try {
+      await resetPassword(email);
+      setResetStatus('email');
+      setError('');
+    } catch (err) {
+      setError("Could not send reset email. If your email is not real, please contact admin.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleAdminResetRequest = async () => {
+    setIsLoading(true);
+    try {
+      const { db } = await import('../config/firebase');
+      const { doc, setDoc, serverTimestamp } = await import('firebase/firestore');
+      
+      const requestRef = doc(db, 'password_reset_requests', email);
+      await setDoc(requestRef, {
+        email: email,
+        requestedAt: serverTimestamp(),
+        status: 'pending'
+      });
+      
+      setResetStatus('admin');
+      setError('');
+      window.alert("Your request for password reset has been sent to the admin. You will be notified once approved.");
+    } catch (err) {
+      console.error("Failed to send reset request:", err);
+      setError("Failed to send reset request. Please try again later.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -278,6 +324,50 @@ export function Auth() {
                   Use a different email
                 </button>
               </div>
+            ) : showForgotPwd ? (
+              <div style={{ textAlign: 'center', marginTop: '0.5rem' }}>
+                <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '0.5rem' }}>Forgot Password?</h3>
+                <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', fontSize: '0.875rem' }}>
+                  If your email is real, we can send you a password reset link. Otherwise, you can request the admin to manually reset it.
+                </p>
+                
+                {resetStatus ? (
+                  <div style={{ padding: '0.75rem', backgroundColor: 'rgba(34, 197, 94, 0.1)', color: '#22c55e', borderRadius: 'var(--radius-md)', fontSize: '0.875rem', marginBottom: '1rem' }}>
+                    {resetStatus === 'email' 
+                      ? "Password reset email sent successfully! Please check your inbox (and spam folder)."
+                      : "Request sent successfully! An admin will review your request shortly."}
+                  </div>
+                ) : (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1rem' }}>
+                    <button 
+                      onClick={handlePasswordReset}
+                      className="button-primary" 
+                      style={{ width: '100%', justifyContent: 'center', padding: '0.75rem' }}
+                      disabled={isLoading}
+                    >
+                      <Send size={18} />
+                      Send Reset Email
+                    </button>
+                    <button 
+                      onClick={handleAdminResetRequest}
+                      className="button-secondary" 
+                      style={{ width: '100%', justifyContent: 'center', padding: '0.75rem' }}
+                      disabled={isLoading}
+                    >
+                      Contact Admin to Reset
+                    </button>
+                  </div>
+                )}
+                
+                <button 
+                  onClick={() => { setShowForgotPwd(false); setResetStatus(null); setError(''); }} 
+                  className="button-secondary" 
+                  style={{ width: '100%', justifyContent: 'center', padding: '0.75rem', border: 'none', background: 'transparent' }}
+                >
+                  <ArrowLeft size={18} />
+                  Back to login
+                </button>
+              </div>
             ) : (
               <form onSubmit={handleAuthSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginTop: '0.5rem' }}>
                 {!emailStatus.accountExists && (
@@ -315,6 +405,28 @@ export function Auth() {
                       autoFocus
                     />
                   </div>
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.875rem' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', color: 'var(--text-secondary)' }}>
+                    <input 
+                      type="checkbox" 
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                      style={{ accentColor: 'var(--accent-primary)', cursor: 'pointer' }}
+                    />
+                    Remember me
+                  </label>
+                  
+                  {emailStatus.accountExists && (
+                    <button 
+                      type="button" 
+                      onClick={() => setShowForgotPwd(true)}
+                      style={{ background: 'none', border: 'none', color: 'var(--accent-primary)', cursor: 'pointer', padding: 0 }}
+                    >
+                      Forgot password?
+                    </button>
+                  )}
                 </div>
 
                 <button 

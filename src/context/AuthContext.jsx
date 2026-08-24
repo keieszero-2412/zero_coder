@@ -5,7 +5,11 @@ import {
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 
   signOut, 
-  onAuthStateChanged
+  onAuthStateChanged,
+  setPersistence,
+  browserLocalPersistence,
+  browserSessionPersistence,
+  sendPasswordResetEmail
 } from 'firebase/auth';
 import { 
   doc, 
@@ -102,7 +106,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const register = async (username, email, password) => {
+  const register = async (username, email, password, remember = true) => {
     // Check if username already exists
     const usersRef = collection(db, 'users');
     const q = query(usersRef, where('username', '==', username));
@@ -113,6 +117,9 @@ export const AuthProvider = ({ children }) => {
     }
 
     const { role, colorCode } = await determineRole(email);
+    
+    // Set persistence
+    await setPersistence(auth, remember ? browserLocalPersistence : browserSessionPersistence);
     
     // Create user in Firebase Auth
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -129,13 +136,18 @@ export const AuthProvider = ({ children }) => {
     return user;
   };
 
-  const login = async (email, password) => {
+  const login = async (email, password, remember = true) => {
+    await setPersistence(auth, remember ? browserLocalPersistence : browserSessionPersistence);
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     return userCredential.user;
   };
 
   const logout = async () => {
     await signOut(auth);
+  };
+  
+  const resetPassword = async (email) => {
+    await sendPasswordResetEmail(auth, email);
   };
 
   const value = {
@@ -144,6 +156,7 @@ export const AuthProvider = ({ children }) => {
     register,
     login,
     logout,
+    resetPassword,
     loading
   };
 
