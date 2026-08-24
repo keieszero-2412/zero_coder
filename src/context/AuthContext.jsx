@@ -5,8 +5,7 @@ import {
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 
   signOut, 
-  onAuthStateChanged,
-  fetchSignInMethodsForEmail
+  onAuthStateChanged
 } from 'firebase/auth';
 import { 
   doc, 
@@ -82,18 +81,19 @@ export const AuthProvider = ({ children }) => {
     let accountExists = false;
     
     try {
-      // Run Firestore check and Firebase Auth check in parallel for double speed!
-      const [roleData, methods] = await Promise.all([
+      // Run Firestore checks in parallel for double speed!
+      const usersRef = collection(db, 'users');
+      const q = query(usersRef, where('email', '==', email));
+      
+      const [roleData, userSnap] = await Promise.all([
         determineRole(email),
-        fetchSignInMethodsForEmail(auth, email).catch(error => {
-          console.error("Auth fetch error:", error);
-          return [];
+        getDocs(q).catch(err => {
+          console.error("Users fetch error:", err);
+          return { empty: true };
         })
       ]);
       
-      if (methods && methods.length > 0) {
-        accountExists = true;
-      }
+      accountExists = !userSnap.empty;
       
       return { role: roleData.role, colorCode: roleData.colorCode, accountExists };
     } catch (e) {
