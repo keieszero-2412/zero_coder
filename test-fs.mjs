@@ -16,10 +16,15 @@ const db = getFirestore(app);
 
 async function test() {
   try {
-    const snap = await getDocs(collection(db, 'users'));
-    console.log("Success! Found", snap.size, "users.");
+    const reqSnap = await getDocs(collection(db, 'password_reset_requests'));
+    console.log("Found", reqSnap.size, "password reset requests.");
+    reqSnap.forEach(doc => {
+      console.log("-", doc.id, "=>", doc.data());
+    });
   } catch(e) {
     console.log("Error:", e.message);
   }
 }
+
+test();
 test();

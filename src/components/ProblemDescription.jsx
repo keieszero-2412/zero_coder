@@ -1,6 +1,7 @@
 import { BookOpen, Lightbulb } from 'lucide-react';
+import { AIAssistant } from './AIAssistant';
 
-export function ProblemDescription({ problem, failedAttempts = 0 }) {
+export function ProblemDescription({ problem, failedAttempts = 0, userCode, testResults }) {
   if (!problem) return null;
 
   return (
@@ -35,6 +36,14 @@ export function ProblemDescription({ problem, failedAttempts = 0 }) {
             {problem.hint || "Hãy đọc kỹ lại yêu cầu đề bài, chú ý đến các trường hợp đặc biệt (edge cases), và kiểm tra xem hàm của bạn đã return đúng giá trị yêu cầu (thay vì chỉ dùng lệnh print) hay chưa."}
           </div>
         </div>
+      )}
+
+      {failedAttempts > 2 && (
+        <AIAssistant 
+          problem={problem} 
+          userCode={userCode} 
+          testResults={testResults} 
+        />
       )}
     </div>
   );

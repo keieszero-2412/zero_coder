@@ -1,0 +1,171 @@
+mocktest4
+1. Một đơn hàng gồm nhiều mặt hàng. prices là đơn giá, quantities là số lượng, vat_rate là thuế VAT tính theo phần trăm (ví dụ 8 nghĩa là 8%).
+
+Yêu cầu: Viết hàm order_total(prices, quantities, vat_rate) trả về tổng tiền phải trả đã bao gồm VAT, làm tròn 2 chữ số thập phân.
+
+Tiền hàng = tổng của đơn giá × số lượng; sau đó cộng VAT trên tổng tiền hàng.
+Đơn hàng rỗng → trả về 0.0.
+Ví dụ
+
+print(order_total([100.0, 50.0], [1, 2], 8.0))
+Kết quả:
+
+216.0
+Tiền hàng = 100 + 100 = 200; VAT 8% → 200 × 1.08 = 216.0
+
+For example:
+
+Test	Result
+print(order_total([100.0, 50.0], [1, 2], 8.0))
+216.0
+Answer:(penalty regime: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 %)
+
+2. Sàn thương mại điện tử tính phí giao hàng theo cân nặng (đơn vị: nghìn đồng).
+
+Cân nặng (kg)	Phí giao hàng
+đến 1 kg	20
+trên 1 đến 3 kg	20 + 10 × (số kg vượt quá 1)
+trên 3 kg	40 + 8 × (số kg vượt quá 3)
+Yêu cầu: Viết hàm shipping_fee(weight) trả về phí giao hàng, làm tròn 2 chữ số thập phân.
+
+Ví dụ
+
+print(shipping_fee(2.5))
+Kết quả:
+
+35.0
+2.5 kg nằm ở bậc 2: 20 + 10 × (2.5 − 1) = 20 + 15 = 35.0
+
+For example:
+
+Test	Result
+print(shipping_fee(2.5))
+35.0
+Answer:(penalty regime: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 %)
+Test	Expected	Got	
+print(shipping_fee(2.5))
+35.0
+35.0
+print(shipping_fee(0.5))
+20.0
+20.0
+print(shipping_fee(1))
+20.0
+20.0
+print(shipping_fee(3))
+40.0
+40
+print(shipping_fee(5.5))
+60.0
+60.0
+Passed all tests!  
+3. Đơn hàng được xuất thành danh sách các dict, mỗi đơn có khoá "channel" (kênh bán), "price" và "quantity".
+
+Yêu cầu: Viết hàm revenue_by_channel(orders) trả về một dict gộp doanh thu theo từng kênh bán.
+
+Doanh thu mỗi đơn = price × quantity.
+Mỗi giá trị làm tròn 2 chữ số thập phân; thứ tự khoá theo lần xuất hiện đầu tiên.
+Danh sách rỗng → trả về {}.
+Ví dụ
+
+print(revenue_by_channel([{"channel": "Shopee", "price": 100.0, "quantity": 2}, {"channel": "Web", "price": 50.0, "quantity": 1}, {"channel": "Shopee", "price": 25.0, "quantity": 4}]))
+Kết quả:
+
+{'Shopee': 300.0, 'Web': 50.0}
+For example:
+
+Test	Result
+print(revenue_by_channel([{"channel": "Shopee", "price": 100.0, "quantity": 2}, {"channel": "Web", "price": 50.0, "quantity": 1}, {"channel": "Shopee", "price": 25.0, "quantity": 4}]))
+{'Shopee': 300.0, 'Web': 50.0}
+Answer:(penalty regime: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 %)
+	
+print(revenue_by_channel([{"channel": "Shopee", "price": 100.0, "quantity": 2}, {"channel": "Web", "price": 50.0, "quantity": 1}, {"channel": "Shopee", "price": 25.0, "quantity": 4}]))
+{'Shopee': 300.0, 'Web': 50.0}
+{'Shopee': 300.0, 'Web': 50.0}
+print(revenue_by_channel([{"channel": "Tiktok", "price": 12.5, "quantity": 4}, {"channel": "Lazada", "price": 30.0, "quantity": 3}, {"channel": "Tiktok", "price": 10.0, "quantity": 5}, {"channel": "Web", "price": 200.0, "quantity": 1}]))
+{'Tiktok': 100.0, 'Lazada': 90.0, 'Web': 200.0}
+{'Tiktok': 100.0, 'Lazada': 90.0, 'Web': 200.0}
+print(revenue_by_channel([{"channel": "Web", "price": 19.99, "quantity": 1}]))
+{'Web': 19.99}
+{'Web': 19.99}
+print(revenue_by_channel([{"channel": "A", "price": 1.5, "quantity": 2}, {"channel": "A", "price": 2.0, "quantity": 5}]))
+{'A': 13.0}
+{'A': 13.0}
+print(revenue_by_channel([]))
+4. Nguyên lý Pareto (80/20): thường một số ít sản phẩm tạo ra phần lớn doanh thu. Để kiểm chứng, ta xếp doanh thu từ cao xuống thấp rồi xem tỷ trọng tích luỹ.
+
+Yêu cầu: Viết hàm cumulative_share(revenues) trả về danh sách tỷ trọng tích luỹ (%), làm tròn 2 chữ số thập phân.
+
+Sắp xếp doanh thu giảm dần trước khi cộng dồn.
+Phần tử thứ i = (tổng i+1 giá trị lớn nhất ÷ tổng tất cả) × 100.
+Danh sách rỗng (hoặc tổng bằng 0) → trả về []. Phần tử cuối luôn là 100.0.
+Ví dụ
+
+print(cumulative_share([10, 40, 50]))
+Kết quả:
+
+[50.0, 90.0, 100.0]
+Xếp giảm dần: 50, 40, 10 (tổng 100) → 50%, 90%, 100%
+
+For example:
+
+Test	Result
+print(cumulative_share([10, 40, 50]))
+[50.0, 90.0, 100.0]
+Answer:(penalty regime: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 %)
+	Test	Expected	Got	
+print(cumulative_share([10, 40, 50]))
+[50.0, 90.0, 100.0]
+[50.0, 90.0, 100.0]
+print(cumulative_share([50, 30, 20]))
+[50.0, 80.0, 100.0]
+[50.0, 80.0, 100.0]
+print(cumulative_share([25, 25, 25, 25]))
+[25.0, 50.0, 75.0, 100.0]
+[25.0, 50.0, 75.0, 100.0]
+print(cumulative_share([100]))
+[100.0]
+[100.0]
+print(cumulative_share([]))
+[]
+[]
+
+5. Hai dict có cùng bộ khoá: prices là giá bán, costs là giá vốn của từng sản phẩm.
+
+Yêu cầu: Viết hàm margin_ranking(prices, costs) trả về danh sách tên sản phẩm xếp theo biên lợi nhuận từ cao xuống thấp.
+
+Biên lợi nhuận (%) = (giá bán − giá vốn) / giá bán × 100.
+Bỏ qua sản phẩm có giá bán nhỏ hơn hoặc bằng 0.
+Hai sản phẩm cùng biên lợi nhuận → xếp theo thứ tự bảng chữ cái (A → Z).
+Ví dụ
+
+print(margin_ranking({"A": 100.0, "B": 200.0, "C": 50.0}, {"A": 60.0, "B": 100.0, "C": 45.0}))
+Kết quả:
+
+['B', 'A', 'C']
+Biên lợi nhuận: A 40%, B 50%, C 10%.
+
+For example:
+
+Test	Result
+print(margin_ranking({"A": 100.0, "B": 200.0, "C": 50.0}, {"A": 60.0, "B": 100.0, "C": 45.0}))
+['B', 'A', 'C']
+Answer:(penalty regime: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 %)
+
+Full screen
+Test	Expected	Got	
+print(margin_ranking({"A": 100.0, "B": 200.0, "C": 50.0}, {"A": 60.0, "B": 100.0, "C": 45.0}))
+['B', 'A', 'C']
+['B', 'A', 'C']
+print(margin_ranking({"A": 100.0, "B": 50.0}, {"A": 50.0, "B": 25.0}))
+['A', 'B']
+['A', 'B']
+print(margin_ranking({"A": 100.0, "B": 100.0}, {"A": 120.0, "B": 50.0}))
+['B', 'A']
+['B', 'A']
+print(margin_ranking({"A": 100.0, "B": 0.0}, {"A": 60.0, "B": 10.0}))
+['A']
+['A']
+print(margin_ranking({}, {}))
+[]
+[]

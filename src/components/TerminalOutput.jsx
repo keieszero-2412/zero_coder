@@ -2,7 +2,7 @@ import { Terminal } from 'lucide-react';
 
 export function TerminalOutput({ output, isLoaded, error }) {
   return (
-    <div className="terminal-section">
+    <div className="terminal-section" style={{ height: '100%', minHeight: '0', flexShrink: 0 }}>
       <div className="section-header">
         <Terminal size={16} />
         <span>Terminal Output</span>

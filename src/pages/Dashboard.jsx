@@ -1,5 +1,5 @@
 import { useMemo, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { problems } from '../data/problems';
 import { Code2, ChevronRight, BookOpen, CheckCircle, Circle, LogOut, User, Bell } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
@@ -9,6 +9,24 @@ import '../index.css';
 export function Dashboard() {
   const [completedProblems, setCompletedProblems] = useState({});
   const { currentUser, logout } = useAuth();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.returnToId) {
+      setTimeout(() => {
+        const el = document.getElementById(`problem-${location.state.returnToId}`);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // Highlight briefly for better UX
+          el.style.transition = 'background-color 0.5s ease';
+          el.style.backgroundColor = 'rgba(59, 130, 246, 0.2)'; // Tailwind blue-500 with opacity
+          setTimeout(() => {
+            el.style.backgroundColor = '';
+          }, 1500);
+        }
+      }, 100);
+    }
+  }, [location.state]);
 
   useEffect(() => {
     let unsubscribe = () => {};
@@ -69,19 +87,39 @@ export function Dashboard() {
   const categories = useMemo(() => {
     const cats = {};
     for (const p of problems) {
-      if (!cats[p.category]) cats[p.category] = [];
-      cats[p.category].push(p);
+      let catName = p.category;
+      if (catName === "Mid-term practice") {
+        catName = "Coding practice";
+      }
+      if (!cats[catName]) cats[catName] = [];
+      cats[catName].push(p);
     }
-    // Add empty placeholder for "Coding practice" if it doesn't exist
-    if (!cats["Coding practice"]) {
-      cats["Coding practice"] = [];
+    
+    const sortedCats = {};
+    for (const key of Object.keys(cats)) {
+      if (key !== "Coding practice") {
+        sortedCats[key] = cats[key];
+      }
     }
-    return cats;
+    if (cats["Coding practice"]) {
+      sortedCats["Coding practice"] = cats["Coding practice"];
+    }
+    
+    return sortedCats;
   }, []);
 
   return (
     <div className="app-container" style={{ overflow: 'auto' }}>
-      <header className="header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <header className="header" style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center',
+        position: 'sticky',
+        top: 0,
+        zIndex: 50,
+        backgroundColor: 'rgba(15, 17, 21, 0.95)',
+        backdropFilter: 'blur(12px)'
+      }}>
         <div className="header-title" style={{ fontSize: '1.75rem', fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
           <img 
             src="/zerocoder-logo-transparent.png" 
@@ -158,15 +196,51 @@ export function Dashboard() {
 
       {showAdminPanel && <AdminPanel onClose={() => setShowAdminPanel(false)} />}
 
-      <main style={{ padding: '3rem 2rem', maxWidth: '1000px', margin: '0 auto', width: '100%' }}>
-        <h1 style={{ marginBottom: '0.5rem', fontSize: '2.5rem' }}>Your Exams</h1>
-        <p style={{ color: 'var(--text-secondary)', marginBottom: '3rem', fontSize: '1.125rem' }}>
+      <main style={{ padding: '0 2rem 2rem 2rem', maxWidth: '1000px', margin: '0 auto', width: '100%' }}>
+        <h1 style={{ marginBottom: '0.5rem', fontSize: '2.5rem', marginTop: '2rem' }}>Your Exams</h1>
+        <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', fontSize: '1.125rem' }}>
           Select a problem to start coding. Your progress is automatically saved.
         </p>
 
+        {/* Sticky Category Navigation - sits below title normally, sticks under header on scroll */}
+        <div style={{ 
+          position: 'sticky', 
+          top: '31px', 
+          zIndex: 40, 
+          backgroundColor: 'var(--bg-base)', 
+          padding: '30px 0 0.75rem 0',
+          margin: 0,
+          marginTop: '-30px',
+          marginBottom: '3rem',
+          borderBottom: '1px solid var(--border-color)',
+          display: 'flex',
+          gap: '1rem',
+          overflowX: 'auto'
+        }}>
+          {Object.keys(categories).map(cat => (
+            <button 
+              key={cat} 
+              className="button-secondary"
+              onClick={() => {
+                const el = document.getElementById(`category-${cat.replace(/\s+/g, '-')}`);
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }}
+              style={{ whiteSpace: 'nowrap' }}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
         {Object.entries(categories).map(([category, items]) => (
-          <div key={category} style={{ display: 'grid', gridTemplateColumns: '220px 1fr', gap: '2rem', marginBottom: '4rem', alignItems: 'start' }}>
-            <div style={{ position: 'sticky', top: '100px' }}>
+          <div 
+            key={category} 
+            id={`category-${category.replace(/\s+/g, '-')}`}
+            style={{ display: 'grid', gridTemplateColumns: '220px 1fr', gap: '2rem', marginBottom: '4rem', alignItems: 'start', scrollMarginTop: '110px' }}
+          >
+            <div style={{ position: 'sticky', top: '110px' }}>
               <h2 style={{ fontSize: '1.75rem', margin: 0, color: 'var(--text-primary)', borderLeft: '4px solid var(--accent-primary)', paddingLeft: '1rem' }}>
                 {category}
               </h2>
@@ -181,7 +255,7 @@ export function Dashboard() {
                 {items.map((problem) => {
                   const isCompleted = completedProblems[problem.id];
                   return (
-                    <Link to={`/exam/${problem.id}`} key={problem.id} className="problem-list-item glass-panel">
+                    <Link to={`/exam/${problem.id}`} key={problem.id} id={`problem-${problem.id}`} className="problem-list-item glass-panel">
                       <div className="problem-list-icon">
                         {isCompleted ? (
                           <CheckCircle size={20} color="var(--accent-primary)" />
