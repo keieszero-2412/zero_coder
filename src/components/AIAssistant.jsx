@@ -298,6 +298,11 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
         </button>
       </form>
       
+      {/* Disclaimer */}
+      <div style={{ textAlign: 'center', fontSize: '0.7rem', color: 'var(--text-tertiary)', marginTop: '0.5rem' }}>
+        AI can make mistakes. Please review the code carefully.
+      </div>
+      
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes spin {
           0% { transform: rotate(0deg); }
