@@ -198,7 +198,7 @@ export function Dashboard() {
 
       <main style={{ padding: '0 2rem 2rem 2rem', maxWidth: '1000px', margin: '0 auto', width: '100%' }}>
         <h1 style={{ marginBottom: '0.5rem', fontSize: '2.5rem', marginTop: '2rem' }}>Your Exams</h1>
-        <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', fontSize: '1.125rem' }}>
+        <p style={{ color: 'var(--text-secondary)', marginBottom: '2.5rem', fontSize: '1.125rem', position: 'relative', zIndex: 1 }}>
           Select a problem to start coding. Your progress is automatically saved.
         </p>
 
