@@ -10,8 +10,7 @@ import { GoogleGenAI } from '@google/genai';
 const providers = [];
 
 // 1. Gemini (Google)
-// Split strings to bypass GitHub push protection regex
-const geminiKey = "AQ.Ab8RN6LA0-dCPoaO" + "8z-2_TjjQDDzaW0dF" + "xMBa3gPw7vO-NPH3w";
+const geminiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
 if (geminiKey) {
   providers.push({
     name: 'Gemini',
@@ -23,7 +22,7 @@ if (geminiKey) {
 }
 
 // 2. Groq (Llama 3.3 70B - very fast)
-const groqKey = "gsk_Kw6pfNsZ2N" + "pL6KQ5ysl4WGdy" + "b3FYwCCk6W9ZNjtWRoXA5HxLGhLT";
+const groqKey = import.meta.env.VITE_GROQ_API_KEY || '';
 if (groqKey) {
   providers.push({
     name: 'Groq',
@@ -35,7 +34,7 @@ if (groqKey) {
 }
 
 // 3. Cerebras (Llama 3.3 70B - very fast)
-const cerebrasKey = "csk-y9n23w5h242p" + "c2rhe25ne22y53tk" + "93yne2r23rdvkpp8k655";
+const cerebrasKey = import.meta.env.VITE_CEREBRAS_API_KEY || '';
 if (cerebrasKey) {
   providers.push({
     name: 'Cerebras',
@@ -47,7 +46,7 @@ if (cerebrasKey) {
 }
 
 // 4. Mistral
-const mistralKey = "hzVbzNQISajZ" + "jyXnDFT33WTW" + "fQAQQDXC";
+const mistralKey = import.meta.env.VITE_MISTRAL_API_KEY || '';
 if (mistralKey) {
   providers.push({
     name: 'Mistral',
