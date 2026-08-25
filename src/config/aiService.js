@@ -27,7 +27,7 @@ if (groqKey) {
   providers.push({
     name: 'Groq',
     type: 'openai-compatible',
-    model: 'llama-3.3-70b-versatile',
+    model: 'groq/compound',
     apiKey: groqKey,
     baseUrl: 'https://api.groq.com/openai/v1/chat/completions',
   });
@@ -39,7 +39,7 @@ if (cerebrasKey) {
   providers.push({
     name: 'Cerebras',
     type: 'openai-compatible',
-    model: 'llama-3.3-70b',
+    model: 'gpt-oss-120b',
     apiKey: cerebrasKey,
     baseUrl: 'https://api.cerebras.ai/v1/chat/completions',
   });
