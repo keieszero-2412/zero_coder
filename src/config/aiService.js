@@ -173,7 +173,7 @@ A student is working on the following problem.
 ${problem.title}
 
 ### Problem Description:
-${problem.description.replace(/<[^>]+>/g, '')}
+${problem.description}
 
 ### Student's Current Code:
 \`\`\`python
