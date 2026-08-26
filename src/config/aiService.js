@@ -33,15 +33,15 @@ if (groqKey) {
   });
 }
 
-// 3. Cerebras (Llama 3.3 70B - very fast)
-const cerebrasKey = import.meta.env.VITE_CEREBRAS_API_KEY || '';
-if (cerebrasKey) {
+// 3. OpenRouter (Free Llama/Gemma)
+const openRouterKey = import.meta.env.VITE_OPENROUTER_API_KEY || '';
+if (openRouterKey) {
   providers.push({
-    name: 'Cerebras',
+    name: 'OpenRouter',
     type: 'openai-compatible',
-    model: 'gpt-oss-120b',
-    apiKey: cerebrasKey,
-    baseUrl: 'https://api.cerebras.ai/v1/chat/completions',
+    model: 'openrouter/free',
+    apiKey: openRouterKey,
+    baseUrl: 'https://openrouter.ai/api/v1/chat/completions',
   });
 }
 
