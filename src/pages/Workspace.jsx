@@ -238,7 +238,7 @@ export function Workspace() {
             disabled={!isLoaded || isRunning}
           >
             <CheckCircle size={16} />
-            Submit
+            Check Code
           </button>
           
           {currentUser && (
