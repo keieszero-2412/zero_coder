@@ -278,6 +278,7 @@ export function Workspace() {
         
         {/* Sidebar Drag Handle */}
         <div 
+          className="drag-handle"
           onMouseDown={() => setIsSidebarDragging(true)}
           style={{
             width: '4px',
@@ -357,6 +358,7 @@ export function Workspace() {
           
           {/* Right Panel: AI Assistant */}
           <div 
+            className="drag-handle"
             onMouseDown={() => setIsDragging(true)}
             style={{
               display: showAIInEditor ? 'block' : 'none',
