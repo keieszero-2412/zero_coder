@@ -178,8 +178,8 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 'bold', color: 'var(--accent-primary)' }}>
             <div style={{ 
-              width: 18, 
-              height: 18, 
+              width: 24, 
+              height: 24, 
               backgroundColor: 'currentColor', 
               maskImage: 'url(/zerocoder-logo.png)', 
               maskSize: 'contain', 
@@ -193,7 +193,7 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
             AI Assistant
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.2rem' }}>
-            <Cpu size={12} /> Powered by {currentProvider}
+            Powered by {currentProvider}
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
