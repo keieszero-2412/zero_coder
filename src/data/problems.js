@@ -1865,7 +1865,7 @@ export const problems = [
     "id": "mock1_1",
     "category": "Mock test 1",
     "title": "1. Tính tổng doanh thu",
-    "description": "<p>Một cửa hàng bán <code>n</code> mặt hàng. Danh sách <code>prices</code> là đơn giá của từng mặt hàng, <code>quantities</code> là số lượng bán được tương ứng.</p><p>Yêu cầu: Viết hàm <code>total_revenue(prices, quantities)</code> trả về tổng doanh thu, làm tròn 2 chữ số thập phân.</p><ul><li>Doanh thu mỗi mặt hàng = đơn giá × số lượng.</li><li>Hai danh sách luôn có cùng độ dài; nếu rỗng thì trả về 0.0.</li></ul>",
+    "description": "<p>Một cửa hàng bán <code>n</code> mặt hàng. Danh sách <code>prices</code> là đơn giá của từng mặt hàng, <code>quantities</code> là số lượng bán được tương ứng.</p><p>Yêu cầu: Viết hàm <code>total_revenue(prices, quantities)</code> trả về tổng doanh thu, làm tròn 2 chữ số thập phân.</p><ul><li>Doanh thu mỗi mặt hàng = đơn giá × số lượng.</li><li>Nếu hai danh sách có độ dài khác nhau, trả về None. Nếu rỗng thì trả về 0.0.</li></ul>",
     "hint": "Sử dụng vòng lặp để nhân từng giá trị tương ứng và cộng tổng, cuối cùng dùng hàm round(tổng, 2).",
     "initialCode": "def total_revenue(prices, quantities):\n    # Write your code here\n",
     "testCases": [
@@ -1893,8 +1893,13 @@ export const problems = [
         "id": 5,
         "code": "print(total_revenue([], []))",
         "expected": "0.0"
-      }
-    ]
+      },
+        {
+          "id": 6,
+          "code": "print(total_revenue([10.5, 20.0], [2, 3, 4]))",
+          "expected": "None"
+        }
+      ]
   },
   {
     "id": "mock1_2",
