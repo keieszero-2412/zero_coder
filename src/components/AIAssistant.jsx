@@ -120,7 +120,7 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
       }
       
       onProposeFix(extractedCode);
-      if (onClose) onClose();
+      // Đã xoá if (onClose) onClose(); để cửa sổ không bị tắt
     } catch (err) {
       setError(err.message || 'An error occurred while communicating with the AI.');
     } finally {

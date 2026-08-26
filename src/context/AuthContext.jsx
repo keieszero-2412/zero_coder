@@ -66,9 +66,23 @@ export const AuthProvider = ({ children }) => {
 
   // Determine user role and code color based on email
   const determineRole = async (email) => {
+    // 1. Hardcoded admin always gets Admin / Green
     if (email === 'keieszero2412@gmail.com') {
       return { role: 'Admin', colorCode: 'Green' };
     }
+
+    // 2. Check if global bypass is active
+    try {
+      const settingsRef = doc(db, 'authorized_emails', 'bypass@zerocoder.admin');
+      const settingsSnap = await getDoc(settingsRef);
+      if (settingsSnap.exists() && settingsSnap.data().bypassBlueCode) {
+        return { role: 'User', colorCode: 'Blue' };
+      }
+    } catch (e) {
+      console.error("Failed to fetch settings:", e);
+    }
+
+    // 3. Fallback to normal authorized_emails check
     try {
       const authRef = doc(db, 'authorized_emails', email);
       const snap = await getDoc(authRef);

@@ -9,6 +9,7 @@ export function AdminPanel({ onClose }) {
   const [resetRequests, setResetRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [manualEmail, setManualEmail] = useState('');
+  const [bypassAuth, setBypassAuth] = useState(false);
 
   useEffect(() => {
     const qAccess = query(collection(db, 'access_requests'), where('status', '==', 'pending'));
@@ -40,9 +41,18 @@ export function AdminPanel({ onClose }) {
       setLoading(false);
     });
 
+    const unsubscribeSettings = onSnapshot(doc(db, 'authorized_emails', 'bypass@zerocoder.admin'), (docSnap) => {
+      if (docSnap.exists()) {
+        setBypassAuth(docSnap.data().bypassBlueCode || false);
+      } else {
+        setBypassAuth(false);
+      }
+    });
+
     return () => {
       unsubscribeAccess();
       unsubscribeReset();
+      unsubscribeSettings();
     };
   }, []);
 
@@ -107,6 +117,15 @@ export function AdminPanel({ onClose }) {
     }
   };
 
+  const toggleBypass = async () => {
+    try {
+      await setDoc(doc(db, 'authorized_emails', 'bypass@zerocoder.admin'), { bypassBlueCode: !bypassAuth }, { merge: true });
+    } catch (err) {
+      console.error("Failed to toggle bypass:", err);
+      alert("Error toggling bypass: " + err.message);
+    }
+  };
+
   return (
     <div style={{
       position: 'fixed',
@@ -148,6 +167,31 @@ export function AdminPanel({ onClose }) {
         </div>
 
         <div style={{ padding: '1.5rem 1.5rem 0', borderBottom: '1px solid var(--border-color)' }}>
+          <h3 style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>Global Settings</h3>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', padding: '1rem', backgroundColor: 'var(--bg-surface-elevated)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+            <div>
+              <div style={{ fontWeight: 500, color: 'var(--text-primary)' }}>Bypass Request Access</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '0.25rem' }}>Auto accept all emails without requesting access</div>
+            </div>
+            <button 
+              onClick={toggleBypass}
+              style={{
+                padding: '0.5rem 1rem',
+                backgroundColor: bypassAuth ? 'rgba(34, 197, 94, 0.1)' : 'rgba(239, 68, 68, 0.1)',
+                color: bypassAuth ? '#22c55e' : 'var(--error)',
+                border: '1px solid',
+                borderColor: bypassAuth ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)',
+                borderRadius: 'var(--radius-md)',
+                cursor: 'pointer',
+                fontWeight: 600,
+                width: '80px',
+                textAlign: 'center'
+              }}
+            >
+              {bypassAuth ? 'ON' : 'OFF'}
+            </button>
+          </div>
+          
           <h3 style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>Manual Authorization</h3>
           <form onSubmit={handleManualAdd} style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
             <input 
