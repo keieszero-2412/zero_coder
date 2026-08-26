@@ -177,7 +177,19 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--border-color)' }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 'bold', color: 'var(--accent-primary)' }}>
-            <Bot size={18} />
+            <div style={{ 
+              width: 18, 
+              height: 18, 
+              backgroundColor: 'currentColor', 
+              maskImage: 'url(/zerocoder-logo.png)', 
+              maskSize: 'contain', 
+              maskRepeat: 'no-repeat', 
+              maskPosition: 'center',
+              WebkitMaskImage: 'url(/zerocoder-logo.png)',
+              WebkitMaskSize: 'contain',
+              WebkitMaskRepeat: 'no-repeat',
+              WebkitMaskPosition: 'center'
+            }} />
             AI Assistant
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.2rem' }}>
@@ -202,7 +214,21 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
         
         {messages.length === 0 && !isLoading && !error && (
           <div style={{ margin: 'auto', textAlign: 'center', color: 'var(--text-secondary)', padding: '2rem' }}>
-            <Bot size={40} style={{ margin: '0 auto 1rem', opacity: 0.5 }} />
+            <div style={{ 
+              width: 40, 
+              height: 40, 
+              backgroundColor: 'currentColor', 
+              maskImage: 'url(/zerocoder-logo.png)', 
+              maskSize: 'contain', 
+              maskRepeat: 'no-repeat', 
+              maskPosition: 'center',
+              WebkitMaskImage: 'url(/zerocoder-logo.png)',
+              WebkitMaskSize: 'contain',
+              WebkitMaskRepeat: 'no-repeat',
+              WebkitMaskPosition: 'center',
+              margin: '0 auto 1rem',
+              opacity: 0.5
+            }} />
             <p>How can I help you with this problem?</p>
             <p style={{ fontSize: '0.85rem', marginTop: '0.5rem' }}>You can ask a question or use the suggestions below.</p>
           </div>
