@@ -15,7 +15,7 @@ if (groqKey) {
   providers.push({
     name: 'Groq',
     type: 'openai-compatible',
-    model: 'llama-3.3-70b-versatile',
+    model: 'groq/compound',
     apiKey: groqKey,
     baseUrl: 'https://api.groq.com/openai/v1/chat/completions',
   });
@@ -27,7 +27,7 @@ if (geminiKey) {
   providers.push({
     name: 'Gemini',
     type: 'gemini',
-    model: 'gemini-1.5-flash',
+    model: 'gemini-3.6-flash',
     apiKey: geminiKey,
     client: new GoogleGenAI({ apiKey: geminiKey }),
   });
