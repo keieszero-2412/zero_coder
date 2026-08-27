@@ -1,7 +1,7 @@
 import { useMemo, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { problems } from '../data/problems';
-import { Code2, ChevronRight, BookOpen, CheckCircle, Circle, LogOut, User, Bell } from 'lucide-react';
+import { Code2, ChevronRight, BookOpen, CheckCircle, Circle, LogOut, User, Bell, Flag } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { AdminPanel } from '../components/AdminPanel';
 import FeedbackWidget from '../components/FeedbackWidget';
@@ -9,6 +9,7 @@ import '../index.css';
 
 export function Dashboard() {
   const [completedProblems, setCompletedProblems] = useState({});
+  const [flaggedProblems, setFlaggedProblems] = useState({});
   const { currentUser, logout } = useAuth();
   const location = useLocation();
 
@@ -26,6 +27,14 @@ export function Dashboard() {
           }, 1500);
         }
       }, 100);
+    }
+    
+    // Load flagged problems
+    try {
+      const flagged = JSON.parse(localStorage.getItem('flagged_problems') || '{}');
+      setFlaggedProblems(flagged);
+    } catch (e) {
+      console.error(e);
     }
   }, [location.state]);
 
@@ -272,7 +281,12 @@ export function Dashboard() {
                         )}
                       </div>
                       <div className="problem-list-content">
-                        <h3 className="problem-list-title">{problem.title}</h3>
+                        <h3 className="problem-list-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          {problem.title}
+                          {flaggedProblems[problem.id] && (
+                            <Flag size={14} fill="#fbbf24" color="#fbbf24" title="Flagged for review" />
+                          )}
+                        </h3>
                         <div className="problem-list-desc" dangerouslySetInnerHTML={{ __html: problem.description.substring(0, 80) + '...' }} />
                       </div>
                       <div className="problem-list-action">

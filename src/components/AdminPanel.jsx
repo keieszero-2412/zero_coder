@@ -11,6 +11,7 @@ export function AdminPanel({ onClose }) {
   const [loading, setLoading] = useState(true);
   const [manualEmail, setManualEmail] = useState('');
   const [bypassAuth, setBypassAuth] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     const qAccess = query(collection(db, 'access_requests'), where('status', '==', 'pending'));
@@ -420,18 +421,18 @@ export function AdminPanel({ onClose }) {
                         {(fb.imageUrls && fb.imageUrls.length > 0) ? (
                           <div style={{ marginTop: '0.5rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                             {fb.imageUrls.map((url, i) => (
-                              <a key={i} href={url} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', color: 'var(--accent-primary)', textDecoration: 'none', padding: '0.5rem', backgroundColor: 'rgba(59, 130, 246, 0.1)', borderRadius: 'var(--radius-sm)' }}>
+                              <button key={i} onClick={() => setSelectedImage(url)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', color: 'var(--accent-primary)', border: 'none', cursor: 'pointer', padding: '0.5rem', backgroundColor: 'rgba(59, 130, 246, 0.1)', borderRadius: 'var(--radius-sm)' }}>
                                 <ImageIcon size={16} />
                                 Screenshot {i + 1}
-                              </a>
+                              </button>
                             ))}
                           </div>
                         ) : fb.imageUrl ? (
                           <div style={{ marginTop: '0.5rem' }}>
-                            <a href={fb.imageUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', color: 'var(--accent-primary)', textDecoration: 'none', padding: '0.5rem', backgroundColor: 'rgba(59, 130, 246, 0.1)', borderRadius: 'var(--radius-sm)' }}>
+                            <button onClick={() => setSelectedImage(fb.imageUrl)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', color: 'var(--accent-primary)', border: 'none', cursor: 'pointer', padding: '0.5rem', backgroundColor: 'rgba(59, 130, 246, 0.1)', borderRadius: 'var(--radius-sm)' }}>
                               <ImageIcon size={16} />
                               View Attached Screenshot
-                            </a>
+                            </button>
                           </div>
                         ) : null}
                       </div>
@@ -443,6 +444,29 @@ export function AdminPanel({ onClose }) {
           )}
         </div>
       </div>
+      
+      {/* Image View Modal */}
+      {selectedImage && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 11000,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          padding: '2rem'
+        }} onClick={() => setSelectedImage(null)}>
+          <img 
+            src={selectedImage} 
+            alt="Feedback Screenshot" 
+            style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: '4px' }} 
+            onClick={(e) => e.stopPropagation()}
+          />
+          <button 
+            onClick={() => setSelectedImage(null)}
+            style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'var(--bg-surface-elevated)', color: 'var(--text-primary)', border: 'none', borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
+          >
+            <X size={24} />
+          </button>
+        </div>
+      )}
     </div>
   );
 }

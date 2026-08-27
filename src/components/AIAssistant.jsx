@@ -63,13 +63,32 @@ const MessageBubble = React.memo(({ msg, onProposeFix }) => (
 ));
 
 export function AIAssistant({ problem, userCode, testResults, onClose, onProposeFix }) {
+  const sessionKey = `ai_chat_${problem?.id}`;
   const [isLoading, setIsLoading] = useState(false);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(() => {
+    try {
+      if (!problem?.id) return [];
+      const saved = sessionStorage.getItem(sessionKey);
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      return [];
+    }
+  });
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState('');
   const [currentProvider, setCurrentProvider] = useState('Gemini');
   
   const chatContainerRef = useRef(null);
+
+  useEffect(() => {
+    if (problem?.id) {
+      try {
+        sessionStorage.setItem(sessionKey, JSON.stringify(messages));
+      } catch (e) {
+        console.error('Failed to save chat to sessionStorage', e);
+      }
+    }
+  }, [messages, problem?.id, sessionKey]);
 
   // Auto-scroll to bottom of chat safely without locking scroll
   useEffect(() => {

@@ -9,7 +9,7 @@ import { AIAssistant } from '../components/AIAssistant';
 import { askAIForHelp } from '../config/aiService';
 import { usePython } from '../hooks/usePython';
 import { problems } from '../data/problems';
-import { Play, CheckCircle, ArrowLeft, Trophy, Loader2, RotateCcw, LogOut, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Play, CheckCircle, ArrowLeft, Trophy, Loader2, RotateCcw, LogOut, Sparkles, ChevronLeft, ChevronRight, Flag } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
@@ -42,6 +42,7 @@ export function Workspace() {
   const [isDragging, setIsDragging] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(400);
   const [isSidebarDragging, setIsSidebarDragging] = useState(false);
+  const [isFlagged, setIsFlagged] = useState(false);
   const { isLoaded, output, error, runCode, runTests, clearOutput } = usePython();
 
   // Initialize code when problem changes
@@ -63,6 +64,13 @@ export function Workspace() {
         setTestResults([]);
         setFailedAttempts(0);
         clearOutput();
+        // Set flagged status
+        try {
+          const flaggedData = JSON.parse(localStorage.getItem('flagged_problems') || '{}');
+          setIsFlagged(!!flaggedData[id]);
+        } catch (e) {
+          console.error(e);
+        }
       } else if (!currentProblem) {
         // If problem not found, go to dashboard
         navigate('/');
@@ -124,6 +132,21 @@ export function Workspace() {
       return () => clearTimeout(timeoutId);
     }
   }, [code, currentUser, id, currentProblem]);
+
+  const handleToggleFlag = () => {
+    try {
+      const flaggedData = JSON.parse(localStorage.getItem('flagged_problems') || '{}');
+      if (isFlagged) {
+        delete flaggedData[id];
+      } else {
+        flaggedData[id] = true;
+      }
+      localStorage.setItem('flagged_problems', JSON.stringify(flaggedData));
+      setIsFlagged(!isFlagged);
+    } catch (e) {
+      console.error('Failed to toggle flag:', e);
+    }
+  };
 
   const handleRun = async () => {
     setIsRunning(true);
@@ -207,6 +230,21 @@ export function Workspace() {
             )}
           </div>
           
+          <button 
+            className="button-secondary"
+            style={{ 
+              display: 'flex', alignItems: 'center', gap: '0.5rem', 
+              color: isFlagged ? '#fbbf24' : 'inherit',
+              borderColor: isFlagged ? 'rgba(251, 191, 36, 0.5)' : 'inherit',
+              backgroundColor: isFlagged ? 'rgba(251, 191, 36, 0.1)' : 'transparent'
+            }}
+            onClick={handleToggleFlag}
+            title={isFlagged ? "Unflag Problem" : "Flag for Review"}
+          >
+            <Flag size={16} fill={isFlagged ? '#fbbf24' : 'none'} />
+            {isFlagged ? 'Flagged' : 'Flag'}
+          </button>
+
           <button 
             className="button-secondary"
             style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
@@ -382,6 +420,7 @@ export function Workspace() {
             flexDirection: 'column' 
           }}>
             <AIAssistant 
+              key={currentProblem?.id || 'ai-assistant'}
               problem={currentProblem} 
               userCode={code} 
               testResults={testResults} 
