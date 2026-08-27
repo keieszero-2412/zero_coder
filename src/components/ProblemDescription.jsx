@@ -1,7 +1,15 @@
-import { BookOpen, Lightbulb } from 'lucide-react';
+import { BookOpen, Lightbulb, ChevronDown, ChevronUp } from 'lucide-react';
 import { AIAssistant } from './AIAssistant';
+import { useState, useEffect } from 'react';
 
 export function ProblemDescription({ problem, failedAttempts = 0, userCode, testResults }) {
+  const [showHint, setShowHint] = useState(false);
+
+  // Reset hint state when problem changes
+  useEffect(() => {
+    setShowHint(false);
+  }, [problem?.id]);
+
   if (!problem) return null;
 
   return (
@@ -26,25 +34,30 @@ export function ProblemDescription({ problem, failedAttempts = 0, userCode, test
         </div>
       ))}
 
-      {failedAttempts > 2 && (
-        <div style={{ marginTop: '2rem', padding: '1rem', backgroundColor: 'rgba(251, 191, 36, 0.1)', border: '1px solid rgba(251, 191, 36, 0.3)', borderRadius: 'var(--radius-md)', color: '#fbbf24' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+      <div style={{ marginTop: '2rem', backgroundColor: 'rgba(251, 191, 36, 0.05)', border: '1px solid rgba(251, 191, 36, 0.3)', borderRadius: 'var(--radius-md)', color: '#fbbf24', overflow: 'hidden' }}>
+        <button 
+          onClick={() => setShowHint(!showHint)}
+          style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.75rem 1rem', background: 'transparent', border: 'none', color: '#fbbf24', cursor: 'pointer', fontWeight: 'bold' }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <Lightbulb size={18} />
             Gợi ý (Hint)
           </div>
-          <div style={{ fontSize: '0.9rem', lineHeight: '1.5' }}>
+          {showHint ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+        </button>
+        
+        {showHint && (
+          <div style={{ padding: '0 1rem 1rem 1rem', fontSize: '0.95rem', lineHeight: '1.6' }}>
             {problem.hint || "Hãy đọc kỹ lại yêu cầu đề bài, chú ý đến các trường hợp đặc biệt (edge cases), và kiểm tra xem hàm của bạn đã return đúng giá trị yêu cầu (thay vì chỉ dùng lệnh print) hay chưa."}
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
-      {failedAttempts > 2 && (
-        <AIAssistant
-          problem={problem}
-          userCode={userCode}
-          testResults={testResults}
-        />
-      )}
+      <AIAssistant
+        problem={problem}
+        userCode={userCode}
+        testResults={testResults}
+      />
     </div>
   );
 }
