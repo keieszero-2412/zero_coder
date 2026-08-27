@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../config/firebase';
-import { collection, query, where, getDocs, doc, setDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
-import { X, Check, Trash2, Mail, Plus } from 'lucide-react';
+import { collection, query, where, getDocs, doc, setDoc, deleteDoc, onSnapshot, orderBy } from 'firebase/firestore';
+import { X, Check, Trash2, Mail, Plus, MessageSquare, ImageIcon } from 'lucide-react';
 import '../index.css';
 
 export function AdminPanel({ onClose }) {
   const [accessRequests, setAccessRequests] = useState([]);
   const [resetRequests, setResetRequests] = useState([]);
+  const [feedbacks, setFeedbacks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [manualEmail, setManualEmail] = useState('');
   const [bypassAuth, setBypassAuth] = useState(false);
@@ -38,6 +39,15 @@ export function AdminPanel({ onClose }) {
         return b.requestedAt.toMillis() - a.requestedAt.toMillis();
       });
       setResetRequests(rReqs);
+    });
+
+    const qFeedback = query(collection(db, 'feedbacks'), orderBy('createdAt', 'desc'));
+    const unsubscribeFeedback = onSnapshot(qFeedback, (snapshot) => {
+      const fbList = [];
+      snapshot.forEach((doc) => {
+        fbList.push({ id: doc.id, ...doc.data() });
+      });
+      setFeedbacks(fbList);
       setLoading(false);
     });
 
@@ -52,6 +62,7 @@ export function AdminPanel({ onClose }) {
     return () => {
       unsubscribeAccess();
       unsubscribeReset();
+      unsubscribeFeedback();
       unsubscribeSettings();
     };
   }, []);
@@ -97,6 +108,16 @@ export function AdminPanel({ onClose }) {
         await deleteDoc(doc(db, 'password_reset_requests', requestId));
       } catch (err) {
         console.error("Failed to reject reset:", err);
+      }
+    }
+  };
+
+  const handleDeleteFeedback = async (feedbackId) => {
+    if (window.confirm("Delete this feedback?")) {
+      try {
+        await deleteDoc(doc(db, 'feedbacks', feedbackId));
+      } catch (err) {
+        console.error("Failed to delete feedback:", err);
       }
     }
   };
@@ -332,6 +353,87 @@ export function AdminPanel({ onClose }) {
                             Resolved
                           </button>
                         </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Feedbacks Section */}
+              <div>
+                <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <span>User Feedbacks</span>
+                  <span style={{ fontSize: '0.75rem', padding: '0.2rem 0.5rem', backgroundColor: 'var(--bg-surface-elevated)', borderRadius: '1rem' }}>{feedbacks.length}</span>
+                </h3>
+                {feedbacks.length === 0 ? (
+                  <div style={{ textAlign: 'center', color: 'var(--text-secondary)', padding: '1rem 0' }}>
+                    <MessageSquare size={32} style={{ opacity: 0.2, margin: '0 auto 0.5rem auto' }} />
+                    <p style={{ fontSize: '0.875rem' }}>No feedback received yet.</p>
+                  </div>
+                ) : (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    {feedbacks.map(fb => (
+                      <div key={fb.id} style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.75rem',
+                        padding: '1rem',
+                        backgroundColor: 'var(--bg-surface-elevated)',
+                        borderRadius: 'var(--radius-md)',
+                        border: '1px solid var(--border-color)'
+                      }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                          <div>
+                            <div style={{ fontWeight: 500, color: 'var(--text-primary)' }}>{fb.username || fb.email}</div>
+                            <div style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '0.25rem' }}>
+                              {fb.createdAt ? new Date(fb.createdAt.toMillis()).toLocaleString() : 'Just now'}
+                            </div>
+                          </div>
+                          <button 
+                            onClick={() => handleDeleteFeedback(fb.id)}
+                            style={{
+                              padding: '0.5rem',
+                              backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                              color: 'var(--error)',
+                              border: 'none',
+                              borderRadius: 'var(--radius-sm)',
+                              cursor: 'pointer'
+                            }}
+                            title="Delete Feedback"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                        
+                        <div style={{ 
+                          fontSize: '0.875rem', 
+                          color: 'var(--text-primary)', 
+                          backgroundColor: 'rgba(0,0,0,0.1)', 
+                          padding: '0.75rem', 
+                          borderRadius: 'var(--radius-sm)',
+                          whiteSpace: 'pre-wrap',
+                          wordBreak: 'break-word'
+                        }}>
+                          {fb.description}
+                        </div>
+
+                        {(fb.imageUrls && fb.imageUrls.length > 0) ? (
+                          <div style={{ marginTop: '0.5rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                            {fb.imageUrls.map((url, i) => (
+                              <a key={i} href={url} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', color: 'var(--accent-primary)', textDecoration: 'none', padding: '0.5rem', backgroundColor: 'rgba(59, 130, 246, 0.1)', borderRadius: 'var(--radius-sm)' }}>
+                                <ImageIcon size={16} />
+                                Screenshot {i + 1}
+                              </a>
+                            ))}
+                          </div>
+                        ) : fb.imageUrl ? (
+                          <div style={{ marginTop: '0.5rem' }}>
+                            <a href={fb.imageUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', color: 'var(--accent-primary)', textDecoration: 'none', padding: '0.5rem', backgroundColor: 'rgba(59, 130, 246, 0.1)', borderRadius: 'var(--radius-sm)' }}>
+                              <ImageIcon size={16} />
+                              View Attached Screenshot
+                            </a>
+                          </div>
+                        ) : null}
                       </div>
                     ))}
                   </div>

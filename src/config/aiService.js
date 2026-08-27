@@ -39,7 +39,7 @@ if (openRouterKey) {
   providers.push({
     name: 'OpenRouter',
     type: 'openai-compatible',
-    model: 'openrouter/free',
+    model: 'openrouter/auto',
     apiKey: openRouterKey,
     baseUrl: 'https://openrouter.ai/api/v1/chat/completions',
   });

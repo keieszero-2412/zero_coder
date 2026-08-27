@@ -4,6 +4,7 @@ import { CodeEditor } from '../components/CodeEditor';
 import { TerminalOutput } from '../components/TerminalOutput';
 import { ProblemDescription } from '../components/ProblemDescription';
 import { TestResults } from '../components/TestResults';
+import FeedbackWidget from '../components/FeedbackWidget';
 import { AIAssistant } from '../components/AIAssistant';
 import { askAIForHelp } from '../config/aiService';
 import { usePython } from '../hooks/usePython';
@@ -262,6 +263,7 @@ export function Workspace() {
                   {currentUser.colorCode}
                 </div>
               </div>
+              <FeedbackWidget />
               <button onClick={logout} className="button-secondary" style={{ padding: '0.5rem' }} title="Sign Out">
                 <LogOut size={16} />
               </button>

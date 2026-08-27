@@ -4,6 +4,7 @@ import { problems } from '../data/problems';
 import { Code2, ChevronRight, BookOpen, CheckCircle, Circle, LogOut, User, Bell } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { AdminPanel } from '../components/AdminPanel';
+import FeedbackWidget from '../components/FeedbackWidget';
 import '../index.css';
 
 export function Dashboard() {
@@ -186,6 +187,8 @@ export function Dashboard() {
                 )}
               </button>
             )}
+
+            <FeedbackWidget />
 
             <button onClick={logout} className="button-secondary" style={{ padding: '0.5rem 0.75rem' }} title="Sign Out">
               <LogOut size={16} />
