@@ -1,5 +1,4 @@
 import { BookOpen, Lightbulb, ChevronDown, ChevronUp } from 'lucide-react';
-import { AIAssistant } from './AIAssistant';
 import { useState, useEffect } from 'react';
 
 export function ProblemDescription({ problem, failedAttempts = 0, userCode, testResults }) {
@@ -53,11 +52,6 @@ export function ProblemDescription({ problem, failedAttempts = 0, userCode, test
         )}
       </div>
 
-      <AIAssistant
-        problem={problem}
-        userCode={userCode}
-        testResults={testResults}
-      />
     </div>
   );
 }
