@@ -1898,7 +1898,7 @@ export const problems = [
     "category": "Mock test 1",
     "title": "1. Tính tổng doanh thu",
     "description": "<p>Một cửa hàng bán <code>n</code> mặt hàng. Danh sách <code>prices</code> là đơn giá của từng mặt hàng, <code>quantities</code> là số lượng bán được tương ứng.</p><p>Yêu cầu: Viết hàm <code>total_revenue(prices, quantities)</code> trả về tổng doanh thu, làm tròn 2 chữ số thập phân.</p><ul><li>Doanh thu mỗi mặt hàng = đơn giá × số lượng.</li><li>Nếu hai danh sách có độ dài khác nhau, trả về None. Nếu rỗng thì trả về 0.0.</li></ul>",
-    "hint": "Sử dụng vòng lặp để nhân từng giá trị tương ứng và cộng tổng, cuối cùng dùng hàm round(tổng, 2).",
+    "hint": "Dùng vòng lặp for kết hợp hàm zip(prices, quantities) để tính tổng các tích p*q, sau đó trả về round(total, 2).",
     "initialCode": "def total_revenue(prices, quantities):\n    # Write your code here\n",
     "testCases": [
       {
@@ -1938,7 +1938,7 @@ export const problems = [
     "category": "Mock test 1",
     "title": "2. Tính hoa hồng luỹ tiến",
     "description": "<p>Công ty trả hoa hồng cho nhân viên bán hàng theo bậc thang (đơn vị: triệu đồng). Giống thuế lũy tiến: mỗi bậc chỉ áp cho phần doanh số nằm trong bậc đó.</p><ul><li>Phần doanh số 0 - 100: 2%</li><li>Phần doanh số trên 100 - 500: 4%</li><li>Phần doanh số trên 500: 6%</li></ul><p>Yêu cầu: Viết hàm <code>commission(sales)</code> trả về tiền hoa hồng (triệu đồng), làm tròn 2 chữ số thập phân.</p>",
-    "hint": "Nếu sales > 500, cộng phần trên 500 nhân 6% và tính phần 500 trở xuống. Nếu > 100 tính phần trên 100 nhân 4%... Dùng câu lệnh if/elif/else chia các mốc.",
+    "hint": "Tính hoa hồng lũy tiến bằng if/elif/else: Nếu > 500 thì (sales-500)*0.06 + 400*0.04 + 100*0.02, vv. Chú ý tính đúng các mốc trước đó.",
     "initialCode": "def commission(sales):\n    # Write your code here\n",
     "testCases": [
       {
@@ -1973,7 +1973,7 @@ export const problems = [
     "category": "Mock test 1",
     "title": "3. Tổng doanh thu theo khu vực",
     "description": "<p>Phòng kinh doanh gửi bạn một danh sách giao dịch. Mỗi phần tử là một tuple <code>(khu_vuc, doanh_thu)</code>; một khu vực có thể xuất hiện nhiều lần.</p><p>Yêu cầu: Viết hàm <code>revenue_by_region(records)</code> trả về một dict gộp tổng doanh thu theo từng khu vực.</p><ul><li>Mỗi giá trị làm tròn 2 chữ số thập phân.</li><li>Thứ tự các khoá theo lần xuất hiện đầu tiên trong records.</li><li>Danh sách rỗng → trả về {}.</li></ul>",
-    "hint": "Dùng dictionary để lưu tổng doanh thu. Duyệt qua từng tuple, cộng dồn doanh thu vào khoá tương ứng. Dictionary trong Python từ bản 3.7 tự động giữ đúng thứ tự xuất hiện.",
+    "hint": "Khởi tạo dict rỗng, duyệt qua vòng lặp for kv, dt in transactions, rồi cộng dồn bằng d[kv] = d.get(kv, 0) + dt.",
     "initialCode": "def revenue_by_region(records):\n    # Write your code here\n",
     "testCases": [
       {
@@ -1993,7 +1993,7 @@ export const problems = [
     "category": "Mock test 1",
     "title": "4. Tốc độ tăng trưởng",
     "description": "<p>Bạn có doanh thu của một chuỗi tháng liên tiếp trong danh sách <code>revenues</code>.</p><p>Yêu cầu: Viết hàm <code>growth_rates(revenues)</code> trả về danh sách tốc độ tăng trưởng theo tháng (đơn vị %), làm tròn 2 chữ số thập phân.</p><ul><li>Tăng trưởng tháng i = (revenues[i] - revenues[i-1]) / revenues[i-1] × 100.</li><li>Danh sách kết quả ngắn hơn revenues đúng 1 phần tử; nếu có ≤ 1 tháng → trả về [].</li><li>Doanh thu giảm → giá trị âm.</li></ul>",
-    "hint": "Tạo một list rỗng, chạy vòng lặp từ chỉ số 1 đến len(revenues)-1, áp dụng công thức, làm tròn 2 chữ số rồi append vào list.",
+    "hint": "Dùng list comprehension: [round((revenues[i] - revenues[i-1]) / revenues[i-1] * 100, 2) for i in range(1, len(revenues))].",
     "initialCode": "def growth_rates(revenues):\n    # Write your code here\n",
     "testCases": [
       {
@@ -2018,7 +2018,7 @@ export const problems = [
     "category": "Mock test 1",
     "title": "5. Sản phẩm bán chạy nhất",
     "description": "<p>Doanh thu theo sản phẩm được lưu trong một dict: khoá là tên sản phẩm, giá trị là doanh thu.</p><p>Yêu cầu: Viết hàm <code>top_products(sales, n)</code> trả về danh sách tên của <code>n</code> sản phẩm có doanh thu cao nhất, xếp từ cao xuống thấp.</p><ul><li>Nếu hai sản phẩm bằng doanh thu → xếp theo thứ tự bảng chữ cái (A → Z).</li><li>Nếu n lớn hơn số sản phẩm → trả về tất cả.</li><li>Chỉ trả về tên sản phẩm, không kèm doanh thu.</li></ul>",
-    "hint": "Bạn có thể sử dụng dict.items() kết hợp với hàm sorted() với tham số key. key=lambda x: (-x[1], x[0]) để xếp giảm dần theo doanh thu và tăng dần theo tên.",
+    "hint": "Dùng sorted() trên sales.items() với key=lambda x: (-x[1], x[0]) rồi dùng vòng lặp hoặc list comprehension cắt [:n] để lấy tên sản phẩm.",
     "initialCode": "def top_products(sales, n):\n    # Write your code here\n",
     "testCases": [
       {
@@ -2070,7 +2070,8 @@ export const problems = [
         "code": "print(average_price([], []))",
         "expected": "0.0"
       }
-    ]
+    ],
+    "hint": "Sử dụng hàm zip(prices, quantities) để tính tổng doanh thu (sum(p*q)) và tổng số lượng (sum(quantities)), sau đó chia cho nhau và round(..., 2)."
   },
   {
     "id": "mock2_2",
@@ -2104,7 +2105,8 @@ export const problems = [
         "code": "print(bulk_price(99.99, 1))",
         "expected": "99.99"
       }
-    ]
+    ],
+    "hint": "Dùng if/elif/else dựa vào sum(quantities). Nếu sum >= 100 thì discount = 0.1, sau đó trả về round(sum(p*q) * (1 - discount), 2)."
   },
   {
     "id": "mock2_3",
@@ -2138,7 +2140,8 @@ export const problems = [
         "code": "print(count_by_category([]))",
         "expected": "{}"
       }
-    ]
+    ],
+    "hint": "Tạo dict rỗng. Dùng vòng lặp for ten, nhom in products, rồi tăng đếm d[nhom] = d.get(nhom, 0) + 1."
   },
   {
     "id": "mock2_4",
@@ -2172,7 +2175,8 @@ export const problems = [
         "code": "print(cumulative([]))",
         "expected": "[]"
       }
-    ]
+    ],
+    "hint": "Dùng biến total để cộng dồn trong vòng lặp for r in revenues, mỗi bước append total vào danh sách kết quả, hoặc dùng itertools.accumulate."
   },
   {
     "id": "mock2_5",
@@ -2206,7 +2210,8 @@ export const problems = [
         "code": "print(above_average({}))",
         "expected": "[]"
       }
-    ]
+    ],
+    "hint": "Tính avg = sum(sales.values()) / len(sales). Dùng list comprehension [k for k, v in sales.items() if v > avg] và gọi hàm .sort()."
   },
   {
     "id": "mock3_1",
@@ -2240,7 +2245,8 @@ export const problems = [
         "code": "print(compound_balance(1000.0, 0.0, 5))",
         "expected": "1000.0"
       }
-    ]
+    ],
+    "hint": "Sử dụng công thức lãi kép: principal * (1 + rate/100)**years. Đừng quên làm tròn bằng round(..., 2)."
   },
   {
     "id": "mock3_2",
@@ -2274,7 +2280,8 @@ export const problems = [
         "code": "print(debt_group(400))",
         "expected": "5"
       }
-    ]
+    ],
+    "hint": "Dùng câu lệnh if/elif/else để kiểm tra số ngày quá hạn (0-9, 10-89, 90-179, ...) và trả về con số nhóm nợ (1 đến 5)."
   },
   {
     "id": "mock3_3",
@@ -2308,7 +2315,8 @@ export const problems = [
         "code": "print(spending_by_category([]))",
         "expected": "{}"
       }
-    ]
+    ],
+    "hint": "Dùng dictionary để gom nhóm: duyệt for t in transactions, cộng dồn d[t['category']] = d.get(t['category'], 0) + t['amount']."
   },
   {
     "id": "mock3_4",
@@ -2342,7 +2350,8 @@ export const problems = [
         "code": "print(moving_average([1, 2], 5))",
         "expected": "[]"
       }
-    ]
+    ],
+    "hint": "Dùng list comprehension kết hợp cắt list (slicing): [round(sum(prices[i:i+k])/k, 2) for i in range(len(prices) - k + 1)]."
   },
   {
     "id": "mock3_5",
@@ -2376,7 +2385,8 @@ export const problems = [
         "code": "print(fund_ranking({}))",
         "expected": "[]"
       }
-    ]
+    ],
+    "hint": "Lọc các quỹ có v > 0, dùng sorted() với key=lambda x: (-x[1], x[0]), sau đó lấy list các tuple kết quả."
   },
   {
     "id": "mock4_1",
@@ -2400,7 +2410,8 @@ export const problems = [
         "code": "print(order_total([], [], 8.0))",
         "expected": "0.0"
       }
-    ]
+    ],
+    "hint": "Tính tổng doanh thu (chưa VAT) bằng sum(p*q for p,q in zip(prices, quantities)), sau đó nhân với (1 + vat_rate/100) và làm tròn 2 chữ số."
   },
   {
     "id": "mock4_2",
@@ -2434,7 +2445,8 @@ export const problems = [
         "code": "print(shipping_fee(5.5))",
         "expected": "60.0"
       }
-    ]
+    ],
+    "hint": "Kiểm tra bằng if/elif/else: Nếu w <= 1 thì 20, nếu w <= 3 thì 20 + 10*(w-1), nếu > 3 thì 40 + 5*(w-3). Gợi ý: dùng math.ceil() nếu đề yêu cầu làm tròn lên số kg."
   },
   {
     "id": "mock4_3",
@@ -2468,7 +2480,8 @@ export const problems = [
         "code": "print(revenue_by_channel([]))",
         "expected": "{}"
       }
-    ]
+    ],
+    "hint": "Tạo dict d. Duyệt qua từng đơn o in orders, cộng dồn doanh thu (price * quantity) vào d[o['channel']]."
   },
   {
     "id": "mock4_4",
@@ -2502,7 +2515,8 @@ export const problems = [
         "code": "print(cumulative_share([]))",
         "expected": "[]"
       }
-    ]
+    ],
+    "hint": "Sắp xếp revenues giảm dần, tính tổng total. Dùng biến cộng dồn current, duyệt từng giá trị, tính (current/total)*100, làm tròn 2 chữ số rồi đưa vào list."
   },
   {
     "id": "mock4_5",
@@ -2536,6 +2550,7 @@ export const problems = [
         "code": "print(margin_ranking({}, {}))",
         "expected": "[]"
       }
-    ]
+    ],
+    "hint": "Tính biên lợi nhuận (prices[k] - costs[k]) / prices[k] cho từng sản phẩm. Dùng sorted với key=lambda k: (-(prices[k]-costs[k])/prices[k], k)."
   }
 ];
