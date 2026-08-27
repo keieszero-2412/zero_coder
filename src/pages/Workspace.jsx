@@ -221,7 +221,7 @@ export function Workspace() {
             }}
           >
             <RotateCcw size={16} />
-            RESET
+            Reset
           </button>
           
           <button 
@@ -230,7 +230,7 @@ export function Workspace() {
             disabled={!isLoaded || isRunning}
           >
             <Play size={16} />
-            {isRunning ? 'RUNNING...' : 'RUN'}
+            {isRunning ? 'Running...' : 'Run'}
           </button>
 
           <button 
@@ -239,7 +239,7 @@ export function Workspace() {
             disabled={!isLoaded || isRunning}
           >
             <CheckCircle size={16} />
-            CHECK
+            Check
           </button>
           
           {currentUser && (
