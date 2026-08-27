@@ -166,7 +166,8 @@ export const problems = [
         "code": "print(check_quadratic_equation(-2, -4, -6))",
         "expected": "No solution"
       }
-    ]
+    ],
+    "hint": "Hãy tính Delta = b^2 - 4ac, sau đó dùng if/elif/else để xét dấu Delta và tìm số nghiệm."
   },
   {
     "id": "exam2_2",
@@ -225,7 +226,8 @@ export const problems = [
         "code": "print(largest_prime([742, 83, 915, 112, 367, 529, 991, 456, 178, 643, 219, 587, 331, 917, 431, 802, 233, 761, 59, 277, 841, 953, 749, 691, 23, 389, 967, 128, 701, 929, 349, 604, 157, 317, 887, 271, 19, 839, 613, 509, 223, 457, 821, 643, 97, 106, 863, 487, 43, 379, 607, 293, 101, 569, 829, 683, 151, 461, 241, 773, 887, 991, 563, 31, 157, 211, 79, 917, 433, 601, 223, 71, 373, 907, 761, 137, 193, 359, 727, 97, 271, 491, 643, 571, 41, 673, 463, 227, 523, 229, 787, 919, 607, 199, 347, 941, 787, 613, 967, 983, 997, 191, 619, 499, 19, 281, 877, 419, 877, 991, 653, 523, 337, 463, 757, 953, 823, 743, 313, 661, 503, 673, 283, 709, 839, 233, 617, 563, 331, 911, 577, 947, 419, 383, 281, 491, 487, 641, 463, 823, 953, 547, 857, 631, 991, 983, 673, 223, 213, 433, 881, 907, 743, 863, 673, 503, 859, 991, 917, 19, 641, 431, 419, 683, 661, 829, 769, 421, 613, 587, 773, 859, 941, 773, 602, 641, 431, 673, 223, 919, 881, 991, 383, 827, 839, 877, 983, 991, 947, 811, 773, 641, 547, 673, 823, 919, 947, 991, 983, 839, 887, 911, 967, 983, 991, 997, 881, 859]))",
         "expected": "997"
       }
-    ]
+    ],
+    "hint": "Dùng list.sort() hoặc sorted() để sắp xếp danh sách, rồi chọn phần tử thỏa mãn yêu cầu."
   },
   {
     "id": "exam2_3",
@@ -279,7 +281,8 @@ export const problems = [
         "code": "print(compare_lists([1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10], [10,9,8,7,6,5,4,3,2,1,10,9,8,7,6,5,4,3,2,1,10,9,8,7,6,5,4,3,2,1]))",
         "expected": "True"
       }
-    ]
+    ],
+    "hint": "Dùng vòng lặp for hoặc dùng list comprehension để duyệt và so sánh các phần tử, nhớ kiểm tra độ dài hai list."
   },
   {
     "id": "exam2_5",
@@ -338,7 +341,8 @@ export const problems = [
         "code": "print(process_list([-11, -10, -9, -8, -7, -6]))",
         "expected": "[121, 81, 49]"
       }
-    ]
+    ],
+    "hint": "Sử dụng list comprehension để lọc số, sau đó dùng các hàm có sẵn như sum() hoặc len()."
   },
   {
     "id": "exam2_6",
@@ -346,7 +350,8 @@ export const problems = [
     "title": "Question 6",
     "description": "<p>Bạn Trường có hai đoạn dây, đoạn thứ nhất dài N mét và đoạn thứ hai dài M mét (N và M là các số nguyên dương).</p><p>Trường muốn cắt hai đoạn dây này thành các đoạn dây nhỏ sao cho:</p><p>Tất cả các đoạn dây nhỏ đều có cùng một độ dài.</p><p>Không có phần dây thừa.</p><p>Độ dài mỗi đoạn dây nhỏ là lớn nhất có thể.</p><p>Khi đó, hỏi Trường có thể cắt được tổng cộng bao nhiêu đoạn dây nhỏ từ hai đoạn dây ban đầu.</p><p>Viết hàm count_segments(N, M) nhận vào hai số nguyên dương N và M, và trả về một số nguyên là tổng số đoạn dây nhỏ có thể cắt được theo quy tắc trên.</p>",
     "initialCode": "def count_segments(N, M):\n    # Write your code here\n",
-    "testCases": []
+    "testCases": [],
+    "hint": "Bạn có thể dùng vòng lặp while hoặc tìm ƯCLN (GCD) của N và M bằng thư viện math.gcd."
   },
   {
     "id": "exam2_7",
@@ -405,7 +410,8 @@ export const problems = [
         "code": "print(max_signed_sum([10, -20, 30, -40, 50, -60, 70, -80, 90, -100]))",
         "expected": "550"
       }
-    ]
+    ],
+    "hint": "Đây là bài toán duyệt mảng, bạn có thể dùng đệ quy (backtracking) hoặc quy hoạch động để thử các dấu."
   },
   {
     "id": "exam2_8",
@@ -464,7 +470,8 @@ export const problems = [
         "code": "print(max_square_area(1987654320, 1246913580))",
         "expected": "3600"
       }
-    ]
+    ],
+    "hint": "Có thể sử dụng vòng lặp while để cắt hình vuông lớn nhất cạnh min(N, M), sau đó cập nhật lại N và M."
   },
   {
     "id": "exam2_9",
@@ -523,7 +530,8 @@ export const problems = [
         "code": "print(count([i for i in range(100)] + [10, 10, 20, 20, 30, 30]))",
         "expected": "10"
       }
-    ]
+    ],
+    "hint": "Dùng dictionary để đếm số lần xuất hiện hoặc dùng collections.Counter(lst).most_common(1)."
   },
   {
     "id": "exam2_10",
@@ -577,7 +585,8 @@ export const problems = [
         "code": "print(max_profit([100000 - i if i % 2 == 0 else i for i in range(1, 100001)]))",
         "expected": "99998"
       }
-    ]
+    ],
+    "hint": "Đây là bài toán mua bán cổ phiếu (Buy and Sell Stock). Hãy duyệt mảng và lưu lại giá min từng ngày."
   },
   {
     "id": "exam2_11",
@@ -626,7 +635,8 @@ export const problems = [
         "code": "print(mirror_message((1, 2)))",
         "expected": "Unsupported"
       }
-    ]
+    ],
+    "hint": "Dùng isinstance(x, str) để kiểm tra, sau đó đảo chuỗi bằng cú pháp cắt lát x[::-1]."
   },
   {
     "id": "exam2_12",
@@ -685,7 +695,8 @@ export const problems = [
         "code": "print(nearest_prime(10000))",
         "expected": "10007"
       }
-    ]
+    ],
+    "hint": "Viết một hàm phụ is_prime(k) để kiểm tra số nguyên tố, rồi dùng vòng lặp while chạy từ N trở đi."
   },
   {
     "id": "exam2_13",
@@ -744,7 +755,8 @@ export const problems = [
         "code": "print(final_number(list(range(1, 1001))))",
         "expected": "501499"
       }
-    ]
+    ],
+    "hint": "Mô phỏng trò chơi bằng vòng lặp while hoặc for, kiểm tra cẩn thận điều kiện dừng."
   },
   {
     "id": "exam2_15",
@@ -803,7 +815,8 @@ export const problems = [
         "code": "print(find_perfect_numbers([18, 18, 18] * 10 + [21, 21] * 20))",
         "expected": "[18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21]"
       }
-    ]
+    ],
+    "hint": "Chuyển số thành chuỗi để tính tổng các chữ số bằng sum(int(c) for c in str(n)), sau đó dùng phép chia dư %."
   },
   {
     "id": "exam2_16",
@@ -862,7 +875,8 @@ export const problems = [
         "code": "print(count_three_sum([\n-6571, 5196, 2463, -8567, -8122, -4910, 4574, -7359, 5460, -1735,\n5688, 3152, 995, -5891, -5751, 4264, 6929, -708, 9507, -6087,\n-2218, 9369, -728, 1100, -9971, 6408, 9526, -8154, 7415, 3557,\n-3150, -1493, -7330, 3066, 6987, -4286, 8548, -2920, -9817, -8623,\n-2314, -3644, 4374, -9530, -2668, -5909, 3867, -7516, 8387, 9920,\n-5403, -8870, 5896, 2197, -378, 7945, 1874, -4887, 4555, 7054,\n-2563, 12, 9417, -6897, 9222, 8475, -1936, -4527, -3526, -8201,\n2704, 2219, 8812, -1031, 3372, -9941, -7440, 3457, -352, -6009,\n9662, -8955, 6158, -1467, -7667, 4182, 7633, -5681, -3348, 5920,\n9011, 7058, 4768, -6495, 2845, -4226, -5808, -5760, 9049, -7537,\n3849, 8496, 162, -7083, 8452, -8515, -5104, -7103, 7520, 5512,\n-6662, -9495, 7491, -8102, 7093, 5339, 2448, -7680, 8695, -9917,\n466, -4873, -8411, 9650, 3816, 9017, 6665, -2907, 3882, -6309,\n7421, -5694, -3642, -9417, 5875, -7744, 3898, -5127, -5735, 7284,\n8510, -5982, 5635, -3743, -7389, 418, -9518, -8351, 9600, 187,\n-8865, -7286, 2955, -718, -5533, 2518, -7023, -438, 3654, -9411,\n7999, 5824, -3005, 8714, -3428, -3361, 8745, -6297, -8277, -7610,\n-8639, -6988, -9110, 8237, 5604, -2681, -9334, 3566, -5743, -6632,\n-8327, 5385, -8660, 8516, 8323, 6028, -7659, 5471, -1051, -2554,\n-9805, 1277, 3149, 8800, -1894, 6952, -5055, -4376, -7740, -3758,\n-7612, -9475, 4368, 1158, 7646, -4669, -5161, -6499, -2029, -9412,\n-6674, -5332 ]))",
         "expected": "53"
       }
-    ]
+    ],
+    "hint": "Sắp xếp danh sách trước, sau đó dùng 2 con trỏ (two pointers) trong vòng lặp for để đếm số bộ ba."
   },
   {
     "id": "exam2_17",
@@ -946,7 +960,8 @@ export const problems = [
         "code": "print(binomial_coefficient(28, 14))",
         "expected": "40116600"
       }
-    ]
+    ],
+    "hint": "Sử dụng công thức n! / (k! * (n-k)!) với thư viện math.factorial hoặc dùng quy hoạch động."
   },
   {
     "id": "exam2_18",
@@ -1005,7 +1020,8 @@ export const problems = [
         "code": "print(count_sum(list(range(1, 3001)), 4000))",
         "expected": "1082333"
       }
-    ]
+    ],
+    "hint": "Có thể dùng 2 con trỏ sau khi sắp xếp mảng, hoặc dùng một tập hợp (set) để lưu phần bù khi duyệt."
   },
   {
     "id": "exam2_19",
@@ -1064,7 +1080,8 @@ export const problems = [
         "code": "jobs = [\n {'name':'Gia sư Toán cấp 2','hours':8,'pay':240},\n {'name':'Gia sư Anh văn','hours':10,'pay':300},\n {'name':'Gia sư IELTS','hours':6,'pay':360},\n {'name':'Phục vụ quán cà phê','hours':18,'pay':270},\n {'name':'Pha chế','hours':14,'pay':280},\n {'name':'Thu ngân cửa hàng','hours':16,'pay':256},\n {'name':'Bán hàng siêu thị','hours':20,'pay':320},\n {'name':'Giao đồ ăn','hours':9,'pay':162},\n {'name':'Giao hàng nhanh','hours':11,'pay':187},\n {'name':'Nhập liệu văn phòng','hours':25,'pay':325},\n {'name':'Viết content fanpage','hours':10,'pay':250},\n {'name':'Quản lý fanpage','hours':15,'pay':330},\n {'name':'Chăm sóc khách hàng','hours':18,'pay':342},\n {'name':'Thiết kế banner','hours':7,'pay':210},\n {'name':'Thiết kế logo','hours':8,'pay':360},\n {'name':'Chỉnh sửa video','hours':12,'pay':420},\n {'name':'Quay video TikTok','hours':9,'pay':225},\n {'name':'SEO website','hours':20,'pay':500},\n {'name':'Lập trình website','hours':24,'pay':960},\n {'name':'Test phần mềm','hours':16,'pay':400},\n {'name':'Phân tích dữ liệu','hours':10,'pay':500},\n {'name':'Trực tổng đài','hours':18,'pay':306},\n {'name':'Bảo vệ ca đêm','hours':24,'pay':360},\n {'name':'Giữ xe','hours':20,'pay':260},\n {'name':'Rửa xe','hours':8,'pay':136},\n {'name':'Phát tờ rơi','hours':6,'pay':90},\n {'name':'Trông trẻ','hours':10,'pay':220},\n {'name':'Kho vận','hours':22,'pay':330},\n {'name':'Livestream bán hàng','hours':16,'pay':480},\n {'name':'Chạy quảng cáo Facebook','hours':12,'pay':480}\n]\nprint(max_income(jobs))",
         "expected": "1820"
       }
-    ]
+    ],
+    "hint": "Dùng phương thức list.sort(key=lambda x: ...) để sắp xếp các dictionary theo thuộc tính yêu cầu."
   },
   {
     "id": "exam2_22",
@@ -1113,7 +1130,8 @@ export const problems = [
         "code": "print(select_items({\"Gold\": 1000, \"Silver\": 450, \"Bronze\": 300, \"Iron\": 700, \"Copper\": 650}))",
         "expected": "['Gold', 'Iron', 'Copper']"
       }
-    ]
+    ],
+    "hint": "Dùng phương pháp sắp xếp giảm dần theo value, hoặc dùng hàm max() với tham số key."
   },
   {
     "id": "exam2_23",
@@ -1192,7 +1210,8 @@ export const problems = [
         "code": "print(count_distinct([1000,2000,3000,1000,5000,6000,7000,3000]))",
         "expected": "6"
       }
-    ]
+    ],
+    "hint": "Chỉ cần ép kiểu list thành set để loại bỏ các phần tử trùng lặp và trả về độ dài len(set(a))."
   },
   {
     "id": "exam2_24",
@@ -1246,7 +1265,8 @@ export const problems = [
         "code": "print(list_distinct([5, 3, 8, 3, 5, 9]))",
         "expected": "[3, 5, 8, 9]"
       }
-    ]
+    ],
+    "hint": "Dùng set để loại bỏ trùng lặp rồi chuyển lại thành list, hoặc dùng vòng lặp duyệt thêm vào list mới."
   },
   {
     "id": "exam2_25",
@@ -1305,7 +1325,8 @@ export const problems = [
         "code": "print(vigenere_encrypt(\"FIDDLEFORDHADITRIGHTALLALONG\", \"BILL\"))",
         "expected": "GQOOMMQZSLSLEQECJOSEBTWLMWYR"
       }
-    ]
+    ],
+    "hint": "Dùng phép chia lấy dư % 26. Ký tự thứ i của khóa sẽ là key[i % len(key)]. Hãy dùng hàm ord() và chr()."
   },
   {
     "id": "exam2_26",
@@ -1364,7 +1385,8 @@ export const problems = [
         "code": "print(count_working_days(17, 23, date(9999, 12, 31)))",
         "expected": "2670409"
       }
-    ]
+    ],
+    "hint": "Bạn cần tìm BCNN (LCM) của chu kỳ (N+1) và (M+1). Lịch trùng nhau khi ngày chia hết cho cả hai."
   },
   {
     "id": "exam2_27",
@@ -1423,7 +1445,8 @@ export const problems = [
         "code": "print(encode_a1z26(\"TECHNOLOGICAL\"))",
         "expected": "20-5-3-8-14-15-12-15-7-9-3-1-12"
       }
-    ]
+    ],
+    "hint": "Dùng ord(c) - 64 đối với chữ hoa để lấy số, và dùng chuỗi.split() để tách các số rồi chuyển đổi."
   },
   {
     "id": "exam2_28",
@@ -1477,7 +1500,8 @@ export const problems = [
         "code": "print(find_adjacency_list({}))",
         "expected": "{}"
       }
-    ]
+    ],
+    "hint": "Dùng dictionary comprehension: {k: list(v.keys()) for k, v in graph.items()}."
   },
   {
     "id": "exam2_29",
@@ -1536,7 +1560,8 @@ export const problems = [
         "code": "print(atbash_decode(\"GSVRMERHRYOVDRAZIWRHDZGXSRMT\"))",
         "expected": "THEINVISIBLEWIZARDISWATCHING"
       }
-    ]
+    ],
+    "hint": "Vì mã Atbash đối xứng, ký tự 'A' biến thành 'Z', ta dùng công thức: chr(155 - ord(c)) với c in hoa."
   },
   {
     "id": "exam2_30",
@@ -1595,7 +1620,8 @@ export const problems = [
         "code": "print(atbash_cipher(\"BILLCIPHER\"))",
         "expected": "YROOXRKSVI"
       }
-    ]
+    ],
+    "hint": "Tương tự bài giải mã, dùng chr(155 - ord(c.upper())) để mã hóa ngược chữ cái thành mã Atbash."
   },
   {
     "id": "exam2_31",
@@ -1654,7 +1680,8 @@ export const problems = [
         "code": "print(compute_area('p', 0.795))",
         "expected": "4.99"
       }
-    ]
+    ],
+    "hint": "Dùng if s == 'p' và elif s == 'a'. Nhớ sử dụng hàm round(val, 2) để làm tròn số."
   },
   {
     "id": "exam2_32",
@@ -1713,7 +1740,8 @@ export const problems = [
         "code": "print(top_value_hostels([\n {'name':f'X{i}','price':round(0.9+0.17*(i%7),2),'distance':round(0.5+0.23*(i%9),2),'rating':round(3.8+0.19*(i%6),2)}\n for i in range(1,31)\n]))",
         "expected": "[{'name': 'X28', 'price': 0.9, 'distance': 0.73, 'rating': 4.56}, {'name': 'X21', 'price': 0.9, 'distance': 1.19, 'rating': 4.37}, {'name': 'X14', 'price': 0.9, 'distance': 1.65, 'rating': 4.18}]"
       }
-    ]
+    ],
+    "hint": "Dùng sorted(hostels, key=lambda x: x['rating']/x['price'] - x['distance']*0.1, reverse=True)[:3]."
   },
   {
     "id": "exam2_33",
@@ -1762,7 +1790,8 @@ export const problems = [
         "code": "print(sort_students_by_height([\n {'name':'An','height':156},\n {'name':'Binh','height':170},\n {'name':'Chi','height':162},\n {'name':'Dung','height':168},\n {'name':'Em','height':160},\n {'name':'Phuc','height':175},\n {'name':'Giang','height':158},\n {'name':'Hanh','height':165},\n {'name':'Khanh','height':180},\n {'name':'Lam','height':172},\n {'name':'Mai','height':159},\n {'name':'Nam','height':167},\n {'name':'Oanh','height':155},\n {'name':'Phong','height':174},\n {'name':'Quynh','height':163},\n {'name':'Son','height':178},\n {'name':'Trang','height':161},\n {'name':'Tuan','height':169},\n {'name':'Vinh','height':176},\n {'name':'Yen','height':157},\n {'name':'Anh','height':164},\n {'name':'Bao','height':171},\n {'name':'Cuong','height':177},\n {'name':'Dao','height':158},\n {'name':'Ha','height':162},\n {'name':'Hung','height':173},\n {'name':'Khoa','height':181},\n {'name':'Linh','height':166},\n {'name':'My','height':160},\n {'name':'Ngoc','height':168},\n {'name':'Phuong','height':174},\n {'name':'Quang','height':179},\n {'name':'Thanh','height':172},\n {'name':'Thao','height':159},\n {'name':'Tien','height':167},\n {'name':'Trung','height':175},\n {'name':'Van','height':163},\n {'name':'Xuan','height':170},\n {'name':'Y','height':158},\n {'name':'Zung','height':165}\n]))",
         "expected": "[{'name': 'Oanh', 'height': 155}, {'name': 'An', 'height': 156}, {'name': 'Yen', 'height': 157}, {'name': 'Giang', 'height': 158}, {'name': 'Dao', 'height': 158}, {'name': 'Y', 'height': 158}, {'name': 'Mai', 'height': 159}, {'name': 'Thao', 'height': 159}, {'name': 'Em', 'height': 160}, {'name': 'My', 'height': 160}, {'name': 'Trang', 'height': 161}, {'name': 'Chi', 'height': 162}, {'name': 'Ha', 'height': 162}, {'name': 'Quynh', 'height': 163}, {'name': 'Van', 'height': 163}, {'name': 'Anh', 'height': 164}, {'name': 'Hanh', 'height': 165}, {'name': 'Zung', 'height': 165}, {'name': 'Linh', 'height': 166}, {'name': 'Nam', 'height': 167}, {'name': 'Tien', 'height': 167}, {'name': 'Dung', 'height': 168}, {'name': 'Ngoc', 'height': 168}, {'name': 'Tuan', 'height': 169}, {'name': 'Binh', 'height': 170}, {'name': 'Xuan', 'height': 170}, {'name': 'Bao', 'height': 171}, {'name': 'Lam', 'height': 172}, {'name': 'Thanh', 'height': 172}, {'name': 'Hung', 'height': 173}, {'name': 'Phong', 'height': 174}, {'name': 'Phuong', 'height': 174}, {'name': 'Phuc', 'height': 175}, {'name': 'Trung', 'height': 175}, {'name': 'Vinh', 'height': 176}, {'name': 'Cuong', 'height': 177}, {'name': 'Son', 'height': 178}, {'name': 'Quang', 'height': 179}, {'name': 'Khanh', 'height': 180}, {'name': 'Khoa', 'height': 181}]"
       }
-    ]
+    ],
+    "hint": "Dùng hàm sorted hoặc list.sort(key=lambda x: x['height']) để sắp xếp danh sách dictionary tăng dần."
   },
   {
     "id": "exam2_34",
@@ -1821,7 +1850,8 @@ export const problems = [
         "code": "print(count_commits({'U1': {'lines': 120, 'commits': 10}, 'U2': {'lines': 130, 'commits': 5}, 'U3': {'lines': 140, 'commits': 15}, 'U4': {'lines': 150, 'commits': 20}, 'U5': {'lines': 160, 'commits': 8}, 'U6': {'lines': 170, 'commits': 11}, 'U7': {'lines': 180, 'commits': 14}, 'U8': {'lines': 190, 'commits': 3}}))",
         "expected": "86"
       }
-    ]
+    ],
+    "hint": "Dùng vòng lặp for value in group.values(), sau đó cộng dồn value['commits']."
   },
   {
     "id": "cp_5",
@@ -1894,12 +1924,12 @@ export const problems = [
         "code": "print(total_revenue([], []))",
         "expected": "0.0"
       },
-        {
-          "id": 6,
-          "code": "print(total_revenue([10.5, 20.0], [2, 3, 4]))",
-          "expected": "None"
-        }
-      ]
+      {
+        "id": 6,
+        "code": "print(total_revenue([10.5, 20.0], [2, 3, 4]))",
+        "expected": "None"
+      }
+    ]
   },
   {
     "id": "mock1_2",

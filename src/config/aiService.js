@@ -39,7 +39,7 @@ if (openRouterKey) {
   providers.push({
     name: 'OpenRouter',
     type: 'openai-compatible',
-    model: 'openrouter/auto',
+    model: 'openrouter/free',
     apiKey: openRouterKey,
     baseUrl: 'https://openrouter.ai/api/v1/chat/completions',
   });
@@ -197,7 +197,7 @@ ${testContext}
   for (const provider of providers) {
     try {
       console.log(`🤖 Trying ${provider.name} (${provider.model})...`);
-      
+
       let resultText;
       if (provider.type === 'gemini') {
         resultText = await callGemini(provider, systemPrompt, chatHistory, userMessage);
@@ -236,12 +236,12 @@ ${testContext}
 
   // All providers failed
   console.error("All AI providers failed:", errors);
-  
+
   const allRateLimited = errors.every(e => e.status === 429 || e.message?.includes('429') || e.message?.includes('quota'));
   if (allRateLimited) {
     throw new Error(`Tất cả ${errors.length} hệ thống AI đều đang bị quá tải. Vui lòng đợi khoảng 1 phút rồi thử lại nhé!`);
   }
-  
+
   const providerNames = errors.map(e => `${e.provider} (${e.status || 'error'})`).join(', ');
   throw new Error(`Không thể kết nối AI. Đã thử: ${providerNames}. Vui lòng kiểm tra API Key hoặc thử lại sau.`);
 }
