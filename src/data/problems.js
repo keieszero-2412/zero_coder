@@ -342,7 +342,7 @@ export const problems = [
         "expected": "[121, 81, 49]"
       }
     ],
-    "hint": "Sử dụng list comprehension để lọc số, sau đó dùng các hàm có sẵn như sum() hoặc len()."
+    "hint": "Dùng list comprehension [x**2 for x in lst if x % 2 != 0] để lọc số lẻ và bình phương, rồi return danh sách đó."
   },
   {
     "id": "exam2_6",
@@ -411,7 +411,7 @@ export const problems = [
         "expected": "550"
       }
     ],
-    "hint": "Đây là bài toán duyệt mảng, bạn có thể dùng đệ quy (backtracking) hoặc quy hoạch động để thử các dấu."
+    "hint": "Để được tổng lớn nhất, bạn chỉ cần biến tất cả các số thành số dương bằng hàm abs() rồi tính tổng sum()."
   },
   {
     "id": "exam2_8",
@@ -756,7 +756,7 @@ export const problems = [
         "expected": "501499"
       }
     ],
-    "hint": "Mô phỏng trò chơi bằng vòng lặp while hoặc for, kiểm tra cẩn thận điều kiện dừng."
+    "hint": "Bất kể thứ tự gộp như thế nào, phần tử cuối cùng luôn là tổng của toàn bộ danh sách ban đầu. Bạn chỉ cần return sum(list)."
   },
   {
     "id": "exam2_15",
@@ -1081,7 +1081,7 @@ export const problems = [
         "expected": "1820"
       }
     ],
-    "hint": "Dùng phương thức list.sort(key=lambda x: ...) để sắp xếp các dictionary theo thuộc tính yêu cầu."
+    "hint": "Dùng phương thức jobs.sort(key=lambda x: (-x['pay'], x['hours'])). Lưu ý dấu trừ để ưu tiên sắp xếp giảm dần theo tiền lương."
   },
   {
     "id": "exam2_22",
@@ -1131,7 +1131,7 @@ export const problems = [
         "expected": "['Gold', 'Iron', 'Copper']"
       }
     ],
-    "hint": "Dùng phương pháp sắp xếp giảm dần theo value, hoặc dùng hàm max() với tham số key."
+    "hint": "Dùng hàm max(items, key=lambda k: items[k]) để tìm đồ vật (key) có giá trị (value) lớn nhất trong dictionary."
   },
   {
     "id": "exam2_23",
