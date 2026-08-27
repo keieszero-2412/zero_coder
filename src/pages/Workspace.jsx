@@ -386,7 +386,7 @@ export function Workspace() {
               userCode={code} 
               testResults={testResults} 
               onClose={() => setShowAIInEditor(false)}
-              onProposeFix={(newCode) => setProposedCode(newCode)}
+              onProposeFix={setProposedCode}
             />
           </div>
 

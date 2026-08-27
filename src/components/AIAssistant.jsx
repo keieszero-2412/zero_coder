@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Bot, Sparkles, Loader2, X, Send, Cpu, Check, Copy, Wand2 } from 'lucide-react';
 import { askAIForHelp } from '../config/aiService';
 import ReactMarkdown from 'react-markdown';
@@ -49,6 +49,18 @@ const CodeBlock = ({ inline, className, children, onProposeFix, ...props }) => {
   }
   return <code className={className} style={{ backgroundColor: 'var(--surface-color)', padding: '0.2rem 0.4rem', borderRadius: '0.25rem', fontSize: '0.85rem', fontFamily: 'monospace' }} {...props}>{children}</code>;
 };
+
+const MessageBubble = React.memo(({ msg, onProposeFix }) => (
+  <div className={`ai-chat-bubble ${msg.role}`}>
+    <ReactMarkdown 
+      remarkPlugins={[remarkGfm, remarkMath]} 
+      rehypePlugins={[rehypeKatex]}
+      components={{ code: (props) => <CodeBlock {...props} onProposeFix={onProposeFix} /> }}
+    >
+      {msg.content}
+    </ReactMarkdown>
+  </div>
+));
 
 export function AIAssistant({ problem, userCode, testResults, onClose, onProposeFix }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -228,15 +240,7 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
         )}
 
         {messages.map((msg, index) => (
-          <div key={index} className={`ai-chat-bubble ${msg.role}`}>
-            <ReactMarkdown 
-              remarkPlugins={[remarkGfm, remarkMath]} 
-              rehypePlugins={[rehypeKatex]}
-              components={{ code: (props) => <CodeBlock {...props} onProposeFix={onProposeFix} /> }}
-            >
-              {msg.content}
-            </ReactMarkdown>
-          </div>
+          <MessageBubble key={index} msg={msg} onProposeFix={onProposeFix} />
         ))}
 
         {isLoading && (
