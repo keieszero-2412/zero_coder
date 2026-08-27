@@ -221,7 +221,7 @@ export function Workspace() {
             }}
           >
             <RotateCcw size={16} />
-            Reset Code
+            RESET
           </button>
           
           <button 
