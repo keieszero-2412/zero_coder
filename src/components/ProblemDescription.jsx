@@ -40,7 +40,7 @@ export function ProblemDescription({ problem, failedAttempts = 0, userCode, test
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <Lightbulb size={18} />
-            Gợi ý (Hint)
+            Hint
           </div>
           {showHint ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
         </button>
