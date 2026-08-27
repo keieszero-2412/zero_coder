@@ -7,14 +7,7 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 
-const getShortModel = (model) => {
-  if (!model) return 'AI';
-  const m = model.toLowerCase();
-  if (m.includes('llama')) return 'Llama';
-  if (m.includes('gemini')) return 'Gemini';
-  if (m.includes('mistral')) return 'Mistral';
-  return model.split('-')[0] || 'AI';
-};
+
 
 const CodeBlock = ({ inline, className, children, onProposeFix, ...props }) => {
   const [copied, setCopied] = useState(false);
@@ -86,7 +79,7 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
     
     try {
       const { text, providerName, modelName } = await askAIForHelp(problem, userCode, testResults, [intentMessage]);
-      setCurrentProvider(getShortModel(modelName));
+      setCurrentProvider(providerName || 'AI');
       setMessages(prev => [...prev, { role: 'assistant', content: text }]);
     } catch (err) {
       setError(err.message || 'An error occurred while communicating with the AI.');
@@ -104,7 +97,7 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
     
     try {
       const { text: response, providerName, modelName } = await askAIForHelp(problem, userCode, testResults, [intentMessage], true);
-      setCurrentProvider(getShortModel(modelName));
+      setCurrentProvider(providerName || 'AI');
       
       // Extract python code from response
       const codeMatch = response.match(/```(?:python|py)?\n([\s\S]*?)```/);
@@ -135,7 +128,7 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
     try {
       // For initial request, we don't send any user text, the AI will use the system prompt
       const { text, providerName, modelName } = await askAIForHelp(problem, userCode, testResults, []);
-      setCurrentProvider(getShortModel(modelName));
+      setCurrentProvider(providerName || 'AI');
       setMessages([{ role: 'assistant', content: text }]);
     } catch (err) {
       setError(err.message || 'An error occurred while communicating with the AI.');
@@ -159,7 +152,7 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
     try {
       // Send the entire chat history
       const { text, providerName, modelName } = await askAIForHelp(problem, userCode, testResults, updatedMessages);
-      setCurrentProvider(getShortModel(modelName));
+      setCurrentProvider(providerName || 'AI');
       setMessages(prev => [...prev, { role: 'assistant', content: text }]);
     } catch (err) {
       setError(err.message || 'An error occurred while communicating with the AI.');
