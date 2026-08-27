@@ -162,20 +162,21 @@ export function Dashboard() {
             {currentUser.role === 'Admin' && (
               <button 
                 onClick={() => setShowAdminPanel(true)}
-                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: '0.5rem', borderRadius: 'var(--radius-md)', position: 'relative' }}
+                className="button-secondary"
+                style={{ padding: '0.5rem 0.75rem', position: 'relative' }}
                 title="Admin Dashboard"
               >
-                <Bell size={20} />
+                <Bell size={16} />
                 <span className="hide-on-mobile">Admin</span>
                 {(pendingAccessCount > 0 || pendingResetCount > 0) && (
                   <span style={{
                     position: 'absolute',
-                    top: '2px', right: '2px',
+                    top: '-5px', right: '-5px',
                     backgroundColor: 'var(--error)',
                     color: 'white',
                     fontSize: '0.7rem',
                     fontWeight: 'bold',
-                    width: '16px', height: '16px',
+                    width: '18px', height: '18px',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',

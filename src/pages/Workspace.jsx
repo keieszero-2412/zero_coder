@@ -230,7 +230,7 @@ export function Workspace() {
             disabled={!isLoaded || isRunning}
           >
             <Play size={16} />
-            {isRunning ? 'Running...' : 'Run Code'}
+            {isRunning ? 'RUNNING...' : 'RUN'}
           </button>
 
           <button 
@@ -239,7 +239,7 @@ export function Workspace() {
             disabled={!isLoaded || isRunning}
           >
             <CheckCircle size={16} />
-            Check Code
+            CHECK
           </button>
           
           {currentUser && (
