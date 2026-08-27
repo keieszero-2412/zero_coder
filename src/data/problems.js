@@ -1875,7 +1875,8 @@ export const problems = [
         "code": "print(count_words(\"OneWord\"))",
         "expected": "1"
       }
-    ]
+    ],
+    "hint": "Hãy sử dụng hàm sentence.split() để tách các từ dựa trên khoảng trắng, sau đó dùng len() để đếm số phần tử."
   },
   {
     "id": "cp_6",
@@ -1889,7 +1890,8 @@ export const problems = [
         "code": "hostels = [{'name': 'A', 'price': 1.5, 'distance': 2.0, 'rating': 4.5}, {'name': 'B', 'price': 1.2, 'distance': 1.8, 'rating': 4.0}, {'name': 'C', 'price': 1.8, 'distance': 2.5, 'rating': 4.2}, {'name': 'D', 'price': 2.0, 'distance': 3.2, 'rating': 4.1}]\nprint(find_cheapest(hostels))",
         "expected": "[{'name': 'B', 'price': 1.2, 'distance': 1.8, 'rating': 4.0}, {'name': 'A', 'price': 1.5, 'distance': 2.0, 'rating': 4.5}, {'name': 'C', 'price': 1.8, 'distance': 2.5, 'rating': 4.2}]"
       }
-    ]
+    ],
+    "hint": "Sử dụng list comprehension kết hợp điều kiện distance <= 3 để lọc, sau đó sorted theo price và dùng slice [:3] để lấy 3 nhà trọ rẻ nhất."
   },
   {
     "id": "mock1_1",
