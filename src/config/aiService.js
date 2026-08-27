@@ -9,27 +9,27 @@ import { GoogleGenAI } from '@google/genai';
 // --- Provider Configuration ---
 const providers = [];
 
-// 1. Gemini (Google)
-const geminiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
-if (geminiKey) {
-  providers.push({
-    name: 'Gemini',
-    type: 'gemini',
-    model: 'gemini-3.6-flash',
-    apiKey: geminiKey,
-    client: new GoogleGenAI({ apiKey: geminiKey }),
-  });
-}
-
-// 2. Groq (Llama 3.3 70B - very fast)
+// 1. Groq (Llama 3.3 70B - very fast)
 const groqKey = import.meta.env.VITE_GROQ_API_KEY || '';
 if (groqKey) {
   providers.push({
     name: 'Groq',
     type: 'openai-compatible',
-    model: 'groq/compound',
+    model: 'llama-3.3-70b-versatile',
     apiKey: groqKey,
     baseUrl: 'https://api.groq.com/openai/v1/chat/completions',
+  });
+}
+
+// 2. Gemini (Google)
+const geminiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
+if (geminiKey) {
+  providers.push({
+    name: 'Gemini',
+    type: 'gemini',
+    model: 'gemini-1.5-flash',
+    apiKey: geminiKey,
+    client: new GoogleGenAI({ apiKey: geminiKey }),
   });
 }
 
