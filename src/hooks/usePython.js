@@ -69,14 +69,19 @@ export function usePython() {
       const pyodide = pyodideRef.current;
       const results = [];
 
+      // Clear output once before running tests
+      setOutput([]);
+
+      try {
+          // Execute the user code ONCE
+          await pyodide.runPythonAsync(code);
+      } catch (err) {
+          // If there's a global error, all tests fail
+          return testCases.map(test => ({ ...test, passed: false, error: err.toString() }));
+      }
+
       for (const test of testCases) {
-          // Reset stdout/stderr for each test case
-          setOutput([]);
-          
           try {
-              // We execute the user code once
-              await pyodide.runPythonAsync(code);
-              
               // Run the test code and capture stdout
               const pyCode = `
 import sys
