@@ -215,18 +215,18 @@ export function Workspace() {
             {prevProblem ? (
               <Link to={`/exam/${prevProblem.id}`} className="button-secondary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', padding: '0.4rem 0.75rem', textDecoration: 'none', fontSize: '0.85rem' }} title="Previous Problem">
                 <ChevronLeft size={16} />
-                Prev
+                <span className="hide-on-mobile">Prev</span>
               </Link>
             ) : (
-              <div style={{ width: '74px' }}></div>
+              <div style={{ width: '74px' }} className="hide-on-mobile"></div>
             )}
             {nextProblem ? (
               <Link to={`/exam/${nextProblem.id}`} className="button-secondary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', padding: '0.4rem 0.75rem', textDecoration: 'none', fontSize: '0.85rem' }} title="Next Problem">
-                Next
+                <span className="hide-on-mobile">Next</span>
                 <ChevronRight size={16} />
               </Link>
             ) : (
-              <div style={{ width: '74px' }}></div>
+              <div style={{ width: '74px' }} className="hide-on-mobile"></div>
             )}
           </div>
           
@@ -242,7 +242,7 @@ export function Workspace() {
             title={isFlagged ? "Unflag Problem" : "Flag for Review"}
           >
             <Flag size={16} fill={isFlagged ? '#fbbf24' : 'none'} />
-            {isFlagged ? 'Flagged' : 'Flag'}
+            <span className="hide-on-mobile">{isFlagged ? 'Flagged' : 'Flag'}</span>
           </button>
 
           <button 
@@ -257,27 +257,30 @@ export function Workspace() {
                 }
               }
             }}
+            title="Reset Code"
           >
             <RotateCcw size={16} />
-            Reset
+            <span className="hide-on-mobile">Reset</span>
           </button>
           
           <button 
             className="button-primary"
             onClick={handleRun}
             disabled={!isLoaded || isRunning}
+            title="Run Code"
           >
             <Play size={16} />
-            {isRunning ? 'Running...' : 'Run'}
+            <span className="hide-on-mobile">{isRunning ? 'Running...' : 'Run'}</span>
           </button>
 
           <button 
             className="button-primary"
             onClick={handleSubmit}
             disabled={!isLoaded || isRunning}
+            title="Check Solution"
           >
             <CheckCircle size={16} />
-            Check
+            <span className="hide-on-mobile">Check</span>
           </button>
           
           {currentUser && (

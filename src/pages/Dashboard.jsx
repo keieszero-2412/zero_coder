@@ -216,18 +216,14 @@ export function Dashboard() {
         </p>
 
         {/* Sticky Category Navigation - sits below title normally, sticks under header on scroll */}
-        <div style={{ 
+        <div className="category-nav-container" style={{ 
           position: 'sticky', 
           top: '31px', 
           zIndex: 40, 
           backgroundColor: 'var(--bg-base)', 
-          padding: '1.5rem 0 0.5rem 0',
           margin: 0,
           marginBottom: '1.5rem',
           borderBottom: '1px solid var(--border-color)',
-          display: 'flex',
-          gap: '1rem',
-          overflowX: 'auto'
         }}>
           {Object.keys(categories).map(cat => (
             <button 
@@ -255,9 +251,10 @@ export function Dashboard() {
           <div 
             key={category} 
             id={`category-${category.replace(/\s+/g, '-')}`}
-            style={{ display: 'grid', gridTemplateColumns: '220px 1fr', gap: '2rem', marginBottom: '4rem', alignItems: 'start', scrollMarginTop: '110px' }}
+            className="category-section"
+            style={{ marginBottom: '4rem', scrollMarginTop: '110px' }}
           >
-            <div style={{ position: 'sticky', top: '110px' }}>
+            <div className="category-header-sticky">
               <h2 style={{ fontSize: '1.75rem', margin: 0, color: 'var(--text-primary)', borderLeft: '4px solid var(--accent-primary)', paddingLeft: '1rem' }}>
                 {category}
               </h2>

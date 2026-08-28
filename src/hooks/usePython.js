@@ -1,119 +1,136 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 
+// We import the worker using Vite's ?worker syntax
+import PythonWorker from './python.worker.js?worker';
+
 export function usePython() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [output, setOutput] = useState([]);
   const [error, setError] = useState(null);
-  const pyodideRef = useRef(null);
+  
+  const workerRef = useRef(null);
+  const messageIdRef = useRef(0);
+  const pendingRequestsRef = useRef(new Map());
+
+  // Helper to create and initialize the worker
+  const initWorker = useCallback(() => {
+    if (workerRef.current) {
+      workerRef.current.terminate();
+    }
+    const worker = new PythonWorker();
+    workerRef.current = worker;
+
+    worker.onmessage = (event) => {
+      const { type, text, error, results, id } = event.data;
+      
+      if (type === 'STDOUT') {
+        setOutput((prev) => [...prev, { type: 'stdout', text }]);
+      } else if (type === 'STDERR') {
+        setOutput((prev) => [...prev, { type: 'stderr', text }]);
+      } else {
+        // Resolve pending requests for specific message IDs
+        const pending = pendingRequestsRef.current.get(id);
+        if (pending) {
+          if (type === 'INIT_DONE') {
+            setIsLoaded(true);
+            pending.resolve();
+          } else if (type === 'INIT_ERROR') {
+            setError(error);
+            pending.reject(new Error(error));
+          } else if (type === 'RUN_CODE_DONE') {
+            pending.resolve();
+          } else if (type === 'RUN_CODE_ERROR') {
+            setOutput((prev) => [...prev, { type: 'stderr', text: error }]);
+            pending.resolve(); // resolve so the UI isn't blocked
+          } else if (type === 'RUN_TESTS_DONE') {
+            pending.resolve(results);
+          } else if (type === 'RUN_TESTS_ERROR') {
+            setOutput((prev) => [...prev, { type: 'stderr', text: error }]);
+            pending.resolve([]); // fallback
+          }
+          pendingRequestsRef.current.delete(id);
+        }
+      }
+    };
+
+    // Initialize Pyodide inside the worker
+    const id = ++messageIdRef.current;
+    return new Promise((resolve, reject) => {
+      pendingRequestsRef.current.set(id, { resolve, reject });
+      worker.postMessage({ type: 'INIT', id });
+    });
+  }, []);
 
   useEffect(() => {
-    let mounted = true;
-    
-    const initPyodide = async () => {
-      try {
-        // Use a global promise to ensure Pyodide is only loaded once across unmounts/remounts
-        if (!window.__pyodidePromise__) {
-          window.__pyodidePromise__ = window.loadPyodide({
-            indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.0/full/',
-          });
-        }
-        
-        const pyodide = await window.__pyodidePromise__;
-        
-        // Setup sys.stdout and sys.stderr interception
-        pyodide.setStdout({
-          batched: (msg) => {
-            if (mounted) setOutput((prev) => [...prev, { type: 'stdout', text: msg }]);
-          }
-        });
-        
-        pyodide.setStderr({
-          batched: (msg) => {
-            if (mounted) setOutput((prev) => [...prev, { type: 'stderr', text: msg }]);
-          }
-        });
-
-        if (mounted) {
-          pyodideRef.current = pyodide;
-          setIsLoaded(true);
-        }
-      } catch (err) {
-        if (mounted) setError(err.message);
+    initWorker().catch(console.error);
+    return () => {
+      if (workerRef.current) {
+        workerRef.current.terminate();
       }
     };
+  }, [initWorker]);
 
-    initPyodide();
+  // Execute a command with timeout
+  const executeWithTimeout = useCallback(async (messageData, timeoutMs = 10000) => {
+    if (!workerRef.current) return;
+    
+    return new Promise((resolve, reject) => {
+      const id = ++messageIdRef.current;
+      
+      const timeoutId = setTimeout(() => {
+        // Terminate worker if it takes too long
+        workerRef.current.terminate();
+        pendingRequestsRef.current.delete(id);
+        setOutput((prev) => [...prev, { type: 'stderr', text: 'Error: Execution timed out (infinite loop?). Worker terminated.' }]);
+        
+        // Re-initialize worker for future runs
+        setIsLoaded(false);
+        initWorker();
+        
+        reject(new Error('Timeout'));
+      }, timeoutMs);
 
-    return () => {
-      mounted = false;
-    };
-  }, []);
+      pendingRequestsRef.current.set(id, {
+        resolve: (data) => {
+          clearTimeout(timeoutId);
+          resolve(data);
+        },
+        reject: (err) => {
+          clearTimeout(timeoutId);
+          reject(err);
+        }
+      });
+
+      workerRef.current.postMessage({ ...messageData, id });
+    });
+  }, [initWorker]);
 
   const runCode = useCallback(async (code) => {
-    if (!pyodideRef.current) return;
-    
-    // Clear previous output
     setOutput([]);
     setError(null);
-    
     try {
-      await pyodideRef.current.runPythonAsync(code);
+      await executeWithTimeout({ type: 'RUN_CODE', code }, 10000);
     } catch (err) {
-      setOutput((prev) => [...prev, { type: 'stderr', text: err.toString() }]);
+      if (err.message !== 'Timeout') {
+        console.error(err);
+      }
     }
-  }, []);
+  }, [executeWithTimeout]);
 
   const runTests = useCallback(async (code, testCases) => {
-      if (!pyodideRef.current) return [];
-
-      const pyodide = pyodideRef.current;
-      const results = [];
-
-      // Clear output once before running tests
-      setOutput([]);
-
-      try {
-          // Execute the user code ONCE
-          await pyodide.runPythonAsync(code);
-      } catch (err) {
-          // If there's a global error, all tests fail
-          return testCases.map(test => ({ ...test, passed: false, error: err.toString() }));
+    setOutput([]);
+    try {
+      const results = await executeWithTimeout({ type: 'RUN_TESTS', code, testCases }, 10000);
+      return results || [];
+    } catch (err) {
+      if (err.message === 'Timeout') {
+        // Mark all tests as failed due to timeout
+        return testCases.map(test => ({ ...test, passed: false, error: 'Execution timed out.' }));
       }
-
-      for (const test of testCases) {
-          try {
-              // Run the test code and capture stdout
-              const pyCode = `
-import sys
-import json
-import traceback
-from io import StringIO
-old_stdout = sys.stdout
-sys.stdout = mystdout = StringIO()
-err_msg = ""
-try:
-${test.code.split('\n').map(line => '    ' + line).join('\n')}
-except Exception as e:
-    err_msg = traceback.format_exc()
-finally:
-    sys.stdout = old_stdout
-json.dumps({"got": mystdout.getvalue().strip(), "error": err_msg})
-`;
-              const jsonResult = await pyodide.runPythonAsync(pyCode);
-              const resultObj = JSON.parse(jsonResult);
-              
-              if (resultObj.error) {
-                  results.push({ ...test, passed: false, error: resultObj.error });
-              } else {
-                  const passed = (resultObj.got === test.expected);
-                  results.push({ ...test, passed, got: resultObj.got });
-              }
-          } catch (err) {
-              results.push({ ...test, passed: false, error: err.toString() });
-          }
-      }
-      return results;
-  }, []);
+      console.error(err);
+      return [];
+    }
+  }, [executeWithTimeout]);
 
   const clearOutput = useCallback(() => setOutput([]), []);
 
