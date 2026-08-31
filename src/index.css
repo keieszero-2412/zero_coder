@@ -59,10 +59,10 @@ body.theme-daylight {
 
 /* 3. Blush (Cute Light Pink Theme) */
 body.theme-blush {
-  --bg-base: #FFF7F8; /* Ultra-light blush */
-  --bg-surface: #FFFFFF; /* Clean white surfaces */
-  --bg-surface-elevated: #FFF0F2; /* Subtle rose tint */
-  --bg-surface-highlight: #FFE4E9; /* Soft pink highlight */
+  --bg-base: #FFF0F2; /* Subtle rose tint */
+  --bg-surface: #FFF5F7; /* Soft blush instead of stark white */
+  --bg-surface-elevated: #FFE4E9; /* Deeper rose tint */
+  --bg-surface-highlight: #FFD6E0; /* Soft pink highlight */
   
   --text-primary: #2D2B3D; /* Dark purple-gray (warm & readable) */
   --text-secondary: #5C5775; /* Medium warm gray */
@@ -137,9 +137,14 @@ body.theme-amber {
   --code-bg: rgba(0, 0, 0, 0.06); /* subtle gray background */
 }
 
-body.theme-daylight .glass-panel,
-body.theme-blush .glass-panel {
+body.theme-daylight .glass-panel {
   background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+body.theme-blush .glass-panel {
+  background: rgba(255, 245, 247, 0.85);
   border: 1px solid rgba(0, 0, 0, 0.05);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
@@ -499,6 +504,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .cm-editor {
   height: 100% !important;
+  background-color: var(--bg-surface) !important;
 }
 
 .cm-gutters {

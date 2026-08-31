@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useAuth } from './AuthContext';
 
 const SettingsContext = createContext();
 
@@ -7,6 +8,7 @@ export function useSettings() {
 }
 
 export function SettingsProvider({ children }) {
+  const { currentUser } = useAuth();
   // Load initial settings from localStorage, or use defaults
   const [settings, setSettings] = useState(() => {
     try {
@@ -24,15 +26,19 @@ export function SettingsProvider({ children }) {
     };
   });
 
-  // Save to localStorage whenever settings change
+  // Save to localStorage whenever settings change and apply theme
   useEffect(() => {
     localStorage.setItem('zerocoder_settings', JSON.stringify(settings));
     
     // Apply theme class to body for global CSS overrides
     document.body.className = '';
-    document.body.classList.add(`theme-${settings.theme}`);
-    
-  }, [settings]);
+    // Force midnight theme when not logged in
+    if (!currentUser) {
+      document.body.classList.add('theme-midnight');
+    } else {
+      document.body.classList.add(`theme-${settings.theme}`);
+    }
+  }, [settings, currentUser]);
 
   const updateSetting = (key, value) => {
     setSettings((prev) => ({

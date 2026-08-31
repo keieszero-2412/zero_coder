@@ -11,9 +11,9 @@ import './index.css';
 
 function App() {
   return (
-    <SettingsProvider>
-      <NotificationProvider>
-        <AuthProvider>
+    <AuthProvider>
+      <SettingsProvider>
+        <NotificationProvider>
           <Router>
             <Routes>
               <Route path="/auth" element={<Auth />} />
@@ -25,9 +25,9 @@ function App() {
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Router>
-        </AuthProvider>
-      </NotificationProvider>
-    </SettingsProvider>
+        </NotificationProvider>
+      </SettingsProvider>
+    </AuthProvider>
   );
 }
 
