@@ -33,20 +33,20 @@ export function ProblemDescription({ problem, failedAttempts = 0, userCode, test
         </div>
       ))}
 
-      <div style={{ marginTop: '2rem', backgroundColor: 'rgba(251, 191, 36, 0.05)', border: '1px solid rgba(251, 191, 36, 0.3)', borderRadius: 'var(--radius-md)', color: '#fbbf24', overflow: 'hidden' }}>
+      <div style={{ marginTop: '2rem', backgroundColor: 'color-mix(in srgb, var(--accent-primary) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--accent-primary) 25%, transparent)', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
         <button 
           onClick={() => setShowHint(!showHint)}
-          style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.75rem 1rem', background: 'transparent', border: 'none', color: '#fbbf24', cursor: 'pointer', fontWeight: 'bold' }}
+          style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.75rem 1rem', background: 'transparent', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', fontWeight: 'bold' }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Lightbulb size={18} />
+            <Lightbulb size={18} color="var(--accent-primary)" />
             Hint
           </div>
           {showHint ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
         </button>
         
         {showHint && (
-          <div style={{ padding: '0 1rem 1rem 1rem', fontSize: '0.95rem', lineHeight: '1.6' }}>
+          <div style={{ padding: '0 1rem 1rem 1rem', fontSize: '0.95rem', lineHeight: '1.6', color: 'var(--text-primary)' }}>
             {problem.hint || "Hãy đọc kỹ lại yêu cầu đề bài, chú ý đến các trường hợp đặc biệt (edge cases), và kiểm tra xem hàm của bạn đã return đúng giá trị yêu cầu (thay vì chỉ dùng lệnh print) hay chưa."}
           </div>
         )}

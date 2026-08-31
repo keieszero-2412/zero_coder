@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Bot, Sparkles, Loader2, X, Send, Cpu, Check, Copy, Wand2 } from 'lucide-react';
+import { Bot, Sparkles, Loader2, X, Send, Cpu, Check, Copy, Wand2, Zap } from 'lucide-react';
 import { askAIForHelp } from '../config/aiService';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -196,52 +196,67 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
 
   // Standard Markdown rendering with CSS taking care of styling
   return (
-    <div style={{ marginTop: '1.5rem', padding: '1rem', backgroundColor: 'var(--bg-surface-elevated)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', display: 'flex', flexDirection: 'column', flex: '1', minHeight: 0 }}>
+    <div style={{ backgroundColor: 'var(--bg-surface-elevated)', display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--border-color)' }}>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 'bold', color: 'var(--accent-primary)' }}>
-            <div style={{ 
-              width: 24, 
-              height: 24, 
-              backgroundColor: 'currentColor', 
-              maskImage: 'url(/zerocoder-logo.png)', 
-              maskSize: 'contain', 
-              maskRepeat: 'no-repeat', 
-              maskPosition: 'center',
-              WebkitMaskImage: 'url(/zerocoder-logo.png)',
-              WebkitMaskSize: 'contain',
-              WebkitMaskRepeat: 'no-repeat',
-              WebkitMaskPosition: 'center'
-            }} />
-            AI Assistant
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.2rem' }}>
-            Powered by {currentProvider}
+      <div className="section-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border-color)', height: '40px', padding: '0 1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              padding: '0.3rem 0.85rem',
+              backgroundColor: 'var(--bg-surface-elevated)',
+              border: '1px solid var(--border-color)',
+              borderRadius: '99px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+            }}>
+              <div style={{ 
+                width: 18, 
+                height: 18, 
+                backgroundColor: 'var(--accent-primary)', 
+                maskImage: 'url(/zerocoder-logo.png)', 
+                maskSize: 'contain', 
+                maskRepeat: 'no-repeat', 
+                maskPosition: 'center',
+                WebkitMaskImage: 'url(/zerocoder-logo.png)',
+                WebkitMaskSize: 'contain',
+                WebkitMaskRepeat: 'no-repeat',
+                WebkitMaskPosition: 'center'
+              }} />
+              <span style={{
+                color: 'var(--text-primary)',
+                fontWeight: 600,
+                fontSize: '0.9rem',
+                letterSpacing: '0.3px',
+                fontFamily: 'inherit',
+                textTransform: 'none'
+              }}>Ask AI</span>
+            </div>
           </div>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
           {onClose && (
             <button 
               onClick={onClose}
-              style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: '0.25rem' }}
+              style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: '0.25rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
               title="Close AI Assistant"
             >
-              <X size={18} />
+              <X size={16} />
             </button>
           )}
         </div>
       </div>
 
       {/* Chat Area */}
-      <div ref={chatContainerRef} style={{ flex: '1', overflowY: 'auto', display: 'flex', flexDirection: 'column', paddingRight: '0.5rem', minHeight: '150px' }}>
+      <div ref={chatContainerRef} style={{ flex: '1', overflowY: 'auto', display: 'flex', flexDirection: 'column', padding: '1rem' }}>
         
         {messages.length === 0 && !isLoading && !error && (
           <div style={{ margin: 'auto', textAlign: 'center', color: 'var(--text-secondary)', padding: '2rem' }}>
             <div style={{ 
-              width: 40, 
-              height: 40, 
-              backgroundColor: 'currentColor', 
+              width: 32, 
+              height: 32, 
+              backgroundColor: 'var(--accent-primary)', 
               maskImage: 'url(/zerocoder-logo.png)', 
               maskSize: 'contain', 
               maskRepeat: 'no-repeat', 
@@ -251,10 +266,10 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
               WebkitMaskRepeat: 'no-repeat',
               WebkitMaskPosition: 'center',
               margin: '0 auto 1rem',
-              opacity: 0.5
+              opacity: 0.8
             }} />
-            <p>How can I help you with this problem?</p>
-            <p style={{ fontSize: '0.85rem', marginTop: '0.5rem' }}>You can ask a question or use the suggestions below.</p>
+            <p style={{ color: 'var(--text-primary)', fontWeight: 500 }}>How can I help you?</p>
+            <p style={{ fontSize: '0.85rem', marginTop: '0.25rem' }}>Ask a question or use the suggestions below.</p>
           </div>
         )}
 
@@ -279,21 +294,21 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
 
       {/* Persistent Suggestions */}
       {!isLoading && (
-        <div style={{ display: 'flex', gap: '0.5rem', padding: '0.75rem 0', overflowX: 'auto', borderTop: '1px solid var(--border-color)', marginTop: '0.5rem', whiteSpace: 'nowrap' }}>
+        <div style={{ display: 'flex', gap: '0.5rem', padding: '0.75rem 1rem', overflowX: 'auto', borderTop: '1px solid var(--border-color)', whiteSpace: 'nowrap' }}>
           <button 
             onClick={() => handleIntent('Analyze my code and explain where I might be wrong. Do NOT give me the direct answer or the full code, just guide me.')}
-            style={{ background: 'var(--bg-surface-elevated)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '1.25rem', padding: '0.4rem 1rem', color: 'var(--text-primary)', fontSize: '0.8rem', cursor: 'pointer', transition: 'all 0.2s ease' }}
-            onMouseOver={(e) => { e.target.style.background = 'rgba(255,255,255,0.12)'; e.target.style.borderColor = 'rgba(255,255,255,0.2)'; }}
-            onMouseOut={(e) => { e.target.style.background = 'var(--bg-surface-elevated)'; e.target.style.borderColor = 'rgba(255,255,255,0.08)'; }}
+            style={{ background: 'var(--bg-base)', border: '1px solid var(--border-color)', borderRadius: '1.25rem', padding: '0.35rem 0.75rem', color: 'var(--text-secondary)', fontSize: '0.75rem', cursor: 'pointer', transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+            onMouseOver={(e) => { e.target.style.background = 'var(--bg-surface-highlight)'; e.target.style.color = 'var(--text-primary)'; }}
+            onMouseOut={(e) => { e.target.style.background = 'var(--bg-base)'; e.target.style.color = 'var(--text-secondary)'; }}
           >
             Analyze my code
           </button>
           {(!testResults.length || !testResults.every(tr => tr.passed)) && (
             <button 
               onClick={handleFixIntent}
-              style={{ background: 'var(--bg-surface-elevated)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '1.25rem', padding: '0.4rem 1rem', color: 'var(--text-primary)', fontSize: '0.8rem', cursor: 'pointer', transition: 'all 0.2s ease' }}
-              onMouseOver={(e) => { e.target.style.background = 'rgba(255,255,255,0.12)'; e.target.style.borderColor = 'rgba(255,255,255,0.2)'; }}
-              onMouseOut={(e) => { e.target.style.background = 'var(--bg-surface-elevated)'; e.target.style.borderColor = 'rgba(255,255,255,0.08)'; }}
+              style={{ background: 'var(--bg-base)', border: '1px solid var(--border-color)', borderRadius: '1.25rem', padding: '0.35rem 0.75rem', color: 'var(--text-secondary)', fontSize: '0.75rem', cursor: 'pointer', transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+              onMouseOver={(e) => { e.target.style.background = 'var(--bg-surface-highlight)'; e.target.style.color = 'var(--text-primary)'; }}
+              onMouseOut={(e) => { e.target.style.background = 'var(--bg-base)'; e.target.style.color = 'var(--text-secondary)'; }}
             >
               Fix my code
             </button>
@@ -302,47 +317,49 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
       )}
 
       {/* Input Area */}
-      <form onSubmit={handleSendMessage} style={{ display: 'flex', gap: '0.5rem', paddingTop: '0.5rem' }}>
-        <input
-          type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          placeholder={messages.length === 0 ? "Ask a question about your code..." : "Ask a follow-up question..."}
-          disabled={isLoading}
-          style={{
-            flex: '1',
-            padding: '0.75rem 1rem',
-            borderRadius: '20px',
-            border: '1px solid var(--border-color)',
-            backgroundColor: 'var(--bg-base)',
-            color: 'var(--text-primary)',
-            outline: 'none'
-          }}
-        />
-        <button 
-          type="submit" 
-          disabled={!inputValue.trim() || isLoading}
-          style={{
-            backgroundColor: inputValue.trim() && !isLoading ? 'var(--accent-primary)' : 'var(--bg-surface-highlight)',
-            color: inputValue.trim() && !isLoading ? 'white' : 'var(--text-secondary)',
-            border: 'none',
-            borderRadius: '50%',
-            width: '42px',
-            height: '42px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: inputValue.trim() && !isLoading ? 'pointer' : 'default',
-            transition: 'background-color 0.2s'
-          }}
-        >
-          <Send size={18} style={{ marginLeft: '2px' }} />
-        </button>
-      </form>
-      
-      {/* Disclaimer */}
-      <div style={{ textAlign: 'center', fontSize: '0.7rem', color: 'var(--text-tertiary)', marginTop: '0.5rem' }}>
-        AI can make mistakes. Please review the code carefully.
+      <div style={{ padding: '0 1rem 1rem 1rem', backgroundColor: 'var(--bg-surface-elevated)' }}>
+        <form onSubmit={handleSendMessage} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', backgroundColor: 'var(--bg-base)', border: '1px solid var(--border-color)', borderRadius: '1.5rem', padding: '0.25rem 0.25rem 0.25rem 1rem' }}>
+          <input
+            type="text"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder={messages.length === 0 ? "Ask a question..." : "Follow up..."}
+            disabled={isLoading}
+            style={{
+              flex: '1',
+              padding: '0.5rem 0',
+              border: 'none',
+              backgroundColor: 'transparent',
+              color: 'var(--text-primary)',
+              fontSize: '0.85rem',
+              outline: 'none'
+            }}
+          />
+          <button 
+            type="submit" 
+            disabled={!inputValue.trim() || isLoading}
+            style={{
+              backgroundColor: inputValue.trim() && !isLoading ? 'var(--accent-primary)' : 'transparent',
+              color: inputValue.trim() && !isLoading ? 'white' : 'var(--text-tertiary)',
+              border: 'none',
+              borderRadius: '50%',
+              width: '32px',
+              height: '32px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: inputValue.trim() && !isLoading ? 'pointer' : 'default',
+              transition: 'all 0.2s'
+            }}
+          >
+            <Send size={14} style={{ marginLeft: inputValue.trim() && !isLoading ? '2px' : '0' }} />
+          </button>
+        </form>
+        
+        {/* Disclaimer */}
+        <div style={{ textAlign: 'center', fontSize: '0.65rem', color: 'var(--text-tertiary)', marginTop: '0.5rem' }}>
+          Powered by {currentProvider}. AI can make mistakes.
+        </div>
       </div>
       
       <style dangerouslySetInnerHTML={{__html: `

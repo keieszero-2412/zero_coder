@@ -3,21 +3,30 @@ import { python } from '@codemirror/lang-python';
 import { vscodeDark } from '@uiw/codemirror-theme-vscode';
 import { unifiedMergeView } from '@codemirror/merge';
 import { EditorView } from '@codemirror/view';
+import { useSettings } from '../context/SettingsContext';
+import { githubLight } from '@uiw/codemirror-theme-github';
+import { vim } from '@replit/codemirror-vim';
 
 export function CodeEditor({ value, originalCode, onChange }) {
+  const { settings } = useSettings();
+  
   const extensions = [python(), EditorView.lineWrapping];
+  
+  if (settings?.vimMode) {
+    extensions.push(vim());
+  }
   if (originalCode !== undefined && originalCode !== null) {
     extensions.push(unifiedMergeView({ original: originalCode, mergeControls: false }));
   }
 
   return (
-    <div className="editor-wrapper" style={{ height: '100%', width: '100%' }}>
+    <div className="editor-wrapper" style={{ flex: 1, display: 'flex', flexDirection: 'column', width: '100%', fontSize: settings?.editorFontSize || '14px' }}>
       <CodeMirror
         value={value}
         height="100%"
         extensions={extensions}
         onChange={(val) => onChange(val)}
-        theme={vscodeDark}
+        theme={['daylight', 'blush', 'amber'].includes(settings?.theme) ? githubLight : vscodeDark}
         basicSetup={{
           lineNumbers: true,
           highlightActiveLineGutter: true,

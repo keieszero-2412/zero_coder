@@ -9,8 +9,10 @@ import { AIAssistant } from '../components/AIAssistant';
 import { askAIForHelp } from '../config/aiService';
 import { usePython } from '../hooks/usePython';
 import { problems } from '../data/problems';
-import { Play, CheckCircle, ArrowLeft, Trophy, Loader2, RotateCcw, LogOut, Sparkles, ChevronLeft, ChevronRight, Flag } from 'lucide-react';
+import { Play, CheckCircle, ArrowLeft, Trophy, Loader2, RotateCcw, LogOut, Zap, ChevronLeft, ChevronRight, Flag, Settings } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { SettingsModal } from '../components/SettingsModal';
+import { useNotification } from '../context/NotificationContext';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import '../index.css';
@@ -19,6 +21,7 @@ export function Workspace() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
+  const { showConfirm, showToast } = useNotification();
   
   // Find problem based on URL param
   const currentProblem = useMemo(() => {
@@ -43,10 +46,14 @@ export function Workspace() {
   const [sidebarWidth, setSidebarWidth] = useState(400);
   const [isSidebarDragging, setIsSidebarDragging] = useState(false);
   const [isFlagged, setIsFlagged] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const { isLoaded, output, error, runCode, runTests, clearOutput } = usePython();
 
   // Initialize code when problem changes
   useEffect(() => {
+    // Scroll to top so mobile users see the problem description first
+    window.scrollTo(0, 0);
+    
     const loadCode = async () => {
       if (currentProblem && currentUser) {
         try {
@@ -194,12 +201,13 @@ export function Workspace() {
   return (
     <div className="app-container">
       <header className="header">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <Link to="/" state={{ returnToId: currentProblem?.id }} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '0.5rem', borderRadius: '9999px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'var(--text-secondary)', textDecoration: 'none', transition: 'all 0.2s ease', backdropFilter: 'blur(4px)' }}>
+        <div className="workspace-header-top" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+          <Link to="/" state={{ returnToId: currentProblem?.id }} className="button-secondary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: 0, textDecoration: 'none' }} title="Back to Dashboard">
             <ArrowLeft size={16} />
           </Link>
-          <div className="header-title" style={{ fontSize: '1rem' }}>
-            {currentProblem.title}
+          <div style={{ display: 'flex', alignItems: 'center', fontWeight: 'bold', fontSize: '1.25rem', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
+            <img src="/zerocoder-logo-transparent.png" alt="logo" style={{ width: '28px', height: '28px', marginRight: '0.5rem', borderRadius: '6px' }} />
+            <span className="hide-on-mobile">zerocoder</span>
           </div>
         </div>
         
@@ -249,13 +257,14 @@ export function Workspace() {
             className="button-secondary"
             style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
             onClick={() => {
-              if (window.confirm('Are you sure you want to reset your code? This will erase your current progress.')) {
+              showConfirm('Are you sure you want to reset your code? This will erase your current progress.', async () => {
                 setCode(currentProblem.initialCode);
                 if (currentUser) {
                   const draftRef = doc(db, 'code_drafts', `${currentUser.uid}_${id}`);
                   setDoc(draftRef, { code: currentProblem.initialCode }, { merge: true }).catch(console.error);
                 }
-              }
+                showToast("Code reset to starter template.", "info");
+              });
             }}
             title="Reset Code"
           >
@@ -283,29 +292,57 @@ export function Workspace() {
             <span className="hide-on-mobile">Check</span>
           </button>
           
+          {!showAIInEditor && (
+            <button 
+              className="button-ai" 
+              onClick={() => setShowAIInEditor(true)}
+              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+              title="Ask AI"
+            >
+              <div style={{ 
+                width: 20, 
+                height: 20, 
+                backgroundColor: 'currentColor', 
+                maskImage: 'url(/zerocoder-logo.png)', 
+                maskSize: 'contain', 
+                maskRepeat: 'no-repeat', 
+                maskPosition: 'center',
+                WebkitMaskImage: 'url(/zerocoder-logo.png)',
+                WebkitMaskSize: 'contain',
+                WebkitMaskRepeat: 'no-repeat',
+                WebkitMaskPosition: 'center'
+              }} />
+              <span className="hide-on-mobile">Ask AI</span>
+            </button>
+          )}
+          
           {currentUser && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginLeft: '1rem', paddingLeft: '1rem', borderLeft: '1px solid var(--border-color)' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                <span style={{ fontSize: '0.875rem', fontWeight: 500 }}>{currentUser.username}</span>
+            <div className="hide-on-mobile" style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginLeft: '1rem', paddingLeft: '1rem', borderLeft: '1px solid var(--border-color)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: '0.375rem', rowGap: '0.125rem', alignItems: 'center' }}>
+                <span style={{ gridColumn: 2, fontSize: '0.875rem', fontWeight: 500, lineHeight: 1 }}>
+                  {currentUser.username}
+                </span>
                 <div style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: '0.25rem', 
+                  width: '8px', 
+                  height: '8px', 
+                  borderRadius: '50%', 
+                  backgroundColor: currentUser.colorCode === 'Green' ? '#10b981' : 
+                                   currentUser.colorCode === 'Blue' ? '#3b82f6' : 'var(--error)' 
+                }} />
+                <div style={{ 
                   fontSize: '0.75rem', 
-                  color: currentUser.colorCode === 'Green' ? 'var(--accent-primary)' : 'var(--text-secondary)'
+                  lineHeight: 1,
+                  color: currentUser.colorCode === 'Green' ? '#10b981' : 
+                         currentUser.colorCode === 'Blue' ? '#3b82f6' : 'var(--text-secondary)'
                 }}>
-                  <div style={{ 
-                    width: '8px', 
-                    height: '8px', 
-                    borderRadius: '50%', 
-                    backgroundColor: currentUser.colorCode === 'Green' ? 'var(--accent-primary)' : 
-                                     currentUser.colorCode === 'Blue' ? '#3b82f6' : 'var(--error)' 
-                  }} />
                   {currentUser.colorCode}
                 </div>
               </div>
-              <FeedbackWidget />
-              <button onClick={logout} className="button-secondary" style={{ padding: '0.5rem' }} title="Sign Out">
+              <FeedbackWidget iconOnly={true} />
+              <button onClick={() => setShowSettings(true)} className="button-secondary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: 0 }} title="Settings">
+                <Settings size={16} />
+              </button>
+              <button onClick={logout} className="button-secondary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: 0 }} title="Sign Out">
                 <LogOut size={16} />
               </button>
             </div>
@@ -369,14 +406,7 @@ export function Workspace() {
                     </div>
                   )}
                   <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                    {!showAIInEditor && (
-                      <button 
-                        className="button-ai" 
-                        onClick={() => setShowAIInEditor(true)}
-                      >
-                        Ask AI
-                      </button>
-                    )}
+                    {/* Ask AI button was moved to the top header */}
                   </div>
                 </div>
               </div>
@@ -400,26 +430,32 @@ export function Workspace() {
           </div>
           
           {/* Right Panel: AI Assistant */}
-          <div 
-            className="drag-handle"
-            onMouseDown={() => setIsDragging(true)}
-            style={{
-              display: showAIInEditor ? 'block' : 'none',
-              width: '4px',
-              cursor: 'col-resize',
-              backgroundColor: isDragging ? 'var(--accent-primary)' : 'var(--border-color)',
-              transition: 'background-color 0.2s',
-              zIndex: 10,
-              margin: '0 -2px',
-              position: 'relative'
-            }}
-          />
+          {showAIInEditor && (
+            <>
+              <style>{`
+                @media (max-width: 768px) {
+                  .mobile-hidden-drag { display: none !important; }
+                }
+              `}</style>
+              <div 
+                className="drag-handle mobile-hidden-drag"
+                onMouseDown={() => setIsDragging(true)}
+                style={{
+                  width: '4px',
+                  cursor: 'col-resize',
+                  backgroundColor: isDragging ? 'var(--accent-primary)' : 'var(--border-color)',
+                  transition: 'background-color 0.2s',
+                  zIndex: 10,
+                  margin: '0 -2px',
+                  position: 'relative'
+                }}
+              />
+            </>
+          )}
           <div style={{ 
             display: showAIInEditor ? 'flex' : 'none',
             flex: '1', 
             overflow: 'hidden', 
-            padding: '0 1rem 1rem', 
-            paddingLeft: '1.5rem', 
             flexDirection: 'column' 
           }}>
             <AIAssistant 
@@ -434,6 +470,8 @@ export function Workspace() {
 
         </div>
       </main>
+
+      {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
     </div>
   );
 }

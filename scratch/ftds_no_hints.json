@@ -1,0 +1,10 @@
+[
+  {
+    "id": "cp_5",
+    "description": "<p>Viết hàm <code>count_words(sentence)</code> để đếm xem trong câu sentence có bao nhiêu từ hợp lệ. Một từ được định nghĩa là một chuỗi ký tự liên tiếp không chứa dấu cách.</p>"
+  },
+  {
+    "id": "cp_6",
+    "description": "<p>Viết hàm <code>find_cheapest(hostels)</code>. Chỉ xét nhà trọ có distance ≤ 3. Sắp xếp các nhà trọ thỏa mãn điều kiện theo price tăng dần. Trả về 03 nhà trọ rẻ nhất trong phạm vi này (hoặc trả về mảng rỗng nếu không có).</p>"
+  }
+]

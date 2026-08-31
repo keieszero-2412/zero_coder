@@ -24,7 +24,166 @@
   
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  
+  --text-on-accent: #ffffff;
+  
+  /* Inline code defaults (for dark themes) */
+  --code-color: var(--accent-primary);
+  --code-bg: var(--bg-surface-highlight);
 }
+
+/* --- UNIFIED THEMES --- */
+
+/* 1. Midnight (Default Dark) is defined by :root. 
+   We explicitly define the class to do nothing and fall back to :root. */
+body.theme-midnight {
+  /* Inherits from :root */
+}
+
+/* 2. Daylight (Light Theme) */
+body.theme-daylight {
+  --bg-base: #f1f5f9;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #f8fafc;
+  --bg-surface-highlight: #e2e8f0;
+  
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #64748b;
+  --border-color: #cbd5e1;
+
+  --accent-primary: #14b8a6; /* Teal - matches Midnight */
+  --accent-primary-hover: #0d9488;
+  --text-on-accent: #ffffff;
+}
+
+/* 3. Blush (Cute Light Pink Theme) */
+body.theme-blush {
+  --bg-base: #FFF7F8; /* Ultra-light blush */
+  --bg-surface: #FFFFFF; /* Clean white surfaces */
+  --bg-surface-elevated: #FFF0F2; /* Subtle rose tint */
+  --bg-surface-highlight: #FFE4E9; /* Soft pink highlight */
+  
+  --text-primary: #2D2B3D; /* Dark purple-gray (warm & readable) */
+  --text-secondary: #5C5775; /* Medium warm gray */
+  --text-tertiary: #9690AD; /* Light muted */
+  --border-color: #F2D5DA; /* Soft pink border */
+
+  --accent-primary: #D45D8A; /* Deeper rose pink (WCAG AA with white) */
+  --accent-primary-hover: #C04A77; /* Even deeper */
+  --text-on-accent: #FFFFFF;
+}
+
+/* 4. Oceanic (Deep Blue Dark Theme) */
+body.theme-oceanic {
+  --bg-base: #0b1121;
+  --bg-surface: #151e32;
+  --bg-surface-elevated: #1e293b;
+  --bg-surface-highlight: #334155;
+  
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+  --border-color: #1e293b;
+
+  --accent-primary: #38bdf8;
+  --accent-primary-hover: #0ea5e9;
+  --text-on-accent: #ffffff;
+}
+
+/* 5. Carbon (Medium Gray Dark Theme) */
+body.theme-carbon {
+  --bg-base: #1e1e1e;
+  --bg-surface: #252526;
+  --bg-surface-elevated: #2d2d30;
+  --bg-surface-highlight: #3e3e42;
+  
+  --text-primary: #cccccc;
+  --text-secondary: #a6a6a6;
+  --text-tertiary: #808080;
+  --border-color: #3e3e42;
+
+  --accent-primary: #007acc;
+  --accent-primary-hover: #0098ff;
+  --text-on-accent: #ffffff;
+}
+
+/* 6. Amber (Warm Solarized Light Theme) */
+body.theme-amber {
+  --bg-base: #fdf6e3; /* Solarized base3 — warm cream */
+  --bg-surface: #f8f1de; /* Warm off-white (no stark white) */
+  --bg-surface-elevated: #f0e8cf; /* Slightly deeper cream */
+  --bg-surface-highlight: #eee8d5; /* Solarized base2 */
+  
+  --text-primary: #33302a; /* Very dark warm brown (high contrast) */
+  --text-secondary: #5c5648; /* Medium warm brown */
+  --text-tertiary: #93896e; /* Muted warm */
+  --border-color: #e0d6b8; /* Warm golden border */
+
+  --accent-primary: #a07800; /* Darker Solarized yellow (WCAG AA with white) */
+  --accent-primary-hover: #876500; /* Even darker gold */
+  --text-on-accent: #FFFFFF;
+}
+
+/* Base structural overrides for Light-based Themes */
+body.theme-daylight,
+body.theme-blush,
+body.theme-amber {
+  --error: #dc2626; /* Darker red for light background */
+  --success: #059669; /* Darker green for light background */
+  
+  /* Inline code for light themes - deep dark text for high readability */
+  --code-color: var(--text-primary);
+  --code-bg: rgba(0, 0, 0, 0.06); /* subtle gray background */
+}
+
+body.theme-daylight .glass-panel,
+body.theme-blush .glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+body.theme-amber .glass-panel {
+  background: rgba(253, 246, 227, 0.85); /* Warm cream glass */
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+body.theme-daylight .button-secondary,
+body.theme-blush .button-secondary,
+body.theme-amber .button-secondary {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--text-primary);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+body.theme-daylight .button-secondary:hover,
+body.theme-blush .button-secondary:hover,
+body.theme-amber .button-secondary:hover {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.18);
+}
+
+body.theme-daylight .button-secondary:active,
+body.theme-blush .button-secondary:active,
+body.theme-amber .button-secondary:active {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+/* Make white logo visible in light themes */
+body.theme-daylight .header-title img,
+body.theme-daylight .dashboard-logo img,
+body.theme-daylight .workspace-header-top img,
+body.theme-blush .header-title img,
+body.theme-blush .dashboard-logo img,
+body.theme-blush .workspace-header-top img,
+body.theme-amber .header-title img,
+body.theme-amber .dashboard-logo img,
+body.theme-amber .workspace-header-top img {
+  filter: invert(1) opacity(0.8);
+}
+
 
 * {
   box-sizing: border-box;
@@ -51,6 +210,7 @@ body {
 
 #root {
   height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
 }
@@ -75,6 +235,7 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 }
 
@@ -131,7 +292,6 @@ h1, h2, h3, h4, h5, h6 {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background-color: #000;
 }
 
 /* UI Elements */
@@ -150,8 +310,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .button-primary {
-  background: linear-gradient(135deg, #5eead4 0%, #2dd4bf 100%);
-  color: #0f1115;
+  background: var(--accent-primary);
+  color: var(--text-on-accent);
   border: none;
   padding: 0.5rem 1.25rem;
   border-radius: 9999px;
@@ -162,14 +322,16 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  white-space: nowrap;
+  flex-shrink: 0;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 8px rgba(45, 212, 191, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .button-primary:hover {
-  background: linear-gradient(135deg, #99f6e4 0%, #5eead4 100%);
+  background: var(--accent-primary-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(45, 212, 191, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .button-primary:active {
@@ -188,7 +350,7 @@ h1, h2, h3, h4, h5, h6 {
 .button-secondary {
   background: rgba(255, 255, 255, 0.04);
   color: var(--text-secondary);
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  border: 1px solid var(--border-color);
   padding: 0.5rem 1.25rem;
   border-radius: 9999px;
   font-weight: 500;
@@ -198,13 +360,15 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  white-space: nowrap;
+  flex-shrink: 0;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .button-secondary:hover {
   background: rgba(255, 255, 255, 0.08);
   color: var(--text-primary);
-  border-color: rgba(148, 163, 184, 0.4);
+  border-color: var(--text-secondary);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
@@ -249,13 +413,14 @@ h1, h2, h3, h4, h5, h6 {
   height: 110px;
   border-top: 1px solid var(--border-color);
   flex-shrink: 0;
+  background-color: var(--bg-surface-elevated);
 }
 
 .terminal-output {
   padding: 1rem;
   font-family: var(--font-mono);
   font-size: 0.875rem;
-  color: #e2e8f0;
+  color: var(--text-primary);
   overflow-y: auto;
   flex: 1;
 }
@@ -336,6 +501,12 @@ h1, h2, h3, h4, h5, h6 {
   height: 100% !important;
 }
 
+.cm-gutters {
+  background-color: var(--bg-surface-elevated) !important;
+  border-right: 1px solid var(--border-color) !important;
+  color: var(--text-tertiary) !important;
+}
+
 /* Problem Selector & Score */
 .problem-selector {
   display: flex;
@@ -390,6 +561,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Dashboard Styles */
+.dashboard-main {
+  padding: 0 2rem 2rem 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+}
+
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -499,11 +677,12 @@ a.button-primary {
 }
 
 .problem-description-content code {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--code-bg);
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
-  font-family: monospace;
-  color: #a8c7fa;
+  font-family: var(--font-mono);
+  color: var(--code-color);
+  font-weight: 500;
 }
 
 .problem-description-content ul {
@@ -518,10 +697,10 @@ a.button-primary {
 
 /* AI Assistant Styles */
 .button-ai {
-  background: linear-gradient(135deg, #5eead4 0%, #2dd4bf 100%);
-  color: #0f1115;
+  background: var(--accent-primary);
+  color: var(--text-on-accent);
   border: none;
-  padding: 0.4rem 1rem;
+  padding: 0.5rem 1.25rem;
   border-radius: 9999px;
   font-weight: 600;
   font-size: 0.85rem;
@@ -531,19 +710,21 @@ a.button-primary {
   align-items: center;
   justify-content: center;
   gap: 0.35rem;
+  white-space: nowrap;
+  flex-shrink: 0;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 8px rgba(45, 212, 191, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .button-ai:hover {
-  background: linear-gradient(135deg, #99f6e4 0%, #5eead4 100%);
+  background: var(--accent-primary-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(45, 212, 191, 0.35);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
 .button-ai:active {
   transform: translateY(0);
-  box-shadow: 0 1px 4px rgba(45, 212, 191, 0.15);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .ai-chat-bubble {
@@ -641,8 +822,13 @@ a.button-primary {
 @media (max-width: 768px) {
   #root, .app-container {
     height: auto;
-    min-height: 100vh;
+    min-height: 100dvh;
   }
+  
+  .dashboard-main {
+    padding: 0 0.75rem 1.5rem 0.75rem !important;
+  }
+
   .main-content {
     flex-direction: column !important;
     overflow-y: visible;
@@ -694,12 +880,49 @@ a.button-primary {
   /* Header Adjustments */
   .header {
     height: auto;
-    padding: 0.75rem 1rem;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    padding: 0.75rem 0.5rem;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.75rem;
   }
   .header > div {
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem !important;
+  }
+
+  .header .button-primary,
+  .header .button-secondary,
+  .button-ai,
+  .workspace-header .button-primary,
+  .workspace-header .button-secondary {
+    padding: 0.5rem !important;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header > div > div[style*="borderRight"] {
+    border-right: none !important;
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+  }
+  
+  .workspace-header-top {
+    width: 100%;
+    justify-content: space-between !important;
+  }
+  
+  .dashboard-user-controls {
+    width: 100%;
+    justify-content: flex-end !important;
+  }
+
+  .dashboard-user-controls > div:first-child {
+    margin-right: auto;
+    margin-left: 0.5rem;
   }
   
   /* Category Layout Mobile */

@@ -6,7 +6,7 @@ export function TerminalOutput({ output, isLoaded, error }) {
       <div className="section-header">
         <Terminal size={16} />
         <span>Terminal Output</span>
-        {!isLoaded && <span style={{ marginLeft: 'auto', color: 'var(--text-tertiary)' }}>Loading Python Env...</span>}
+        {!isLoaded && !error && <span style={{ marginLeft: 'auto', color: 'var(--text-tertiary)' }}>Loading Python Env...</span>}
       </div>
       <div className="terminal-output">
         {error ? (

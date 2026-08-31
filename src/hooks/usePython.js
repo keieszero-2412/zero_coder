@@ -3,94 +3,119 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 // We import the worker using Vite's ?worker syntax
 import PythonWorker from './python.worker.js?worker';
 
+// Global shared worker instance to prevent reloading on navigation
+let sharedWorker = null;
+let sharedIsLoaded = false;
+let messageIdCounter = 0;
+let pendingRequests = new Map();
+let activeOutputHandler = null;
+let activeLoadHandler = null;
+
+function initSharedWorker() {
+  if (sharedWorker) return sharedWorker;
+  
+  sharedWorker = new PythonWorker();
+  
+  sharedWorker.onmessage = (event) => {
+    const { type, text, error, results, id } = event.data;
+    
+    if (type === 'STDOUT') {
+      if (activeOutputHandler) activeOutputHandler({ type: 'stdout', text });
+    } else if (type === 'STDERR') {
+      if (activeOutputHandler) activeOutputHandler({ type: 'stderr', text });
+    } else {
+      const pending = pendingRequests.get(id);
+      if (pending) {
+        if (type === 'INIT_DONE') {
+          sharedIsLoaded = true;
+          if (activeLoadHandler) activeLoadHandler(true, null);
+          pending.resolve();
+        } else if (type === 'INIT_ERROR') {
+          sharedIsLoaded = false;
+          if (activeLoadHandler) activeLoadHandler(false, error);
+          pending.reject(new Error(error));
+        } else if (type === 'RUN_CODE_DONE') {
+          pending.resolve();
+        } else if (type === 'RUN_CODE_ERROR') {
+          if (activeOutputHandler) activeOutputHandler({ type: 'stderr', text: error });
+          pending.resolve();
+        } else if (type === 'RUN_TESTS_DONE') {
+          pending.resolve(results);
+        } else if (type === 'RUN_TESTS_ERROR') {
+          if (activeOutputHandler) activeOutputHandler({ type: 'stderr', text: error });
+          pending.resolve([]);
+        }
+        pendingRequests.delete(id);
+      }
+    }
+  };
+  
+  // Start initializing immediately to pre-warm the environment
+  const id = ++messageIdCounter;
+  pendingRequests.set(id, {
+    resolve: () => {},
+    reject: (err) => console.error("Global init error", err)
+  });
+  sharedWorker.postMessage({ type: 'INIT', id });
+  
+  return sharedWorker;
+}
+
+// Pre-warm the environment as soon as this file is evaluated
+initSharedWorker();
+
 export function usePython() {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(sharedIsLoaded);
   const [output, setOutput] = useState([]);
   const [error, setError] = useState(null);
-  
-  const workerRef = useRef(null);
-  const messageIdRef = useRef(0);
-  const pendingRequestsRef = useRef(new Map());
-
-  // Helper to create and initialize the worker
-  const initWorker = useCallback(() => {
-    if (workerRef.current) {
-      workerRef.current.terminate();
-    }
-    const worker = new PythonWorker();
-    workerRef.current = worker;
-
-    worker.onmessage = (event) => {
-      const { type, text, error, results, id } = event.data;
-      
-      if (type === 'STDOUT') {
-        setOutput((prev) => [...prev, { type: 'stdout', text }]);
-      } else if (type === 'STDERR') {
-        setOutput((prev) => [...prev, { type: 'stderr', text }]);
-      } else {
-        // Resolve pending requests for specific message IDs
-        const pending = pendingRequestsRef.current.get(id);
-        if (pending) {
-          if (type === 'INIT_DONE') {
-            setIsLoaded(true);
-            pending.resolve();
-          } else if (type === 'INIT_ERROR') {
-            setError(error);
-            pending.reject(new Error(error));
-          } else if (type === 'RUN_CODE_DONE') {
-            pending.resolve();
-          } else if (type === 'RUN_CODE_ERROR') {
-            setOutput((prev) => [...prev, { type: 'stderr', text: error }]);
-            pending.resolve(); // resolve so the UI isn't blocked
-          } else if (type === 'RUN_TESTS_DONE') {
-            pending.resolve(results);
-          } else if (type === 'RUN_TESTS_ERROR') {
-            setOutput((prev) => [...prev, { type: 'stderr', text: error }]);
-            pending.resolve([]); // fallback
-          }
-          pendingRequestsRef.current.delete(id);
-        }
-      }
-    };
-
-    // Initialize Pyodide inside the worker
-    const id = ++messageIdRef.current;
-    return new Promise((resolve, reject) => {
-      pendingRequestsRef.current.set(id, { resolve, reject });
-      worker.postMessage({ type: 'INIT', id });
-    });
-  }, []);
 
   useEffect(() => {
-    initWorker().catch(console.error);
-    return () => {
-      if (workerRef.current) {
-        workerRef.current.terminate();
-      }
+    // Register this component as the active handler
+    activeOutputHandler = (msg) => setOutput((prev) => [...prev, msg]);
+    activeLoadHandler = (loaded, err) => {
+      setIsLoaded(loaded);
+      if (err) setError(`Lỗi Môi Trường Python: ${err}`);
     };
-  }, [initWorker]);
+    
+    // Sync initial state in case it loaded before mount
+    setIsLoaded(sharedIsLoaded);
+    
+    // If worker was terminated (e.g. timeout), restart it
+    if (!sharedWorker) {
+      initSharedWorker();
+    }
+    
+    return () => {
+      // Don't terminate the worker! Just detach handlers to prevent memory leaks
+      activeOutputHandler = null;
+      activeLoadHandler = null;
+    };
+  }, []);
 
-  // Execute a command with timeout
   const executeWithTimeout = useCallback(async (messageData, timeoutMs = 10000) => {
-    if (!workerRef.current) return;
+    if (!sharedWorker) return;
     
     return new Promise((resolve, reject) => {
-      const id = ++messageIdRef.current;
+      const id = ++messageIdCounter;
       
       const timeoutId = setTimeout(() => {
-        // Terminate worker if it takes too long
-        workerRef.current.terminate();
-        pendingRequestsRef.current.delete(id);
-        setOutput((prev) => [...prev, { type: 'stderr', text: 'Error: Execution timed out (infinite loop?). Worker terminated.' }]);
+        // Terminate worker if it takes too long (e.g., infinite loop)
+        sharedWorker.terminate();
+        sharedWorker = null;
+        sharedIsLoaded = false;
+        pendingRequests.delete(id);
         
-        // Re-initialize worker for future runs
+        if (activeOutputHandler) {
+          activeOutputHandler({ type: 'stderr', text: 'Error: Execution timed out (infinite loop?). Worker terminated.' });
+        }
+        
         setIsLoaded(false);
-        initWorker();
+        initSharedWorker(); // Restart for future runs
         
         reject(new Error('Timeout'));
       }, timeoutMs);
 
-      pendingRequestsRef.current.set(id, {
+      pendingRequests.set(id, {
         resolve: (data) => {
           clearTimeout(timeoutId);
           resolve(data);
@@ -101,9 +126,9 @@ export function usePython() {
         }
       });
 
-      workerRef.current.postMessage({ ...messageData, id });
+      sharedWorker.postMessage({ ...messageData, id });
     });
-  }, [initWorker]);
+  }, []);
 
   const runCode = useCallback(async (code) => {
     setOutput([]);
@@ -124,7 +149,6 @@ export function usePython() {
       return results || [];
     } catch (err) {
       if (err.message === 'Timeout') {
-        // Mark all tests as failed due to timeout
         return testCases.map(test => ({ ...test, passed: false, error: 'Execution timed out.' }));
       }
       console.error(err);

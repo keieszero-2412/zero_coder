@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "lint": "oxlint",
     "preview": "vite preview"
@@ -13,6 +13,8 @@
     "@codemirror/lang-python": "^6.2.1",
     "@codemirror/merge": "^6.12.2",
     "@google/genai": "^2.18.0",
+    "@replit/codemirror-vim": "^6.4.0",
+    "@uiw/codemirror-theme-github": "^4.25.11",
     "@uiw/codemirror-theme-vscode": "^4.25.11",
     "@uiw/react-codemirror": "^4.25.11",
     "firebase": "^12.18.0",

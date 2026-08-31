@@ -1,34 +1,63 @@
 // src/hooks/python.worker.js
 
-importScripts('https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js');
-
 let pyodideReadyPromise = null;
+
+async function loadPyodideLocally() {
+  try {
+    try {
+      // In some browsers, importScripts exists but throws in ESM workers
+      importScripts('/pyodide/pyodide.js');
+      return await loadPyodide({
+        indexURL: '/pyodide/',
+      });
+    } catch (e) {
+      if (e.message && e.message.includes('importScripts')) {
+        // Fallback for ESM workers, use new Function to hide from Vite's static analyzer
+        const pyodideModule = await new Function('return import("/pyodide/pyodide.mjs")')();
+        return await pyodideModule.loadPyodide({
+          indexURL: '/pyodide/',
+        });
+      }
+      throw e;
+    }
+  } catch (err) {
+    throw new Error('Failed to load Pyodide from local public folder: ' + err.message);
+  }
+}
 
 async function initPyodide() {
   if (!pyodideReadyPromise) {
     pyodideReadyPromise = (async () => {
-      const pyodide = await loadPyodide({
-        indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.0/full/',
-      });
+      // 30 seconds timeout
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Khởi tạo Python quá thời gian (30s). Vui lòng thử lại.')), 30000)
+      );
       
-      pyodide.setStdout({
-        batched: (msg) => {
-          self.postMessage({ type: 'STDOUT', text: msg });
-        }
-      });
+      const loadPromise = async () => {
+        const pyodide = await loadPyodideLocally();
+        
+        pyodide.setStdout({
+          batched: (msg) => {
+            self.postMessage({ type: 'STDOUT', text: msg });
+          }
+        });
+        
+        pyodide.setStderr({
+          batched: (msg) => {
+            self.postMessage({ type: 'STDERR', text: msg });
+          }
+        });
+        
+        return pyodide;
+      };
       
-      pyodide.setStderr({
-        batched: (msg) => {
-          self.postMessage({ type: 'STDERR', text: msg });
-        }
-      });
-      
-      return pyodide;
+      return Promise.race([loadPromise(), timeoutPromise]);
     })();
   }
   return pyodideReadyPromise;
 }
 
+// Ensure message handler is registered immediately
 self.onmessage = async (event) => {
   const { type, id, code, testCases } = event.data;
   
@@ -37,7 +66,9 @@ self.onmessage = async (event) => {
       await initPyodide();
       self.postMessage({ type: 'INIT_DONE', id });
     } catch (error) {
-      self.postMessage({ type: 'INIT_ERROR', error: error.message, id });
+      // Clear promise so it can be retried
+      pyodideReadyPromise = null;
+      self.postMessage({ type: 'INIT_ERROR', error: error.toString(), id });
     }
     return;
   }

@@ -1,10 +1,11 @@
 import { useMemo, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { problems } from '../data/problems';
-import { Code2, ChevronRight, BookOpen, CheckCircle, Circle, LogOut, User, Bell, Flag } from 'lucide-react';
+import { Code2, ChevronRight, BookOpen, CheckCircle, Circle, LogOut, User, Bell, Flag, Settings } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { AdminPanel } from '../components/AdminPanel';
 import FeedbackWidget from '../components/FeedbackWidget';
+import { SettingsModal } from '../components/SettingsModal';
 import '../index.css';
 
 export function Dashboard() {
@@ -63,6 +64,7 @@ export function Dashboard() {
   }, [currentUser]);
 
   const [showAdminPanel, setShowAdminPanel] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const [pendingAccessCount, setPendingAccessCount] = useState(0);
   const [pendingResetCount, setPendingResetCount] = useState(0);
 
@@ -127,7 +129,7 @@ export function Dashboard() {
         position: 'sticky',
         top: 0,
         zIndex: 50,
-        backgroundColor: 'rgba(15, 17, 21, 0.95)',
+        backgroundColor: 'color-mix(in srgb, var(--bg-surface) 90%, transparent)',
         backdropFilter: 'blur(12px)'
       }}>
         <div className="header-title" style={{ fontSize: '1.75rem', fontWeight: 'bold', display: 'flex', alignItems: 'center' }}>
@@ -147,26 +149,27 @@ export function Dashboard() {
         </div>
         
         {currentUser && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-              <span style={{ fontSize: '0.875rem', fontWeight: 500 }}>{currentUser.username}</span>
-              <div style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '0.25rem', 
-                fontSize: '0.75rem', 
-                color: currentUser.colorCode === 'Green' ? 'var(--accent-primary)' : 'var(--text-secondary)'
-              }}>
+          <div className="dashboard-user-controls" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: '0.375rem', rowGap: '0.125rem', alignItems: 'center' }}>
+                <span style={{ gridColumn: 2, fontSize: '0.875rem', fontWeight: 500, lineHeight: 1 }}>
+                  {currentUser.username}
+                </span>
                 <div style={{ 
                   width: '8px', 
                   height: '8px', 
                   borderRadius: '50%', 
-                  backgroundColor: currentUser.colorCode === 'Green' ? 'var(--accent-primary)' : 
+                  backgroundColor: currentUser.colorCode === 'Green' ? '#10b981' : 
                                    currentUser.colorCode === 'Blue' ? '#3b82f6' : 'var(--error)' 
                 }} />
-                Code: {currentUser.colorCode}
+                <div style={{ 
+                  fontSize: '0.75rem', 
+                  lineHeight: 1,
+                  color: currentUser.colorCode === 'Green' ? '#10b981' : 
+                         currentUser.colorCode === 'Blue' ? '#3b82f6' : 'var(--text-secondary)'
+                }}>
+                  Code: {currentUser.colorCode}
+                </div>
               </div>
-            </div>
             
             {currentUser.role === 'Admin' && (
               <button 
@@ -200,16 +203,23 @@ export function Dashboard() {
 
             <FeedbackWidget />
 
+            <button onClick={() => setShowSettings(true)} className="button-secondary" style={{ padding: '0.5rem 0.75rem' }} title="Settings">
+              <Settings size={16} />
+              <span className="hide-on-mobile">Settings</span>
+            </button>
+
             <button onClick={logout} className="button-secondary" style={{ padding: '0.5rem 0.75rem' }} title="Sign Out">
               <LogOut size={16} />
+              <span className="hide-on-mobile">Logout</span>
             </button>
           </div>
         )}
       </header>
 
       {showAdminPanel && <AdminPanel onClose={() => setShowAdminPanel(false)} />}
+      {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
 
-      <main style={{ padding: '0 2rem 2rem 2rem', maxWidth: '1000px', margin: '0 auto', width: '100%' }}>
+      <main className="dashboard-main">
         <h1 style={{ marginBottom: '0.5rem', fontSize: '2.5rem', marginTop: '2rem' }}>Your Exams</h1>
         <p style={{ color: 'var(--text-secondary)', marginBottom: 0, paddingBottom: '0.5rem', fontSize: '1.125rem', position: 'relative', zIndex: 1 }}>
           Select a problem to start coding. Your progress is automatically saved.
@@ -237,9 +247,7 @@ export function Dashboard() {
               }}
               style={{ 
                 whiteSpace: 'nowrap',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                color: 'var(--text-primary)',
-                borderColor: 'rgba(255, 255, 255, 0.2)'
+                color: 'var(--text-primary)'
               }}
             >
               {cat}

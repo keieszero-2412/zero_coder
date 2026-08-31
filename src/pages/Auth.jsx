@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useNotification } from '../context/NotificationContext';
 import { Mail, KeyRound, User, ArrowRight, ShieldAlert, LogIn, UserPlus, ArrowLeft, Send, CheckCircle2, XCircle } from 'lucide-react';
 import '../index.css';
 
@@ -20,6 +21,7 @@ export function Auth() {
   const [isLoading, setIsLoading] = useState(false);
   
   const { checkEmailStatus, login, register, resetPassword, currentUser, loading } = useAuth();
+  const { showToast } = useNotification();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -150,10 +152,10 @@ export function Auth() {
       });
       
       setRequestSent(true);
-      window.alert("Your request for access has been sent to the admin. You will be notified once approved.");
+      showToast("Your request for access has been sent to the admin. You will be notified once approved.", "success");
     } catch (err) {
       console.error("Failed to send request:", err);
-      window.alert("Failed to send request. Please try again later.");
+      showToast("Failed to send request. Please try again later.", "error");
     }
   };
 
@@ -185,7 +187,7 @@ export function Auth() {
       
       setResetStatus('admin');
       setError('');
-      window.alert("Your request for password reset has been sent to the admin. You will be notified once approved.");
+      showToast("Your request for password reset has been sent to the admin. You will be notified once approved.", "success");
     } catch (err) {
       console.error("Failed to send reset request:", err);
       setError("Failed to send reset request. Please try again later.");
