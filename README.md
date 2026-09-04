@@ -1,15 +1,14 @@
-# ZeroCoder 🚀
+# ZeroCoder
 
-ZeroCoder is an online platform for learning and taking Python programming exams, built with React, Vite, and Firebase. The system allows students to write and run Python code directly in the browser (using Pyodide) and automatically grades exercises and exams.
+ZeroCoder is an online platform, designed specifically for Foreign Trade University students to review and prepare for their programming course (TIN314). The system allows students to write and execute Python code directly in the browser and features automated grading for exercises and exams.
 
-## 🌟 Key Features
+## Key Features
 - **In-browser IDE**: Write and execute Python directly in the browser without installing a server, powered by Pyodide.
 - **Autograding**: Integrates hidden and public test cases to instantly evaluate and grade code.
-- **AI Hints (Google Gemini)**: Provides smart AI-driven hints to help students solve difficult problems without revealing the full answer.
-- **Account Management**: Seamless Login/Registration via Firebase Authentication.
-- **Modern UI**: A beautiful user interface with Dark/Light mode support, configurable Editor (Vim mode), and a responsive design.
+- **AI Hints**: Provides smart AI-driven hints to help students solve difficult problems.
+- **Account Management**: Seamless Login/Registration.
 
-## 🛠 Technology Stack
+## Technology Stack
 - **Frontend:** React.js, Vite, React Router, Context API
 - **Editor:** CodeMirror 6 (with themes and Vim mode)
 - **Python Runtime:** Pyodide
@@ -17,7 +16,7 @@ ZeroCoder is an online platform for learning and taking Python programming exams
 - **AI Integration:** Google Gemini API
 - **Others:** KaTeX (Math formula rendering), Lucide React (Icons)
 
-## 🚀 Setup Instructions
+## Setup Instructions
 
 1. **Clone the repository:**
    ```bash
