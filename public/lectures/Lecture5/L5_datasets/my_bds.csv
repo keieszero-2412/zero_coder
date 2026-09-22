@@ -1,0 +1,101 @@
+,beds,category,city,direction,district,news_begin_date,news_end_date,news_id,news_type_level,price,root,square,street,ward,label_price
+0,,Nhà đất bán,Hồ Chí Minh,,Phú Nhuận,1536537600000,1537142400000,17533924.0,Tin thường,21.0,nha_dat_thue,100m²,,,triệu/tháng
+1,,Nhà đất cho thuê,Hồ Chí Minh,,Phú Nhuận,1536192000000,1536796800000,17404807.0,Tin thường,35.0,nha_dat_thue,76m²,Đào Duy Anh,9,triệu/tháng
+2,,Nhà đất bán,Hồ Chí Minh,,Phú Nhuận,1536019200000,1536624000000,16807519.0,Tin thường,80.0,nha_dat_thue,144m²,Hoa Lan,2,triệu/tháng
+3,,Nhà đất cho thuê,Hồ Chí Minh,,Phú Nhuận,1536105600000,1536710400000,16831594.0,Tin thường,15.9,nha_dat_thue,50m²,Hoa Cau,,triệu/tháng
+4,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 1,1536192000000,1536796800000,17500085.0,Tin thường,420.3,nha_dat_thue,70m²,Nguyễn Công Trứ,Nguyễn Thái Bình,nghìn/m2/tháng
+5,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 1,1535587200000,1536969600000,17425627.0,Tin thường,200.0,nha_dat_thue,1m²,Tôn Đức Thắng,Bến Nghé,nghìn/tháng
+6,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 1,1536019200000,1536624000000,6649933.0,Tin thường,68.0,nha_dat_thue,100m²,Nguyễn Trãi,,triệu/tháng
+7,,Nhà đất bán,Hồ Chí Minh,,Quận 1,1536019200000,1536624000000,15253083.0,Tin thường,120.0,nha_dat_thue,100m²,Lê Thánh Tôn,,triệu/tháng
+8,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 1,1536278400000,1536883200000,17431540.0,Tin thường,52.0,nha_dat_thue,800m²,Hai Bà Trưng,,triệu/tháng
+9,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 1,1535932800000,1536537600000,16973033.0,Tin thường,694.8,nha_dat_thue,860m²,Nguyễn Trãi,Nguyễn Cư Trinh,triệu/tháng
+10,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 1,1536364800000,1536969600000,14508431.0,Tin thường,9.0,nha_dat_thue,30m²,Nguyễn Văn Thủ,,triệu/tháng
+11,3+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 1,1536105600000,1536710400000,17472906.0,Tin thường,23.0,nha_dat_thue,125m²,Trần Quang Khải,Tân Định,triệu/tháng
+12,,Nhà đất cho thuê,Hồ Chí Minh,Đông-Nam,Quận 1,1529884800000,1537833600000,10661483.0,Tin thường,6.5,nha_dat_thue,Không xác định,Tôn Thất Đạm,Bến Thành,triệu/tháng
+13,,Nhà đất bán,Hồ Chí Minh,,Quận 1,1536364800000,1536969600000,17523726.0,Tin thường,345.0,nha_dat_thue,80m²,Ngô Đức Kế,Bến Nghé,triệu/tháng
+14,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 1,1536537600000,1537142400000,17535253.0,Tin thường,,nha_dat_thue,Không xác định,Nguyễn Cư Trinh,,
+15,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 1,1536278400000,1536883200000,15954223.0,Tin thường,40.0,nha_dat_thue,72m²,Tôn Đức Thắng,Bến Nghé,triệu/tháng
+16,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 10,1536192000000,1536796800000,13406108.0,Tin thường,500.0,nha_dat_thue,200m²,Cách Mạng Tháng Tám,12,nghìn/m2/tháng
+17,1+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 10,1536105600000,1536796800000,17202232.0,Tin thường,8.0,nha_dat_thue,30m²,Cao Thắng,12,triệu/tháng
+18,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 10,1536364800000,1536969600000,17133152.0,Tin thường,59.0,nha_dat_thue,172.2m²,Ngô Gia Tự,,triệu/tháng
+19,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 10,1536019200000,1536624000000,17355768.0,Tin Vip 3,70.0,nha_dat_thue,115.5m²,Sư Vạn Hạnh,12,triệu/tháng
+20,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 10,1536192000000,1536883200000,4648354.0,Tin thường,2.0,nha_dat_thue,15m²,Thành Thái,14,triệu/tháng
+21,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 10,1536537600000,1537142400000,14242411.0,Tin thường,40.0,nha_dat_thue,176m²,Cao Thắng,,triệu/tháng
+22,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 11,1536105600000,1537142400000,4186309.0,Tin thường,3.5,nha_dat_thue,18m²,Hà Tôn Quyền,6,triệu/tháng
+23,4+,Nhà đất bán,Hà Nội,,Hai Bà Trưng,1536364800000,1536969600000,17518743.0,Tin thường,4.6,nha_dat_ban,55m²,Lạc Trung,Vĩnh Tuy,tỷ
+24,1+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 12,1536364800000,1536969600000,17524195.0,Tin thường,6.5,nha_dat_thue,40m²,Nguyễn Văn Quá,Đông Hưng Thuận,triệu/tháng
+25,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 12,1536192000000,1536796800000,17494437.0,Tin thường,200.0,nha_dat_thue,3000m²,Trường Chinh,Tân Thới Nhất,triệu/tháng
+26,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 12,1536105600000,1536710400000,17408865.0,Tin thường,100.0,nha_dat_thue,600m²,Lê Văn Khương,Tân Thới Hiệp,triệu/tháng
+27,,Nhà đất bán,Hà Nội,,Hai Bà Trưng,1536278400000,1536883200000,17509753.0,Tin thường,2.3,nha_dat_ban,52m²,Minh Khai,Minh Khai,tỷ
+28,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 12,1536105600000,1536710400000,16800173.0,Tin thường,10.0,nha_dat_thue,80m²,Trường Chinh,Tân Thới Nhất,triệu/tháng
+29,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,1536278400000,1536883200000,16960651.0,Tin thường,18.0,nha_dat_thue,76m²,Xa Lộ Hà Nội,Thảo Điền,triệu/tháng
+30,2+,Nhà đất cho thuê,Hồ Chí Minh,Đông,Quận 2,1536278400000,1536883200000,15845695.0,Tin thường,17.0,nha_dat_thue,88m²,66,Thảo Điền,triệu/tháng
+31,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,1536192000000,1536796800000,15803797.0,Tin thường,2.5,nha_dat_thue,25m²,54, Thạnh Mỹ Lợi,triệu/tháng
+32,3+,Nhà đất cho thuê,Hồ Chí Minh,Tây-Bắc,Quận 2,1536019200000,1536624000000,14526920.0,Tin thường,18.0,nha_dat_thue,102m²,Mai Chí Thọ,An Phú,triệu/tháng
+33,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,1536019200000,1536624000000,16782383.0,Tin thường,13.0,nha_dat_thue,50m²,Đồng Văn Cống,An Phú,triệu/tháng
+34,,Nhà đất bán,Hà Nội,,Hai Bà Trưng,1536192000000,1536796800000,16707183.0,Tin thường,2.85,nha_dat_ban,35m²,Đê Trần Khát Chân,Thanh Lương,tỷ
+35,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,1536364800000,1536969600000,12078784.0,Tin thường,20.0,nha_dat_thue,88m²,Mai Chí Thọ,An Lợi Đông,triệu/tháng
+36,1+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,1536192000000,1536796800000,17159392.0,Tin thường,11.0,nha_dat_thue,50m²,Mai Chí Thọ,Bình Khánh,triệu/tháng
+37,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,1536364800000,1536969600000,17012101.0,Tin thường,10.0,nha_dat_thue,70m²,Nguyễn Duy Trinh,Bình Trưng Đông,triệu/tháng
+38,3+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,1536364800000,1536969600000,17526821.0,Tin thường,22.0,nha_dat_thue,104m²,Xa Lộ Hà Nội,An Phú,triệu/tháng
+39,5+,Nhà đất bán,Hà Nội,,Hai Bà Trưng,1536451200000,1537056000000,17141316.0,Tin thường,4.2,nha_dat_ban,38m²,Minh Khai,Minh Khai,tỷ
+40,5+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,1536105600000,1536710400000,17114567.0,Tin thường,35.0,nha_dat_thue,140m²,Trần Não,Bình An,triệu/tháng
+41,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,1536278400000,1536883200000,17505260.0,Tin thường,15.0,nha_dat_thue,200m²,,An Phú,triệu/tháng
+42,1+,Nhà đất cho thuê,Hồ Chí Minh,Tây-Bắc,Quận 2,1536105600000,1536710400000,17103014.0,Tin thường,12.0,nha_dat_thue,56m²,Đồng Văn Cống, Thạnh Mỹ Lợi,triệu/tháng
+43,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,1536364800000,1538956800000,17520504.0,Tin thường,10.5,nha_dat_thue,35m²,Số 64,Thảo Điền,triệu/tháng
+44,4+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,1536019200000,1536710400000,15550776.0,Tin thường,22.0,nha_dat_thue,100m²,39,Bình Trưng Tây,triệu/tháng
+45,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,1536019200000,1536710400000,17460572.0,Tin thường,16.0,nha_dat_thue,64m²,Xa Lộ Hà Nội,Thảo Điền,triệu/tháng
+46,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,1536537600000,1537142400000,11385513.0,Tin thường,22.0,nha_dat_thue,135m²,,An Phú,triệu/tháng
+47,1+,Nhà đất cho thuê,Hồ Chí Minh,Đông-Nam,Quận 2,1536278400000,1536883200000,11672827.0,Tin thường,14.0,nha_dat_thue,48m²,Xa Lộ Hà Nội,Thảo Điền,triệu/tháng
+48,3+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,1536019200000,1536624000000,17122782.0,Tin thường,47.0,nha_dat_thue,142m²,,An Lợi Đông,triệu/tháng
+49,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,1536364800000,1536969600000,14232709.0,Tin thường,20.0,nha_dat_thue,77m²,Nguyễn Cơ Thạch,An Lợi Đông,triệu/tháng
+50,,Nhà đất bán,Hồ Chí Minh,,Quận 2,1536537600000,1537142400000,17533902.0,Tin thường,26.0,nha_dat_thue,80m²,15,Bình An,triệu/tháng
+51,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,1536278400000,1536883200000,17515574.0,Tin thường,6.5,nha_dat_thue,20m²,Phan Văn Đáng, Thạnh Mỹ Lợi,triệu/tháng
+52,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,1536364800000,1536969600000,17525432.0,Tin thường,150.0,nha_dat_thue,217m²,Xuân Thủy,Thảo Điền,triệu/tháng
+53,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 3,1536278400000,1536883200000,17508496.0,Tin thường,10.0,nha_dat_thue,50m²,Cách Mạng Tháng Tám,,triệu/tháng
+54,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 3,1536537600000,1537142400000,15465690.0,Tin thường,80.0,nha_dat_thue,108m²,Lê Văn Sỹ,14,triệu/tháng
+55,1+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 3,1536278400000,1536883200000,11444340.0,Tin thường,14.0,nha_dat_thue,40m²,Lý Chính Thắng,,triệu/tháng
+56,5+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 3,1536019200000,1536624000000,17293550.0,Tin thường,42.0,nha_dat_thue,80m²,Hai Bà Trưng,,triệu/tháng
+57,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 3,1536105600000,1536710400000,17480824.0,Tin thường,209.48,nha_dat_thue,376m²,Võ Văn Tần,12,triệu/tháng
+58,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 3,1536105600000,1536883200000,15564613.0,Tin thường,107.0,nha_dat_thue,225m²,Cao Thắng,3,triệu/tháng
+59,4+,Nhà đất cho thuê,Hồ Chí Minh,Đông-Bắc,Quận 3,1536192000000,1536796800000,17448777.0,Tin thường,21.0,nha_dat_thue,140m²,Bà Huyện Thanh Quan,9,triệu/tháng
+60,,Nhà đất bán,Hồ Chí Minh,,Quận 3,1536105600000,1536710400000,14198898.0,Tin thường,7.5,nha_dat_thue,35m²,Lê Văn Sỹ,13,triệu/tháng
+61,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 3,1536278400000,1536883200000,17515545.0,Tin thường,80.0,nha_dat_thue,80m²,Hai Bà Trưng,,triệu/tháng
+62,3+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 4,1536105600000,1536710400000,17472554.0,Tin thường,30.0,nha_dat_thue,117m²,Bến Vân Đồn,1,triệu/tháng
+63,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 4,1536192000000,1536796800000,10197940.0,Tin thường,16.0,nha_dat_thue,70m²,Nguyễn Khoái,1,triệu/tháng
+64,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 4,1536105600000,1536710400000,17390367.0,Tin thường,14.0,nha_dat_thue,72m²,Bến Vân Đồn,1,triệu/tháng
+65,3+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 4,1536278400000,1536883200000,17510696.0,Tin Vip 3,25.0,nha_dat_thue,117m²,Bến Vân Đồn,1,triệu/tháng
+66,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 4,1535760000000,1536624000000,15955550.0,Tin thường,18.0,nha_dat_thue,75m²,Bến Vân Đồn,12,triệu/tháng
+67,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 4,1536364800000,1536969600000,12553339.0,Tin thường,12.0,nha_dat_thue,75m²,Hoàng Diệu,8,triệu/tháng
+68,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 4,1536278400000,1536883200000,17513514.0,Tin thường,90.0,nha_dat_thue,73m²,Bến Vân Đồn,6,triệu/tháng
+69,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 4,1536278400000,1536883200000,17111103.0,Tin thường,12.0,nha_dat_thue,81m²,Nguyễn Tất Thành,18,triệu/tháng
+70,4+,Nhà đất bán,Hà Nội,Đông-Nam,Hai Bà Trưng,1536364800000,1536969600000,17297410.0,Tin thường,7.0,nha_dat_ban,45m²,Kim Ngưu,Minh Khai,tỷ
+71,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 5,1536019200000,1536624000000,17397098.0,Tin thường,10.0,nha_dat_thue,30m²,An Dương Vương,4,triệu/tháng
+72,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 5,1535932800000,1536537600000,17455470.0,Tin thường,10.0,nha_dat_thue,40m²,An Dương Vương,4,triệu/tháng
+73,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 6,1536364800000,1536969600000,15852999.0,Tin thường,18.0,nha_dat_thue,72m²,Bình Phú,10,triệu/tháng
+74,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 6,1536278400000,1536883200000,14501348.0,Tin thường,10.0,nha_dat_thue,97m²,Hậu Giang,,triệu/tháng
+75,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 6,1535500800000,1537488000000,16227093.0,Tin thường,2.0,nha_dat_thue,12m²,Số 29,10,triệu/tháng
+76,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 6,1536278400000,1536883200000,16245941.0,Tin thường,13.5,nha_dat_thue,84.9m²,Chu Văn An,2,triệu/tháng
+77,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 6,1536192000000,1536796800000,16892882.0,Tin thường,12.0,nha_dat_thue,80m²,Phan Văn Khỏe,2,triệu/tháng
+78,4+,Nhà đất bán,Hà Nội,,Hai Bà Trưng,1536364800000,1536969600000,17518672.0,Tin thường,2.9,nha_dat_ban,32m²,Trần Khát Chân,Thanh Nhàn,tỷ
+79,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,1536019200000,1536624000000,17390764.0,Tin thường,7.0,nha_dat_thue,67m²,Phạm Hữu Lầu,Phú Mỹ,triệu/tháng
+80,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,1536278400000,1536883200000,15900050.0,Tin Vip 3,16.0,nha_dat_thue,78m²,,Tân Phú,triệu/tháng
+81,3+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,1536019200000,1536624000000,17409830.0,Tin thường,10.0,nha_dat_thue,112m²,Hoàng Quốc Việt,Phú Thuận,triệu/tháng
+82,1+,Nhà đất cho thuê,Hồ Chí Minh,Đông-Nam,Quận 7,1536105600000,1536710400000,17419365.0,Tin thường,,nha_dat_thue,25m²,Số 9,Tân Thuận Đông,
+83,3+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,1536105600000,1537315200000,16934813.0,Tin thường,16.0,nha_dat_thue,80m²,D1,Tân Hưng,triệu/tháng
+84,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,1536105600000,1536710400000,16514560.0,Tin thường,15.0,nha_dat_thue,71m²,Phạm Văn Nghị,Tân Phong,triệu/tháng
+85,4+,Nhà đất cho thuê,Hồ Chí Minh,Bắc,Quận 7,1536019200000,1536624000000,16974911.0,Tin thường,22.0,nha_dat_thue,80m²,38,Tân Phong,triệu/tháng
+86,,Nhà đất bán,Hà Nội,Tây-Bắc,Hai Bà Trưng,1534896000000,1537488000000,17330321.0,Tin Vip 3,50.0,nha_dat_ban,360m²,Bạch Mai,Cầu Dền,tỷ
+87,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,1536105600000,1536710400000,13372069.0,Tin thường,17.0,nha_dat_thue,77m²,Nguyễn Văn Linh,Tân Phú,triệu/tháng
+88,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,1534464000000,1537142400000,17273396.0,Tin thường,13.0,nha_dat_thue,67m²,Huỳnh Tấn Phát,Bình Thuận,triệu/tháng
+89,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,1536105600000,1536883200000,17097685.0,Tin thường,25.0,nha_dat_thue,57m²,Hoàng Quốc Việt,,triệu/tháng
+90,,Nhà đất bán,Hà Nội,Đông-Bắc,Hoài Đức,1536105600000,1536710400000,17094826.0,Tin thường,21.0,nha_dat_ban,150m²,Lê Trọng Tấn,An Thượng,triệu/m²
+91,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,1536364800000,1536969600000,17527162.0,Tin thường,10.0,nha_dat_thue,55m²,,,triệu/tháng
+92,,Nhà đất bán,Hà Nội,Đông-Bắc,Hoài Đức,1535760000000,1536710400000,16326451.0,Tin thường,7.2,nha_dat_ban,211.7m²,Quốc lộ 32,Trạm Trôi,tỷ
+93,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,1536451200000,1537056000000,8969271.0,Tin thường,18.0,nha_dat_thue,99m²,Nguyễn Hữu Thọ,Tân Hưng,triệu/tháng
+94,,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,1536278400000,1536883200000,16923544.0,Tin thường,7.0,nha_dat_thue,45m²,Huỳnh Tấn Phát,Bình Thuận,triệu/tháng
+95,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,1536364800000,1536969600000,17526812.0,Tin thường,22.0,nha_dat_thue,110m²,,,triệu/tháng
+96,3+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,1536278400000,1536883200000,16522512.0,Tin thường,25.0,nha_dat_thue,146m²,Tôn Dật Tiên,Tân Phong,triệu/tháng
+97,2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,1536192000000,1536796800000,17386750.0,Tin thường,7.5,nha_dat_thue,58m²,Hoàng Quốc Việt,Phú Thuận,triệu/tháng
+98,,Nhà đất cho thuê,Hồ Chí Minh,Đông,Quận 7,1536192000000,1536796800000,16895045.0,Tin thường,60.0,nha_dat_thue,100m²,D1,Tân Hưng,triệu/tháng
+99,3+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,1536278400000,1536883200000,17272561.0,Tin thường,16.0,nha_dat_thue,86m²,Số 10,Tân Quy,triệu/tháng

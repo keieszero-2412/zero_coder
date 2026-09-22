@@ -1,10 +1,9 @@
 import CodeMirror from '@uiw/react-codemirror';
 import { python } from '@codemirror/lang-python';
-import { vscodeDark } from '@uiw/codemirror-theme-vscode';
 import { unifiedMergeView } from '@codemirror/merge';
 import { EditorView } from '@codemirror/view';
 import { useSettings } from '../context/SettingsContext';
-import { githubLight } from '@uiw/codemirror-theme-github';
+import { getCodeTheme } from '../theme/CodeTheme';
 import { vim } from '@replit/codemirror-vim';
 
 export function CodeEditor({ value, originalCode, onChange }) {
@@ -26,7 +25,7 @@ export function CodeEditor({ value, originalCode, onChange }) {
         height="100%"
         extensions={extensions}
         onChange={(val) => onChange(val)}
-        theme={['daylight', 'blush', 'amber'].includes(settings?.theme) ? githubLight : vscodeDark}
+        theme={getCodeTheme(settings?.theme)}
         basicSetup={{
           lineNumbers: true,
           highlightActiveLineGutter: true,

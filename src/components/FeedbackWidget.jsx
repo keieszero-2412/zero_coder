@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { MessageSquare, X, Upload, Loader2, CheckCircle2, Plus, ArrowLeft } from 'lucide-react';
+import { MessageSquare, X, Upload, Loader2, CheckCircle2, Plus, ArrowLeft, ImageIcon } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { db } from '../config/firebase';
-import { collection, addDoc, serverTimestamp, query, where, onSnapshot, doc, writeBatch } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, serverTimestamp, query, where, onSnapshot, doc, writeBatch } from 'firebase/firestore';
+import { Pencil } from 'lucide-react';
 
 export default function FeedbackWidget({ iconOnly = false }) {
   const { currentUser } = useAuth();
@@ -14,6 +15,7 @@ export default function FeedbackWidget({ iconOnly = false }) {
 
   // Form states
   const [description, setDescription] = useState('');
+  const [editingFeedbackId, setEditingFeedbackId] = useState(null);
   const [imageFiles, setImageFiles] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -31,7 +33,7 @@ export default function FeedbackWidget({ iconOnly = false }) {
       snapshot.forEach(document => {
         const data = document.data();
         fbs.push({ id: document.id, ...data });
-        if (data.status === 'replied') {
+        if (data.status === 'replied' || data.status === 'resolved') {
           unread++;
         }
       });
@@ -59,14 +61,16 @@ export default function FeedbackWidget({ iconOnly = false }) {
       if (unreadCount > 0) {
         const batch = writeBatch(db);
         myFeedbacks.forEach(fb => {
-          if (fb.status === 'replied') {
+          if (fb.status === 'replied' || fb.status === 'resolved') {
             const ref = doc(db, 'feedbacks', fb.id);
-            batch.update(ref, { status: 'read' });
+            batch.update(ref, { status: fb.status === 'resolved' ? 'resolved_read' : 'read' });
           }
         });
         batch.commit().catch(console.error);
       }
     } else {
+      setEditingFeedbackId(null);
+      setDescription('');
       setViewMode('form');
     }
   };
@@ -151,20 +155,33 @@ export default function FeedbackWidget({ iconOnly = false }) {
         imageUrls = await Promise.all(uploadPromises);
       }
 
-      await addDoc(collection(db, 'feedbacks'), {
-        userId: currentUser.uid,
-        username: currentUser.username,
-        email: currentUser.email,
-        description: description,
-        imageUrls: imageUrls,
-        status: 'new', // new, replied, read
-        createdAt: serverTimestamp()
-      });
+      if (editingFeedbackId) {
+        const updateData = {
+          description: description,
+          status: 'new', // Reset status back to pending after edit
+          updatedAt: serverTimestamp()
+        };
+        if (imageUrls.length > 0) {
+          updateData.imageUrls = imageUrls;
+        }
+        await updateDoc(doc(db, 'feedbacks', editingFeedbackId), updateData);
+      } else {
+        await addDoc(collection(db, 'feedbacks'), {
+          userId: currentUser.uid,
+          username: currentUser.username,
+          email: currentUser.email,
+          description: description,
+          imageUrls: imageUrls,
+          status: 'new', // new, replied, read
+          createdAt: serverTimestamp()
+        });
+      }
 
       setIsSuccess(true);
       setTimeout(() => {
         setIsSuccess(false);
         setDescription('');
+        setEditingFeedbackId(null);
         setImageFiles([]);
         setViewMode('list');
       }, 1500);
@@ -181,12 +198,12 @@ export default function FeedbackWidget({ iconOnly = false }) {
     <>
       <button
         onClick={handleOpen}
-        className="button-secondary"
-        style={iconOnly ? { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: 0, position: 'relative' } : { padding: '0.5rem 0.75rem', position: 'relative' }}
+        className={`button-secondary ${iconOnly ? '' : 'header-btn'}`}
+        style={iconOnly ? { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: 0, position: 'relative', borderRadius: '9999px' } : { position: 'relative' }}
         title="Send Feedback / Report Bug"
       >
         <MessageSquare size={16} />
-        {!iconOnly && <span className="hide-on-mobile">Feedback</span>}
+        {!iconOnly && <span className="header-btn-label">Feedback</span>}
         
         {/* Unread Notification Badge */}
         {unreadCount > 0 && (
@@ -225,6 +242,7 @@ export default function FeedbackWidget({ iconOnly = false }) {
             padding: '2rem 1rem',
             overflowY: 'auto'
           }}
+          className="smooth-scroll"
           onPaste={(e) => {
             if (viewMode === 'form' && e.clipboardData.files && e.clipboardData.files.length > 0) {
               const files = Array.from(e.clipboardData.files).filter(f => f.type.startsWith('image/'));
@@ -265,9 +283,9 @@ export default function FeedbackWidget({ iconOnly = false }) {
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                 {viewMode === 'form' && myFeedbacks.length > 0 && (
-                  <button 
-                    onClick={() => setViewMode('list')}
-                    style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: 0 }}
+                  <button
+                    onClick={() => { setViewMode('list'); setDescription(''); setEditingFeedbackId(null); }}
+                    style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)' }}
                   >
                     <ArrowLeft size={20} />
                   </button>
@@ -289,14 +307,14 @@ export default function FeedbackWidget({ iconOnly = false }) {
             </div>
 
             {/* Content Area */}
-            <div style={{ padding: '1.5rem', overflowY: 'auto', flex: 1 }}>
+            <div className="smooth-scroll" style={{ padding: '1.5rem', overflowY: 'auto', flex: 1 }}>
               
               {/* LIST VIEW */}
               {viewMode === 'list' && (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                  <button 
-                    onClick={() => setViewMode('form')}
+                  <button
                     className="button-primary"
+                    onClick={() => { setEditingFeedbackId(null); setDescription(''); setViewMode('form'); }}
                     style={{ width: '100%', justifyContent: 'center', padding: '0.75rem' }}
                   >
                     <Plus size={18} style={{ marginRight: '0.5rem' }} />
@@ -321,19 +339,47 @@ export default function FeedbackWidget({ iconOnly = false }) {
                         }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>
                             <span>{fb.createdAt ? new Date(fb.createdAt.toMillis()).toLocaleString() : 'Just now'}</span>
-                            {fb.status === 'new' && <span style={{ color: 'var(--text-secondary)' }}>Pending</span>}
-                            {fb.status === 'replied' && <span style={{ color: 'var(--accent-primary)', fontWeight: 'bold' }}>New Reply</span>}
-                            {fb.status === 'read' && <span style={{ color: 'var(--success)' }}>Replied</span>}
+                            {fb.status === 'new' && <span style={{ backgroundColor: 'color-mix(in srgb, #eab308 15%, transparent)', color: '#eab308', padding: '0.1rem 0.5rem', borderRadius: '1rem', fontWeight: 600 }}>Pending</span>}
+                            {fb.status === 'approved' && <span style={{ backgroundColor: 'color-mix(in srgb, var(--success) 15%, transparent)', color: 'var(--success)', padding: '0.1rem 0.5rem', borderRadius: '1rem', fontWeight: 600 }}>Approved</span>}
+                            {fb.status === 'rejected' && <span style={{ backgroundColor: 'color-mix(in srgb, var(--error) 15%, transparent)', color: 'var(--error)', padding: '0.1rem 0.5rem', borderRadius: '1rem', fontWeight: 600 }}>Rejected</span>}
+                            {fb.status === 'replied' && <span style={{ backgroundColor: 'color-mix(in srgb, var(--accent-primary) 15%, transparent)', color: 'var(--accent-primary)', padding: '0.1rem 0.5rem', borderRadius: '1rem', fontWeight: 600 }}>New Reply</span>}
+                            {fb.status === 'read' && <span style={{ backgroundColor: 'color-mix(in srgb, var(--text-tertiary) 15%, transparent)', color: 'var(--text-tertiary)', padding: '0.1rem 0.5rem', borderRadius: '1rem', fontWeight: 600 }}>Replied (Read)</span>}
                           </div>
                           
-                          <div style={{ color: 'var(--text-primary)', fontSize: '0.9rem', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
-                            {fb.description}
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                            <div style={{ color: 'var(--text-primary)', fontSize: '0.9rem', whiteSpace: 'pre-wrap', wordBreak: 'break-word', flex: 1 }}>
+                              {fb.description}
+                            </div>
+                            
+                            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem', alignItems: 'center' }}>
+                              {(fb.status === 'new') && <span style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: '4px', backgroundColor: 'var(--bg-base)', border: '1px solid var(--border-color)' }}>Pending</span>}
+                              {(fb.status === 'replied' || fb.status === 'read') && <span style={{ color: 'var(--accent-primary)', fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: '4px', backgroundColor: 'rgba(59, 130, 246, 0.1)', border: '1px solid var(--accent-primary)' }}>Replied</span>}
+                              {(fb.status === 'resolved' || fb.status === 'resolved_read') && <span style={{ color: '#10b981', fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: '4px', backgroundColor: 'rgba(16, 185, 129, 0.1)', border: '1px solid #10b981' }}>Resolved</span>}
+                              
+                              {fb.status === 'new' && (
+                                <button
+                                  onClick={() => {
+                                    setEditingFeedbackId(fb.id);
+                                    setDescription(fb.description);
+                                    setImageFiles([]); // Reset images to avoid accidental overwrite unless intended
+                                    setViewMode('form');
+                                  }}
+                                  className="button-secondary"
+                                  style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                                >
+                                  <Pencil size={12} /> Edit
+                                </button>
+                              )}
+                            </div>
                           </div>
 
                           {(fb.imageUrls?.length > 0 || fb.imageUrl) && (
-                            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                              <ImageIcon size={14} style={{ verticalAlign: 'middle', marginRight: '4px' }} />
-                              Attached {(fb.imageUrls || [fb.imageUrl]).length} image(s)
+                            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
+                              {(fb.imageUrls || [fb.imageUrl]).map((url, i) => (
+                                <button key={i} onClick={() => setSelectedImage(url)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.75rem', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', cursor: 'pointer', padding: '0.3rem 0.6rem', backgroundColor: 'transparent', borderRadius: 'var(--radius-sm)', transition: 'all 0.2s' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(59, 130, 246, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                                  <ImageIcon size={14} /> Image {i + 1}
+                                </button>
+                              ))}
                             </div>
                           )}
 
@@ -341,12 +387,14 @@ export default function FeedbackWidget({ iconOnly = false }) {
                             <div style={{ 
                               marginTop: '0.5rem',
                               padding: '0.75rem',
-                              backgroundColor: 'rgba(20, 184, 166, 0.1)',
-                              borderLeft: '3px solid var(--accent-primary)',
+                              backgroundColor: (fb.status === 'resolved' || fb.status === 'resolved_read') ? 'rgba(16, 185, 129, 0.1)' : 'rgba(20, 184, 166, 0.1)',
+                              borderLeft: `3px solid ${(fb.status === 'resolved' || fb.status === 'resolved_read') ? '#10b981' : 'var(--accent-primary)'}`,
                               borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
                               fontSize: '0.875rem'
                             }}>
-                              <div style={{ fontWeight: 600, color: 'var(--accent-primary)', marginBottom: '0.25rem' }}>Admin Reply:</div>
+                              <div style={{ fontWeight: 600, color: (fb.status === 'resolved' || fb.status === 'resolved_read') ? '#10b981' : 'var(--accent-primary)', marginBottom: '0.25rem' }}>
+                                {(fb.status === 'resolved' || fb.status === 'resolved_read') ? 'Resolved by Admin:' : 'Admin Reply:'}
+                              </div>
                               <div style={{ color: 'var(--text-primary)', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
                                 {fb.adminReply}
                               </div>
@@ -372,7 +420,7 @@ export default function FeedbackWidget({ iconOnly = false }) {
                     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                       <div>
                         <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>
-                          Description <span style={{ color: 'var(--error)' }}>*</span>
+                          {editingFeedbackId ? 'Edit Description' : 'Description'} <span style={{ color: 'var(--error)' }}>*</span>
                         </label>
                         <textarea
                           value={description}
@@ -395,7 +443,7 @@ export default function FeedbackWidget({ iconOnly = false }) {
 
                       <div>
                         <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>
-                          Attach Screenshot (Optional)
+                          {editingFeedbackId ? 'Replace Screenshot (Optional - overwrites old images)' : 'Attach Screenshot (Optional)'}
                         </label>
                         <div style={{
                           border: '1px dashed var(--border-color)',
@@ -479,13 +527,14 @@ export default function FeedbackWidget({ iconOnly = false }) {
                         >
                           Cancel
                         </button>
-                        <button 
+                        <button
                           type="submit"
+                          disabled={isSubmitting || !description.trim()}
                           className="button-primary"
-                          disabled={isSubmitting}
-                          style={{ minWidth: '100px' }}
+                          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', padding: '0.75rem', marginTop: '0.5rem' }}
                         >
-                          {isSubmitting ? <Loader2 size={18} className="spin" /> : 'Send'}
+                          {isSubmitting ? <Loader2 size={18} className="spin" /> : (editingFeedbackId ? <Pencil size={18} /> : <Upload size={18} />)}
+                          {isSubmitting ? (editingFeedbackId ? 'Updating...' : 'Sending...') : (editingFeedbackId ? 'Update Feedback' : 'Send Feedback')}
                         </button>
                       </div>
                     </form>
@@ -494,6 +543,25 @@ export default function FeedbackWidget({ iconOnly = false }) {
               )}
             </div>
           </div>
+        </div>,
+        document.body
+      )}
+
+      {/* Image View Modal */}
+      {selectedImage && createPortal(
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 10000,
+          display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '2rem'
+        }} onClick={() => setSelectedImage(null)}>
+          <img src={selectedImage} alt="Feedback Screenshot" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: 'var(--radius-md)' }} onClick={e => e.stopPropagation()} />
+          <button onClick={() => setSelectedImage(null)} style={{
+            position: 'absolute', top: '1rem', right: '1rem', background: 'var(--bg-surface)', border: 'none',
+            borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+          }}>
+            <X size={24} color="var(--text-primary)" />
+          </button>
         </div>,
         document.body
       )}

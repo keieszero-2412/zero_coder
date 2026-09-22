@@ -8,10 +8,12 @@ import FeedbackWidget from '../components/FeedbackWidget';
 import { AIAssistant } from '../components/AIAssistant';
 import { askAIForHelp } from '../config/aiService';
 import { usePython } from '../hooks/usePython';
-import { problems } from '../data/problems';
-import { Play, CheckCircle, ArrowLeft, Trophy, Loader2, RotateCcw, LogOut, Zap, ChevronLeft, ChevronRight, Flag, Settings } from 'lucide-react';
+import { useProblems } from '../context/ProblemsContext';
+import { Play, CheckCircle, ArrowLeft, Trophy, Loader2, RotateCcw, LogOut, Zap, ChevronLeft, ChevronRight, Flag, Settings, Info, FileCode } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { SettingsModal } from '../components/SettingsModal';
+import { AboutModal } from '../components/AboutModal';
+import { CheatsheetModal } from '../components/CheatsheetModal';
 import { useNotification } from '../context/NotificationContext';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
@@ -19,6 +21,7 @@ import '../index.css';
 
 export function Workspace() {
   const { id } = useParams();
+  const { problems, isLoading, isFetching } = useProblems();
   const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
   const { showConfirm, showToast } = useNotification();
@@ -26,14 +29,54 @@ export function Workspace() {
   // Find problem based on URL param
   const currentProblem = useMemo(() => {
     return problems.find(p => p.id === id || p.id === Number(id));
-  }, [id]);
+  }, [id, problems]);
 
-  const currentIndex = useMemo(() => {
-    return problems.findIndex(p => p.id === currentProblem?.id);
+  const currentTerm = useMemo(() => {
+    if (!currentProblem) return 'mid';
+    const cat = (currentProblem.category || '').toLowerCase();
+    if (cat.includes('final') || cat.includes('last')) return 'final';
+    return 'mid';
   }, [currentProblem]);
 
-  const prevProblem = currentIndex > 0 ? problems[currentIndex - 1] : null;
-  const nextProblem = currentIndex >= 0 && currentIndex < problems.length - 1 ? problems[currentIndex + 1] : null;
+  const orderedProblems = useMemo(() => {
+    if (!problems || problems.length === 0) return [];
+    
+    const cats = {};
+    for (const p of problems) {
+      const catLower = (p.category || '').toLowerCase();
+      const isMid = p.category === 'FTDS coding practice' || catLower.includes('mid') || catLower.includes('mock');
+      const isFinal = p.category === 'FTDS coding practice' || catLower.includes('final') || catLower.includes('last');
+
+      if (currentTerm === 'mid' && !isMid) continue;
+      if (currentTerm === 'final' && !isFinal) continue;
+      
+      let catName = p.category;
+      if (catName === 'FTDS coding practice' || catName === 'Mid-term practice') {
+        catName = "Coding practice";
+      }
+      if (!cats[catName]) cats[catName] = [];
+      cats[catName].push(p);
+    }
+    
+    const result = [];
+    for (const key of Object.keys(cats)) {
+      if (key !== "Coding practice") {
+        result.push(...cats[key]);
+      }
+    }
+    if (cats["Coding practice"]) {
+      result.push(...cats["Coding practice"]);
+    }
+    
+    return result;
+  }, [problems, currentTerm]);
+
+  const currentIndex = useMemo(() => {
+    return orderedProblems.findIndex(p => p.id === currentProblem?.id);
+  }, [currentProblem, orderedProblems]);
+
+  const prevProblem = currentIndex > 0 ? orderedProblems[currentIndex - 1] : null;
+  const nextProblem = currentIndex >= 0 && currentIndex < orderedProblems.length - 1 ? orderedProblems[currentIndex + 1] : null;
 
   const [code, setCode] = useState('');
   const [proposedCode, setProposedCode] = useState(null);
@@ -47,6 +90,8 @@ export function Workspace() {
   const [isSidebarDragging, setIsSidebarDragging] = useState(false);
   const [isFlagged, setIsFlagged] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
+  const [showCheatsheet, setShowCheatsheet] = useState(false);
   const { isLoaded, output, error, runCode, runTests, clearOutput } = usePython();
 
   // Initialize code when problem changes
@@ -78,14 +123,14 @@ export function Workspace() {
         } catch (e) {
           console.error(e);
         }
-      } else if (!currentProblem) {
-        // If problem not found, go to dashboard
+      } else if (!currentProblem && !isLoading && !isFetching) {
+        // If problem not found after loading, go to dashboard
         navigate('/');
       }
     };
     loadCode();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentProblem, navigate, currentUser, id]);
+  }, [currentProblem, navigate, currentUser, id, isLoading, isFetching]);
 
   // Handle panel resizing
   useEffect(() => {
@@ -196,7 +241,18 @@ export function Workspace() {
     else if (score.passed > 0) scoreClass = 'partial';
   }
 
-  if (!currentProblem) return null;
+  if (!currentProblem) {
+    if (isLoading || isFetching) {
+      return (
+        <div className="app-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+          <Loader2 className="spin" size={32} color="var(--accent-primary)" />
+        </div>
+      );
+    }
+    return null;
+  }
+
+
 
   return (
     <div className="app-container">
@@ -205,10 +261,6 @@ export function Workspace() {
           <Link to="/" state={{ returnToId: currentProblem?.id }} className="button-secondary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: 0, textDecoration: 'none' }} title="Back to Dashboard">
             <ArrowLeft size={16} />
           </Link>
-          <div style={{ display: 'flex', alignItems: 'center', fontWeight: 'bold', fontSize: '1.25rem', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
-            <img src="/zerocoder-logo-transparent.png" alt="logo" style={{ width: '28px', height: '28px', marginRight: '0.5rem', borderRadius: '6px' }} />
-            <span className="hide-on-mobile">zerocoder</span>
-          </div>
         </div>
         
         {score.total > 0 && (
@@ -221,7 +273,7 @@ export function Workspace() {
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginRight: '0.5rem', paddingRight: '1rem', borderRight: '1px solid var(--border-color)' }}>
             {prevProblem ? (
-              <Link to={`/exam/${prevProblem.id}`} className="button-secondary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', padding: '0.4rem 0.75rem', textDecoration: 'none', fontSize: '0.85rem' }} title="Previous Problem">
+              <Link to={`/workspace/${prevProblem.id}`} className="button-secondary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', padding: '0.4rem 0.75rem', textDecoration: 'none', fontSize: '0.85rem' }} title="Previous Problem">
                 <ChevronLeft size={16} />
                 <span className="hide-on-mobile">Prev</span>
               </Link>
@@ -229,12 +281,17 @@ export function Workspace() {
               <div style={{ width: '74px' }} className="hide-on-mobile"></div>
             )}
             {nextProblem ? (
-              <Link to={`/exam/${nextProblem.id}`} className="button-secondary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', padding: '0.4rem 0.75rem', textDecoration: 'none', fontSize: '0.85rem' }} title="Next Problem">
-                <span className="hide-on-mobile">Next</span>
+              <Link to={`/workspace/${nextProblem.id}`} className="button-secondary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', padding: '0.4rem 0.75rem', textDecoration: 'none', fontSize: '0.85rem', whiteSpace: 'nowrap' }} title="Next Problem">
+                <span className="hide-on-mobile">
+                  {nextProblem.category !== currentProblem.category ? `Next: ${nextProblem.category}` : 'Next'}
+                </span>
                 <ChevronRight size={16} />
               </Link>
             ) : (
-              <div style={{ width: '74px' }} className="hide-on-mobile"></div>
+              <Link to="/" state={{ returnToId: currentProblem?.id }} className="button-secondary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', padding: '0.4rem 0.75rem', textDecoration: 'none', fontSize: '0.85rem', whiteSpace: 'nowrap' }} title="Finish and go back">
+                <span className="hide-on-mobile">Finish</span>
+                <ChevronRight size={16} />
+              </Link>
             )}
           </div>
           
@@ -250,7 +307,7 @@ export function Workspace() {
             title={isFlagged ? "Unflag Problem" : "Flag for Review"}
           >
             <Flag size={16} fill={isFlagged ? '#fbbf24' : 'none'} />
-            <span className="hide-on-mobile">{isFlagged ? 'Flagged' : 'Flag'}</span>
+            <span className="hide-on-mobile" style={{ width: '56px', textAlign: 'left' }}>{isFlagged ? 'Flagged' : 'Flag'}</span>
           </button>
 
           <button 
@@ -317,7 +374,36 @@ export function Workspace() {
           )}
           
           {currentUser && (
-            <div className="hide-on-mobile" style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginLeft: '1rem', paddingLeft: '1rem', borderLeft: '1px solid var(--border-color)' }}>
+            <div className="hide-on-mobile" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginLeft: '1rem', paddingLeft: '1rem', borderLeft: '1px solid var(--border-color)' }}>
+              <button 
+                onClick={() => setShowCheatsheet(true)} 
+                className="button-secondary" 
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '36px', padding: '0 0.75rem', borderRadius: '9999px', fontSize: '0.8rem', fontWeight: 600, color: 'var(--accent-primary)', gap: '0.35rem' }} 
+                title="Python Cheatsheet"
+              >
+                <FileCode size={15} />
+                <span>Cheatsheet</span>
+              </button>
+              <FeedbackWidget iconOnly={true} />
+              <button onClick={() => setShowSettings(true)} className="button-secondary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: 0, borderRadius: '9999px' }} title="Settings">
+                <Settings size={16} />
+              </button>
+              <button
+                onClick={() => setShowAbout(true)}
+                className="button-secondary"
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: 0, borderRadius: '9999px' }}
+                title="About Project"
+              >
+                <img 
+                  src="/zerocoder-logo-transparent.png" 
+                  alt="logo" 
+                  className="about-btn-logo" 
+                  style={{ width: '18px', height: '18px', objectFit: 'contain' }} 
+                />
+              </button>
+
+              <div style={{ height: '20px', width: '1px', backgroundColor: 'var(--border-color)', margin: '0 0.25rem' }} />
+
               <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: '0.375rem', rowGap: '0.125rem', alignItems: 'center' }}>
                 <span style={{ gridColumn: 2, fontSize: '0.875rem', fontWeight: 500, lineHeight: 1 }}>
                   {currentUser.username}
@@ -338,10 +424,7 @@ export function Workspace() {
                   {currentUser.colorCode}
                 </div>
               </div>
-              <FeedbackWidget iconOnly={true} />
-              <button onClick={() => setShowSettings(true)} className="button-secondary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: 0 }} title="Settings">
-                <Settings size={16} />
-              </button>
+
               <button onClick={logout} className="button-secondary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: 0 }} title="Sign Out">
                 <LogOut size={16} />
               </button>
@@ -472,6 +555,13 @@ export function Workspace() {
       </main>
 
       {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
+      <AboutModal isOpen={showAbout} onClose={() => setShowAbout(false)} />
+      <CheatsheetModal
+        isOpen={showCheatsheet}
+        onClose={() => setShowCheatsheet(false)}
+        mode="master"
+        term={currentTerm === 'final' ? 'last' : 'mid'}
+      />
     </div>
   );
 }

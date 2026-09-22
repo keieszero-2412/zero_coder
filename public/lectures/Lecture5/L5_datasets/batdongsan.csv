@@ -1,0 +1,1001 @@
+beds,category,city,direction,district,news_begin_date,news_end_date,news_id,news_type_level,price,root,square,street,ward,label_price
+,Nhà đất bán,Kiên Giang,Đông,Phú Quốc,9/10/2018,9/17/2018,17536888,Tin thường,,nha_dat_ban,120m²,Dương Tơ,Dương Tơ,
+,Nhà đất bán,Đồng Nai,,Nhơn Trạch,9/10/2018,9/17/2018,17288861,Tin thường,1.2,nha_dat_ban,262m²,,Vĩnh Thanh,tỷ
+3+,Nhà đất bán,Bình Dương,,Bến Cát,9/6/2018,9/13/2018,16667097,Tin thường,1.2,nha_dat_ban,67.5m²,NE2,Thới Hòa,tỷ
+,Nhà đất bán,Kiên Giang,,Phú Quốc,9/7/2018,9/14/2018,16338832,Tin thường,2.9,nha_dat_ban,Không xác định,Bào,Dương Tơ,tỷ
+,Nhà đất bán,Hồ Chí Minh,Tây-Nam,Quận 1,9/4/2018,9/11/2018,15120807,Tin thường,70,nha_dat_ban,225m²,Tôn Đức Thắng,Bến Nghé,tỷ
+2+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Thủ Đức,9/7/2018,9/14/2018,16435218,Tin thường,1.65,nha_dat_ban,48m²,38,Hiệp Bình Chánh,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Thạnh,9/8/2018,9/15/2018,17526997,Tin thường,13.5,nha_dat_ban,52m²,Hoàng Hoa Thám,5,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 1,9/8/2018,9/15/2018,17525165,Tin thường,30,nha_dat_ban,112.5m²,Trần Quang Khải,Tân Định,tỷ
+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Quận 12,9/7/2018,9/14/2018,17512130,Tin Vip 3,45,nha_dat_ban,80m²,Nguyễn Văn Quá,Tân Hưng Thuận,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Hóc Môn,9/7/2018,9/14/2018,17511416,Tin thường,800,nha_dat_ban,80m²,Đặng Thúc Vịnh,,triệu
+,Nhà đất bán,Hồ Chí Minh,Tây-Nam,Quận 12,9/7/2018,9/14/2018,17511539,Tin thường,,nha_dat_ban,64m²,Thạnh Lộc 29,Thạnh Lộc,
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Tân Bình,9/7/2018,9/14/2018,17203848,Tin thường,13,nha_dat_thue,80m²,Phổ Quang,2,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 4,9/6/2018,9/13/2018,17496960,Tin thường,6,nha_dat_ban,68m²,Nguyễn Khoái,4,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Nhà Bè,9/8/2018,9/15/2018,15743887,Tin thường,12,nha_dat_ban,2240m²,Long Thới,Nhơn Đức,tỷ
+3+,Nhà đất bán,Hồ Chí Minh,,Bình Tân,9/6/2018,10/6/2018,17494547,Tin thường,5.4,nha_dat_ban,56m²,Bùi Tư Toàn,An Lạc,tỷ
+,Nhà đất bán,Khánh Hòa,Bắc,Nha Trang,8/10/2018,11/10/2018,16962415,Tin thường,4.8,nha_dat_ban,95m²,23/10,Vĩnh Hiệp,tỷ
+2+,Nhà đất cho thuê,Hà Nội,,Thanh Xuân,9/6/2018,9/14/2018,15283617,Tin thường,14,nha_dat_thue,87m²,Nguyễn Huy Tưởng,Thanh Xuân Trung,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Bình Tân,9/6/2018,9/13/2018,17497084,Tin thường,1.1,nha_dat_ban,100m²,Lê Tấn Bê,An Lạc,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/8/2018,9/15/2018,17284502,Tin thường,780,nha_dat_ban,80m²,Liên Phường,Phước Long A,triệu
+,Nhà đất bán,Hồ Chí Minh,,Quận 7,9/8/2018,10/8/2018,17520175,Tin thường,15,nha_dat_ban,126m²,16,Tân Phú,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Tân Bình,9/8/2018,9/15/2018,17231326,Tin thường,19.5,nha_dat_ban,102m²,Lê Văn Sỹ,1,tỷ
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Tân Bình,9/4/2018,9/11/2018,17464062,Tin thường,10,nha_dat_thue,75m²,Trương Công Định,14,triệu/tháng
+,Nhà đất bán,Hà Nội,,Long Biên,9/7/2018,9/14/2018,17514076,Tin thường,8.5,nha_dat_ban,60m²,Lâm Du,Bồ Đề,tỷ
+,Nhà đất bán,Đà Nẵng,,Ngũ Hành Sơn,9/8/2018,9/15/2018,15617420,Tin thường,17.5,nha_dat_ban,130m²,Ngũ Hành Sơn,Mỹ An,tỷ
+,Nhà đất cho thuê,Bà Rịa Vũng Tàu,,Vũng Tàu,9/5/2018,9/12/2018,14271088,Tin thường,15,nha_dat_thue,100m²,Trương Công Định,3,triệu/tháng
+,Nhà đất bán,Hà Nội,,Hoàn Kiếm,9/9/2018,9/16/2018,17373461,Tin thường,350,nha_dat_ban,270m²,Đinh Tiên Hoàng,Hàng Gai,tỷ
+2+,Nhà đất bán,Bình Dương,,Thủ Dầu Một,9/8/2018,9/15/2018,17245764,Tin thường,1.67,nha_dat_ban,100m²,DX 090,Hiệp An,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 2,9/10/2018,9/18/2018,14052428,Tin thường,30,nha_dat_ban,300m²,, Thạnh Mỹ Lợi,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Tân Bình,9/7/2018,9/14/2018,16487750,Tin thường,3.5,nha_dat_thue,Không xác định,Cộng Hòa,13,triệu/tháng
+,Nhà đất cho thuê,Nghệ An,,Vinh,8/21/2018,11/19/2018,17300361,Tin thường,5,nha_dat_thue,120m²,Trần Cảnh Bình,Trung Đô,triệu/tháng
+,Nhà đất cho thuê,Đà Nẵng,,Hải Châu,9/5/2018,9/12/2018,16194469,Tin thường,24,nha_dat_thue,105m²,Lê Lợi,Thạch Thang,triệu/tháng
+4+,Nhà đất bán,Hà Nội,,Nam Từ Liêm,9/9/2018,9/16/2018,16850703,Tin thường,4.85,nha_dat_ban,45m²,Mỹ Đình,Mỹ Đình 1,tỷ
+,Nhà đất bán,Thừa Thiên Huế,,Phú Vang,9/6/2018,9/13/2018,17488170,Tin thường,,nha_dat_ban,105m²,Tỉnh Lộ 10,,
+,Nhà đất bán,Quảng Ninh,,Hạ Long,9/7/2018,9/14/2018,16193160,Tin thường,,nha_dat_ban,184.2m²,,Bãi Cháy,
+1+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,9/4/2018,9/11/2018,17377631,Tin Vip 1,6,nha_dat_thue,48m²,15B,Phú Mỹ,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Phú Nhuận,9/7/2018,9/14/2018,17509576,Tin thường,10.7,nha_dat_ban,50m²,Hoa Sữa,7,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Thạnh,9/8/2018,9/15/2018,17513958,Tin thường,28,nha_dat_ban,255m²,Đinh Bộ Lĩnh,24,tỷ
+4+,Nhà đất cho thuê,Hà Nội,Tây-Nam,Long Biên,9/4/2018,9/11/2018,12879819,Tin thường,30,nha_dat_thue,150m²,Anh Đào,Việt Hưng,triệu/tháng
+,Nhà đất bán,Đà Nẵng,Đông-Nam,Hải Châu,9/8/2018,9/15/2018,17524167,Tin thường,52,nha_dat_ban,99m²,Vũ Trọng Phụng,Hòa Cường Nam,triệu/m²
+3+,Nhà đất bán,Quảng Nam,,Thăng Bình,9/10/2018,9/29/2018,16783822,Tin thường,31.778,nha_dat_ban,1500m²,,Bình Dương,tỷ
+,Nhà đất bán,Khánh Hòa,,Cam Ranh,9/7/2018,9/14/2018,17340178,Tin thường,18,nha_dat_ban,125.2m²,Nguyễn Tất Thành,Cam Nghĩa,triệu/m²
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Phú Nhuận,9/4/2018,9/11/2018,8889678,Tin thường,16,nha_dat_thue,93m²,Nguyễn Thượng Hiền,5,triệu/tháng
+,Nhà đất bán,Đồng Nai,,Nhơn Trạch,9/8/2018,9/15/2018,16632842,Tin thường,6.5,nha_dat_ban,100m²,Nguyễn Hữu Cảnh,Vĩnh Thanh,triệu/m²
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,9/4/2018,9/11/2018,15628147,Tin thường,159.15,nha_dat_thue,222m²,Bùi Bằng Đoàn,Tân Phong,triệu/tháng
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,9/5/2018,9/12/2018,14576626,Tin thường,9,nha_dat_thue,74m²,Nguyễn Văn Linh,Tân Phong,triệu/tháng
+2+,Nhà đất cho thuê,Hà Nội,,Nam Từ Liêm,9/5/2018,9/12/2018,17471811,Tin thường,8.5,nha_dat_thue,66m²,Trần Bình,Mỹ Đình 2,triệu/tháng
+,Nhà đất bán,Hà Nội,Tây-Bắc,Hoài Đức,9/4/2018,9/11/2018,16516789,Tin Vip 3,55,nha_dat_ban,76m²,,Trạm Trôi,triệu/m²
+4+,Nhà đất cho thuê,Hà Nội,,Hai Bà Trưng,9/10/2018,9/17/2018,16212821,Tin thường,11.5,nha_dat_thue,140m²,Lò Đúc,Phạm Đình Hổ,triệu/tháng
+,Nhà đất bán,Hà Nội,Tây-Bắc,Nam Từ Liêm,9/9/2018,9/16/2018,12632643,Tin thường,2.55,nha_dat_ban,51m²,Đình Thôn,Mỹ Đình 1,tỷ
+,Nhà đất bán,Hồ Chí Minh,Tây-Nam,Quận 10,9/7/2018,9/14/2018,17514421,Tin thường,6,nha_dat_ban,66m²,Điện Biên Phủ,11,tỷ
+3+,Nhà đất cho thuê,Hà Nội,,Thanh Xuân,9/10/2018,9/17/2018,15688896,Tin thường,22,nha_dat_thue,120m²,Lê Văn Lương,Nhân Chính,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Quận 2,9/7/2018,9/21/2018,16694076,Tin thường,5,nha_dat_ban,90m²,Số 5,Bình Trưng Đông,tỷ
+,Nhà đất bán,Đà Nẵng,,Ngũ Hành Sơn,9/10/2018,9/17/2018,17533302,Tin thường,,nha_dat_ban,110m²,Minh Mạng,Hòa Quý,
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/4/2018,12/4/2018,13189496,Tin Vip 2,58,nha_dat_ban,96m²,Liên Phường,Phú Hữu,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Quận 5,9/6/2018,9/13/2018,17502736,Tin Vip 3,24.8,nha_dat_ban,62m²,Châu Văn Liêm,14,tỷ
+,Nhà đất cho thuê,Hà Nội,,Cầu Giấy,9/4/2018,9/11/2018,17448509,Tin thường,32,nha_dat_thue,65m²,Hoàng Quốc Việt,Nghĩa Tân,triệu/tháng
+3+,Nhà đất bán,Đồng Nai,Đông,Biên Hòa,9/6/2018,9/13/2018,17499622,Tin thường,2.35,nha_dat_ban,115m²,,Tân Hiệp,tỷ
+4+,Nhà đất bán,Hồ Chí Minh,Bắc,Quận 8,8/28/2018,9/11/2018,17205086,Tin Vip 1,2.8,nha_dat_ban,30m²,Bông Sao,5,tỷ
+,Nhà đất bán,Bình Dương,,Thủ Dầu Một,9/10/2018,9/19/2018,15599978,Tin thường,24,nha_dat_ban,300m²,Hoàng Hoa Thám,Hiệp Thành,triệu/m²
+2+,Nhà đất bán,Hà Nội,,Long Biên,9/6/2018,9/16/2018,17502286,Tin Vip 1,800,nha_dat_ban,50m²,Chu Huy Mân,Phúc Đồng,triệu
+,Nhà đất cho thuê,Khánh Hòa,Tây-Nam,Nha Trang,6/21/2018,9/21/2018,11618463,Tin thường,,nha_dat_thue,210m²,23/10,Vĩnh Hiệp,
+,Nhà đất bán,Hồ Chí Minh,,Quận 6,9/7/2018,9/14/2018,17514057,Tin thường,3.05,nha_dat_ban,25.62m²,Bình Tiên,8,tỷ
+,Nhà đất bán,Hải Phòng,,Dương Kinh,9/8/2018,9/15/2018,17525791,Tin Vip 2,,nha_dat_ban,450m²,Phạm Văn Đồng,,
+,Nhà đất bán,Long An,Tây,Đức Hòa,9/4/2018,9/11/2018,17271030,Tin thường,1.75,nha_dat_ban,75m²,824,Mỹ Hạnh Nam,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 3,9/10/2018,9/17/2018,17536915,Tin thường,45.5,nha_dat_ban,138m²,Điện Biên Phủ,6,tỷ
+,Nhà đất cần mua,Bình Phước,,Chơn Thành,1/1/2018,1/1/2018,,,,nha_dat_can_mua,Không xác định,,Thành Tâm,
+2+,Nhà đất cho thuê,Hà Nội,,Cầu Giấy,9/4/2018,9/11/2018,13163425,Tin thường,21,nha_dat_thue,130m²,,Trung Hòa,triệu/tháng
+,Nhà đất cho thuê,Hà Nội,,Thanh Xuân,9/5/2018,9/12/2018,17481261,Tin thường,25,nha_dat_thue,65m²,Lê Trọng Tấn,Khương Trung,triệu/tháng
+,Nhà đất cho thuê,Hà Nội,,Nam Từ Liêm,9/4/2018,9/11/2018,17459647,Tin thường,180,nha_dat_thue,2000m²,Phạm Hùng,Mễ Trì,nghìn/m2/tháng
+,Nhà đất bán,Nghệ An,Đông,Vinh,9/8/2018,9/15/2018,17523979,Tin thường,,nha_dat_ban,133m²,Lý Tự Trọng,,
+2+,Nhà đất cho thuê,Hà Nội,,Nam Từ Liêm,9/6/2018,9/14/2018,13769561,Tin thường,10,nha_dat_thue,71m²,Phạm Hùng,Mỹ Đình 2,triệu/tháng
+,Nhà đất cho thuê,Hà Nội,,Cầu Giấy,9/7/2018,9/14/2018,17210105,Tin thường,132.58,nha_dat_thue,110m²,Nguyễn Khánh Toàn,Nghĩa Đô,triệu/tháng
+1+,Nhà đất cho thuê,Hồ Chí Minh,,Tân Bình,9/4/2018,9/11/2018,17159526,Tin thường,10,nha_dat_thue,25m²,Tân Sơn,15,triệu/tháng
+,Nhà đất cho thuê,Đắk Lắk,,Buôn Ma Thuột,6/21/2018,12/18/2018,16474716,Tin thường,6,nha_dat_thue,Không xác định,Lê Duẩn,,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 2,9/6/2018,9/13/2018,16404073,Tin thường,18,nha_dat_ban,100m²,Nguyễn Thị Định,Cát Lái,triệu/m²
+1+,Nhà đất cho thuê,Hà Nội,,Hoàn Kiếm,9/9/2018,9/16/2018,10427135,Tin thường,11,nha_dat_thue,40m²,Yết Kiêu,Trần Hưng Đạo,triệu/tháng
+3+,Nhà đất cho thuê,Hà Nội,Đông-Nam,Thanh Xuân,9/3/2018,9/10/2018,17293240,Tin thường,17,nha_dat_thue,134m²,Nguyễn Trãi,Thượng Đình,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Tân Bình,9/8/2018,9/15/2018,17519215,Tin thường,24.8,nha_dat_ban,209m²,Lê Văn Sỹ,1,tỷ
+,Nhà đất bán,Hà Nội,,Đống Đa,9/6/2018,9/13/2018,10225089,Tin thường,178.08,nha_dat_thue,500m²,Láng,Láng Thượng,nghìn/m2/tháng
+,Nhà đất cho thuê,Hà Nội,,Hoàn Kiếm,9/10/2018,9/17/2018,17533694,Tin thường,60,nha_dat_thue,40m²,Chả Cá,Hàng Đào,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Củ Chi,9/7/2018,9/14/2018,17506196,Tin thường,15,nha_dat_ban,85m²,Võ Văn Bích,Tân Thạnh Đông,triệu/m²
+,Nhà đất bán,Quảng Nam,Đông-Nam,Điện Bàn,9/5/2018,9/12/2018,17477506,Tin Vip 3,14.5,nha_dat_ban,152.5m²,Dũng Sĩ Điện Ngọc,Điện Ngọc,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,Đông-Bắc,Quận 9,9/10/2018,9/17/2018,17535321,Tin thường,32,nha_dat_ban,60m²,Gò Cát,Phú Hữu,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,Đông-Bắc,Hóc Môn,9/6/2018,9/13/2018,17117454,Tin thường,2.7,nha_dat_ban,79.2m²,Đông Lân,Bà Điểm,tỷ
+,Nhà đất bán,Đắk Lắk,,Buôn Đôn,7/5/2018,1/1/2019,16657004,Tin thường,480,nha_dat_ban,Không xác định,,Ea Nuôl,triệu
+,Nhà đất bán,Hồ Chí Minh,,Quận 2,9/7/2018,9/14/2018,16442704,Tin thường,,nha_dat_ban,100m²,Nguyễn Duy Trinh,,
+,Nhà đất cho thuê,Hồ Chí Minh,,Tân Phú,9/4/2018,9/11/2018,16783589,Tin thường,15,nha_dat_thue,78.2m²,Lê Cảnh Tuân,Phú Thọ Hòa,triệu/tháng
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 1,8/22/2018,11/20/2018,17302319,Tin thường,6.5,nha_dat_thue,Không xác định,Nguyễn Thị Nghĩa,Bến Thành,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 8,9/9/2018,9/16/2018,16681407,Tin thường,2.5,nha_dat_ban,36.3m²,Phú Định,16,tỷ
+2+,Nhà đất bán,Hồ Chí Minh,Đông-Bắc,Quận 10,9/4/2018,9/14/2018,17357648,Tin Vip đặc biệt,3.3,nha_dat_ban,70m²,Lý Thường Kiệt,14,tỷ
+,Nhà đất bán,Đồng Nai,Nam,Biên Hòa,9/6/2018,9/13/2018,17428306,Tin thường,980,nha_dat_ban,100m²,,Trảng Dài,triệu
+,Nhà đất bán,Hồ Chí Minh,,Củ Chi,8/21/2018,2/17/2019,17303177,Tin thường,18,nha_dat_ban,3800m²,,Tân Phú Trung,tỷ
+,Nhà đất bán,Long An,,Cần Giuộc,9/3/2018,9/11/2018,17004666,Tin thường,950,nha_dat_ban,80m²,Lê Văn Lương,Long Hậu,triệu
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/8/2018,9/15/2018,16606335,Tin thường,890,nha_dat_ban,90m²,Phạm Hùng,Bình Hưng,triệu
+,Nhà đất bán,Đà Nẵng,Nam,Ngũ Hành Sơn,9/6/2018,9/13/2018,17499004,Tin thường,150,nha_dat_ban,320m²,Hồ Xuân Hương,Mỹ An,triệu/m²
+3+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,9/5/2018,9/12/2018,17478391,Tin thường,17,nha_dat_thue,128m²,D4,Tân Hưng,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Gò Vấp,9/7/2018,9/14/2018,16376786,Tin thường,4.05,nha_dat_ban,52m²,Số 5,16,tỷ
+4+,Nhà đất bán,Hà Nội,,Tây Hồ,8/3/2018,11/3/2018,16012477,Tin thường,108,nha_dat_ban,140m²,An Dương Vương,Phú Thượng,triệu/m²
+,Nhà đất bán,Hà Nội,,Đống Đa,9/6/2018,9/13/2018,17495829,Tin thường,9.5,nha_dat_ban,65m²,Yên Lãng,Trung Liệt,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 6,9/5/2018,9/13/2018,17385596,Tin thường,30,nha_dat_thue,100m²,Bình Phú,11,triệu/tháng
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,9/3/2018,9/10/2018,14927120,Tin thường,20,nha_dat_thue,Không xác định,Quốc Hương,Thảo Điền,triệu/tháng
+,Nhà đất bán,Cần Thơ,,Bình Thủy,8/26/2018,9/26/2018,17388751,Tin thường,22,nha_dat_ban,1433.7m²,Nguyễn Văn Linh,Long Hòa,tỷ
+3+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Quận 12,9/10/2018,9/17/2018,16167361,Tin thường,3.1,nha_dat_ban,60m²,Thạnh Lộc 19,Thạnh Lộc,tỷ
+,Nhà đất bán,Hồ Chí Minh,Đông-Bắc,Cần Giờ,9/8/2018,9/15/2018,17526053,Tin thường,2,nha_dat_ban,2000m²,Rừng Sác,Bình Khánh,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Tân Bình,9/10/2018,9/17/2018,17237805,Tin thường,74,nha_dat_ban,579m²,Cộng Hòa,13,tỷ
+3+,Nhà đất bán,Hà Nội,Tây-Nam,Nam Từ Liêm,9/7/2018,9/14/2018,17213780,Tin thường,2.5,nha_dat_ban,35m²,70,Tây Mỗ,tỷ
+5+,Nhà đất bán,Hồ Chí Minh,,Quận 10,9/4/2018,9/11/2018,17322545,Tin Vip 1,7.5,nha_dat_ban,46.3m²,Cao Thắng,,tỷ
+,Nhà đất bán,Quảng Nam,Tây-Nam,Điện Bàn,9/7/2018,9/14/2018,17510084,Tin thường,1.3,nha_dat_ban,123m²,Trần Đại Nghĩa,Điện Ngọc,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/8/2018,9/15/2018,17521696,Tin thường,400,nha_dat_ban,56m²,Quách Điêu,Vĩnh Lộc A,triệu
+2+,Nhà đất bán,Hà Nội,,Thanh Trì,9/5/2018,9/12/2018,17410040,Tin Vip 3,1.799,nha_dat_ban,74.08m²,Nguyễn Xiển,Tân Triều,tỷ
+,Nhà đất bán,Đồng Nai,Bắc,Biên Hòa,9/8/2018,9/15/2018,15464142,Tin thường,35,nha_dat_ban,924m²,Nguyễn Thành Phương,Thống Nhất,tỷ
+,Nhà đất bán,Bình Định,,Quy Nhơn,9/7/2018,9/14/2018,17504788,Tin thường,3,nha_dat_ban,300m²,,Nhơn Lý,tỷ
+,Nhà đất bán,Đà Nẵng,Đông,Sơn Trà,9/4/2018,9/11/2018,17134420,Tin thường,13.4,nha_dat_ban,250m²,Trần Hưng Đạo,,tỷ
+,Nhà đất bán,Hà Nội,Đông-Nam,Thanh Xuân,9/5/2018,9/12/2018,16538505,Tin thường,13.2,nha_dat_ban,147m²,Triều Khúc,Thanh Xuân Nam,tỷ
+,Nhà đất bán,Hà Nội,Đông-Nam,Đống Đa,9/7/2018,9/14/2018,17507612,Tin thường,4.8,nha_dat_ban,48m²,Phạm Ngọc Thạch,Trung Tự,tỷ
+4+,Nhà đất cho thuê,Hải Phòng,Tây-Nam,Ngô Quyền,9/4/2018,9/11/2018,14941708,Tin thường,20,nha_dat_thue,80m²,Văn Cao,Đằng Giang,triệu/tháng
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 4,9/7/2018,9/14/2018,17509350,Tin thường,19.77,nha_dat_thue,72m²,Bến Vân Đồn,6,triệu/tháng
+,Nhà đất cho thuê,Hà Nội,,Hoàng Mai,8/31/2018,2/27/2019,17377281,Tin thường,15,nha_dat_thue,60m²,Nguyễn Cảnh Dị,Định Công,triệu/tháng
+,Nhà đất bán,Khánh Hòa,Đông-Nam,Nha Trang,9/9/2018,9/16/2018,16073379,Tin thường,32,nha_dat_ban,91.9m²,Phùng Hưng,Vĩnh Thái,triệu/m²
+,Nhà đất cho thuê,Hồ Chí Minh,,Bình Thạnh,6/25/2018,12/22/2018,16528379,Tin thường,4.3,nha_dat_thue,30m²,Trần Kế Xương,3,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 1,9/6/2018,9/13/2018,16706228,Tin thường,28,nha_dat_ban,120m²,Nguyễn Cư Trinh,Phạm Ngũ Lão,tỷ
+3+,Nhà đất bán,Đà Nẵng,Tây-Nam,Hải Châu,9/7/2018,9/17/2018,17064593,Tin thường,3.3,nha_dat_ban,94m²,Hải Phòng,,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Tân,9/7/2018,9/14/2018,17510013,Tin thường,1.52,nha_dat_ban,52m²,Tỉnh Lộ 10,Tân Tạo,tỷ
+5+,Nhà đất bán,Hồ Chí Minh,,Quận 3,9/10/2018,9/17/2018,17533473,Tin thường,8,nha_dat_ban,63m²,Lý Chính Thắng,7,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 10,9/6/2018,9/13/2018,17497631,Tin thường,11.5,nha_dat_ban,44m²,Cửu Long,15,tỷ
+4+,Nhà đất bán,Bình Dương,Đông,Thuận An,9/8/2018,9/15/2018,17414308,Tin thường,15.5,nha_dat_ban,480m²,Quốc Lộ 13,Bình Hòa,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 10,9/7/2018,9/14/2018,17504066,Tin thường,26,nha_dat_ban,90m²,Lý Thường Kiệt,15,tỷ
+,Nhà đất bán,Bình Dương,,Bến Cát,9/6/2018,9/13/2018,13984168,Tin thường,650,nha_dat_ban,100m²,Vành Đai 4,,triệu
+5+,Nhà đất cho thuê,Hà Nội,Đông-Nam,Tây Hồ,9/6/2018,9/13/2018,17159639,Tin thường,18,nha_dat_thue,50m²,Âu Cơ,Tứ Liên,triệu/tháng
+,Nhà đất cho thuê,Hà Nội,,Nam Từ Liêm,9/4/2018,9/11/2018,16414314,Tin thường,227.7,nha_dat_thue,200m²,Nguyễn Hoàng,Mỹ Đình 2,nghìn/m2/tháng
+4+,Nhà đất bán,Hồ Chí Minh,,Quận 3,9/8/2018,9/15/2018,17523770,Tin thường,5.2,nha_dat_ban,56m²,Lý Chính Thắng,7,tỷ
+3+,Nhà đất cho thuê,Hồ Chí Minh,,Bình Thạnh,8/29/2018,11/27/2018,17378621,Tin thường,25,nha_dat_thue,135m²,Nguyễn Hữu Cảnh,22,triệu/tháng
+2+,Nhà đất cho thuê,Hà Nội,,Nam Từ Liêm,9/7/2018,9/15/2018,15318037,Tin thường,12,nha_dat_thue,86m²,Hàm Nghi,Cầu Diễn,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Tân Bình,9/8/2018,9/15/2018,17522593,Tin thường,7.9,nha_dat_ban,96m²,Trần Thái Tông,15,tỷ
+2+,Nhà đất bán,Hà Nội,,Hai Bà Trưng,9/7/2018,9/16/2018,17503221,Tin thường,3.9,nha_dat_ban,40m²,Minh Khai,Minh Khai,tỷ
+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Thủ Đức,9/9/2018,9/16/2018,17528703,Tin thường,6.8,nha_dat_ban,96m²,Số 8,Hiệp Bình Phước,tỷ
+,Nhà đất bán,Đà Nẵng,,Liên Chiểu,9/10/2018,9/17/2018,17534050,Tin thường,10,nha_dat_ban,100m²,,Hòa Hiệp Nam,triệu/m²
+,Nhà đất bán,Bình Dương,,Thuận An,9/10/2018,10/10/2018,17537193,Tin thường,2.1,nha_dat_ban,100m²,NA5,Bình Hòa,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/9/2018,9/16/2018,12810840,Tin thường,25,nha_dat_ban,57m²,Long Phước,Long Phước,triệu/m²
+4+,Nhà đất bán,Hồ Chí Minh,,Bình Tân,9/7/2018,9/24/2018,17006438,Tin thường,28,nha_dat_ban,200m²,34,Bình Trị Đông B,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/6/2018,9/13/2018,17388473,Tin thường,1.4,nha_dat_ban,Không xác định,Vĩnh Lộc,Vĩnh Lộc B,tỷ
+2+,Nhà đất cho thuê,Bình Dương,,Thuận An,8/24/2018,9/14/2018,17358293,Tin thường,7,nha_dat_thue,170m²,Vĩnh Phú 33,Vĩnh Phú,triệu/tháng
+,Nhà đất bán,Hà Nội,,Hoàng Mai,9/5/2018,9/12/2018,16290178,Tin Vip 1,1.75,nha_dat_ban,30m²,Ngũ Nhạc,Thanh Trì,tỷ
+,Nhà đất bán,Đắk Lắk,,Buôn Hồ,9/10/2018,9/17/2018,16865111,Tin thường,4.6,nha_dat_ban,150m²,Trần Hưng Đạo,An Lạc,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Gò Vấp,9/4/2018,9/11/2018,17458102,Tin Vip 3,30,nha_dat_ban,200m²,Nguyễn Oanh,7,tỷ
+,Nhà đất bán,Hà Nội,Đông-Nam,Nam Từ Liêm,9/6/2018,9/13/2018,17494667,Tin thường,40,nha_dat_ban,126m²,70,Tây Mỗ,triệu/m²
+,Nhà đất bán,Hà Nội,,Cầu Giấy,9/7/2018,9/14/2018,16711523,Tin thường,4.2,nha_dat_ban,55m²,Hồ Tùng Mậu,Mai Dịch,tỷ
+,Nhà đất cho thuê,Hà Nội,,Hoàn Kiếm,8/31/2018,9/30/2018,17441083,Tin thường,50,nha_dat_thue,40m²,Phan Chu Trinh,Phan Chu Trinh,triệu/tháng
+,Nhà đất bán,Hà Nội,,Hoàng Mai,9/7/2018,9/14/2018,16355145,Tin thường,43.1,nha_dat_ban,200m²,Nguyễn Xiển,Đại Kim,tỷ
+,Nhà đất bán,Hà Nội,Đông-Bắc,Nam Từ Liêm,8/28/2018,9/12/2018,17361948,Tin Vip 2,36,nha_dat_ban,502m²,Trần Hữu Dực,Xuân Phương,triệu/m²
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 9,9/6/2018,9/13/2018,17172262,Tin thường,4,nha_dat_thue,49m²,Liên Phường,Phú Hữu,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Tân Phú,9/7/2018,9/18/2018,17302492,Tin thường,14,nha_dat_ban,158m²,Trần Thủ Độ,Phú Thạnh,tỷ
+4+,Nhà đất bán,Đà Nẵng,Tây,Hải Châu,9/7/2018,9/14/2018,17422777,Tin thường,4.5,nha_dat_ban,54m²,Bắc Đẩu,Thanh Bình,tỷ
+,Nhà đất bán,Hà Nội,,Thanh Oai,8/14/2018,9/13/2018,17225569,Tin Vip 3,,nha_dat_ban,97.3m²,,Thanh Mai,
+2+,Nhà đất cho thuê,Hà Nội,Tây-Bắc,Thanh Xuân,9/4/2018,9/11/2018,17098911,Tin thường,14.5,nha_dat_thue,70m²,Lê Văn Lương,Nhân Chính,triệu/tháng
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 6,8/30/2018,10/14/2018,17377264,Tin thường,4,nha_dat_thue,21m²,Hậu Giang,11,triệu/tháng
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 3,9/3/2018,9/10/2018,15296759,Tin thường,,nha_dat_thue,231.42m²,Lê Văn Sỹ,,
+2+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Quận 12,9/6/2018,9/13/2018,17423622,Tin thường,2.58,nha_dat_ban,52m²,Thạnh Lộc 37,Thạnh Lộc,tỷ
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Bình Thạnh,9/8/2018,9/15/2018,16934774,Tin thường,12,nha_dat_thue,65m²,D2,25,triệu/tháng
+,Nhà đất bán,Đắk Lắk,,Buôn Ma Thuột,9/7/2018,9/14/2018,17400873,Tin thường,1.08,nha_dat_ban,435m²,Dã Tượng,Tân An,tỷ
+1+,Nhà đất cho thuê,Bình Dương,,Thủ Dầu Một,9/7/2018,9/14/2018,17509687,Tin thường,6.5,nha_dat_thue,60m²,Yersin,Phú Cường,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/6/2018,9/13/2018,17499808,Tin thường,350,nha_dat_ban,121m²,Trịnh Như Khuê,,triệu
+,Nhà đất bán,Hà Nội,,Hai Bà Trưng,9/7/2018,9/14/2018,16974162,Tin thường,13.5,nha_dat_ban,100m²,Võ Thị Sáu,Thanh Nhàn,tỷ
+,Nhà đất cho thuê,Hà Nội,,Đống Đa,9/7/2018,9/14/2018,17509927,Tin thường,250,nha_dat_thue,340m²,Láng Hạ,Láng Hạ,nghìn/m2/tháng
+,Nhà đất bán,Hồ Chí Minh,,Tân Bình,9/8/2018,9/15/2018,17524755,Tin thường,6.5,nha_dat_ban,56m²,Hoàng Hoa Thám,12,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/5/2018,9/12/2018,17007326,Tin thường,3.15,nha_dat_ban,75m²,Trịnh Quang Nghị,Phong Phú,tỷ
+,Nhà đất bán,Long An,,Bến Lức,9/6/2018,9/13/2018,17501839,Tin thường,500,nha_dat_ban,100m²,Phan Văn Mảng,Bến Lức,triệu
+,Nhà đất cho thuê,Bình Dương,,Thủ Dầu Một,9/9/2018,9/16/2018,16771022,Tin thường,8,nha_dat_thue,60m²,Phạm Ngọc Thạch,Hiệp Thành,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/7/2018,9/14/2018,17501393,Tin thường,850,nha_dat_ban,125m²,Tỉnh Lộ 10,Lê Minh Xuân,triệu
+,Nhà đất bán,Hồ Chí Minh,,Quận 12,9/9/2018,9/16/2018,17109424,Tin thường,1.4,nha_dat_ban,44m²,Tân Thới Nhất 1,Tân Thới Nhất,tỷ
+3+,Nhà đất bán,Bình Dương,,Dĩ An,9/7/2018,9/14/2018,17147647,Tin thường,2.95,nha_dat_ban,Không xác định,ĐT 743,,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Tân,9/7/2018,9/14/2018,17161797,Tin thường,1.4,nha_dat_ban,80m²,17,Bình Trị Đông B,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Gò Vấp,9/6/2018,9/13/2018,17319858,Tin Vip 3,4.8,nha_dat_ban,64m²,Nguyễn Kiệm,3,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 12,9/4/2018,9/11/2018,16593654,Tin thường,32,nha_dat_thue,900m²,Nguyễn Ảnh Thủ,Hiệp Thành,triệu/tháng
+4+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Gò Vấp,9/7/2018,9/14/2018,17513766,Tin thường,6.5,nha_dat_ban,50m²,Quang Trung,8,tỷ
+,Nhà đất bán,Hà Nội,Tây,Hoàn Kiếm,9/6/2018,9/13/2018,14061671,Tin thường,165,nha_dat_ban,190m²,Hàng Hành,Hàng Trống,tỷ
+,Nhà đất bán,Bình Dương,,Thủ Dầu Một,9/6/2018,9/13/2018,17501496,Tin thường,2.4,nha_dat_ban,290m²,Huỳnh Thị Hiếu,Tân An,tỷ
+,Nhà đất bán,Nghệ An,Đông-Nam,Vinh,9/6/2018,9/13/2018,17415572,Tin thường,,nha_dat_ban,160m²,Phượng Hoàng,Trung Đô,
+,Nhà đất bán,Hà Nội,Đông-Nam,Hà Đông,9/5/2018,9/12/2018,12805840,Tin thường,,nha_dat_ban,330m²,Lê Văn Lương,Vạn Phúc,
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 5,9/8/2018,9/15/2018,17291558,Tin thường,30,nha_dat_thue,100m²,Trần Bình Trọng,,triệu/tháng
+,Nhà đất bán,Long An,,Cần Đước,9/8/2018,9/15/2018,17520141,Tin thường,680,nha_dat_ban,100m²,Vành Đai 4,Long Định,triệu
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/8/2018,9/15/2018,15411811,Tin thường,449,nha_dat_ban,80m²,Lê Văn Việt,Long Bình,triệu
+,Nhà đất bán,Bình Dương,Đông-Bắc,Thuận An,9/10/2018,9/17/2018,15859607,Tin thường,6,nha_dat_ban,482.1m²,Vĩnh Phú 2,Vĩnh Phú,tỷ
+,Nhà đất cho thuê,Hà Nội,,Thanh Xuân,9/8/2018,9/15/2018,17526109,Tin thường,38,nha_dat_thue,200m²,Hoàng Văn Thái,Khương Trung,triệu/tháng
+,Nhà đất bán,Khánh Hòa,Tây-Bắc,Nha Trang,9/8/2018,9/18/2018,17518898,Tin thường,4.3,nha_dat_ban,28m²,Hùng Vương,Lộc Thọ,tỷ
+,Nhà đất bán,Hưng Yên,,Văn Giang,9/7/2018,9/14/2018,15318278,Tin thường,,nha_dat_ban,210m²,Thủy Nguyên,Xuân Quan,
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,8/25/2018,9/22/2018,16953364,Tin thường,,nha_dat_ban,70m²,Trần Văn Giàu,,
+,Nhà đất bán,Hà Nội,Tây-Nam,Hà Đông,9/7/2018,10/7/2018,17507218,Tin thường,2.9,nha_dat_ban,50m²,Lê Văn Lương,La Khê,tỷ
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Tân Bình,9/6/2018,9/13/2018,17496855,Tin thường,9.5,nha_dat_thue,80m²,Trương Công Định,13,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Tân Bình,9/7/2018,9/14/2018,17418161,Tin thường,17.5,nha_dat_ban,100m²,Cộng Hòa,12,tỷ
+3+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/8/2018,9/15/2018,17521386,Tin thường,1.45,nha_dat_ban,102m²,Đinh Đức Thiện,Tân Quý Tây,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Thủ Đức,9/8/2018,9/15/2018,17520103,Tin thường,32,nha_dat_ban,85m²,,,triệu/m²
+,Nhà đất cho thuê,Hà Nội,,Cầu Giấy,9/7/2018,9/14/2018,17506924,Tin Vip 2,23,nha_dat_thue,30m²,Xuân Thủy,Nghĩa Tân,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Hóc Môn,9/8/2018,9/15/2018,17385288,Tin thường,350,nha_dat_ban,85m²,Nguyễn Văn Bứa,Xuân Thới Sơn,triệu
+4+,Nhà đất bán,Hồ Chí Minh,,Quận 8,8/18/2018,9/18/2018,17275862,Tin thường,4.1,nha_dat_ban,53m²,An Dương Vương,16,tỷ
+4+,Nhà đất bán,Hà Nội,Đông-Bắc,Ba Đình,9/7/2018,9/19/2018,17317686,Tin thường,4.5,nha_dat_ban,30m²,Văn Cao,Liễu Giai,tỷ
+,Nhà đất bán,Hà Nội,,Hà Đông,9/7/2018,9/14/2018,17511366,Tin thường,5.2,nha_dat_ban,52m²,Trần Đăng Ninh,Hà Cầu,tỷ
+5+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/8/2018,9/15/2018,17443702,Tin thường,6.876,nha_dat_ban,Không xác định,Võ Chí Công,Phú Hữu,tỷ
+,Nhà đất bán,Bình Dương,,Thủ Dầu Một,9/9/2018,9/16/2018,16428628,Tin thường,1.82,nha_dat_ban,154m²,DX 084,Định Hòa,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 1,9/7/2018,9/14/2018,17436467,Tin thường,13,nha_dat_ban,72m²,Phạm Viết Chánh,Nguyễn Cư Trinh,tỷ
+,Nhà đất cho thuê,Hà Nội,,Cầu Giấy,9/10/2018,9/17/2018,17532739,Tin thường,,nha_dat_thue,990m²,Cầu Giấy,Dịch Vọng,
+4+,Nhà đất bán,Hà Nội,,Thanh Trì,9/7/2018,9/14/2018,16167181,Tin thường,1.75,nha_dat_ban,36m²,Yên Ngưu,Tứ Hiệp,tỷ
+,Nhà đất bán,Bình Dương,,Thủ Dầu Một,9/10/2018,9/17/2018,17537842,Tin thường,20,nha_dat_ban,90m²,Phạm Ngọc Thạch,Hòa Phú,triệu/m²
+2+,Nhà đất cho thuê,Hà Nội,,Thanh Trì,9/5/2018,9/13/2018,17349226,Tin thường,9,nha_dat_thue,68m²,Nguyễn Xiển,Tân Triều,triệu/tháng
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 3,9/4/2018,9/11/2018,17391388,Tin Vip 3,,nha_dat_thue,189m²,Nguyễn Đình Chiểu,4,
+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Quận 2,9/7/2018,9/14/2018,16238711,Tin thường,42,nha_dat_ban,160m²,Đồng Văn Cống,Cát Lái,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Bình Tân,9/8/2018,9/15/2018,17361801,Tin thường,,nha_dat_ban,68m²,Bùi Tư Toàn,An Lạc,
+,Nhà đất bán,Hồ Chí Minh,,Quận 7,9/7/2018,9/14/2018,17244041,Tin thường,719,nha_dat_ban,100m²,Phạm Hữu Lầu,Phú Mỹ,triệu
+,Nhà đất bán,Khánh Hòa,,Cam Ranh,9/6/2018,9/13/2018,9433162,Tin thường,1,nha_dat_ban,126m²,Nguyễn Tất Thành,Cam Lập,tỷ
+3+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,9/6/2018,9/13/2018,17500468,Tin thường,9,nha_dat_thue,110m²,Lương Định Của,Bình An,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Tân Phú,9/10/2018,9/17/2018,17535250,Tin thường,3.4,nha_dat_ban,48m²,Tân Quý,Tân Quý,tỷ
+4+,Nhà đất bán,Hà Nội,,Đống Đa,9/6/2018,9/13/2018,17396749,Tin thường,3.9,nha_dat_ban,39m²,Nguyễn Phúc Lai,Ô Chợ Dừa,tỷ
+3+,Nhà đất cho thuê,Hà Nội,,Nam Từ Liêm,9/8/2018,9/17/2018,14269047,Tin thường,13,nha_dat_thue,117m²,Lê Đức Thọ,Mỹ Đình 2,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 12,9/7/2018,9/17/2018,17345706,Tin thường,6,nha_dat_ban,109m²,Trần Thị Hè,Hiệp Thành,tỷ
+,Nhà đất bán,Đà Nẵng,,Ngũ Hành Sơn,9/4/2018,9/11/2018,17464038,Tin thường,7,nha_dat_ban,136.8m²,Võ Như Hưng,,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Hóc Môn,9/7/2018,9/14/2018,17505285,Tin thường,900,nha_dat_ban,100m²,Lê Thị Hà,Tân Hiệp,triệu
+,Nhà đất cho thuê,Tiền Giang,,Gò Công,9/6/2018,10/6/2018,17498463,Tin thường,,nha_dat_thue,1000m²,,5,
+5+,Nhà đất bán,Hà Nội,Tây-Bắc,Cầu Giấy,9/10/2018,9/17/2018,15929955,Tin thường,15,nha_dat_ban,75m²,Trung Kính,Yên Hòa,tỷ
+,Nhà đất cần thuê,Hồ Chí Minh,,Bình Thạnh,1/1/2018,1/1/2018,,,,nha_dat_can_thue,Trên 60m²,,,
+3+,Nhà đất bán,Hà Nội,,Hai Bà Trưng,9/6/2018,9/13/2018,17497849,Tin thường,2.85,nha_dat_ban,35m²,Trần Khát Chân,Thanh Lương,tỷ
+,Nhà đất bán,Khánh Hòa,,Cam Ranh,9/4/2018,9/11/2018,17462914,Tin Vip 1,16,nha_dat_ban,120m²,Nguyễn Tất Thành,Cam Nghĩa,triệu/m²
+4+,Nhà đất bán,Hồ Chí Minh,Nam,Quận 9,9/4/2018,9/11/2018,16382569,Tin Vip 3,7.5,nha_dat_ban,160m²,Bưng Ông Thoàn,Phú Hữu,tỷ
+,Nhà đất bán,Hồ Chí Minh,Nam,Quận 9,9/6/2018,9/13/2018,14407097,Tin thường,1.7,nha_dat_ban,52m²,Số 1,Long Trường,tỷ
+,Nhà đất bán,Long An,,Đức Hòa,9/7/2018,9/14/2018,16815942,Tin thường,6,nha_dat_ban,140m²,Vành Đai 4,Đức Lập Thượng,triệu/m²
+,Nhà đất bán,Bình Dương,Tây-Nam,Thuận An,9/10/2018,9/17/2018,17275759,Tin thường,2.15,nha_dat_ban,100.9m²,Phan Thanh Giản,Lái Thiêu,tỷ
+,Nhà đất bán,Khánh Hòa,,Cam Lâm,9/5/2018,9/12/2018,17019480,Tin thường,7,nha_dat_ban,300m²,Nguyễn Tất Thành,Cam Hải Đông,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 1,9/10/2018,9/17/2018,17531842,Tin thường,410,nha_dat_ban,Không xác định,Hàm Nghi,,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,9/5/2018,9/12/2018,17470643,Tin thường,45,nha_dat_thue,100m²,Mai Chí Thọ,An Phú,triệu/tháng
+,Nhà đất bán,Hà Nội,,Cầu Giấy,9/8/2018,9/15/2018,8264065,Tin thường,40,nha_dat_ban,100m²,Nguyễn Văn Huyên,Quan Hoa,tỷ
+,Nhà đất cho thuê,Hưng Yên,,Văn Giang,9/9/2018,9/16/2018,16605590,Tin thường,,nha_dat_thue,100m²,Thủy Nguyên,Xuân Quan,
+,Nhà đất bán,Hồ Chí Minh,Tây,Bình Tân,9/8/2018,9/15/2018,17341071,Tin thường,3.75,nha_dat_ban,56m²,,An Lạc,tỷ
+4+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,9/4/2018,9/11/2018,17281933,Tin thường,80,nha_dat_thue,111m²,Hà Huy Tập,Tân Phong,triệu/tháng
+3+,Nhà đất cho thuê,Hồ Chí Minh,Đông-Nam,Quận 8,9/5/2018,9/12/2018,17473585,Tin thường,15,nha_dat_thue,150m²,Tạ Quang Bửu,5,triệu/tháng
+4+,Nhà đất bán,Hồ Chí Minh,Nam,Quận 7,9/7/2018,9/14/2018,17514363,Tin thường,15,nha_dat_ban,200m²,Bùi Bằng Đoàn,Tân Phong,tỷ
+,Nhà đất cần thuê,Hà Nội,,Cầu Giấy,1/1/2018,1/1/2018,,,1,nha_dat_can_thue,30m² - 50m²,Mai Dịch,Dịch Vọng Hậu,triệu
+,Nhà đất bán,Hồ Chí Minh,,Thủ Đức,9/8/2018,9/15/2018,17256248,Tin thường,33,nha_dat_ban,150m²,Ngô Chí Quốc,Bình Chiểu,triệu/m²
+,Nhà đất bán,Đồng Nai,,Biên Hòa,9/10/2018,9/17/2018,17532982,Tin thường,10,nha_dat_ban,Không xác định,Quốc Lộ 51,Phước Tân,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,Bắc,Thủ Đức,9/6/2018,9/13/2018,17481561,Tin thường,7.6,nha_dat_ban,110m²,Quốc Lộ 13,Hiệp Bình Phước,tỷ
+3+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 3,8/13/2018,9/13/2018,17204406,Tin thường,6,nha_dat_thue,17.5m²,Cách Mạng Tháng Tám,10,triệu/tháng
+,Nhà đất bán,Long An,,Đức Hòa,9/8/2018,9/15/2018,15187161,Tin thường,250,nha_dat_ban,100m²,Tỉnh lộ 8,,triệu
+,Nhà đất bán,Hà Nội,Đông-Nam,Nam Từ Liêm,9/7/2018,9/14/2018,17106319,Tin thường,,nha_dat_ban,96m²,Lê Quang Đạo,Đại Mỗ,
+3+,Nhà đất bán,Quảng Nam,Đông,Hội An,9/4/2018,9/30/2018,16636849,Tin thường,30,nha_dat_ban,1100m²,Âu Cơ,Cửa Đại,triệu/m²
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,9/4/2018,9/15/2018,15849491,Tin thường,16.3,nha_dat_thue,68.66m²,Phạm Văn Nghị,Tân Phong,triệu/tháng
+,Nhà đất bán,Đồng Nai,,Biên Hòa,9/4/2018,9/11/2018,17466251,Tin Vip 1,10,nha_dat_ban,100m²,Quốc Lộ 51,Phước Tân,triệu/m²
+,Nhà đất bán,Thái Nguyên,,Phú Bình,7/5/2018,1/1/2019,16655835,Tin thường,6.7,nha_dat_ban,170000m²,,Điềm Thụy,triệu/m²
+,Nhà đất cho thuê,Hồ Chí Minh,,Tân Phú,8/30/2018,11/28/2018,17371815,Tin thường,,nha_dat_thue,100m²,Nguyễn Trọng Quyền,Tân Thới Hòa,
+,Nhà đất bán,Bà Rịa Vũng Tàu,,Bà Rịa,9/7/2018,9/14/2018,17509926,Tin thường,1,nha_dat_ban,140m²,Quốc Lộ 51,Kim Dinh,tỷ
+,Nhà đất bán,Bà Rịa Vũng Tàu,Tây-Bắc,Vũng Tàu,9/7/2018,9/27/2018,16185837,Tin thường,16.8,nha_dat_ban,210m²,,9,triệu/m²
+1+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 10,9/5/2018,9/12/2018,17476917,Tin thường,14,nha_dat_thue,53m²,Lý Thường Kiệt,14,triệu/tháng
+,Nhà đất cho thuê,Hồ Chí Minh,,Phú Nhuận,9/6/2018,9/13/2018,17399059,Tin thường,43,nha_dat_thue,98m²,Nguyễn Trọng Tuyển,8,triệu/tháng
+,Nhà đất bán,Hà Nội,,Thạch Thất,9/7/2018,9/14/2018,17509184,Tin Vip 2,500,nha_dat_ban,120m²,Đại lộ Thăng Long,Tiến Xuân,triệu
+,Nhà đất bán,Hồ Chí Minh,,Quận 1,9/8/2018,9/15/2018,15178346,Tin thường,52,nha_dat_ban,100.8m²,Phạm Ngũ Lão,Phạm Ngũ Lão,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 3,9/7/2018,9/14/2018,16716237,Tin thường,,nha_dat_ban,83.5m²,Cách Mạng Tháng Tám,,
+,Nhà đất bán,Hồ Chí Minh,,Phú Nhuận,9/6/2018,9/13/2018,17423229,Tin thường,180,nha_dat_ban,504m²,Phan Xích Long,2,tỷ
+,Nhà đất bán,Hà Nội,Đông,Tây Hồ,9/7/2018,9/14/2018,17428261,Tin thường,2.4,nha_dat_ban,45m²,,Phú Thượng,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 3,9/8/2018,9/15/2018,17523965,Tin thường,23,nha_dat_ban,97.5m²,Phạm Ngọc Thạch,6,tỷ
+,Nhà đất bán,Đồng Nai,,Biên Hòa,9/8/2018,9/15/2018,16806032,Tin thường,800,nha_dat_ban,90m²,Nam Cao,Phước Tân,triệu
+,Nhà đất bán,Hà Nội,,Tây Hồ,9/8/2018,9/15/2018,16982971,Tin thường,230,nha_dat_ban,160m²,Xuân La,Xuân La,triệu/m²
+,Nhà đất bán,Hải Phòng,,Lê Chân,9/8/2018,9/17/2018,17383200,Tin thường,22,nha_dat_ban,105m²,Ngô Kim Tài,,triệu/m²
+,Nhà đất bán,Đà Nẵng,,Sơn Trà,9/10/2018,9/17/2018,16157584,Tin thường,,nha_dat_ban,144m²,Lê Văn Duyệt,Nại Hiên Đông ,
+,Nhà đất bán,Hồ Chí Minh,Nam,Quận 2,9/6/2018,9/13/2018,17420580,Tin thường,5.75,nha_dat_ban,80m²,Nguyễn Duy Trinh,An Phú,tỷ
+,Nhà đất bán,Đà Nẵng,Đông,Ngũ Hành Sơn,9/5/2018,9/12/2018,16858771,Tin thường,,nha_dat_ban,573m²,,,
+,Nhà đất bán,Hà Nội,Tây-Nam,Nam Từ Liêm,9/8/2018,9/15/2018,17521526,Tin thường,1.8,nha_dat_ban,40m²,Phương Canh,Phương Canh,tỷ
+3+,Nhà đất bán,Hà Nội,,Đống Đa,9/6/2018,9/13/2018,17174841,Tin Vip 3,27,nha_dat_ban,201m²,Đê La Thành,Ô Chợ Dừa,triệu/m²
+,Nhà đất cho thuê,Hồ Chí Minh,,Tân Bình,9/4/2018,9/11/2018,15145331,Tin thường,3.9,nha_dat_thue,20m²,Hoàng Hoa Thám,13,triệu/tháng
+,Nhà đất bán,Đà Nẵng,Tây-Bắc,Hải Châu,9/10/2018,9/17/2018,17533725,Tin thường,38,nha_dat_ban,300m²,Bùi Viện,Hòa Cường Nam,triệu/m²
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 12,6/15/2018,9/15/2018,15571310,Tin thường,182.04,nha_dat_thue,220m²,Trường Chinh,Tân Hưng Thuận,nghìn/m2/tháng
+5+,Nhà đất bán,Hồ Chí Minh,,Quận 11,9/8/2018,9/15/2018,17439233,Tin thường,7.6,nha_dat_ban,40m²,Nguyễn Bá Học,4,tỷ
+,Nhà đất bán,Đà Nẵng,Đông,Ngũ Hành Sơn,9/6/2018,9/13/2018,17094606,Tin thường,3.8,nha_dat_ban,150m²,Trần Văn Hai,Hòa Hải,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Tân Phú,9/5/2018,9/12/2018,15922053,Tin thường,5.117,nha_dat_ban,115.94m²,Âu Cơ,Tân Sơn Nhì,tỷ
+3+,Nhà đất cho thuê,Hà Nội,,Hà Đông,9/4/2018,9/12/2018,16323056,Tin thường,12,nha_dat_thue,155m²,Ao Sen,Mỗ Lao,triệu/tháng
+2+,Nhà đất bán,Hà Nội,Đông-Nam,Sơn Tây,9/3/2018,9/10/2018,16548831,Tin thường,6,nha_dat_thue,72m²,Chùa Thông,Sơn Lộc,triệu/tháng
+3+,Nhà đất bán,Hà Nội,Đông-Nam,Hà Đông,9/6/2018,9/13/2018,17354644,Tin thường,2.6,nha_dat_ban,33m²,19/5,Văn Quán,tỷ
+,Nhà đất bán,Hà Nội,,Đan Phượng,6/5/2018,12/2/2018,16285929,Tin thường,7,nha_dat_thue,64m²,,Tân Lập,triệu/tháng
+,Nhà đất cho thuê,Hà Nội,,Cầu Giấy,9/9/2018,9/16/2018,17528996,Tin thường,15,nha_dat_thue,122m²,Hoàng Đạo Thúy,Trung Hòa,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Bình Tân,9/9/2018,9/16/2018,16247315,Tin thường,3.85,nha_dat_ban,107.5m²,Kinh Dương Vương,,tỷ
+4+,Nhà đất cho thuê,Hồ Chí Minh,,Tân Bình,9/3/2018,9/10/2018,17342734,Tin thường,25,nha_dat_thue,100m²,Hoàng Kế Viêm,12,triệu/tháng
+,Nhà đất bán,Hà Nội,,Nam Từ Liêm,9/6/2018,9/13/2018,17498209,Tin Vip 3,21,nha_dat_ban,190m²,Lê Đức Thọ,Mỹ Đình 2,tỷ
+,Nhà đất bán,Hồ Chí Minh,Bắc,Quận 7,9/10/2018,9/17/2018,16318322,Tin thường,7.5,nha_dat_ban,80m²,Phú Thuận,Phú Thuận,tỷ
+2+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Tân Bình,9/4/2018,9/11/2018,17458973,Tin Vip 3,1.5,nha_dat_ban,64.6m²,Phan Huy Ích,15,tỷ
+,Nhà đất cho thuê,Khánh Hòa,,Diên Khánh,9/5/2018,9/12/2018,17479052,Tin Vip 3,,nha_dat_thue,6400m²,,Diên Phú,
+,Nhà đất bán,Kiên Giang,,Phú Quốc,9/6/2018,9/13/2018,17424150,Tin thường,13.9,nha_dat_ban,120.25m²,Dương Tơ,Dương Tơ,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 3,9/5/2018,9/12/2018,17481002,Tin Vip 3,26,nha_dat_ban,92m²,Võ Văn Tần,6,tỷ
+,Nhà đất bán,Lào Cai,,Lào Cai,9/9/2018,9/16/2018,17530884,Tin thường,,nha_dat_ban,Không xác định,,,
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 9,9/2/2018,9/15/2018,17451922,Tin thường,40,nha_dat_thue,800m²,Võ Văn Hát,Long Trường,triệu/tháng
+,Nhà đất bán,Đồng Nai,,Nhơn Trạch,9/9/2018,9/16/2018,17529679,Tin thường,1.65,nha_dat_ban,142m²,Lý Thái Tổ,Phú Hữu,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/9/2018,9/16/2018,17437083,Tin thường,27.5,nha_dat_ban,151.8m²,,Phú Hữu,triệu/m²
+,Nhà đất bán,Thanh Hóa,,Thanh Hóa,9/7/2018,9/14/2018,17339299,Tin thường,5,nha_dat_ban,122m²,Đại lộ Châu Âu,,tỷ
+,Nhà đất bán,Đồng Nai,,Long Thành,9/7/2018,9/14/2018,17511872,Tin thường,13,nha_dat_ban,100m²,Nguyễn Hải,Long Thành,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Nhà Bè,9/8/2018,9/15/2018,17441011,Tin thường,11.4,nha_dat_ban,304.6m²,Phạm Hữu Lầu,Phước Kiển,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Tân,4/4/2018,10/1/2018,15376591,Tin thường,20,nha_dat_ban,1400m²,Nguyễn Văn Cự,,tỷ
+,Nhà đất bán,Đà Nẵng,,Liên Chiểu,9/5/2018,9/12/2018,16609586,Tin thường,2.2,nha_dat_ban,125m²,,Hòa Hiệp Nam,tỷ
+,Nhà đất cho thuê,Hà Nội,,Cầu Giấy,9/4/2018,9/11/2018,17457509,Tin thường,32,nha_dat_thue,60m²,Hoàng Quốc Việt,Nghĩa Tân,triệu/tháng
+1+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,9/7/2018,9/14/2018,17517139,Tin thường,8,nha_dat_thue,52m²,15B,Phú Mỹ,triệu/tháng
+,Nhà đất bán,Kiên Giang,,Phú Quốc,9/6/2018,9/13/2018,16744723,Tin thường,1.5,nha_dat_ban,118m²,Ba Trại,Cửa Dương,tỷ
+,Nhà đất bán,Đà Nẵng,Tây-Nam,Cẩm Lệ,9/6/2018,9/13/2018,17111212,Tin thường,2.1,nha_dat_ban,81.6m²,Nguyễn Công Hoan,,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Thủ Đức,9/7/2018,9/14/2018,17384079,Tin thường,20,nha_dat_ban,80m²,Hoàng Diệu 2,Linh Trung,triệu/m²
+,Nhà đất cho thuê,Hồ Chí Minh,,Tân Phú,7/31/2018,10/29/2018,17037185,Tin thường,106.46,nha_dat_thue,135m²,Số 18,Tân Quý,triệu/tháng
+,Nhà đất bán,Bình Dương,,Thuận An,9/8/2018,9/15/2018,17522749,Tin thường,19,nha_dat_ban,80m²,ĐT 743,An Phú,triệu/m²
+,Nhà đất cho thuê,Hồ Chí Minh,Đông-Bắc,Tân Bình,9/5/2018,9/12/2018,17082642,Tin thường,40,nha_dat_thue,160m²,Bàu Cát,14,triệu/tháng
+,Nhà đất cho thuê,Hà Nội,,Hà Đông,9/4/2018,9/11/2018,17160658,Tin thường,250,nha_dat_thue,500m²,Trần Phú,,nghìn/m2/tháng
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 6,9/4/2018,9/11/2018,17450698,Tin Vip 3,1.5,nha_dat_thue,16m²,Lý Chiêu Hoàng,10,triệu/tháng
+,Nhà đất bán,Hà Nội,,Hoàng Mai,9/10/2018,9/17/2018,17533210,Tin thường,16.5,nha_dat_ban,99m²,,Đại Kim,tỷ
+,Nhà đất bán,Hà Nội,,Nam Từ Liêm,9/6/2018,9/13/2018,16224390,Tin thường,3,nha_dat_ban,6000m²,70,Xuân Phương,triệu/m²
+,Nhà đất bán,Hà Nội,,Sóc Sơn,9/10/2018,9/17/2018,17534808,Tin thường,550,nha_dat_ban,27000m²,,Minh Trí,nghìn/m²
+2+,Nhà đất cho thuê,Hà Nội,,Hoàng Mai,9/4/2018,9/11/2018,17389682,Tin thường,5.5,nha_dat_thue,60m²,Tam Trinh,Yên Sở,triệu/tháng
+,Nhà đất bán,Phú Thọ,,Việt Trì,8/21/2018,9/20/2018,17315856,Tin Vip 3,5.5,nha_dat_ban,105m²,Châu Phong,Tân Dân,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Bình Thạnh,9/8/2018,9/15/2018,16537472,Tin thường,67,nha_dat_thue,150m²,Nguyễn Hữu Cảnh,22,triệu/tháng
+,Nhà đất cho thuê,Hà Nội,,Nam Từ Liêm,8/25/2018,9/16/2018,17363787,Tin thường,30,nha_dat_thue,200m²,Tây Mỗ,,triệu/tháng
+2+,Nhà đất cho thuê,Hà Nội,,Ba Đình,9/4/2018,9/11/2018,17465972,Tin thường,14,nha_dat_thue,84m²,Giảng Võ,Giảng Võ,triệu/tháng
+,Nhà đất bán,Long An,,Cần Đước,9/6/2018,9/13/2018,17492371,Tin thường,379,nha_dat_ban,90m²,Nguyễn Trung Trực,Long Cang,triệu
+3+,Nhà đất bán,Hồ Chí Minh,,Bình Thạnh,9/7/2018,9/14/2018,17509226,Tin thường,1.9,nha_dat_ban,75m²,Bình Quới,28,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Bình Thạnh,9/6/2018,9/13/2018,17501120,Tin thường,4,nha_dat_thue,22m²,Bùi Đình Túy,26,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 1,9/7/2018,9/14/2018,15935340,Tin thường,36,nha_dat_ban,40.7m²,Đông Du,Bến Nghé,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Hóc Môn,9/6/2018,9/13/2018,17496816,Tin thường,950,nha_dat_ban,100m²,Trưng Nữ Vương,,triệu
+5+,Nhà đất bán,Lâm Đồng,,Đà Lạt,9/5/2018,9/12/2018,17209064,Tin thường,7.8,nha_dat_ban,300m²,Trần Quang Khải,8,tỷ
+,Nhà đất bán,Bà Rịa Vũng Tàu,,Phú Mỹ,9/8/2018,9/15/2018,17518916,Tin thường,180,nha_dat_ban,100m²,81,Hắc Dịch,triệu
+5+,Nhà đất bán,Hồ Chí Minh,,Bình Thạnh,9/7/2018,9/14/2018,17513027,Tin thường,10.5,nha_dat_ban,102m²,Phan Văn Trị,11,tỷ
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Bình Chánh,9/7/2018,9/14/2018,17504420,Tin thường,4.5,nha_dat_thue,63m²,Nguyễn Văn Linh,An Phú Tây,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/9/2018,9/26/2018,17208640,Tin thường,10.5,nha_dat_ban,Không xác định,Bưng Ông Thoàn,Phú Hữu,tỷ
+,Nhà đất bán,Đà Nẵng,Tây,Ngũ Hành Sơn,9/9/2018,9/16/2018,17448978,Tin thường,20,nha_dat_ban,162m²,Đỗ Bí,,tỷ
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 9,9/5/2018,9/12/2018,14289070,Tin thường,11,nha_dat_thue,78m²,Liên Phường,Phú Hữu,triệu/tháng
+,Nhà đất bán,Hà Nội,,Hà Đông,9/10/2018,9/17/2018,14093456,Tin Vip 2,9.5,nha_dat_ban,120m²,Lê Trọng Tấn,La Khê,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/7/2018,9/14/2018,17509762,Tin thường,820,nha_dat_ban,120m²,Quốc Lộ 50,Đa Phước,triệu
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,9/8/2018,9/15/2018,11551465,Tin thường,95,nha_dat_thue,122.5m²,Mai Chí Thọ,An Lợi Đông,triệu/tháng
+,Nhà đất bán,Hà Nội,,Đống Đa,9/10/2018,9/17/2018,17450227,Tin thường,4.55,nha_dat_ban,36m²,Yên Lãng,Thịnh Quang,tỷ
+,Nhà đất bán,Bình Định,,Quy Nhơn,9/8/2018,9/15/2018,16797939,Tin thường,5,nha_dat_ban,175m²,,Nhơn Lý,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 2,9/10/2018,9/17/2018,17534462,Tin thường,,nha_dat_ban,Không xác định,,,
+,Nhà đất cho thuê,Hà Nội,,Đống Đa,9/6/2018,9/13/2018,17499276,Tin thường,60,nha_dat_thue,90m²,Nguyễn Lương Bằng,Ô Chợ Dừa,triệu/tháng
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,9/5/2018,9/12/2018,12466696,Tin thường,8,nha_dat_thue,68m²,Nguyễn Văn Linh,Tân Phong,triệu/tháng
+,Nhà đất cho thuê,Hồ Chí Minh,,Bình Thạnh,9/10/2018,9/18/2018,17060412,Tin thường,368,nha_dat_thue,170m²,Điện Biên Phủ,25,nghìn/m2/tháng
+1+,Nhà đất cho thuê,Bình Dương,,Thủ Dầu Một,9/9/2018,9/16/2018,17529050,Tin thường,6,nha_dat_thue,36m²,Phạm Ngọc Thạch,Hiệp Thành,triệu/tháng
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,9/6/2018,9/13/2018,15994394,Tin thường,3.5,nha_dat_thue,30m²,Trần Xuân Soạn,Tân Hưng,triệu/tháng
+,Nhà đất cho thuê,Hà Nội,,Cầu Giấy,9/5/2018,9/12/2018,17208068,Tin thường,279.12,nha_dat_thue,110m²,Lê Đức Thọ,Dịch Vọng,nghìn/m2/tháng
+4+,Nhà đất cho thuê,Bình Dương,,Bến Cát,9/5/2018,9/12/2018,17132272,Tin thường,16,nha_dat_thue,228.6m²,NE2,Thới Hòa,triệu/tháng
+,Nhà đất bán,Bình Dương,,Thủ Dầu Một,9/7/2018,9/14/2018,17109530,Tin thường,1.13,nha_dat_ban,100m²,DX 028,Phú Mỹ,tỷ
+,Nhà đất cho thuê,Hà Nội,,Cầu Giấy,9/5/2018,9/12/2018,17470636,Tin thường,12,nha_dat_thue,70m²,Tôn Thất Thuyết,,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 8,9/8/2018,9/15/2018,17521482,Tin thường,4.4,nha_dat_ban,48m²,13,4,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 12,9/6/2018,9/13/2018,17203188,Tin thường,9,nha_dat_thue,100m²,Nguyễn Văn Quá,Đông Hưng Thuận,triệu/tháng
+3+,Nhà đất cho thuê,Hà Nội,,Thanh Xuân,9/7/2018,9/15/2018,16338138,Tin thường,16.5,nha_dat_thue,80.7m²,Lê Văn Lương,Nhân Chính,triệu/tháng
+3+,Nhà đất bán,Hồ Chí Minh,Đông-Bắc,Tân Bình,9/7/2018,9/14/2018,17151620,Tin thường,43,nha_dat_ban,328m²,Cộng Hòa,12,tỷ
+,Nhà đất bán,Bình Dương,,Thủ Dầu Một,9/7/2018,9/14/2018,16054727,Tin thường,580,nha_dat_ban,150m²,Đại Lộ Bình Dương,Hòa Phú,triệu
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/9/2018,9/16/2018,15254436,Tin thường,47,nha_dat_ban,3400m²,C12,Tân Kiên,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 7,9/6/2018,9/13/2018,17409437,Tin thường,5.83,nha_dat_ban,80m²,Số 2B,Phú Mỹ,tỷ
+3+,Nhà đất bán,Hà Nội,Đông-Bắc,Thanh Xuân,9/5/2018,9/15/2018,17464318,Tin Vip đặc biệt,5.5,nha_dat_ban,120.5m²,Nguyễn Huy Tưởng,Thanh Xuân Trung,tỷ
+4+,Nhà đất cho thuê,Hà Nội,Tây-Nam,Long Biên,9/6/2018,9/13/2018,16916282,Tin thường,,nha_dat_thue,190m²,,Đức Giang,
+,Nhà đất bán,Hồ Chí Minh,,Tân Bình,9/6/2018,10/6/2018,17501137,Tin thường,13.5,nha_dat_ban,72m²,Bàu Cát 7,14,tỷ
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Tân Bình,9/7/2018,9/15/2018,16950620,Tin thường,10,nha_dat_thue,75m²,Cộng Hòa,,triệu/tháng
+,Nhà đất bán,Hà Nội,,Thanh Xuân,9/6/2018,9/13/2018,16423860,Tin thường,220,nha_dat_ban,100m²,Vũ Tông Phan,Khương Đình,triệu/m²
+,Nhà đất bán,Hà Nội,Đông-Bắc,Gia Lâm,9/7/2018,9/14/2018,17515284,Tin thường,14,nha_dat_ban,70m²,Khoan Tế,Đa Tốn,triệu/m²
+,Nhà đất cho thuê,Hà Nội,,Cầu Giấy,9/4/2018,9/11/2018,17465994,Tin thường,9,nha_dat_thue,32m²,,Dịch Vọng,triệu/tháng
+,Nhà đất bán,Bà Rịa Vũng Tàu,,Bà Rịa,9/7/2018,9/14/2018,17513298,Tin thường,6.9,nha_dat_ban,100m²,Quốc Lộ 55,,triệu/m²
+4+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Quận 9,9/5/2018,9/12/2018,14382212,Tin Vip 1,9.9,nha_dat_ban,171m²,Bưng Ông Thoàn,Phú Hữu,tỷ
+,Nhà đất bán,Bà Rịa Vũng Tàu,,Bà Rịa,9/7/2018,9/14/2018,17510039,Tin thường,2.8,nha_dat_ban,100m²,Nguyễn Văn Cừ,Long Toàn,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/7/2018,9/14/2018,17505225,Tin thường,12,nha_dat_ban,56m²,Lã Xuân Oai,Tăng Nhơn Phú A,triệu/m²
+,Nhà đất cho thuê,Hà Nội,,Hoài Đức,9/7/2018,9/14/2018,17517093,Tin Vip 3,45,nha_dat_thue,1300m²,72,An Khánh,nghìn/m2/tháng
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,9/5/2018,9/12/2018,17472691,Tin thường,11,nha_dat_thue,73m²,D4,Tân Hưng,triệu/tháng
+,Nhà đất bán,Bình Dương,,Tân Uyên,9/7/2018,9/14/2018,16770093,Tin thường,1.1,nha_dat_ban,150m²,N7A,Vĩnh Tân,tỷ
+,Nhà đất bán,Hà Nội,Đông,Ba Đình,9/7/2018,9/14/2018,17222710,Tin thường,11,nha_dat_ban,100m²,Kim Mã,Kim Mã,tỷ
+,Nhà đất bán,Hà Nội,Bắc,Long Biên,9/8/2018,9/15/2018,17228300,Tin thường,2.75,nha_dat_ban,43.9m²,Thượng Thanh,Thượng Thanh,tỷ
+1+,Nhà đất cho thuê,Hồ Chí Minh,Đông-Nam,Quận 2,9/8/2018,9/15/2018,17445989,Tin thường,11,nha_dat_thue,50m²,Mai Chí Thọ,Bình Khánh,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,Đông-Bắc,Quận 9,9/6/2018,9/13/2018,16734997,Tin thường,2.1,nha_dat_ban,64m²,Long Thuận,Trường Thạnh,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/7/2018,9/14/2018,17320449,Tin thường,1.5,nha_dat_ban,80m²,Quốc Lộ 50,Bình Hưng,tỷ
+,Nhà đất bán,Đà Nẵng,Tây-Nam,Ngũ Hành Sơn,9/9/2018,9/16/2018,17529490,Tin thường,4.8,nha_dat_ban,100m²,Đa Mặn 5, Khuê Mỹ,tỷ
+3+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,9/5/2018,9/12/2018,12897173,Tin thường,12,nha_dat_thue,113m²,D4,Tân Hưng,triệu/tháng
+,Nhà đất cho thuê,Hồ Chí Minh,,Phú Nhuận,8/8/2018,11/8/2018,17135550,Tin thường,4,nha_dat_thue,20m²,Hồ Biểu Chánh,11,triệu/tháng
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,9/8/2018,9/15/2018,17521616,Tin thường,14.5,nha_dat_thue,76m²,D1,Tân Hưng,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 10,9/8/2018,9/15/2018,17407925,Tin thường,7.5,nha_dat_ban,49m²,Thành Thái,14,tỷ
+,Nhà đất bán,Long An,,Đức Hòa,9/7/2018,9/14/2018,16835258,Tin thường,6,nha_dat_ban,100m²,823,Đức Lập Thượng,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/7/2018,9/14/2018,16887305,Tin thường,730,nha_dat_ban,100m²,Phạm Hùng,Bình Hưng,triệu
+2+,Nhà đất bán,Hồ Chí Minh,,Quận 4,9/2/2018,9/12/2018,16643916,Tin Vip đặc biệt,3.6,nha_dat_ban,70m²,Bến Vân Đồn,1,tỷ
+,Nhà đất bán,Hồ Chí Minh,Đông-Bắc,Quận 12,9/8/2018,9/22/2018,13046016,Tin thường,9,nha_dat_ban,100m²,Nguyễn Ảnh Thủ,Tân Chánh Hiệp,tỷ
+4+,Nhà đất bán,Đồng Nai,,Nhơn Trạch,9/10/2018,9/23/2018,17296745,Tin thường,8.5,nha_dat_ban,320m²,,Đại Phước,tỷ
+,Nhà đất bán,Hà Nội,,Quốc Oai,9/6/2018,9/13/2018,16804686,Tin thường,12,nha_dat_ban,240m²,21A,Phú Cát,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Gò Vấp,9/6/2018,9/15/2018,17482288,Tin Vip 2,227,nha_dat_ban,120m²,,,triệu
+,Nhà đất cho thuê,Hồ Chí Minh,,Tân Phú,9/8/2018,9/15/2018,17527381,Tin thường,3,nha_dat_thue,25m²,Gò Dầu,Tân Quý,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,Nam,Quận 6,9/7/2018,9/14/2018,17512424,Tin thường,9,nha_dat_ban,68m²,Lý Chiêu Hoàng,10,tỷ
+,Nhà đất bán,Bình Dương,,Thủ Dầu Một,9/6/2018,9/13/2018,7564972,Tin Vip 1,1.65,nha_dat_ban,100m²,Lê Lợi,Phú Mỹ,tỷ
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 6,9/6/2018,9/13/2018,17488089,Tin thường,9,nha_dat_thue,65m²,Tân Hòa Đông,14,triệu/tháng
+3+,Nhà đất cho thuê,Hà Nội,,Hoàng Mai,9/6/2018,9/13/2018,17487143,Tin thường,7,nha_dat_thue,72m²,Tam Trinh,Yên Sở,triệu/tháng
+3+,Nhà đất bán,Đồng Nai,Tây-Nam,Biên Hòa,8/28/2018,9/27/2018,17399934,Tin Vip 3,1.8,nha_dat_ban,72m²,,An Hòa,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 3,9/8/2018,9/15/2018,17525074,Tin thường,45,nha_dat_ban,96.9m²,Võ Văn Tần,6,tỷ
+,Nhà đất bán,Hồ Chí Minh,Tây,Phú Nhuận,9/7/2018,9/14/2018,17513291,Tin thường,18.5,nha_dat_ban,79.9m²,Trần Huy Liệu,12,tỷ
+3+,Nhà đất bán,Hồ Chí Minh,Tây,Bình Tân,9/8/2018,9/15/2018,17522435,Tin thường,5.66,nha_dat_ban,Không xác định,Bùi Tư Toàn,An Lạc,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/9/2018,9/16/2018,16155885,Tin thường,750,nha_dat_ban,120m²,Hoàng Hữu Nam,,triệu
+3+,Nhà đất bán,Bình Dương,,Thủ Dầu Một,9/6/2018,9/13/2018,17011851,Tin thường,2.8,nha_dat_ban,125m²,DX 047,Phú Mỹ,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/7/2018,9/14/2018,16432188,Tin thường,300,nha_dat_ban,80m²,Hương Lộ 11,Bình Hưng,triệu
+1+,Nhà đất cho thuê,Hồ Chí Minh,Đông-Nam,Bình Thạnh,9/6/2018,9/13/2018,17264739,Tin thường,8,nha_dat_thue,53m²,Nguyễn Xí,26,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 7,9/6/2018,9/13/2018,16003707,Tin thường,36.6,nha_dat_ban,273.6m²,Tân Phú,Tân Phú,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/7/2018,9/14/2018,15077440,Tin thường,980,nha_dat_ban,90m²,Đỗ Xuân Hợp,,triệu
+2+,Nhà đất cho thuê,Hà Nội,,Hai Bà Trưng,9/7/2018,9/22/2018,17516852,Tin thường,12.5,nha_dat_thue,76m²,Minh Khai,Vĩnh Tuy,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/7/2018,9/14/2018,15755483,Tin thường,2.3,nha_dat_ban,125m²,Vĩnh Lộc B,Vĩnh Lộc A,tỷ
+2+,Nhà đất bán,Hồ Chí Minh,Nam,Quận 7,9/7/2018,9/14/2018,16113040,Tin thường,3.8,nha_dat_ban,64m²,Huỳnh Tấn Phát,Phú Thuận,tỷ
+,Nhà đất bán,Khánh Hòa,Tây,Nha Trang,9/6/2018,9/13/2018,16857043,Tin thường,48.5,nha_dat_ban,91.05m²,A2,,triệu/m²
+,Nhà đất bán,Hà Nội,,Long Biên,9/5/2018,9/12/2018,17204211,Tin thường,18.5,nha_dat_ban,298.1m²,Hoa Phượng 3,Việt Hưng,tỷ
+,Nhà đất bán,Đà Nẵng,Bắc,Thanh Khê,9/8/2018,9/15/2018,17518330,Tin thường,6,nha_dat_ban,223m²,Mẹ Nhu,,tỷ
+,Nhà đất bán,Đà Nẵng,Đông-Bắc,Sơn Trà,9/10/2018,9/17/2018,15975271,Tin thường,10.5,nha_dat_ban,107.5m²,Mỹ Khê 2,Phước Mỹ,tỷ
+3+,Nhà đất cho thuê,Hồ Chí Minh,,Thủ Đức,9/7/2018,9/14/2018,17506323,Tin thường,15,nha_dat_thue,150m²,Số 2,Hiệp Bình Phước,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,Nam,Bình Chánh,9/9/2018,9/16/2018,13371138,Tin thường,7.3,nha_dat_ban,171m²,Nguyễn Văn Linh,Bình Hưng,tỷ
+,Nhà đất bán,Hà Nội,,Ba Vì,9/8/2018,9/15/2018,17217154,Tin thường,16,nha_dat_ban,40000m²,Tản Lĩnh,Vân Hòa,tỷ
+,Nhà đất bán,Hà Nội,,Thanh Xuân,9/6/2018,9/13/2018,17499271,Tin thường,8.6,nha_dat_ban,80m²,Trường Chinh,Phương Liệt,tỷ
+4+,Nhà đất bán,Hồ Chí Minh,Đông-Bắc,Quận 12,9/8/2018,9/15/2018,16858591,Tin thường,3.8,nha_dat_ban,Không xác định,Tô Ngọc Vân,Thạnh Xuân,tỷ
+3+,Nhà đất bán,Lào Cai,Tây-Nam,Sa Pa,9/4/2018,9/11/2018,16674656,Tin thường,14.439,nha_dat_ban,400m²,Cầu Mây,Sa Pa,tỷ
+,Nhà đất bán,Hà Nội,,Ba Đình,9/4/2018,9/11/2018,14286955,Tin thường,165,nha_dat_ban,208.2m²,Nam Cao,Giảng Võ,triệu/m²
+,Nhà đất bán,Hà Nam,,Phủ Lý,9/6/2018,9/13/2018,17328155,Tin thường,4.3,nha_dat_ban,100m²,Quốc lộ 21B,Lê Hồng Phong,triệu/m²
+3+,Nhà đất cho thuê,Hà Nội,Tây-Nam,Cầu Giấy,9/10/2018,9/17/2018,17310941,Tin thường,12,nha_dat_thue,110m²,,Dịch Vọng,triệu/tháng
+5+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 10,9/7/2018,9/14/2018,16748588,Tin thường,25,nha_dat_thue,100m²,Cao Thắng,,triệu/tháng
+1+,Nhà đất cho thuê,Đồng Nai,,Biên Hòa,9/9/2018,9/16/2018,17524639,Tin thường,3,nha_dat_thue,100m²,Trần Văn Xã,Trảng Dài,triệu/tháng
+2+,Nhà đất cho thuê,Hà Nội,Tây,Cầu Giấy,9/8/2018,9/16/2018,17436634,Tin thường,12,nha_dat_thue,97m²,Dương Đình Nghệ,Yên Hòa,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Nhà Bè,9/5/2018,9/12/2018,16951452,Tin thường,5.9,nha_dat_ban,93.5m²,Nguyễn Hữu Thọ,Phước Kiển,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Thạnh,9/5/2018,9/12/2018,17467180,Tin Vip 3,8,nha_dat_ban,75m²,Nguyễn Xí,26,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 10,9/7/2018,9/14/2018,14636188,Tin thường,17,nha_dat_ban,168m²,Hòa Hưng,12,tỷ
+,Nhà đất bán,Hà Nội,Tây-Nam,Cầu Giấy,9/5/2018,9/12/2018,15407405,Tin thường,32.5,nha_dat_ban,160m²,Trung Yên 11,Yên Hòa,tỷ
+3+,Nhà đất cho thuê,Hà Nội,,Nam Từ Liêm,9/5/2018,9/13/2018,14893518,Tin thường,,nha_dat_thue,110m²,Hàm Nghi,Cầu Diễn,
+,Nhà đất bán,Bình Dương,,Bến Cát,9/7/2018,9/14/2018,16649262,Tin thường,980,nha_dat_ban,100m²,Đại Lộ Bình Dương,Tân Định,triệu
+4+,Nhà đất bán,Hà Nội,Tây-Bắc,Cầu Giấy,9/7/2018,9/14/2018,17514407,Tin thường,75,nha_dat_ban,62m²,Doãn Kế Thiện,Mai Dịch,tỷ
+,Nhà đất bán,Bình Dương,,Tân Uyên,9/7/2018,9/14/2018,11400175,Tin thường,760,nha_dat_ban,150m²,,Vĩnh Tân,triệu
+,Nhà đất bán,Bà Rịa Vũng Tàu,,Xuyên Mộc,7/4/2018,10/4/2018,16672564,Tin thường,8.5,nha_dat_ban,1000m²,44B,Phước Thuận,tỷ
+,Nhà đất bán,Hải Dương,,Hải Dương,9/4/2018,9/11/2018,17445061,Tin thường,1.6,nha_dat_ban,90.7m²,Nguyễn Chế Nghĩa,Tân Bình,tỷ
+,Nhà đất bán,Cần Thơ,Đông-Nam,Cái Răng,9/10/2018,9/17/2018,15711262,Tin thường,14.5,nha_dat_ban,90m²,Số 14,Hưng Thạnh,triệu/m²
+,Nhà đất bán,Bắc Ninh,Nam,Tiên Du,9/8/2018,9/15/2018,17524599,Tin thường,860,nha_dat_ban,130m²,,Hoàn Sơn,triệu
+3+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,9/6/2018,9/13/2018,17497405,Tin thường,18,nha_dat_thue,104m²,D1,Tân Hưng,triệu/tháng
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 8,9/6/2018,9/13/2018,15218401,Tin thường,5,nha_dat_thue,51m²,192,16,triệu/tháng
+,Nhà đất bán,Đồng Nai,,Nhơn Trạch,9/2/2018,9/20/2018,17451326,Tin thường,3.5,nha_dat_ban,120m²,,Đại Phước,tỷ
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Nhà Bè,9/5/2018,9/12/2018,16990833,Tin thường,9.5,nha_dat_thue,79m²,Nguyễn Hữu Thọ,Phước Kiển,triệu/tháng
+2+,Nhà đất cho thuê,Hà Nội,,Hoài Đức,9/9/2018,9/16/2018,15341965,Tin thường,,nha_dat_thue,65m²,Đại lộ Thăng Long,An Khánh,
+,Nhà đất cho thuê,Hà Nội,,Ba Đình,8/22/2018,2/18/2019,17305499,Tin thường,38,nha_dat_thue,80m²,Láng Hạ,,triệu/tháng
+,Nhà đất bán,Hà Nội,Tây-Bắc,Thanh Xuân,9/7/2018,9/14/2018,17250444,Tin thường,6,nha_dat_ban,72m²,Phùng Khoang,Thanh Xuân Bắc,tỷ
+3+,Nhà đất bán,Hà Nội,,Hai Bà Trưng,9/8/2018,9/15/2018,17518883,Tin thường,3.25,nha_dat_ban,39m²,Hồng Mai,Bạch Mai,tỷ
+2+,Nhà đất bán,Hồ Chí Minh,,Gò Vấp,9/10/2018,9/17/2018,16632955,Tin thường,2.38,nha_dat_ban,28m²,Phan Huy Ích,12,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Củ Chi,9/8/2018,10/8/2018,17517948,Tin thường,2.5,nha_dat_ban,639m²,Cây Da,Củ Chi,tỷ
+5+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Bình Thạnh,9/10/2018,9/17/2018,17535933,Tin thường,,nha_dat_ban,363m²,Nguyễn Hữu Cảnh,22,
+4+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/7/2018,9/14/2018,16637443,Tin thường,5.3,nha_dat_ban,132m²,990,Phú Hữu,tỷ
+,Nhà đất bán,Hà Nội,,Bắc Từ Liêm,9/7/2018,9/14/2018,12917709,Tin thường,6.7,nha_dat_ban,124m²,Hoàng Tăng Bí,Đức Thắng,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Tân Bình,9/5/2018,9/15/2018,17480332,Tin thường,,nha_dat_ban,186m²,Phổ Quang,,
+3+,Nhà đất bán,Hải Phòng,Bắc,Lê Chân,9/6/2018,9/13/2018,17499540,Tin thường,1.3,nha_dat_ban,38m²,Chợ Hàng Mới,,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Nhà Bè,9/7/2018,9/14/2018,17427210,Tin thường,20,nha_dat_ban,210m²,Huỳnh Tấn Phát,Phú Xuân,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Gò Vấp,9/9/2018,9/18/2018,16668537,Tin thường,3.65,nha_dat_ban,68m²,Số 20,5,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/7/2018,9/14/2018,17417864,Tin thường,410,nha_dat_ban,64m²,Võ Văn Vân,Vĩnh Lộc B,triệu
+,Nhà đất bán,Hà Nội,,Hà Đông,9/9/2018,9/16/2018,16635127,Tin thường,26.5,nha_dat_ban,Không xác định,,Kiến Hưng,triệu/m²
+,Nhà đất bán,Bình Thuận  ,,Phan Thiết,9/7/2018,9/14/2018,17024599,Tin thường,4.95,nha_dat_ban,1500m²,,Mũi Né,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/6/2018,9/13/2018,17498660,Tin thường,980,nha_dat_ban,100m²,Nguyễn Duy Trinh,Phú Hữu,triệu
+2+,Nhà đất cho thuê,Hà Nội,,Cầu Giấy,9/6/2018,9/13/2018,17127485,Tin thường,12,nha_dat_thue,87m²,Cầu Giấy,Dịch Vọng,triệu/tháng
+2+,Nhà đất bán,Hồ Chí Minh,Đông-Bắc,Quận 10,9/7/2018,9/14/2018,17515581,Tin thường,6.1,nha_dat_ban,18m²,Hồ Thị Kỷ,1,tỷ
+4+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Quận 4,9/6/2018,9/13/2018,16525228,Tin thường,10,nha_dat_ban,52m²,Xóm Chiếu,13,tỷ
+,Nhà đất bán,Bà Rịa Vũng Tàu,Bắc,Châu Đức,9/7/2018,9/21/2018,17509966,Tin thường,320,nha_dat_ban,500m²,,Bàu Chinh,triệu
+,Nhà đất bán,Hà Nội,,Hai Bà Trưng,9/7/2018,9/14/2018,17518085,Tin thường,3.3,nha_dat_ban,29m²,Thanh Nhàn,Thanh Nhàn,tỷ
+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Củ Chi,9/9/2018,9/16/2018,17525651,Tin thường,8,nha_dat_ban,75m²,Quốc Lộ 22,,triệu/m²
+4+,Nhà đất bán,Hà Nội,Đông-Nam,Hà Đông,9/5/2018,9/12/2018,17473694,Tin thường,5,nha_dat_ban,40m²,Ngô Thì Nhậm,Hà Cầu,tỷ
+,Nhà đất bán,Đà Nẵng,Đông-Nam,Ngũ Hành Sơn,9/6/2018,9/13/2018,15259168,Tin thường,8.8,nha_dat_ban,125m²,Nguyễn Khắc Viện,,tỷ
+,Nhà đất bán,Khánh Hòa,Đông-Nam,Cam Lâm,9/8/2018,9/15/2018,16477164,Tin thường,,nha_dat_ban,240m²,Nguyễn Tất Thành,Cam Hải Đông,
+3+,Nhà đất cho thuê,Hà Nội,,Hoàng Mai,9/4/2018,9/11/2018,12932624,Tin thường,5.5,nha_dat_thue,30m²,Tân Mai,Tân Mai,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 10,9/7/2018,9/14/2018,17504393,Tin thường,18.2,nha_dat_ban,50m²,2-Mar,8,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 7,9/6/2018,9/13/2018,17502233,Tin thường,80,nha_dat_ban,320m²,Nguyễn Văn Linh,Tân Phong,triệu/m²
+3+,Nhà đất bán,Hà Nội,Đông-Nam,Long Biên,9/4/2018,9/11/2018,16717687,Tin thường,,nha_dat_ban,164m²,Anh Đào 8,Việt Hưng,
+3+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/6/2018,9/13/2018,15988133,Tin thường,2.8,nha_dat_ban,105m²,Trịnh Quang Nghị,Phong Phú,tỷ
+,Nhà đất bán,Bình Dương,,Thủ Dầu Một,9/9/2018,9/16/2018,17530760,Tin thường,1.85,nha_dat_ban,105m²,,Hiệp Thành,tỷ
+,Nhà đất cho thuê,Hà Nội,,Hà Đông,4/21/2018,9/16/2018,12463416,Tin thường,37,nha_dat_thue,600m²,Lê Văn Lương,Yên Nghĩa,nghìn/m2/tháng
+3+,Nhà đất cho thuê,Hà Nội,,Thanh Xuân,9/8/2018,9/16/2018,17519844,Tin thường,,nha_dat_thue,114m²,Vũ Trọng Phụng,Thanh Xuân Trung,
+,Nhà đất bán,Hồ Chí Minh,,Nhà Bè,9/4/2018,9/11/2018,17077073,Tin Vip 3,18,nha_dat_ban,210m²,Nguyễn Hữu Thọ,Phước Kiển,tỷ
+,Nhà đất bán,Bình Dương,Nam,Thủ Dầu Một,9/7/2018,9/27/2018,17515505,Tin thường,950,nha_dat_ban,6643m²,,Tân An,nghìn/m²
+,Nhà đất bán,Đà Nẵng,Tây,Sơn Trà,9/8/2018,9/15/2018,17203774,Tin thường,6.7,nha_dat_ban,109m²,Hoàng Bích Sơn,Phước Mỹ,tỷ
+2+,Nhà đất bán,Hồ Chí Minh,Tây-Nam,Quận 2,9/9/2018,9/16/2018,16407087,Tin Vip 1,2.95,nha_dat_ban,60m²,Song Hành,An Phú,tỷ
+,Nhà đất bán,Hồ Chí Minh,Đông,Tân Phú,9/8/2018,9/15/2018,17270535,Tin thường,7.9,nha_dat_ban,104m²,Lê Thúc Hoạch,Tân Quý,tỷ
+,Nhà đất bán,Hà Nội,Đông-Nam,Đống Đa,9/8/2018,9/15/2018,15327432,Tin thường,7,nha_dat_ban,50m²,Thái Hà,Trung Liệt,tỷ
+4+,Nhà đất bán,Hồ Chí Minh,,Gò Vấp,9/7/2018,9/14/2018,17514604,Tin thường,8.4,nha_dat_ban,110m²,Phan Văn Trị,1,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Tân Bình,9/10/2018,9/17/2018,16223074,Tin thường,11.3,nha_dat_ban,98.6m²,Hồng Hà,2,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 1,9/8/2018,9/15/2018,16604701,Tin thường,256,nha_dat_ban,365m²,Bùi Thị Xuân,Bến Thành,tỷ
+4+,Nhà đất bán,Hà Nội,Tây-Bắc,Tây Hồ,9/5/2018,10/6/2018,16660729,Tin thường,10.5,nha_dat_ban,73m²,Võng Thị,Bưởi,tỷ
+,Nhà đất bán,Hà Nội,,Ba Đình,9/6/2018,9/14/2018,12725333,Tin thường,30,nha_dat_thue,30m²,Kim Mã,Kim Mã,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Bình Thạnh,9/7/2018,9/14/2018,17502849,Tin thường,6,nha_dat_ban,70m²,Nơ Trang Long,13,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 1,9/3/2018,9/10/2018,15780695,Tin Vip 3,28.5,nha_dat_ban,68.25m²,Thái Văn Lung,Bến Nghé,tỷ
+,Nhà đất bán,Cần Thơ,Tây-Nam,Cái Răng,9/6/2018,9/13/2018,17498140,Tin thường,840,nha_dat_ban,120m²,B8,Tân Phú,triệu
+,Nhà đất cho thuê,Hà Nội,,Hà Đông,9/10/2018,9/17/2018,17533076,Tin thường,,nha_dat_thue,109m²,Lê Trọng Tấn,Phú La,
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,9/6/2018,9/13/2018,17499929,Tin thường,8.5,nha_dat_thue,92m²,Nguyễn Lương Bằng,Phú Mỹ,triệu/tháng
+,Nhà đất bán,Hà Nội,,Cầu Giấy,9/7/2018,9/15/2018,12061340,Tin thường,170,nha_dat_thue,100m²,Nguyễn Hoàng,Dịch Vọng,nghìn/m2/tháng
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/7/2018,9/14/2018,17503789,Tin thường,1.1,nha_dat_ban,100m²,An Hạ,Phạm Văn Hai,tỷ
+4+,Nhà đất bán,Hồ Chí Minh,,Quận 10,9/7/2018,9/14/2018,17509217,Tin thường,10.7,nha_dat_ban,75m²,Hòa Hảo,8,tỷ
+3+,Nhà đất bán,Hồ Chí Minh,Đông,Bình Tân,9/7/2018,9/14/2018,17507573,Tin thường,3.5,nha_dat_ban,104m²,Liên khu 4-5,Bình Hưng Hòa B,tỷ
+,Nhà đất bán,Bình Dương,,Bến Cát,9/8/2018,9/15/2018,17358111,Tin thường,4,nha_dat_ban,300m²,,Thới Hòa,triệu/m²
+,Nhà đất bán,Hà Nội,,Hà Đông,9/6/2018,9/13/2018,17129570,Tin thường,,nha_dat_ban,Không xác định,Tô Hiệu,Quang Trung,
+,Nhà đất bán,Đồng Nai,,Nhơn Trạch,9/8/2018,9/15/2018,17358637,Tin thường,8.5,nha_dat_ban,125m²,Lê Hồng Phong,Long Thọ,triệu/m²
+5+,Nhà đất bán,Hồ Chí Minh,Tây-Nam,Quận 7,9/8/2018,9/22/2018,14326632,Tin thường,77,nha_dat_ban,Không xác định,Hà Huy Tập,Tân Phú,tỷ
+2+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Bình Thạnh,9/5/2018,9/12/2018,16901595,Tin Vip 2,1.95,nha_dat_ban,66m²,Nguyễn Xí,26,tỷ
+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Nhà Bè,9/6/2018,9/13/2018,16758409,Tin thường,18,nha_dat_ban,210m²,Nguyễn Hữu Thọ,Phước Kiển,tỷ
+,Nhà đất bán,Bà Rịa Vũng Tàu,,Bà Rịa,9/6/2018,9/13/2018,17297456,Tin thường,,nha_dat_ban,999m²,Hương lộ 2,Hòa Long,
+5+,Nhà đất bán,Hồ Chí Minh,,Quận 10,9/6/2018,9/13/2018,17502131,Tin thường,7.6,nha_dat_ban,50.4m²,Cách Mạng Tháng Tám,13,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Tân Bình,9/6/2018,9/13/2018,17372927,Tin Vip 3,13,nha_dat_thue,75m²,Phổ Quang,2,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/6/2018,9/13/2018,17467854,Tin thường,,nha_dat_ban,Không xác định,,,
+,Nhà đất bán,Hà Nội,,Thanh Xuân,9/10/2018,9/17/2018,17535678,Tin thường,,nha_dat_thue,Không xác định,,Thanh Xuân Bắc,
+4+,Nhà đất bán,Hà Nội,Nam,Hai Bà Trưng,9/9/2018,9/16/2018,17446781,Tin thường,6.5,nha_dat_ban,55m²,Vĩnh Tuy,Vĩnh Tuy,tỷ
+3+,Nhà đất cho thuê,Hà Nội,,Thanh Xuân,9/8/2018,9/15/2018,12852805,Tin thường,15,nha_dat_thue,134m²,Lê Văn Lương,Nhân Chính,triệu/tháng
+3+,Nhà đất cho thuê,Hà Nội,Bắc,Bắc Từ Liêm,9/8/2018,9/15/2018,15148024,Tin thường,15,nha_dat_thue,93m²,,Xuân Đỉnh,triệu/tháng
+,Nhà đất bán,Đồng Nai,,Biên Hòa,9/8/2018,9/15/2018,17394024,Tin thường,255,nha_dat_ban,100m²,Đồng Khởi,Tân Phong,triệu
+,Nhà đất cần mua,Hồ Chí Minh,,Quận 12,1/1/2018,1/1/2018,,,,nha_dat_can_mua,Không xác định,Vườn Lài,An Phú Đông,
+,Nhà đất bán,Hồ Chí Minh,,Bình Thạnh,9/10/2018,9/17/2018,17388749,Tin thường,230,nha_dat_ban,1500m²,Phan Chu Trinh,2,tỷ
+3+,Nhà đất bán,Bình Dương,,Thuận An,9/7/2018,9/14/2018,17512846,Tin thường,2.5,nha_dat_ban,100m²,,Bình Chuẩn,tỷ
+4+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 1,9/1/2018,10/1/2018,17447134,Tin thường,20,nha_dat_thue,35m²,Nguyễn Văn Nguyễn,Tân Định,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 10,9/8/2018,9/15/2018,17362618,Tin thường,10.5,nha_dat_ban,30.6m²,Lý Thường Kiệt,14,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 12,9/6/2018,9/13/2018,17427823,Tin thường,5.7,nha_dat_ban,110m²,Tân Thới Nhất 17,Tân Thới Nhất,tỷ
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,9/8/2018,9/15/2018,17442076,Tin thường,19,nha_dat_thue,70m²,Nguyễn Văn Linh,Tân Phú,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/7/2018,9/14/2018,17516419,Tin thường,1.3,nha_dat_ban,52m²,Vĩnh Lộc,Vĩnh Lộc B,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/7/2018,9/14/2018,17082595,Tin thường,2.6,nha_dat_ban,103.5m²,Quách Điêu,Vĩnh Lộc A,tỷ
+,Nhà đất bán,Hồ Chí Minh,Đông-Bắc,Thủ Đức,9/8/2018,9/15/2018,17267819,Tin thường,5.98,nha_dat_ban,101m²,22,Hiệp Bình Chánh,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Tân Bình,9/6/2018,9/13/2018,16685985,Tin thường,1.6,nha_dat_ban,100m²,Ba Vân,13,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/7/2018,9/14/2018,17504538,Tin thường,1.1,nha_dat_ban,100m²,An Hạ,Phạm Văn Hai,tỷ
+,Nhà đất bán,Khánh Hòa,Nam,Diên Khánh,9/6/2018,9/13/2018,17499183,Tin thường,8,nha_dat_ban,108m²,,Diên An,triệu/m²
+4+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,9/3/2018,9/10/2018,17453448,Tin thường,24,nha_dat_thue,56m²,Hoàng Quốc Việt,Phú Mỹ,triệu/tháng
+,Nhà đất bán,Hà Nội,Đông-Bắc,Nam Từ Liêm,9/7/2018,9/14/2018,17500210,Tin Vip 2,1.65,nha_dat_ban,45m²,Tố Hữu,Mễ Trì,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/6/2018,9/13/2018,17499445,Tin Vip 1,10,nha_dat_ban,Không xác định,Tỉnh lộ 835,Bình Chánh,triệu/m²
+,Nhà đất cho thuê,Hồ Chí Minh,,Bình Thạnh,9/4/2018,9/11/2018,16844926,Tin thường,,nha_dat_thue,100m²,Điện Biên Phủ,22,
+4+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Bình Thạnh,9/7/2018,9/14/2018,16074566,Tin thường,7.7,nha_dat_ban,54m²,Hoàng Hoa Thám,6,tỷ
+,Nhà đất bán,Hà Nội,,Đống Đa,9/8/2018,9/15/2018,17528340,Tin thường,4.3,nha_dat_ban,38m²,Xã Đàn,Láng Thượng,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,9/10/2018,9/17/2018,11862083,Tin thường,421,nha_dat_thue,200m²,Tân Trào,Tân Phú,nghìn/m2/tháng
+3+,Nhà đất cho thuê,Hà Nội,,Thanh Xuân,9/7/2018,9/14/2018,17514682,Tin thường,11,nha_dat_thue,105m²,Lê Văn Thiêm,,triệu/tháng
+5+,Nhà đất bán,Hà Nội,,Hoàng Mai,9/5/2018,9/12/2018,14966834,Tin thường,6.5,nha_dat_ban,54m²,Đại Kim,Đại Kim,tỷ
+3+,Nhà đất bán,Hồ Chí Minh,,Quận 12,9/10/2018,9/17/2018,17161783,Tin thường,1.48,nha_dat_ban,75m²,Tô Ngọc Vân,Thạnh Xuân,tỷ
+,Nhà đất bán,Đồng Nai,,Biên Hòa,9/4/2018,9/11/2018,16809550,Tin Vip 3,10,nha_dat_ban,100m²,Nam Cao,Phước Tân,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/8/2018,10/8/2018,15513071,Tin thường,60,nha_dat_ban,240m²,Võ Chí Công,Phú Hữu,triệu/m²
+,Nhà đất bán,Bình Dương,Đông-Bắc,Thủ Dầu Một,9/6/2018,9/13/2018,13624977,Tin thường,2.75,nha_dat_ban,164.5m²,Huỳnh Văn Lũy,Phú Lợi,tỷ
+1+,Nhà đất cho thuê,Hồ Chí Minh,Tây-Bắc,Quận 2,8/31/2018,9/10/2018,13390414,Tin thường,12,nha_dat_thue,50m²,Mai Chí Thọ,An Phú,triệu/tháng
+3+,Nhà đất cho thuê,Hà Nội,,Đống Đa,9/4/2018,9/11/2018,15439609,Tin thường,14,nha_dat_thue,110m²,Nguyễn Chí Thanh,Láng Hạ,triệu/tháng
+,Nhà đất bán,Hà Nội,,Ba Đình,9/4/2018,9/11/2018,11745099,Tin Vip 1,,nha_dat_ban,Không xác định,Liễu Giai,Liễu Giai,
+,Nhà đất cần mua,Bình Dương,,Bến Cát,1/1/2018,1/1/2018,,,,nha_dat_can_thue,Trên 100m²,NK10,,
+,Nhà đất bán,Hà Nội,,Hoài Đức,9/9/2018,9/16/2018,16828217,Tin thường,,nha_dat_ban,400m²,,An Khánh,
+,Nhà đất bán,Hồ Chí Minh,,Nhà Bè,9/7/2018,9/14/2018,17508579,Tin thường,23.5,nha_dat_ban,138m²,Nguyễn Văn Tạo,Long Thới,triệu/m²
+2+,Nhà đất bán,Hà Nội,,Hà Đông,9/7/2018,9/14/2018,17515884,Tin thường,23.5,nha_dat_ban,53m²,,Yên Nghĩa,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Quận 3,9/7/2018,9/14/2018,17506030,Tin thường,6.4,nha_dat_ban,36m²,Nguyễn Đình Chiểu,2,tỷ
+,Nhà đất bán,Hà Nội,,Tây Hồ,9/4/2018,9/11/2018,8705424,Tin thường,132,nha_dat_ban,323m²,Lạc Long Quân,Xuân La,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Quận 2,9/8/2018,9/15/2018,17519900,Tin thường,55,nha_dat_ban,52m²,Thạnh Mỹ Lợi, Thạnh Mỹ Lợi,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Tân Bình,9/8/2018,9/15/2018,17524886,Tin thường,24.3,nha_dat_ban,Không xác định,Phạm Văn Bạch,15,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 1,9/4/2018,9/11/2018,15303989,Tin thường,190,nha_dat_thue,150m²,Lê Lợi,,triệu/tháng
+4+,Nhà đất bán,Hồ Chí Minh,,Quận 7,9/9/2018,9/16/2018,17529260,Tin Vip 3,3.5,nha_dat_ban,48m²,Huỳnh Tấn Phát,Tân Thuận Đông,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Gò Vấp,9/6/2018,9/13/2018,15873592,Tin thường,38,nha_dat_ban,244.17m²,Nguyên Hồng,1,triệu/m²
+,Nhà đất cho thuê,Hà Nội,,Nam Từ Liêm,9/4/2018,9/11/2018,16697216,Tin thường,230,nha_dat_thue,230m²,Nguyễn Hoàng,Mỹ Đình 2,nghìn/m2/tháng
+,Nhà đất bán,Hồ Chí Minh,,Tân Phú,9/7/2018,9/14/2018,17338200,Tin thường,4.5,nha_dat_ban,40m²,Vườn Lài,Phú Thọ Hòa,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Gò Vấp,9/9/2018,9/16/2018,17436647,Tin thường,18.3,nha_dat_ban,162m²,Quang Trung,8,tỷ
+,Nhà đất bán,Hà Nội,,Long Biên,9/10/2018,9/17/2018,15385665,Tin thường,19,nha_dat_ban,256m²,Bằng Lăng 5,Việt Hưng,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 2,9/7/2018,9/14/2018,17512730,Tin thường,2.7,nha_dat_ban,60m²,Thạnh Mỹ Lợi, Thạnh Mỹ Lợi,tỷ
+,Nhà đất bán,Hà Nội,,Hoàng Mai,9/9/2018,9/16/2018,17084109,Tin thường,6.7,nha_dat_ban,68m²,Giáp Bát,Giáp Bát,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Nhà Bè,9/10/2018,9/17/2018,16446516,Tin thường,31.5,nha_dat_ban,80m²,Đào Sư Tích,Phước Kiển,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Gò Vấp,9/8/2018,9/15/2018,16397587,Tin thường,5.4,nha_dat_ban,47m²,Số 7,3,tỷ
+,Nhà đất cho thuê,Hà Nội,,Thanh Xuân,9/5/2018,9/13/2018,13114214,Tin thường,200,nha_dat_thue,50m²,Khuất Duy Tiến,Thanh Xuân Bắc,nghìn/m2/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/7/2018,9/14/2018,17515002,Tin thường,6,nha_dat_ban,100m²,Tăng Nhơn Phú,Phước Long B,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/6/2018,9/13/2018,17494482,Tin Vip 2,10,nha_dat_ban,100m²,Đinh Đức Thiện,Bình Chánh,triệu/m²
+,Nhà đất bán,Hà Nội,Đông-Bắc,Hoài Đức,9/3/2018,9/13/2018,17347016,Tin thường,795,nha_dat_ban,31.4m²,Vân Canh,Vân Canh,triệu
+,Nhà đất bán,Hồ Chí Minh,,Thủ Đức,9/8/2018,9/15/2018,17355834,Tin thường,,nha_dat_ban,64m²,Tam Bình,Tam Phú,
+3+,Nhà đất bán,Hồ Chí Minh,Tây,Quận 12,9/9/2018,9/16/2018,17108542,Tin thường,4.95,nha_dat_ban,80.5m²,Lâm Thị Hố,Tân Chánh Hiệp,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Tân Bình,9/8/2018,9/15/2018,17526163,Tin thường,36,nha_dat_ban,200m²,Lê Văn Sỹ,2,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Thủ Đức,9/7/2018,9/14/2018,17209876,Tin thường,40,nha_dat_thue,180m²,Tô Vĩnh Diện,Linh Chiểu,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 1,9/8/2018,9/15/2018,17524882,Tin thường,19.5,nha_dat_ban,96m²,Nguyễn Bỉnh Khiêm,Đa Kao,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 12,9/9/2018,9/16/2018,17531193,Tin thường,,nha_dat_ban,Không xác định,,Tân Thới Nhất,
+,Nhà đất cho thuê,Hồ Chí Minh,Bắc,Quận 7,9/4/2018,9/14/2018,17029393,Tin thường,3,nha_dat_thue,16m²,37,Tân Quy,triệu/tháng
+4+,Nhà đất bán,Hà Nội,,Thanh Xuân,9/8/2018,9/15/2018,14454632,Tin thường,3.8,nha_dat_ban,50m²,Khương Đình,Hạ Đình,tỷ
+,Nhà đất bán,Hà Nội,Đông-Nam,Long Biên,9/4/2018,9/11/2018,17464613,Tin Vip 3,,nha_dat_ban,168m²,Tulip 7,Việt Hưng,
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Phú Nhuận,9/4/2018,9/11/2018,15926322,Tin thường,14,nha_dat_thue,76m²,Nguyễn Thượng Hiền,5,triệu/tháng
+,Nhà đất bán,Hải Phòng,,Thủy Nguyên,9/10/2018,9/22/2018,16459108,Tin thường,21,nha_dat_ban,Không xác định,10,Thủy Sơn,triệu/m²
+,Nhà đất bán,Bình Dương,Tây-Nam,Thủ Dầu Một,9/6/2018,9/13/2018,16210663,Tin thường,32,nha_dat_ban,356m²,30/4,Phú Hòa,tỷ
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 6,8/13/2018,9/13/2018,17175917,Tin thường,8,nha_dat_thue,56m²,Kinh Dương Vương,12,triệu/tháng
+,Nhà đất bán,Hà Nội,,Long Biên,9/7/2018,9/14/2018,17511960,Tin thường,20,nha_dat_ban,130m²,Nguyễn Văn Cừ,Long Biên,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 10,9/6/2018,9/13/2018,17501919,Tin thường,32,nha_dat_ban,144m²,2-Mar,15,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 5,8/14/2018,9/14/2018,16730448,Tin thường,18.5,nha_dat_ban,80m²,Trần Bình Trọng,1,tỷ
+,Nhà đất cần thuê,Hồ Chí Minh,,Bình Thạnh,1/1/2018,1/1/2018,,,,nha_dat_can_thue,Không xác định,,,
+2+,Nhà đất cho thuê,Hà Nội,,Ba Đình,9/8/2018,9/15/2018,17519654,Tin thường,14.5,nha_dat_thue,70m²,Giảng Võ,Giảng Võ,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/9/2018,9/16/2018,17528880,Tin thường,400,nha_dat_ban,56m²,6D,Vĩnh Lộc B,triệu
+2+,Nhà đất bán,Hồ Chí Minh,,Nhà Bè,9/6/2018,9/13/2018,17199299,Tin Vip 1,1.95,nha_dat_ban,88m²,Nguyễn Hữu Thọ,Phước Kiển,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Thạnh,9/6/2018,9/13/2018,15700724,Tin thường,8.5,nha_dat_ban,80m²,D2,25,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 3,9/6/2018,9/13/2018,17502993,Tin thường,5.5,nha_dat_ban,39m²,Nguyễn Thiện Thuật,,tỷ
+3+,Nhà đất cho thuê,Hồ Chí Minh,,Nhà Bè,9/7/2018,9/14/2018,17507800,Tin thường,16,nha_dat_thue,106m²,Nguyễn Hữu Thọ,Phước Kiển,triệu/tháng
+3+,Nhà đất cho thuê,Hà Nội,Đông-Nam,Cầu Giấy,9/4/2018,9/12/2018,7142089,Tin thường,13,nha_dat_thue,128m²,Duy Tân,Dịch Vọng,triệu/tháng
+4+,Nhà đất bán,Hà Nội,,Hà Đông,8/13/2018,9/13/2018,17195009,Tin thường,5.35,nha_dat_ban,50m²,Văn Khê,La Khê,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Gò Vấp,9/8/2018,9/15/2018,17115940,Tin thường,5.4,nha_dat_ban,54m²,Trương Đăng Quế,3,tỷ
+,Nhà đất cho thuê,Hà Nội,,Nam Từ Liêm,9/6/2018,9/13/2018,17495138,Tin thường,120,nha_dat_thue,100m²,Phạm Hùng,Mễ Trì,nghìn/m2/tháng
+4+,Nhà đất bán,Hà Nội,Tây-Nam,Hoàng Mai,8/14/2018,9/14/2018,17229816,Tin thường,19.247,nha_dat_ban,75m²,Nguyễn Xiển,Đại Kim,tỷ
+,Nhà đất bán,Hà Nội,,Đống Đa,9/9/2018,9/16/2018,14215655,Tin thường,36.8,nha_dat_ban,96m²,Nguyên Hồng,Láng Hạ,tỷ
+,Nhà đất bán,Hồ Chí Minh,Đông-Bắc,Bình Chánh,9/8/2018,9/15/2018,17525039,Tin thường,3,nha_dat_ban,85m²,Nguyễn Văn Linh,Phong Phú,tỷ
+2+,Nhà đất bán,Hà Nội,Tây-Nam,Thanh Trì,9/6/2018,9/22/2018,16458775,Tin thường,700,nha_dat_ban,53m²,Hữu Lê,Hữu Hòa,triệu
+,Nhà đất cho thuê,Hồ Chí Minh,,Bình Tân,9/6/2018,9/13/2018,17485144,Tin thường,25,nha_dat_thue,100m²,Tỉnh Lộ 10,Bình Trị Đông,triệu/tháng
+4+,Nhà đất bán,Hà Nội,Tây-Bắc,Đống Đa,9/7/2018,9/14/2018,15435642,Tin thường,4.4,nha_dat_ban,30m²,Xã Đàn,Phương Liên,tỷ
+4+,Nhà đất bán,Hồ Chí Minh,,Phú Nhuận,9/7/2018,9/14/2018,17514174,Tin thường,9.7,nha_dat_ban,60m²,Hoàng Diệu,10,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 1,9/10/2018,9/17/2018,17333147,Tin thường,19.2,nha_dat_ban,52.5m²,Hồ Hảo Hớn,Cô Giang,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Củ Chi,9/6/2018,9/13/2018,17502753,Tin thường,,nha_dat_thue,25000m²,Tỉnh Lộ 2,Trung Lập Thượng,
+,Nhà đất bán,Hà Nội,Đông-Bắc,Hoài Đức,9/8/2018,9/15/2018,17522080,Tin thường,1.484,nha_dat_ban,55.4m²,32,Di Trạch,tỷ
+,Nhà đất bán,Hà Nội,Đông-Nam,Thanh Trì,9/7/2018,9/14/2018,16860384,Tin thường,41,nha_dat_ban,103m²,Tứ Hiệp,Tứ Hiệp,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,Bắc,Quận 1,9/6/2018,9/13/2018,17486984,Tin thường,29.5,nha_dat_ban,80m²,Trần Quang Khải,Tân Định,tỷ
+,Nhà đất bán,Khánh Hòa,Tây-Nam,Nha Trang,9/7/2018,9/14/2018,17514664,Tin thường,44,nha_dat_ban,110m²,Số 4,Phước Hải,triệu/m²
+,Nhà đất cho thuê,Hà Nội,Tây-Bắc,Long Biên,9/5/2018,9/12/2018,16682077,Tin thường,,nha_dat_thue,250m²,Hoa Sữa,Phúc Lợi,
+,Nhà đất bán,Hà Nội,,Tây Hồ,9/8/2018,9/15/2018,15404336,Tin thường,16,nha_dat_ban,140m²,,Xuân La,tỷ
+,Nhà đất bán,Kiên Giang,,Phú Quốc,9/4/2018,9/11/2018,17373493,Tin thường,62,nha_dat_ban,440m²,Dương Tơ,Dương Tơ,tỷ
+,Nhà đất bán,Cần Thơ,Đông,Bình Thủy,9/7/2018,9/14/2018,16816794,Tin thường,3.5,nha_dat_ban,3000m²,Quốc lộ 91B,Thới An Đông,tỷ
+,Nhà đất cho thuê,Hà Nội,,Hoàng Mai,9/4/2018,9/11/2018,17318746,Tin thường,,nha_dat_thue,120m²,Nguyễn Khoái,Thanh Trì,
+,Nhà đất cho thuê,Hà Nội,Nam,Nam Từ Liêm,9/5/2018,9/12/2018,17392443,Tin thường,20,nha_dat_thue,75m²,Hàm Nghi,Cầu Diễn,triệu/tháng
+3+,Nhà đất cho thuê,Hà Nội,,Long Biên,9/4/2018,9/11/2018,17466663,Tin thường,4,nha_dat_thue,70m²,,Giang Biên,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 1,9/6/2018,9/13/2018,17362766,Tin thường,19,nha_dat_ban,100m²,Điện Biên Phủ,Đa Kao,tỷ
+,Nhà đất bán,Khánh Hòa,Đông,Nha Trang,9/4/2018,9/11/2018,17112489,Tin Vip 3,5.5,nha_dat_ban,125.6m²,Hùng Vương,Vĩnh Phương,triệu/m²
+5+,Nhà đất bán,Hồ Chí Minh,,Tân Phú,9/9/2018,9/16/2018,17395919,Tin thường,6.6,nha_dat_ban,275m²,Lưu Chí Hiếu,Tây Thạnh,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Thạnh,9/6/2018,9/13/2018,16772249,Tin thường,20,nha_dat_ban,144m²,Vạn Kiếp,3,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Tân Phú,9/8/2018,9/15/2018,17373008,Tin thường,7.9,nha_dat_ban,105m²,Nguyễn Háo Vĩnh,Tân Quý,tỷ
+2+,Nhà đất cho thuê,Bình Dương,,Thuận An,9/6/2018,9/13/2018,16796622,Tin thường,8,nha_dat_thue,70m²,Đại Lộ Bình Dương,Hưng Định,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Tân Phú,9/6/2018,9/13/2018,17116892,Tin thường,11.5,nha_dat_ban,72m²,Trương Vĩnh Ký,Tân Thành,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 12,9/8/2018,9/15/2018,17518646,Tin thường,2.65,nha_dat_ban,65m²,Vườn Lài,An Phú Đông,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Bình Thạnh,9/10/2018,9/17/2018,15985249,Tin thường,13,nha_dat_thue,40m²,D2,25,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/6/2018,10/6/2018,17498317,Tin thường,1.7,nha_dat_ban,57m²,Tam Đa,Trường Thạnh,tỷ
+,Nhà đất cần thuê,Hồ Chí Minh,,Phú Nhuận,1/1/2018,1/1/2018,,,,nha_dat_can_thue,Trên 60m²,,,
+,Nhà đất bán,Hà Nội,Bắc,Cầu Giấy,9/6/2018,9/13/2018,15026817,Tin thường,30,nha_dat_ban,86m²,Nguyễn Thị Thập,Trung Hòa,tỷ
+,Nhà đất bán,Đà Nẵng,Nam,Cẩm Lệ,9/10/2018,9/17/2018,17396918,Tin thường,26,nha_dat_ban,106.5m²,,Khuê Trung,triệu/m²
+5+,Nhà đất bán,Đà Nẵng,Đông-Nam,Liên Chiểu,9/10/2018,9/17/2018,17533214,Tin thường,10,nha_dat_ban,376m²,Bàu Năng 8,Hòa Minh,tỷ
+,Nhà đất bán,Khánh Hòa,Tây-Nam,Nha Trang,9/6/2018,9/13/2018,17499958,Tin thường,,nha_dat_ban,92m²,,Vĩnh Hòa,
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 1,9/6/2018,9/13/2018,14751688,Tin thường,34.5,nha_dat_thue,100m²,Đông Du,,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/8/2018,9/15/2018,17525289,Tin thường,2.8,nha_dat_ban,118m²,Đình Phong Phú,Tăng Nhơn Phú B,tỷ
+,Nhà đất bán,Lâm Đồng,,Bảo Lộc,9/7/2018,9/14/2018,17514432,Tin thường,2.1,nha_dat_ban,300m²,Trần Phú,Lộc Sơn,tỷ
+4+,Nhà đất cho thuê,Khánh Hòa,Tây-Bắc,Nha Trang,7/18/2018,10/18/2018,16814135,Tin thường,,nha_dat_thue,102m²,B1,Vĩnh Hiệp,
+,Nhà đất bán,Bắc Ninh,Đông-Bắc,Yên Phong,9/7/2018,9/16/2018,17514370,Tin Vip 3,11.8,nha_dat_ban,100m²,,Yên Trung,triệu/m²
+,Nhà đất bán,Hà Nội,,Quốc Oai,9/10/2018,9/17/2018,17451848,Tin thường,1,nha_dat_ban,770m²,Liên Xã,Hòa Thạch,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/10/2018,9/17/2018,16624889,Tin thường,26.3,nha_dat_ban,110m²,Nguyễn Duy Trinh,,triệu/m²
+,Nhà đất bán,Bà Rịa Vũng Tàu,,Vũng Tàu,9/10/2018,9/17/2018,16908974,Tin thường,45,nha_dat_ban,152m²,Thùy Vân,2,tỷ
+2+,Nhà đất bán,Hà Nội,,Đống Đa,9/6/2018,9/14/2018,16935711,Tin thường,16,nha_dat_thue,112m²,Láng Hạ,Láng Hạ,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 10,9/10/2018,9/17/2018,16120901,Tin thường,23,nha_dat_ban,64m²,Cao Thắng,12,tỷ
+2+,Nhà đất cho thuê,Hà Nội,,Cầu Giấy,9/8/2018,9/15/2018,17121482,Tin thường,13,nha_dat_thue,150m²,Khuất Duy Tiến,Trung Hòa,triệu/tháng
+3+,Nhà đất bán,Hà Nội,,Hai Bà Trưng,9/6/2018,9/13/2018,16631164,Tin Vip 1,2.9,nha_dat_ban,95m²,Minh Khai,Vĩnh Tuy,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 10,9/6/2018,9/13/2018,17412649,Tin thường,20,nha_dat_ban,92.4m²,Sư Vạn Hạnh,,tỷ
+,Nhà đất cho thuê,Bình Dương,,Thuận An,9/6/2018,9/13/2018,17048250,Tin thường,,nha_dat_thue,1080m²,Nguyễn Văn Tiết,Lái Thiêu,
+,Nhà đất bán,Hồ Chí Minh,,Quận 2,9/7/2018,9/14/2018,17123000,Tin thường,110,nha_dat_ban,2200m²,Nguyễn Văn Hưởng,Thảo Điền,triệu/m²
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 3,9/6/2018,9/13/2018,17491983,Tin thường,14,nha_dat_thue,81m²,Trường Sa,12,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Hóc Môn,9/7/2018,9/14/2018,17436296,Tin thường,1.1,nha_dat_ban,80m²,Lê Thị Hà,Tân Xuân,tỷ
+3+,Nhà đất bán,Vĩnh Phúc,,Phúc Yên,9/4/2018,9/22/2018,16039711,Tin thường,14.8,nha_dat_ban,130m²,Lê Duẩn,Ngọc Thanh,triệu/m²
+2+,Nhà đất bán,Đà Nẵng,,Sơn Trà,9/7/2018,9/14/2018,14445768,Tin Vip 3,,nha_dat_ban,70m²,An Trung 2,An Hải Tây,
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/7/2018,9/14/2018,17235929,Tin thường,2.6,nha_dat_ban,100m²,Nguyễn Xiển,Long Thạnh Mỹ,tỷ
+,Nhà đất bán,Hà Nội,,Hai Bà Trưng,9/6/2018,9/13/2018,17274231,Tin thường,,nha_dat_ban,168m²,Thái Phiên,Lê Đại Hành,
+,Nhà đất cho thuê,Kiên Giang,,Rạch Giá,9/10/2018,9/17/2018,14953956,Tin thường,800,nha_dat_thue,18m²,Sư Vạn Hạnh,An Bình,nghìn/tháng
+2+,Nhà đất bán,Hồ Chí Minh,,Quận 7,8/13/2018,9/13/2018,17208920,Tin Vip 2,4.95,nha_dat_ban,59.72m²,Số 25A,Tân Quy,tỷ
+,Nhà đất bán,Đà Nẵng,Đông-Nam,Cẩm Lệ,9/9/2018,9/16/2018,16788755,Tin thường,16,nha_dat_ban,100m²,Nguyễn Phước Lan,Hòa Xuân,triệu/m²
+5+,Nhà đất bán,Hà Nội,,Hai Bà Trưng,9/7/2018,9/14/2018,16840998,Tin thường,2.3,nha_dat_ban,35m²,Gốc Đề,Minh Khai,tỷ
+4+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/4/2018,9/11/2018,16232902,Tin thường,3.75,nha_dat_ban,75m²,Dương Đình Hội,Phước Long B,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 2,9/6/2018,9/13/2018,17491410,Tin thường,1.45,nha_dat_ban,59m²,Nguyễn Duy Trinh,Bình Trưng Tây,tỷ
+,Nhà đất bán,Hà Nội,,Tây Hồ,9/7/2018,9/14/2018,17516206,Tin thường,6.5,nha_dat_ban,47m²,Âu Cơ,Tứ Liên,tỷ
+,Nhà đất bán,Hà Nội,,Nam Từ Liêm,9/8/2018,9/15/2018,15336979,Tin thường,122,nha_dat_ban,96m²,Hàm Nghi,Mỹ Đình 2,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Nhà Bè,9/9/2018,9/16/2018,16598686,Tin thường,,nha_dat_ban,1500m²,Phạm Hùng,Phước Lộc,
+,Nhà đất bán,Hồ Chí Minh,,Quận 2,9/4/2018,9/11/2018,17248548,Tin thường,37,nha_dat_ban,120m²,Nguyễn Cơ Thạch,An Lợi Đông,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 3,9/7/2018,10/8/2018,16706046,Tin thường,155,nha_dat_ban,480m²,Trần Quốc Thảo,,tỷ
+,Nhà đất cho thuê,Bình Dương,,Thủ Dầu Một,7/27/2018,9/10/2018,16869796,Tin thường,8,nha_dat_thue,150m²,D1,,triệu/tháng
+,Nhà đất bán,Hà Nội,Đông-Bắc,Hà Đông,9/4/2018,9/11/2018,15568571,Tin thường,1.4,nha_dat_ban,49m²,Thanh Lãm,Kiến Hưng,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Gò Vấp,9/4/2018,9/11/2018,17277591,Tin thường,15,nha_dat_thue,38m²,Số 1,7,triệu/tháng
+,Nhà đất bán,Hà Nội,Tây,Hoàn Kiếm,9/8/2018,9/15/2018,12119057,Tin thường,30,nha_dat_ban,60m²,Hàng Tre,Lý Thái Tổ,tỷ
+4+,Nhà đất cho thuê,Hồ Chí Minh,,Bình Thạnh,9/5/2018,9/12/2018,16663919,Tin thường,20,nha_dat_thue,60m²,Bùi Đình Túy,,triệu/tháng
+,Nhà đất cho thuê,Hà Nội,,Hai Bà Trưng,9/5/2018,9/12/2018,17474840,Tin thường,120,nha_dat_thue,75m²,Nguyễn Du,Nguyễn Du,triệu/tháng
+4+,Nhà đất bán,Hồ Chí Minh,,Bình Thạnh,9/8/2018,9/15/2018,16835792,Tin thường,8.3,nha_dat_ban,77.4m²,Hoàng Hoa Thám,7,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Tân Bình,9/8/2018,9/15/2018,17524565,Tin Vip 1,7,nha_dat_thue,Không xác định,Cộng Hòa,13,triệu/tháng
+,Nhà đất bán,Hà Nội,,Gia Lâm,9/6/2018,9/13/2018,17136141,Tin thường,40,nha_dat_ban,90m²,Ngô Xuân Quảng,Trâu Quỳ,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/6/2018,9/13/2018,15477199,Tin Vip 3,700,nha_dat_ban,Không xác định,Nguyễn Xiển,Long Thạnh Mỹ,triệu
+2+,Nhà đất bán,Hồ Chí Minh,Tây-Nam,Nhà Bè,9/5/2018,9/12/2018,17469174,Tin Vip 3,1.95,nha_dat_ban,34.5m²,Huỳnh Tấn Phát,Phú Xuân,tỷ
+3+,Nhà đất bán,Hồ Chí Minh,,Bình Thạnh,9/6/2018,9/13/2018,17500714,Tin thường,3.5,nha_dat_ban,33.3m²,Phan Văn Trị,11,tỷ
+,Nhà đất bán,Hà Nội,,Hoài Đức,9/6/2018,9/13/2018,15716363,Tin thường,23,nha_dat_ban,130m²,,An Thượng,triệu/m²
+,Nhà đất cho thuê,Hà Nội,,Hoàn Kiếm,9/7/2018,9/14/2018,17506173,Tin thường,116.38,nha_dat_thue,200m²,Hạ Hồi,Trần Hưng Đạo,triệu/tháng
+,Nhà đất bán,Bà Rịa Vũng Tàu,Đông,Phú Mỹ,9/7/2018,9/14/2018,16431636,Tin thường,290,nha_dat_ban,100m²,Tóc Tiên-Châu Pha,Châu Pha,triệu
+,Nhà đất bán,Hồ Chí Minh,,Quận 7,9/7/2018,9/14/2018,16749555,Tin thường,16,nha_dat_ban,80m²,Tân Trào,Tân Phú,triệu/m²
+,Nhà đất cho thuê,Hà Nội,,Nam Từ Liêm,9/5/2018,9/12/2018,17411628,Tin thường,32,nha_dat_thue,90m²,Tố Hữu,Trung Văn,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Thủ Đức,9/6/2018,9/13/2018,15207643,Tin thường,6.8,nha_dat_ban,133m²,Số 25,Hiệp Bình Chánh,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Tân Phú,9/10/2018,9/17/2018,16294193,Tin thường,17.5,nha_dat_ban,181.5m²,Lê Trọng Tấn,Tây Thạnh,tỷ
+,Nhà đất cho thuê,Hà Nội,,Hai Bà Trưng,9/4/2018,9/11/2018,16735803,Tin thường,344,nha_dat_thue,400m²,Triệu Việt Vương,Lê Đại Hành,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Bình Thạnh,9/7/2018,9/14/2018,17084973,Tin thường,12,nha_dat_ban,80m²,Đinh Bộ Lĩnh,,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/8/2018,9/15/2018,17525131,Tin thường,700,nha_dat_ban,120m²,Quốc Lộ 50,Đa Phước,triệu
+,Nhà đất bán,Bình Dương,,Dĩ An,9/8/2018,9/15/2018,16318923,Tin thường,2.25,nha_dat_ban,124m²,Võ Thị Sáu,Đông Hòa,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Gò Vấp,8/16/2018,10/1/2018,17180124,Tin thường,30,nha_dat_thue,140m²,Lê Đức Thọ,7,triệu/tháng
+2+,Nhà đất cho thuê,Hà Nội,,Long Biên,9/4/2018,9/11/2018,17464202,Tin thường,6,nha_dat_thue,70m²,Sài Đồng,Phúc Đồng,triệu/tháng
+,Nhà đất cho thuê,Hà Nội,,Hoàn Kiếm,9/4/2018,9/11/2018,17462957,Tin thường,45,nha_dat_thue,70m²,Hàng Da,Hàng Bông,triệu/tháng
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 8,9/4/2018,9/11/2018,16969594,Tin thường,11,nha_dat_thue,Không xác định,Lê Quang Kim,8,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,Tây-Nam,Gò Vấp,9/8/2018,9/15/2018,15495230,Tin thường,5.5,nha_dat_ban,35m²,Nguyễn Văn Công,3,tỷ
+3+,Nhà đất bán,Đồng Nai,Tây-Nam,Biên Hòa,9/7/2018,9/14/2018,16187930,Tin thường,,nha_dat_ban,110m²,Bùi Hữu Nghĩa,Bửu Hòa,
+,Nhà đất cho thuê,Hà Nội,,Cầu Giấy,9/6/2018,9/13/2018,15973067,Tin thường,150,nha_dat_thue,50m²,Duy Tân,Dịch Vọng Hậu,nghìn/m2/tháng
+2+,Nhà đất bán,Đồng Nai,,Trảng Bom,9/10/2018,9/17/2018,17532729,Tin thường,,nha_dat_ban,90m²,Xã Đồi 61,Giang Điền,
+3+,Nhà đất bán,Hải Phòng,Tây-Nam,Lê Chân,9/7/2018,9/14/2018,17510056,Tin thường,3.5,nha_dat_ban,67m²,Quán Nải, Kênh Dương,tỷ
+,Nhà đất bán,Hà Nội,Đông,Hoài Đức,9/8/2018,9/15/2018,15706717,Tin thường,28,nha_dat_ban,994m²,Đại lộ Thăng Long,An Thượng,triệu/m²
+2+,Nhà đất bán,Khánh Hòa,Đông-Bắc,Nha Trang,9/6/2018,9/13/2018,16604874,Tin thường,1.5,nha_dat_ban,100.8m²,,Vĩnh Ngọc,tỷ
+,Nhà đất bán,Hà Nội,Đông-Nam,Nam Từ Liêm,9/8/2018,9/15/2018,16326103,Tin thường,15.5,nha_dat_ban,123m²,Tố Hữu,Trung Văn,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 1,9/7/2018,9/28/2018,17510927,Tin thường,37,nha_dat_ban,100m²,Trần Hưng Đạo,Bến Nghé,tỷ
+4+,Nhà đất bán,Long An,,Bến Lức,9/6/2018,9/13/2018,17496493,Tin thường,1.2,nha_dat_ban,80m²,Tỉnh lộ 824,,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Củ Chi,9/8/2018,9/15/2018,16640028,Tin thường,1.45,nha_dat_ban,140m²,Tỉnh lộ 8,Hòa Phú,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Thạnh,9/8/2018,9/15/2018,17527404,Tin thường,25.4,nha_dat_ban,80m²,Phan Văn Hân,17,tỷ
+,Nhà đất cho thuê,Đà Nẵng,,Hải Châu,9/7/2018,9/14/2018,16986615,Tin thường,225,nha_dat_thue,336m²,Lê Đình Lý,,nghìn/m2/tháng
+,Nhà đất bán,Hồ Chí Minh,,Phú Nhuận,9/7/2018,9/14/2018,17514244,Tin thường,24,nha_dat_ban,130m²,Phan Xích Long,,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 1,9/6/2018,9/22/2018,17078952,Tin thường,108,nha_dat_ban,400m²,Trần Hưng Đạo,Phạm Ngũ Lão,tỷ
+2+,Nhà đất bán,Hà Nội,,Đống Đa,9/6/2018,9/13/2018,17316409,Tin thường,17.5,nha_dat_ban,87m²,Khâm Thiên,Khâm Thiên,tỷ
+2+,Nhà đất bán,Hồ Chí Minh,Bắc,Bình Tân,9/10/2018,9/17/2018,17452265,Tin thường,3.25,nha_dat_ban,48m²,Lê Văn Quới,Bình Trị Đông,tỷ
+,Nhà đất cần mua,Bình Dương,,Bến Cát,1/1/2018,1/1/2018,,,,nha_dat_can_thue,Trên 100m²,,,
+,Nhà đất bán,Khánh Hòa,,Nha Trang,9/8/2018,9/15/2018,17527076,Tin thường,42,nha_dat_ban,344.5m²,Triệu Quốc Đạt,Vĩnh Hòa,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Tân Bình,9/7/2018,9/14/2018,17249535,Tin thường,6.5,nha_dat_ban,36m²,Cách Mạng Tháng Tám,7,tỷ
+,Nhà đất bán,Quảng Nam,,Điện Bàn,9/7/2018,9/16/2018,16090607,Tin thường,1.37,nha_dat_ban,178.71m²,,,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 3,9/7/2018,9/14/2018,17093766,Tin thường,7.1,nha_dat_ban,37m²,Nguyễn Thiện Thuật,,tỷ
+,Nhà đất bán,Hà Nội,Tây-Nam,Long Biên,9/7/2018,9/14/2018,16092754,Tin thường,25.7,nha_dat_ban,368.9m²,Phong Lan 5,Việt Hưng,tỷ
+,Nhà đất bán,Bình Dương,Tây,Dĩ An,9/8/2018,9/15/2018,17445024,Tin thường,24,nha_dat_ban,280m²,Nguyễn An Ninh,Dĩ An,tỷ
+5+,Nhà đất bán,Hà Nội,Nam,Cầu Giấy,9/7/2018,9/14/2018,15769691,Tin thường,7.5,nha_dat_ban,80m²,Phùng Chí Kiên,Nghĩa Đô,tỷ
+3+,Nhà đất bán,Hồ Chí Minh,,Thủ Đức,9/7/2018,9/15/2018,15628139,Tin thường,,nha_dat_ban,90m²,Phạm Văn Đồng,Hiệp Bình Chánh,
+,Nhà đất bán,Đồng Nai,Đông,Biên Hòa,9/7/2018,9/14/2018,17208753,Tin thường,2.2,nha_dat_ban,120m²,Thân Nhân Trung,Hố Nai,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 2,9/8/2018,9/15/2018,14598650,Tin thường,40,nha_dat_ban,443m²,Nguyễn Văn Hưởng,Thảo Điền,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/8/2018,9/17/2018,14791750,Tin thường,668,nha_dat_ban,130m²,Trần Văn Giàu,Lê Minh Xuân,triệu
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 3,9/10/2018,9/17/2018,14866595,Tin thường,,nha_dat_thue,960m²,Nguyễn Thị Minh Khai,,
+,Nhà đất bán,Hải Phòng,Bắc,Hải An,9/10/2018,9/17/2018,17531726,Tin thường,33,nha_dat_ban,60m²,Ngô Gia Tự,Thành Tô,triệu/m²
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,9/6/2018,12/5/2018,17368321,Tin thường,19,nha_dat_thue,96m²,Số 3, Thạnh Mỹ Lợi,triệu/tháng
+,Nhà đất bán,Bình Dương,Đông-Nam,Thuận An,9/7/2018,9/14/2018,16831498,Tin thường,1.6,nha_dat_ban,150m²,D16,,tỷ
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Tân Phú,9/4/2018,9/11/2018,16937315,Tin thường,9.5,nha_dat_thue,70m²,Âu Cơ,Tân Sơn Nhì,triệu/tháng
+,Nhà đất bán,Hà Nội,Đông,Hoàng Mai,9/6/2018,9/13/2018,15809424,Tin thường,1.65,nha_dat_ban,31m²,Thanh Lân,Vĩnh Hưng,tỷ
+,Nhà đất bán,Bắc Ninh,,Từ Sơn,9/10/2018,9/17/2018,17400796,Tin thường,3,nha_dat_ban,120m²,Hữu Nghị,Phù Chẩn,tỷ
+,Nhà đất cho thuê,Hà Nội,,Hoàn Kiếm,9/4/2018,9/11/2018,17392358,Tin thường,60,nha_dat_thue,50m²,,Cửa Nam,triệu/tháng
+,Nhà đất bán,Bình Dương,,Thuận An,9/4/2018,9/11/2018,17459957,Tin thường,15.1,nha_dat_ban,1160.5m²,Lê Thị Trung,Bình Chuẩn,tỷ
+3+,Nhà đất bán,Hồ Chí Minh,,Thủ Đức,9/4/2018,9/11/2018,17457054,Tin Vip 2,3.87,nha_dat_ban,90.7m²,Số 8,Linh Đông,tỷ
+,Nhà đất bán,Khánh Hòa,,Nha Trang,9/7/2018,9/14/2018,17508987,Tin thường,44,nha_dat_ban,110m²,Số 4,Phước Hải,triệu/m²
+4+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/5/2018,9/12/2018,15103916,Tin thường,2.55,nha_dat_ban,50m²,Liên Phường,Phú Hữu,tỷ
+2+,Nhà đất cho thuê,Hà Nội,,Đống Đa,9/8/2018,9/16/2018,14824659,Tin thường,,nha_dat_thue,85m²,Thái Hà,Láng Hạ,
+,Nhà đất bán,Hồ Chí Minh,,Phú Nhuận,9/8/2018,9/16/2018,17523045,Tin thường,11,nha_dat_thue,17.5m²,Nguyễn Văn Trỗi,12,triệu/tháng
+,Nhà đất cho thuê,Đà Nẵng,,Hải Châu,9/7/2018,9/14/2018,16247796,Tin thường,20,nha_dat_thue,92m²,Lý Nhân Tông,,triệu/tháng
+,Nhà đất bán,Hà Nội,Đông-Bắc,Thanh Xuân,9/7/2018,9/14/2018,16951062,Tin thường,8.6,nha_dat_ban,50m²,Chính Kinh,Nhân Chính,tỷ
+2+,Nhà đất cho thuê,Hà Nội,,Long Biên,9/7/2018,9/14/2018,17114026,Tin thường,10,nha_dat_thue,94m²,,Long Biên,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 7,9/6/2018,9/13/2018,17503241,Tin Vip 3,180,nha_dat_ban,3000m²,Số 25,Tân Quy,tỷ
+3+,Nhà đất bán,Hà Nội,Tây-Bắc,Nam Từ Liêm,9/4/2018,9/11/2018,17356762,Tin thường,27,nha_dat_ban,200m²,Lê Đức Thọ,Mỹ Đình 2,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Bình Thạnh,9/4/2018,9/11/2018,17460671,Tin thường,11,nha_dat_thue,60m²,Đinh Bộ Lĩnh,26,triệu/tháng
+,Nhà đất bán,Đà Nẵng,Đông-Bắc,Ngũ Hành Sơn,9/7/2018,9/21/2018,16855097,Tin thường,2.85,nha_dat_ban,95m²,Tuy Lý Vương, Khuê Mỹ,tỷ
+2+,Nhà đất bán,Hồ Chí Minh,,Quận 7,9/8/2018,9/15/2018,17522416,Tin thường,3.55,nha_dat_ban,40m²,Trần Xuân Soạn,Tân Hưng,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Bình Thạnh,9/9/2018,9/16/2018,17529229,Tin thường,14,nha_dat_thue,105m²,Quốc Lộ 13,26,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,Tây,Quận 10,9/8/2018,9/15/2018,17525864,Tin thường,15,nha_dat_ban,100m²,Cư Xá Bắc Hải,15,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/7/2018,9/14/2018,10263047,Tin thường,1.2,nha_dat_ban,180m²,Tỉnh Lộ 10,Vĩnh Lộc B,tỷ
+3+,Nhà đất bán,Thái Bình,,Thái Bình,9/7/2018,9/14/2018,14654089,Tin thường,4.7,nha_dat_ban,400m²,,,tỷ
+,Nhà đất cho thuê,Hà Nội,,Ba Đình,9/4/2018,9/11/2018,17461596,Tin thường,65,nha_dat_thue,60m²,Nguyễn Công Hoan,Kim Mã,triệu/tháng
+3+,Nhà đất bán,Hồ Chí Minh,Đông,Quận 1,9/4/2018,9/11/2018,17174127,Tin Vip 1,8.7,nha_dat_ban,100m²,Tôn Đức Thắng,Bến Nghé,tỷ
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,9/7/2018,9/14/2018,17356823,Tin thường,17,nha_dat_thue,74.73m²,Mai Chí Thọ,Bình Khánh,triệu/tháng
+1+,Nhà đất bán,Hồ Chí Minh,,Gò Vấp,9/4/2018,9/11/2018,17465252,Tin thường,7,nha_dat_ban,171m²,Nguyên Hồng,1,tỷ
+,Nhà đất bán,Hà Nội,Đông-Bắc,Cầu Giấy,9/6/2018,9/13/2018,17494800,Tin thường,20,nha_dat_ban,102m²,Trung Yên 10,Trung Hòa,tỷ
+,Nhà đất cho thuê,Hà Nội,,Cầu Giấy,9/4/2018,9/11/2018,14540803,Tin thường,160,nha_dat_thue,250m²,Hoàng Đạo Thúy,Trung Hòa,nghìn/m2/tháng
+2+,Nhà đất cho thuê,Hà Nội,Tây-Bắc,Nam Từ Liêm,9/7/2018,9/15/2018,17423735,Tin thường,9,nha_dat_thue,76m²,Tố Hữu,Trung Văn,triệu/tháng
+1+,Nhà đất cho thuê,Hồ Chí Minh,,Gò Vấp,9/10/2018,9/25/2018,14532308,Tin thường,7.2,nha_dat_thue,34m²,Nguyễn Kiệm,3,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 3,9/8/2018,9/15/2018,17525815,Tin thường,305,nha_dat_ban,968m²,Tú Xương,7,tỷ
+,Nhà đất bán,Hà Nội,,Hoàng Mai,9/8/2018,9/15/2018,16494063,Tin thường,10,nha_dat_ban,147m²,Yên Sở,Yên Sở,tỷ
+,Nhà đất cho thuê,Hà Nội,,Hai Bà Trưng,9/4/2018,9/11/2018,17460162,Tin thường,,nha_dat_thue,360m²,Phố Huế,Phố Huế,
+,Nhà đất cho thuê,Hà Nội,,Tây Hồ,9/6/2018,9/13/2018,17502721,Tin thường,5,nha_dat_thue,70m²,Âu Cơ,Tứ Liên,triệu/tháng
+3+,Nhà đất bán,Hồ Chí Minh,,Quận 12,9/8/2018,9/15/2018,17522750,Tin thường,1.48,nha_dat_ban,75m²,Tô Ngọc Vân,Thạnh Xuân,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Tân,9/8/2018,9/15/2018,17520916,Tin thường,4.5,nha_dat_ban,56m²,Mã Lò,,tỷ
+4+,Nhà đất bán,Hà Nội,Bắc,Nam Từ Liêm,9/6/2018,9/13/2018,17497935,Tin thường,5.2,nha_dat_ban,58m²,Lê Đức Thọ,Mỹ Đình 1,tỷ
+1+,Nhà đất cho thuê,Hà Nội,,Hà Đông,9/5/2018,9/12/2018,17413388,Tin thường,8.5,nha_dat_thue,50m²,,Mỗ Lao,triệu/tháng
+,Nhà đất cho thuê,Hồ Chí Minh,,Tân Bình,9/10/2018,9/17/2018,17156292,Tin thường,,nha_dat_thue,264m²,Hậu Giang,4,
+,Nhà đất bán,Đà Nẵng,Tây-Bắc,Thanh Khê,9/7/2018,9/14/2018,17512927,Tin thường,12,nha_dat_ban,112m²,Quang Dũng,,tỷ
+2+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Quận 10,9/6/2018,9/13/2018,17501417,Tin thường,6.2,nha_dat_ban,56m²,Hòa Hưng,12,tỷ
+,Nhà đất bán,Hồ Chí Minh,Nam,Bình Thạnh,9/7/2018,9/18/2018,17517346,Tin Vip 1,92,nha_dat_ban,75m²,Nơ Trang Long,13,triệu/m²
+,Nhà đất bán,Long An,,Đức Hòa,9/7/2018,9/14/2018,16422348,Tin thường,390,nha_dat_ban,175m²,Tỉnh Lộ 10,Hựu Thạnh,triệu
+,Nhà đất bán,Hồ Chí Minh,Tây-Bắc,Quận 2,9/10/2018,9/17/2018,17260326,Tin thường,105,nha_dat_ban,128m²,Lương Định Của,An Phú,triệu/m²
+,Nhà đất bán,Đồng Nai,,Long Thành,8/27/2018,9/26/2018,16594229,Tin thường,450,nha_dat_ban,100m²,Quốc Lộ 51,Long Phước,triệu
+,Nhà đất bán,Hà Nội,,Long Biên,9/4/2018,9/11/2018,17459530,Tin thường,21.8,nha_dat_ban,317m²,Nguyệt Quế,Việt Hưng,tỷ
+,Nhà đất cho thuê,Hà Nội,,Hai Bà Trưng,9/7/2018,9/15/2018,10206517,Tin thường,200,nha_dat_thue,70m²,Đại Cồ Việt,,nghìn/m2/tháng
+,Nhà đất cho thuê,Hồ Chí Minh,,Bình Thạnh,9/6/2018,9/13/2018,16934700,Tin thường,85,nha_dat_thue,130m²,Phan Văn Hân,17,triệu/tháng
+,Nhà đất bán,Bình Dương,,Bắc Tân Uyên,9/6/2018,9/13/2018,17502951,Tin thường,330,nha_dat_ban,Không xác định,ĐT 746,Đất Cuốc,triệu
+,Nhà đất bán,Hồ Chí Minh,,Bình Thạnh,9/6/2018,9/13/2018,17165425,Tin thường,3.8,nha_dat_ban,78m²,Phan Văn Trị,5,tỷ
+4+,Nhà đất bán,Hà Nội,Tây-Nam,Hoàng Mai,9/5/2018,9/12/2018,12649137,Tin thường,,nha_dat_ban,115m²,Yên Duyên,Yên Sở,
+,Nhà đất cho thuê,Hà Nội,,Đống Đa,9/4/2018,9/11/2018,17456143,Tin thường,12,nha_dat_thue,70m²,Nguyễn Lương Bằng,Thịnh Quang,triệu/tháng
+3+,Nhà đất cho thuê,Hồ Chí Minh,,Bình Thạnh,9/6/2018,9/13/2018,17501809,Tin thường,22,nha_dat_thue,118m²,Điện Biên Phủ,22,triệu/tháng
+,Nhà đất bán,Đồng Nai,,Long Thành,7/5/2018,10/5/2018,16683197,Tin thường,6.6,nha_dat_ban,14679m²,,Phước Bình,tỷ
+4+,Nhà đất bán,Hồ Chí Minh,,Nhà Bè,9/6/2018,9/13/2018,17155933,Tin thường,2.6,nha_dat_ban,250m²,Nguyễn Hữu Thọ,Phước Kiển,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 1,9/4/2018,9/20/2018,17157632,Tin thường,5,nha_dat_thue,25m²,Cống Quỳnh,Nguyễn Cư Trinh,triệu/tháng
+,Nhà đất bán,Bình Dương,,Thủ Dầu Một,9/7/2018,9/14/2018,15849868,Tin thường,1.52,nha_dat_ban,119m²,DX 078,Định Hòa,tỷ
+,Nhà đất bán,Long An,,Tân Trụ,8/23/2018,9/22/2018,17332087,Tin thường,680,nha_dat_ban,170m²,,Mỹ Bình,triệu
+4+,Nhà đất bán,Hà Nội,Đông-Bắc,Thanh Xuân,9/5/2018,9/12/2018,17478716,Tin Vip 3,5.5,nha_dat_ban,125m²,Nguyễn Huy Tưởng,Thanh Xuân Trung,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 11,9/10/2018,9/17/2018,17533761,Tin thường,14.3,nha_dat_ban,95m²,,12,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Củ Chi,9/8/2018,9/15/2018,17445876,Tin thường,40,nha_dat_thue,1200m²,Hà Duy Phiên,Bình Mỹ,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/6/2018,9/13/2018,14244323,Tin thường,12.5,nha_dat_ban,100m²,Số 7,Bình Hưng,tỷ
+3+,Nhà đất cho thuê,Hà Nội,,Nam Từ Liêm,9/5/2018,9/12/2018,15458270,Tin thường,22,nha_dat_thue,120m²,Mễ Trì,Mễ Trì,triệu/tháng
+3+,Nhà đất cho thuê,Hà Nội,Nam,Bắc Từ Liêm,9/5/2018,9/12/2018,16661886,Tin thường,8,nha_dat_thue,90m²,Phạm Văn Đồng,Cổ Nhuế 1,triệu/tháng
+,Nhà đất cho thuê,Hà Nội,,Nam Từ Liêm,9/6/2018,9/13/2018,17334866,Tin thường,3.5,nha_dat_thue,25m²,Nguyễn Hoàng,Mỹ Đình 2,triệu/tháng
+2+,Nhà đất bán,Hà Nội,,Hà Đông,9/6/2018,9/14/2018,10789696,Tin thường,10,nha_dat_thue,124m²,Tô Hiến Thành,Mỗ Lao,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,Tây-Nam,Quận 9,9/4/2018,9/11/2018,17123698,Tin thường,7.98,nha_dat_ban,132m²,Nguyễn Thị Tư,Phú Hữu,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Tân Phú,9/6/2018,9/13/2018,16308250,Tin thường,3.85,nha_dat_ban,58.75m²,Gò Dầu,Tân Quý,tỷ
+,Nhà đất bán,Hồ Chí Minh,Tây-Bắc,Quận 2,9/8/2018,9/18/2018,17416728,Tin thường,14.4,nha_dat_ban,240m²,Trương Văn Bang,Bình Trưng Tây,tỷ
+2+,Nhà đất cho thuê,Bình Dương,,Thuận An,9/7/2018,9/14/2018,17413990,Tin thường,5,nha_dat_thue,52m²,Thuận An Hòa,An Phú,triệu/tháng
+,Nhà đất bán,Đà Nẵng,,Liên Chiểu,9/6/2018,9/13/2018,16889257,Tin thường,2.3,nha_dat_ban,200m²,Nguyễn Lương Bằng,Hòa Hiệp Nam,tỷ
+1+,Nhà đất bán,Hà Nội,,Đống Đa,8/13/2018,9/12/2018,17210568,Tin Vip 3,1.4,nha_dat_ban,41m²,Tây Sơn,Quang Trung,tỷ
+,Nhà đất cho thuê,Hà Nội,,Thanh Xuân,9/10/2018,9/17/2018,17443222,Tin thường,18,nha_dat_thue,80m²,Khuất Duy Tiến,Thanh Xuân Bắc,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/7/2018,9/14/2018,14617616,Tin thường,3.8,nha_dat_ban,81m²,,Phong Phú,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Cần Giờ,9/6/2018,9/13/2018,12855064,Tin thường,3.5,nha_dat_ban,9000m²,Rừng Sác,An Thới Đông,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Quận 10,9/8/2018,9/15/2018,17442360,Tin thường,17.6,nha_dat_ban,80m²,Điện Biên Phủ,11,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/7/2018,9/14/2018,17510523,Tin thường,1.2,nha_dat_ban,200m²,Trần Văn Giàu,Phạm Văn Hai,tỷ
+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Thủ Đức,9/7/2018,9/14/2018,17108584,Tin thường,4.82,nha_dat_ban,112m²,12,Trường Thọ,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 3,9/8/2018,9/15/2018,17523136,Tin thường,46.8,nha_dat_ban,170.1m²,Bàn Cờ,3,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Phú Nhuận,9/7/2018,9/14/2018,17514323,Tin thường,14,nha_dat_ban,63m²,Hồ Văn Huê,9,tỷ
+1+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 10,9/5/2018,9/13/2018,15918534,Tin thường,12,nha_dat_thue,51m²,Cao Thắng,12,triệu/tháng
+,Nhà đất bán,Bình Dương,,Dĩ An,9/7/2018,9/14/2018,17402066,Tin thường,2.22,nha_dat_ban,125m²,D14,Tân Bình,tỷ
+,Nhà đất bán,Hồ Chí Minh,Tây-Nam,Quận 2,9/6/2018,9/13/2018,15672847,Tin Vip 3,11,nha_dat_ban,100m²,Lê Hữu Kiều,Bình Trưng Tây,tỷ
+3+,Nhà đất bán,Hà Nội,,Hai Bà Trưng,9/5/2018,9/12/2018,9836303,Tin thường,13,nha_dat_thue,119m²,Minh Khai,Vĩnh Tuy,triệu/tháng
+4+,Nhà đất bán,Hồ Chí Minh,Bắc,Quận 9,9/5/2018,9/12/2018,16423479,Tin thường,14,nha_dat_ban,300m²,Bưng Ông Thoàn,Phú Hữu,tỷ
+,Nhà đất bán,Long An,,Cần Giuộc,9/7/2018,9/14/2018,17222858,Tin thường,10,nha_dat_ban,100m²,Tỉnh lộ 835,Cần Giuộc,triệu/m²
+,Nhà đất bán,Bình Dương,,Thủ Dầu Một,9/8/2018,9/15/2018,17518563,Tin thường,1.35,nha_dat_ban,110m²,,Phú Mỹ,tỷ
+,Nhà đất bán,Bình Dương,Đông,Bến Cát,9/8/2018,9/15/2018,17230941,Tin thường,10.5,nha_dat_ban,150m²,Đại Lộ Bình Dương,Thới Hòa,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Quận 7,9/7/2018,9/16/2018,17513176,Tin thường,4.05,nha_dat_ban,91.7m²,Đào Trí,Phú Thuận,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 2,9/10/2018,9/17/2018,14320841,Tin thường,33,nha_dat_ban,119m²,Nguyễn Thị Định 2,Cát Lái,triệu/m²
+4+,Nhà đất bán,Hồ Chí Minh,,Quận 10,9/8/2018,9/15/2018,17525635,Tin thường,10.5,nha_dat_ban,35m²,Lý Thường Kiệt,14,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 7,9/5/2018,9/15/2018,17479347,Tin Vip đặc biệt,49,nha_dat_ban,Không xác định,,,triệu
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 11,9/4/2018,9/11/2018,17135013,Tin thường,18,nha_dat_thue,87m²,Lê Đại Hành,15,triệu/tháng
+5+,Nhà đất bán,Hà Nội,Nam,Tây Hồ,9/7/2018,9/14/2018,17088994,Tin thường,18,nha_dat_ban,140m²,Nguyễn Hoàng Tôn,Xuân La,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,8/23/2018,9/22/2018,15572194,Tin thường,,nha_dat_ban,108m²,Nguyễn Văn Linh,Phong Phú,
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,9/8/2018,9/17/2018,14343517,Tin thường,16,nha_dat_thue,75m²,Nguyễn Thị Định,Bình Trưng Tây,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Gò Vấp,9/7/2018,9/14/2018,17063917,Tin thường,10.3,nha_dat_ban,140m²,Nguyễn Duy Cung,12,tỷ
+2+,Nhà đất cho thuê,Hải Phòng,,Ngô Quyền,9/4/2018,9/11/2018,14746895,Tin thường,15,nha_dat_thue,62m²,Lạch Tray,Lạch Tray,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,Đông,Bình Tân,8/16/2018,9/16/2018,13468593,Tin thường,7.5,nha_dat_ban,1500m²,,Tân Tạo A,triệu/m²
+3+,Nhà đất cho thuê,Hà Nội,,Thanh Xuân,9/7/2018,9/15/2018,15339635,Tin thường,,nha_dat_thue,Không xác định,Nguyễn Trãi,Thanh Xuân Trung,
+,Nhà đất bán,Hà Nội,Tây-Nam,Hà Đông,9/10/2018,9/17/2018,17392222,Tin thường,16,nha_dat_ban,182m²,Tô Hiệu,Hà Cầu,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/6/2018,9/13/2018,17255796,Tin thường,,nha_dat_ban,100m²,Quốc lộ 1A,Bình Chánh,
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/6/2018,9/13/2018,17497888,Tin thường,,nha_dat_ban,90m²,Nguyễn Văn Linh,Phong Phú,
+,Nhà đất bán,Đà Nẵng,Tây-Bắc,Cẩm Lệ,9/7/2018,10/7/2018,17516241,Tin thường,5.5,nha_dat_ban,100m²,7,Hòa Xuân,tỷ
+,Nhà đất bán,Đà Nẵng,Tây-Bắc,Sơn Trà,9/8/2018,9/15/2018,16864051,Tin thường,280,nha_dat_ban,324m²,Võ Văn Kiệt,,triệu/m²
+,Nhà đất bán,Quảng Nam,Nam,Hội An,8/28/2018,11/28/2018,17162944,Tin thường,,nha_dat_thue,100m²,Trần Phú,Minh An,
+,Nhà đất bán,Đồng Nai,,Biên Hòa,9/7/2018,9/14/2018,16776658,Tin thường,700,nha_dat_ban,100m²,Long Hưng - Phước Tân,Phước Tân,triệu
+,Nhà đất bán,Khánh Hòa,,Nha Trang,9/7/2018,9/14/2018,17505622,Tin thường,20.5,nha_dat_ban,200m²,,,triệu/m²
+,Nhà đất bán,Hưng Yên,,Văn Giang,8/24/2018,9/24/2018,17356033,Tin thường,47,nha_dat_ban,363m²,Trúc,Xuân Quan,triệu/m²
+,Nhà đất bán,Đà Nẵng,,Ngũ Hành Sơn,9/6/2018,9/13/2018,14182644,Tin thường,3.25,nha_dat_ban,125m²,Đoàn Khuê, Khuê Mỹ,tỷ
+4+,Nhà đất bán,Hồ Chí Minh,,Nhà Bè,9/6/2018,9/13/2018,16646573,Tin thường,2.75,nha_dat_ban,41.6m²,Lê Văn Lương,Nhơn Đức,tỷ
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Bình Thạnh,9/3/2018,9/10/2018,17455438,Tin thường,20,nha_dat_thue,80m²,Nguyễn Hữu Cảnh,22,triệu/tháng
+4+,Nhà đất bán,Long An,,Bến Lức,9/6/2018,9/13/2018,17500765,Tin thường,2,nha_dat_ban,90m²,Quốc lộ 1A,Bến Lức,tỷ
+,Nhà đất bán,Hà Nội,,Hoài Đức,8/15/2018,9/15/2018,17238807,Tin thường,25,nha_dat_ban,160m²,Láng Hòa Lạc,An Khánh,triệu/m²
+,Nhà đất bán,Hà Nội,Tây-Nam,Đống Đa,9/8/2018,9/15/2018,13550244,Tin thường,250,nha_dat_ban,97.6m²,Nam Đồng,Nam Đồng,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Quận 1,9/9/2018,9/16/2018,17529951,Tin thường,13.5,nha_dat_ban,88.8m²,Trần Đình Xu,,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 10,9/6/2018,9/13/2018,17244941,Tin thường,12.5,nha_dat_ban,81.7m²,Thành Thái,14,tỷ
+3+,Nhà đất bán,Hà Nội,Tây,Hà Đông,9/9/2018,9/16/2018,16775326,Tin thường,1.46,nha_dat_ban,35.5m²,21B,Phú Lãm,tỷ
+4+,Nhà đất bán,Hồ Chí Minh,,Quận 12,9/8/2018,9/15/2018,17008358,Tin thường,3.75,nha_dat_ban,68m²,Tô Ngọc Vân,Thạnh Xuân,tỷ
+4+,Nhà đất bán,Hà Nội,,Nam Từ Liêm,9/6/2018,9/13/2018,16088591,Tin thường,2.3,nha_dat_ban,34m²,Tây Mỗ,Tây Mỗ,tỷ
+,Nhà đất bán,Hưng Yên,,Văn Lâm,9/6/2018,9/13/2018,17306526,Tin thường,,nha_dat_ban,320m²,5A,Như Quỳnh,
+4+,Nhà đất bán,Hà Nội,Đông,Hoàng Mai,9/7/2018,9/14/2018,17433026,Tin thường,16,nha_dat_ban,168.87m²,Nguyễn Xiển,Đại Kim,tỷ
+,Nhà đất bán,Bà Rịa Vũng Tàu,,Xuyên Mộc,9/7/2018,9/14/2018,16664896,Tin thường,10.5,nha_dat_ban,606m²,328,Bình Châu,tỷ
+,Nhà đất bán,Long An,,Bến Lức,9/8/2018,9/15/2018,17520038,Tin thường,780,nha_dat_ban,200m²,Nguyễn Trung Trực,Bến Lức,triệu
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 9,9/6/2018,9/13/2018,16168761,Tin thường,5.5,nha_dat_thue,Không xác định,Đỗ Xuân Hợp,Phước Long B,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/8/2018,9/15/2018,16835368,Tin thường,4.45,nha_dat_ban,75m²,Vành Đai 2,Phú Hữu,tỷ
+,Nhà đất bán,Long An,,Đức Hòa,9/6/2018,9/13/2018,16973075,Tin thường,950,nha_dat_ban,125m²,Tỉnh Lộ 10,Hựu Thạnh,triệu
+,Nhà đất bán,Hồ Chí Minh,,Phú Nhuận,9/5/2018,9/12/2018,17480686,Tin thường,11.3,nha_dat_ban,68m²,Đào Duy Anh,9,tỷ
+,Nhà đất cho thuê,Hà Nội,,Đống Đa,9/7/2018,9/15/2018,12836738,Tin thường,30,nha_dat_thue,60m²,Vũ Ngọc Phan,Láng Hạ,triệu/tháng
+,Nhà đất bán,Khánh Hòa,,Nha Trang,9/10/2018,9/17/2018,17532209,Tin thường,6.5,nha_dat_ban,89m²,,,tỷ
+,Nhà đất bán,Đà Nẵng,,Sơn Trà,9/4/2018,9/11/2018,17461262,Tin Vip 3,1.3,nha_dat_ban,48m²,,Thọ Quang,tỷ
+2+,Nhà đất cho thuê,Hà Nội,,Hai Bà Trưng,9/6/2018,9/13/2018,17496377,Tin thường,10,nha_dat_thue,80m²,Minh Khai,Minh Khai,triệu/tháng
+,Nhà đất bán,Đồng Nai,,Trảng Bom,9/7/2018,9/14/2018,16984567,Tin thường,115,nha_dat_ban,110m²,Quốc lộ 1A,Sông Trầu,triệu
+,Nhà đất bán,Đồng Nai,,Biên Hòa,9/10/2018,9/17/2018,16803912,Tin thường,740,nha_dat_ban,100m²,Quốc Lộ 51,Phước Tân,triệu
+,Nhà đất bán,Khánh Hòa,,Nha Trang,9/8/2018,9/15/2018,17056419,Tin thường,,nha_dat_ban,102m²,,Vĩnh Thạnh,
+,Nhà đất bán,Bà Rịa Vũng Tàu,,Long Điền,9/7/2018,9/14/2018,17403631,Tin thường,,nha_dat_ban,100m²,,Phước Tỉnh,
+,Nhà đất cho thuê,Hà Nội,,Cầu Giấy,9/7/2018,9/14/2018,17392789,Tin thường,6.5,nha_dat_thue,50m²,Hồ Tùng Mậu,Mai Dịch,triệu/tháng
+,Nhà đất bán,Đắk Lắk,Tây-Bắc,Buôn Ma Thuột,9/7/2018,9/14/2018,17400925,Tin thường,6.3,nha_dat_ban,375m²,Nguyễn Đình Chiểu,Tân Lợi,tỷ
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 11,9/7/2018,9/14/2018,15040757,Tin thường,23,nha_dat_thue,116m²,2-Mar,15,triệu/tháng
+,Nhà đất bán,Quảng Nam,,Hội An,9/8/2018,9/15/2018,17430191,Tin thường,45,nha_dat_ban,300m²,,Cẩm An,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/4/2018,9/11/2018,13544572,Tin Vip 3,100,nha_dat_ban,100m²,Số 3,Bình Hưng,triệu/m²
+,Nhà đất cho thuê,Khánh Hòa,,Nha Trang,9/4/2018,9/11/2018,17459006,Tin thường,18,nha_dat_thue,50m²,Trần Hưng Đạo,Lộc Thọ,triệu/tháng
+,Nhà đất bán,Bình Dương,,Dĩ An,9/7/2018,9/14/2018,17316432,Tin thường,2.2,nha_dat_ban,125m²,D14,Tân Bình,tỷ
+,Nhà đất bán,Quảng Nam,,Hội An,9/7/2018,9/14/2018,17501317,Tin thường,22,nha_dat_ban,200m²,Lạc Long Quân,Cẩm Châu,triệu/m²
+,Nhà đất cho thuê,Hồ Chí Minh,,Tân Bình,9/5/2018,9/13/2018,16157134,Tin thường,455,nha_dat_thue,360m²,Hồng Hà,2,nghìn/m2/tháng
+,Nhà đất bán,Thừa Thiên Huế,Đông-Nam,Hương Thủy,9/6/2018,9/13/2018,17499118,Tin thường,450,nha_dat_ban,100m²,,Phú Bài,triệu
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 1,9/10/2018,9/19/2018,15285926,Tin thường,460,nha_dat_thue,368m²,Chu Mạnh Trinh,,triệu/tháng
+3+,Nhà đất cho thuê,Đà Nẵng,Đông,Ngũ Hành Sơn,9/8/2018,9/15/2018,17071034,Tin thường,13,nha_dat_thue,Không xác định,,Hòa Hải,triệu/tháng
+3+,Nhà đất bán,Hồ Chí Minh,,Quận 5,9/8/2018,9/15/2018,16478237,Tin thường,11.2,nha_dat_ban,73.1m²,Nguyễn Trãi,2,tỷ
+5+,Nhà đất bán,Hà Nội,Tây-Bắc,Hà Đông,9/7/2018,9/14/2018,17507783,Tin thường,4.75,nha_dat_ban,50m²,Văn La,Phú La,tỷ
+,Nhà đất bán,Hồ Chí Minh,Đông-Bắc,Quận 10,9/8/2018,9/15/2018,16731998,Tin thường,14,nha_dat_ban,66m²,Tô Hiến Thành,12,tỷ
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 8,9/5/2018,9/12/2018,17396519,Tin thường,13,nha_dat_thue,115m²,Tạ Quang Bửu,5,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 12,9/8/2018,9/15/2018,17525978,Tin thường,3.85,nha_dat_ban,250m²,Hiệp Thành 23,Thạnh Xuân,tỷ
+,Nhà đất bán,Hà Nội,,Ba Đình,9/10/2018,9/17/2018,17030930,Tin thường,10.7,nha_dat_ban,45m²,Quần Ngựa,Liễu Giai,tỷ
+,Nhà đất cần thuê,Hồ Chí Minh,,Gò Vấp,1/1/2018,1/1/2018,,,45,nha_dat_can_thue,150m² - 400m²,,,triệu
+,Nhà đất bán,Hồ Chí Minh,,Quận 10,9/8/2018,9/15/2018,17423814,Tin thường,17,nha_dat_ban,84m²,Trường Sơn,,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Tân,9/9/2018,9/16/2018,17450817,Tin thường,1.95,nha_dat_ban,52m²,Tỉnh Lộ 10,Tân Tạo,tỷ
+4+,Nhà đất bán,Hồ Chí Minh,,Bình Thạnh,9/5/2018,9/12/2018,17330678,Tin Vip 1,5.3,nha_dat_ban,50m²,Nguyễn Xí,26,tỷ
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,9/9/2018,9/16/2018,17350697,Tin thường,7.5,nha_dat_thue,58m²,Hoàng Quốc Việt,Phú Thuận,triệu/tháng
+,Nhà đất cho thuê,Hà Nội,,Thanh Xuân,9/8/2018,9/15/2018,17526968,Tin thường,3,nha_dat_thue,15m²,Nguyễn Huy Tưởng,Nhân Chính,triệu/tháng
+,Nhà đất cho thuê,Hồ Chí Minh,,Phú Nhuận,9/6/2018,9/13/2018,17404807,Tin thường,35,nha_dat_thue,76m²,Đào Duy Anh,9,triệu/tháng
+,Nhà đất bán,Bình Dương,Đông-Bắc,Thủ Dầu Một,9/7/2018,10/1/2018,17502811,Tin thường,2.15,nha_dat_ban,125m²,Nguyễn Đức Thuận,Hiệp Thành,tỷ
+3+,Nhà đất cho thuê,Hà Nội,,Thanh Xuân,9/8/2018,9/15/2018,14532906,Tin thường,6,nha_dat_thue,35m²,Quan Nhân,Nhân Chính,triệu/tháng
+4+,Nhà đất bán,Hồ Chí Minh,,Thủ Đức,9/7/2018,9/14/2018,17513056,Tin thường,4.7,nha_dat_ban,220m²,Phạm Văn Đồng,,tỷ
+,Nhà đất bán,Bình Dương,,Thủ Dầu Một,9/9/2018,9/16/2018,17528907,Tin thường,2.65,nha_dat_ban,137.5m²,Số 1,Hiệp Thành,tỷ
+3+,Nhà đất cho thuê,Hà Nội,,Cầu Giấy,9/9/2018,9/17/2018,16951631,Tin thường,,nha_dat_thue,200m²,Nguyễn Thị Định,Trung Hòa,
+3+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 5,9/5/2018,9/12/2018,17471490,Tin thường,19,nha_dat_thue,132m²,Hồng Bàng,12,triệu/tháng
+,Nhà đất cho thuê,Hồ Chí Minh,,Nhà Bè,9/4/2018,9/11/2018,17457690,Tin thường,5,nha_dat_thue,40m²,Nguyễn Hữu Thọ,Phước Kiển,triệu/tháng
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 4,9/7/2018,9/14/2018,17511017,Tin Vip 1,18,nha_dat_thue,80m²,Bến Vân Đồn,1,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 7,9/6/2018,9/13/2018,17500636,Tin thường,12,nha_dat_ban,148m²,Phú Thuận,Phú Thuận,tỷ
+4+,Nhà đất bán,Hồ Chí Minh,,Thủ Đức,9/7/2018,9/14/2018,17509771,Tin thường,3.7,nha_dat_ban,63m²,Quốc Lộ 13,Hiệp Bình Phước,tỷ
+,Nhà đất bán,Đồng Nai,,Biên Hòa,9/10/2018,9/17/2018,17323524,Tin thường,900,nha_dat_ban,100m²,Bắc Sơn - Long Thành,Tam Phước,triệu
+,Nhà đất bán,Đà Nẵng,,Hải Châu,9/10/2018,9/17/2018,15233469,Tin thường,11.6,nha_dat_ban,125m²,Nguyễn Tất Thành,Thanh Bình,tỷ
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 4,9/4/2018,9/11/2018,17188838,Tin thường,17,nha_dat_thue,71m²,Nguyễn Khoái,2,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Phú Nhuận,9/8/2018,9/15/2018,17526096,Tin thường,28.5,nha_dat_ban,152m²,Phan Đình Phùng,,tỷ
+4+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 2,9/5/2018,9/12/2018,13307631,Tin thường,25,nha_dat_thue,80m²,,An Phú,triệu/tháng
+,Nhà đất bán,Bình Dương,,Thuận An,9/7/2018,9/14/2018,17236334,Tin thường,3.8,nha_dat_ban,2081m²,An Sơn 24,An Sơn,triệu/m²
+,Nhà đất bán,Khánh Hòa,,Nha Trang,9/8/2018,9/15/2018,17442331,Tin thường,750,nha_dat_ban,Không xác định,Nguyễn Đức Thuận,Vĩnh Hòa,triệu
+,Nhà đất bán,Bình Dương,,Thuận An,9/7/2018,9/14/2018,17507309,Tin thường,19,nha_dat_ban,80m²,An Phú 17,An Phú,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Tân Bình,9/10/2018,9/17/2018,17528315,Tin thường,9.2,nha_dat_ban,77.9m²,Bàu Cát,,tỷ
+3+,Nhà đất cho thuê,Hà Nội,,Thanh Trì,9/8/2018,9/15/2018,17521484,Tin thường,18,nha_dat_thue,110m²,Nguyễn Xiển,Tân Triều,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 1,9/8/2018,9/16/2018,15754690,Tin thường,15,nha_dat_ban,50m²,Trần Khánh Dư,Tân Định,tỷ
+,Nhà đất bán,Khánh Hòa,,Cam Ranh,9/8/2018,9/15/2018,17520252,Tin thường,,nha_dat_ban,120m²,Nguyễn Tất Thành,,
+,Nhà đất bán,Bà Rịa Vũng Tàu,,Long Điền,9/8/2018,9/15/2018,16894189,Tin thường,700,nha_dat_ban,100m²,44,Long Điền,triệu
+5+,Nhà đất bán,Hồ Chí Minh,,Phú Nhuận,9/8/2018,9/15/2018,17418724,Tin thường,17.3,nha_dat_ban,81m²,Cù Lao,8,tỷ
+,Nhà đất bán,Bình Dương,,Thủ Dầu Một,9/7/2018,9/17/2018,17507411,Tin Vip đặc biệt,660,nha_dat_ban,144m²,Đại Lộ Bình Dương,Hiệp Thành,triệu
+,Nhà đất bán,Hồ Chí Minh,Đông,Tân Phú,9/10/2018,9/17/2018,17533206,Tin thường,7,nha_dat_ban,Không xác định,Nguyễn Văn Yến,Tân Thới Hòa,tỷ
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 4,9/5/2018,9/12/2018,17472883,Tin thường,14,nha_dat_thue,85m²,Tôn Đản,13,triệu/tháng
+4+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Quận 9,9/5/2018,9/12/2018,17479353,Tin thường,7.7,nha_dat_ban,175m²,Liên Phường,Phước Long B,tỷ
+,Nhà đất bán,Hà Nội,,Thanh Xuân,9/8/2018,9/15/2018,13986340,Tin thường,,nha_dat_ban,147m²,Triều Khúc,Thanh Xuân Nam,
+,Nhà đất cho thuê,Hà Nội,,Hai Bà Trưng,9/7/2018,9/14/2018,17227840,Tin thường,300,nha_dat_thue,200m²,Phố Huế,Phố Huế,triệu/tháng
+,Nhà đất bán,Bà Rịa Vũng Tàu,,Xuyên Mộc,9/9/2018,9/16/2018,17530427,Tin thường,6.5,nha_dat_ban,300m²,55,Bình Châu,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/7/2018,9/14/2018,16695547,Tin thường,768,nha_dat_ban,80m²,Hoàng Hữu Nam,Long Bình,triệu
+,Nhà đất bán,Hà Nội,,Hai Bà Trưng,9/9/2018,9/16/2018,17448207,Tin thường,15,nha_dat_ban,70m²,Nguyễn Thượng Hiền,Phố Huế,tỷ
+,Nhà đất cho thuê,Hà Nội,,Thanh Xuân,9/5/2018,9/13/2018,11606079,Tin thường,,nha_dat_thue,100m²,Hoàng Đạo Thúy,Nhân Chính,
+,Nhà đất bán,Hồ Chí Minh,,Quận 5,9/8/2018,9/15/2018,17527403,Tin thường,15,nha_dat_ban,80m²,Trần Hưng Đạo,,tỷ
+,Nhà đất bán,Hồ Chí Minh,Tây-Nam,Quận 12,9/5/2018,10/5/2018,17480966,Tin thường,3.9,nha_dat_ban,68m²,Thạnh Xuân 24,Thạnh Xuân,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Bình Thạnh,9/7/2018,9/14/2018,17516041,Tin thường,13,nha_dat_ban,85m²,Hoàng Hoa Thám,,tỷ
+,Nhà đất cần thuê,Hà Nội,,Cầu Giấy,1/1/2018,1/1/2018,,,20,nha_dat_can_thue,Trên 40m²,Hồ Tùng Mậu,Mai Dịch,triệu
+4+,Nhà đất bán,Hồ Chí Minh,Nam,Nhà Bè,9/10/2018,9/17/2018,15193519,Tin thường,4.4,nha_dat_ban,86.5m²,Lê Văn Lương,Phước Kiển,tỷ
+3+,Nhà đất bán,Đà Nẵng,Đông-Nam,Ngũ Hành Sơn,9/8/2018,9/15/2018,17517304,Tin thường,3.8,nha_dat_ban,100m²,Đa Mặn 6, Khuê Mỹ,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Gò Vấp,9/7/2018,10/7/2018,17510851,Tin thường,3.75,nha_dat_ban,70m²,Dương Quảng Hàm,5,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 3,9/9/2018,9/16/2018,16121308,Tin thường,295,nha_dat_ban,1000m²,Trương Định,9,tỷ
+,Nhà đất bán,Đồng Nai,,Nhơn Trạch,9/7/2018,9/14/2018,17194513,Tin thường,780,nha_dat_ban,93m²,,Phú Đông,triệu
+4+,Nhà đất bán,Hồ Chí Minh,,Phú Nhuận,9/8/2018,9/15/2018,17524289,Tin thường,6.2,nha_dat_ban,44m²,Đoàn Thị Điểm,1,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 3,9/7/2018,9/14/2018,17046846,Tin thường,500,nha_dat_thue,Không xác định,Nguyễn Đình Chiểu,6,nghìn/tháng
+,Nhà đất bán,Đồng Nai,,Biên Hòa,9/7/2018,9/14/2018,15307018,Tin thường,1.75,nha_dat_ban,60m²,Bùi Hữu Nghĩa,Bửu Hòa,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 3,9/7/2018,9/14/2018,17512380,Tin thường,37,nha_dat_ban,170m²,Cư xá Đô Thành,4,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 3,9/6/2018,9/13/2018,17048695,Tin thường,290,nha_dat_ban,954m²,Lê Quý Đôn,7,tỷ
+,Nhà đất cho thuê,Hà Nội,,Tây Hồ,7/30/2018,10/28/2018,16967752,Tin thường,3,nha_dat_thue,70m²,Nguyễn Hoàng Tôn,Phú Thượng,triệu/tháng
+,Nhà đất cho thuê,Hà Nội,,Cầu Giấy,9/10/2018,9/17/2018,15031628,Tin thường,4,nha_dat_thue,35m²,Nguyễn Ngọc Vũ,Trung Hòa,triệu/tháng
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Tân Bình,9/5/2018,9/12/2018,16597993,Tin thường,11,nha_dat_thue,75m²,Cộng Hòa,,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 2,9/8/2018,9/15/2018,17523119,Tin thường,1.5,nha_dat_ban,80m²,Trần Não,An Phú,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/6/2018,9/13/2018,15895622,Tin thường,10.5,nha_dat_ban,140m²,Dương Đình Hội,Phước Long B,tỷ
+,Nhà đất bán,Đồng Nai,,Biên Hòa,9/7/2018,9/14/2018,17505203,Tin thường,22,nha_dat_ban,98m²,Võ Thị Sáu,Quyết Thắng,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Thủ Đức,9/6/2018,9/16/2018,14850875,Tin thường,,nha_dat_ban,140m²,Quốc Lộ 13,Hiệp Bình Phước,
+,Nhà đất cần thuê,Hồ Chí Minh,,Bình Thạnh,1/1/2018,1/1/2018,,,,nha_dat_can_thue,Trên 77m²,,,
+,Nhà đất bán,Bình Dương,,Bắc Tân Uyên,9/6/2018,9/13/2018,17494190,Tin thường,7,nha_dat_ban,100m²,ĐT 746,Đất Cuốc,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Bình Thạnh,9/10/2018,9/17/2018,17536253,Tin thường,7.9,nha_dat_ban,25m²,Phạm Văn Đồng,13,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 10,9/10/2018,9/17/2018,17336358,Tin thường,13.8,nha_dat_ban,56.25m²,Tô Hiến Thành,15,tỷ
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Thủ Đức,9/6/2018,9/18/2018,17501156,Tin thường,10,nha_dat_thue,28m²,Kha Vạn Cân,Hiệp Bình Chánh,triệu/tháng
+2+,Nhà đất bán,Hồ Chí Minh,Tây-Nam,Quận 12,9/8/2018,9/16/2018,16627419,Tin thường,2.15,nha_dat_ban,45.5m²,Thạnh Lộc 31,Thạnh Lộc,tỷ
+,Nhà đất cho thuê,Hà Nội,,Hoàng Mai,8/20/2018,9/11/2018,17302906,Tin thường,90,nha_dat_thue,1390m²,Giải Phóng,,nghìn/m2/tháng
+,Nhà đất cần mua,Bình Dương,,Bến Cát,1/1/2018,1/1/2018,,,,nha_dat_can_thue,Trên 100m²,NH2,,
+,Nhà đất cho thuê,Bình Dương,Đông-Bắc,Dĩ An,8/21/2018,9/20/2018,17308518,Tin thường,,nha_dat_thue,140m²,Lê Thị Út,Tân Đông Hiệp,
+,Nhà đất bán,Gia Lai,,Ia Grai,5/23/2018,11/19/2018,16006291,Tin thường,1.6,nha_dat_ban,27000m²,,Ia Pếch,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 3,9/5/2018,9/12/2018,17420939,Tin thường,80,nha_dat_thue,Không xác định,Võ Văn Tần,,triệu/tháng
+,Nhà đất bán,Hà Nội,Tây-Bắc,Hai Bà Trưng,9/8/2018,9/15/2018,11340745,Tin thường,1.25,nha_dat_ban,36.7m²,Đê Trần Khát Chân,Thanh Lương,tỷ
+,Nhà đất cần thuê,Hồ Chí Minh,,Bình Thạnh,1/1/2018,1/1/2018,,,,nha_dat_can_thue,Trên 90m²,,,
+,Nhà đất bán,Bình Dương,Nam,Thuận An,9/7/2018,9/14/2018,17239829,Tin Vip 1,2.6,nha_dat_ban,100m²,NA7,Bình Hòa,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Phú Nhuận,9/5/2018,9/14/2018,17030682,Tin thường,40,nha_dat_thue,125m²,Nguyễn Văn Trỗi,8,triệu/tháng
+,Nhà đất bán,Khánh Hòa,,Nha Trang,9/9/2018,9/16/2018,12934760,Tin thường,24,nha_dat_ban,375m²,,Phước Đồng,triệu/m²
+,Nhà đất bán,Hà Nội,Đông-Nam,Hoài Đức,9/8/2018,10/8/2018,14880230,Tin thường,30,nha_dat_ban,46.3m²,Vân Canh,Vân Canh,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Quận 2,9/7/2018,9/14/2018,14075608,Tin thường,9,nha_dat_ban,Không xác định,,Bình Trưng Tây,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Phú Nhuận,9/9/2018,9/16/2018,17530389,Tin thường,23.9,nha_dat_ban,Không xác định,Phan Xích Long,2,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 1,9/6/2018,9/13/2018,17489640,Tin Vip 3,8.6,nha_dat_ban,44.64m²,Lương Hữu Khánh,Phạm Ngũ Lão,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 12,9/5/2018,9/12/2018,15654486,Tin thường,60,nha_dat_thue,1300m²,Phan Văn Hớn,Tân Thới Nhất,triệu/tháng
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,9/3/2018,9/10/2018,14908702,Tin thường,3.4,nha_dat_thue,22m²,Trần Xuân Soạn,Tân Hưng,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 12,9/7/2018,9/14/2018,16421395,Tin thường,26.85,nha_dat_ban,127m²,Trần Thị Do,Hiệp Thành,triệu/m²
+2+,Nhà đất cho thuê,Hà Nội,,Thanh Trì,9/9/2018,9/16/2018,16850188,Tin thường,12,nha_dat_thue,80m²,Nguyễn Xiển,Tân Triều,triệu/tháng
+,Nhà đất bán,Long An,,Cần Giuộc,9/9/2018,9/16/2018,17529047,Tin thường,14,nha_dat_ban,100m²,835B,Long Thượng,triệu/m²
+5+,Nhà đất bán,Hà Nội,Tây-Nam,Ba Đình,9/7/2018,9/14/2018,17231906,Tin Vip 1,10,nha_dat_ban,86m²,Hoàng Hoa Thám,Cống Vị,tỷ
+2+,Nhà đất bán,Hồ Chí Minh,Bắc,Bình Tân,9/10/2018,9/17/2018,15490610,Tin Vip 3,1.9,nha_dat_ban,68m²,Tên Lửa,Bình Trị Đông B,tỷ
+4+,Nhà đất bán,Hồ Chí Minh,,Quận 8,9/6/2018,9/13/2018,15999888,Tin thường,3.99,nha_dat_ban,100m²,An Dương Vương,16,tỷ
+,Nhà đất bán,Hồ Chí Minh,Đông,Quận 7,9/8/2018,9/15/2018,16789471,Tin thường,200,nha_dat_ban,4m²,Nguyễn Lương Bằng,Phú Mỹ,triệu
+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Bình Chánh,9/7/2018,9/14/2018,16292654,Tin thường,,nha_dat_ban,100m²,Nguyễn Văn Linh,Phong Phú,
+,Nhà đất bán,Bình Dương,,Thuận An,9/10/2018,9/17/2018,17532693,Tin Vip 2,17,nha_dat_ban,100m²,Thủ Khoa Huân,Thuận Giao,triệu
+1+,Nhà đất cho thuê,Hồ Chí Minh,,Tân Bình,9/7/2018,9/14/2018,16846148,Tin thường,8,nha_dat_thue,36m²,Phổ Quang,2,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/7/2018,9/14/2018,16457299,Tin thường,18.5,nha_dat_ban,180m²,Đỗ Xuân Hợp,Phước Long A,tỷ
+,Nhà đất bán,Hà Nội,,Thanh Xuân,9/7/2018,9/14/2018,17202484,Tin thường,16,nha_dat_ban,112m²,Khương Trung,Thanh Xuân Nam,tỷ
+1+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 4,9/5/2018,9/12/2018,12389338,Tin thường,18,nha_dat_thue,Không xác định,Bến Vân Đồn,12,triệu/tháng
+,Nhà đất bán,Hà Nội,,Hoàng Mai,9/4/2018,9/11/2018,17172732,Tin thường,25.8,nha_dat_ban,160m²,Nguyễn Xiển,Đại Kim,tỷ
+3+,Nhà đất bán,Hồ Chí Minh,Nam,Quận 7,9/6/2018,9/13/2018,12386810,Tin thường,8.9,nha_dat_ban,134m²,Đào Trí,Phú Thuận,tỷ
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 7,9/9/2018,9/16/2018,17529956,Tin thường,9,nha_dat_thue,127m²,Phạm Hữu Lầu,Phú Mỹ,triệu/tháng
+,Nhà đất bán,Khánh Hòa,Tây-Bắc,Diên Khánh,9/10/2018,9/17/2018,17531217,Tin thường,1,nha_dat_ban,348m²,,Diên Lâm,triệu/m²
+,Nhà đất cho thuê,Đà Nẵng,,Hải Châu,9/4/2018,9/11/2018,16678123,Tin thường,200,nha_dat_thue,41m²,Nguyễn Hữu Thọ,,nghìn/m2/tháng
+,Nhà đất bán,Bình Dương,,Bến Cát,9/6/2018,9/13/2018,14729938,Tin thường,285,nha_dat_ban,100m²,Đại Lộ Bình Dương,Thới Hòa,triệu
+,Nhà đất bán,Hồ Chí Minh,,Tân Phú,9/8/2018,9/15/2018,15829087,Tin thường,6,nha_dat_ban,60m²,CN11,Sơn Kỳ,tỷ
+,Nhà đất bán,Đồng Nai,,Nhơn Trạch,9/6/2018,9/13/2018,17496782,Tin thường,,nha_dat_ban,7517m²,Nguyễn Ái Quốc,Phước Khánh,
+3+,Nhà đất bán,Hồ Chí Minh,Tây-Bắc,Quận 3,9/7/2018,9/14/2018,16549383,Tin thường,13,nha_dat_ban,86m²,Trần Văn Đang,11,tỷ
+,Nhà đất bán,Bình Dương,Tây-Nam,Dĩ An,9/7/2018,9/21/2018,17507943,Tin thường,3.9,nha_dat_ban,134.8m²,Nguyễn Bính,Đông Hòa,tỷ
+2+,Nhà đất bán,Hồ Chí Minh,,Bình Thạnh,9/9/2018,9/16/2018,17448159,Tin thường,2.5,nha_dat_ban,18.76m²,Xô Viết Nghệ Tĩnh,21,tỷ
+5+,Nhà đất bán,Hồ Chí Minh,,Quận 10,9/8/2018,9/15/2018,17435504,Tin thường,8.4,nha_dat_ban,53.2m²,Thành Thái,12,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 7,9/9/2018,9/16/2018,17207216,Tin thường,3.2,nha_dat_ban,60m²,,Tân Quy,tỷ
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Tân Bình,9/10/2018,9/17/2018,17533136,Tin thường,10,nha_dat_thue,81m²,Trương Công Định,14,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Tân Bình,9/6/2018,9/13/2018,17501237,Tin thường,15.5,nha_dat_ban,114.4m²,Bạch Đằng,2,tỷ
+,Nhà đất bán,Bình Dương,,Thuận An,9/10/2018,9/17/2018,16049660,Tin thường,20,nha_dat_ban,100m²,Phan Thanh Giản,Lái Thiêu,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Quận 10,9/8/2018,9/15/2018,17522640,Tin thường,4.35,nha_dat_ban,45m²,Cách Mạng Tháng Tám,13,tỷ
+,Nhà đất bán,Hà Nội,,Cầu Giấy,9/6/2018,9/13/2018,11162454,Tin thường,,nha_dat_ban,104m²,Phạm Hùng,Trung Hòa,
+,Nhà đất bán,Hồ Chí Minh,,Bình Thạnh,9/9/2018,9/16/2018,17289362,Tin thường,5.2,nha_dat_ban,30m²,Nguyễn Cửu Vân,17,tỷ
+2+,Nhà đất bán,Hồ Chí Minh,,Bình Thạnh,9/7/2018,9/16/2018,17506672,Tin thường,3.85,nha_dat_ban,44m²,Phan Văn Trị,,tỷ
+,Nhà đất bán,Hà Nội,Đông-Bắc,Hoài Đức,9/7/2018,9/14/2018,17125814,Tin thường,795,nha_dat_ban,31.4m²,422,Vân Canh,triệu
+,Nhà đất bán,Hồ Chí Minh,,Bình Chánh,9/6/2018,9/13/2018,17498047,Tin thường,1.5,nha_dat_ban,7749m²,,Phong Phú,triệu/m²
+,Nhà đất bán,Hồ Chí Minh,,Tân Phú,9/10/2018,9/17/2018,16129843,Tin thường,6.2,nha_dat_ban,76m²,Khuông Việt,Phú Trung,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Quận 7,9/8/2018,9/15/2018,17526131,Tin thường,2.2,nha_dat_ban,60m²,Gò Ô Môi,Phú Thuận,tỷ
+,Nhà đất bán,Kiên Giang,,Phú Quốc,9/1/2018,9/11/2018,17448822,Tin Vip 1,,nha_dat_ban,120m²,Dương Tơ,Dương Tơ,
+2+,Nhà đất cho thuê,Hà Nội,Nam,Hai Bà Trưng,9/7/2018,9/14/2018,17513300,Tin thường,11,nha_dat_thue,Không xác định,Minh Khai,Vĩnh Tuy,triệu/tháng
+,Nhà đất bán,Long An,,Đức Hòa,9/5/2018,9/13/2018,17397398,Tin thường,8.6,nha_dat_ban,140m²,Tỉnh lộ 823,Đức Lập Hạ,triệu/m²
+2+,Nhà đất cho thuê,Hồ Chí Minh,Đông,Tân Bình,9/5/2018,9/12/2018,17473115,Tin thường,13.5,nha_dat_thue,61m²,Hoàng Hoa Thám,13,triệu/tháng
+,Nhà đất bán,Đồng Nai,,Biên Hòa,9/8/2018,9/15/2018,11669460,Tin thường,568,nha_dat_ban,100m²,Bùi Hữu Nghĩa,Tam Phước,triệu
+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 4,9/6/2018,9/13/2018,17235872,Tin thường,9,nha_dat_thue,30m²,Bến Vân Đồn,6,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Bình Tân,9/8/2018,9/15/2018,17360126,Tin thường,750,nha_dat_ban,100m²,Tỉnh Lộ 10,Tân Tạo,triệu
+,Nhà đất bán,Hồ Chí Minh,,Quận 3,9/8/2018,9/15/2018,16054941,Tin thường,95,nha_dat_ban,433m²,Nam Kỳ Khởi Nghĩa,7,tỷ
+,Nhà đất cho thuê,Hà Nội,,Ba Đình,9/4/2018,9/11/2018,17401129,Tin thường,85,nha_dat_thue,100m²,Kim Mã,Kim Mã,triệu/tháng
+1+,Nhà đất bán,Hồ Chí Minh,,Quận 2,9/4/2018,9/11/2018,17275348,Tin Vip 3,4,nha_dat_ban,85m²,11,Thảo Điền,tỷ
+,Nhà đất bán,Hồ Chí Minh,,Nhà Bè,9/8/2018,9/15/2018,16698547,Tin thường,29,nha_dat_ban,288m²,15B,Phú Xuân,triệu/m²
+,Nhà đất bán,Bình Dương,Tây,Thủ Dầu Một,9/9/2018,9/16/2018,17432758,Tin Vip 3,31,nha_dat_ban,771.5m²,30/4,Phú Thọ,triệu/m²
+,Nhà đất bán,Hà Nội,,Đống Đa,9/6/2018,9/13/2018,17497840,Tin thường,3.2,nha_dat_ban,36m²,Tôn Đức Thắng,Hàng Bột,tỷ
+1+,Nhà đất bán,Hồ Chí Minh,,Quận 9,9/4/2018,9/11/2018,17457371,Tin Vip 3,1.02,nha_dat_ban,47m²,Liên Phường,Phú Hữu,tỷ
+3+,Nhà đất cho thuê,Hà Nội,,Hà Đông,9/4/2018,9/12/2018,16647959,Tin thường,,nha_dat_thue,120m²,Ao Sen,Mỗ Lao,
+,Nhà đất bán,Quảng Nam,Đông-Bắc,Điện Bàn,9/7/2018,9/14/2018,17504172,Tin thường,980,nha_dat_ban,105m²,Quốc lộ 1A,Điện Thắng Trung,triệu
+,Nhà đất bán,Hà Nội,,Đống Đa,9/8/2018,9/15/2018,16361497,Tin thường,13.2,nha_dat_ban,55m²,Thái Hà,Trung Liệt,tỷ
+,Nhà đất cho thuê,Hà Nội,,Hà Đông,9/5/2018,9/12/2018,17469506,Tin thường,38,nha_dat_thue,60m²,Trần Phú,Nguyễn Trãi,triệu/tháng
+2+,Nhà đất cho thuê,Hồ Chí Minh,,Quận 9,9/5/2018,9/12/2018,17411763,Tin thường,15,nha_dat_thue,80m²,Đỗ Xuân Hợp,Phước Bình,triệu/tháng
+,Nhà đất bán,Bắc Giang,Đông-Nam,Bắc Giang,9/7/2018,9/14/2018,17095580,Tin thường,870,nha_dat_ban,100m²,,Xương Giang,triệu
+2+,Nhà đất bán,Hà Nội,,Hà Đông,9/3/2018,9/11/2018,17153686,Tin thường,11,nha_dat_thue,80m²,Tô Hiến Thành,Mỗ Lao,triệu/tháng
+,Nhà đất bán,Hồ Chí Minh,,Nhà Bè,9/6/2018,9/13/2018,14693259,Tin thường,550,nha_dat_ban,80m²,Nguyễn Bình,,triệu
+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Quận 9,9/7/2018,9/17/2018,17354797,Tin Vip 2,1.4,nha_dat_ban,52m²,Lã Xuân Oai,Long Trường,tỷ
+2+,Nhà đất cho thuê,Hà Nội,,Thanh Xuân,9/6/2018,9/13/2018,16423285,Tin thường,9,nha_dat_thue,87m²,Chính Kinh,Thượng Đình,triệu/tháng
+4+,Nhà đất cho thuê,Bình Dương,Đông-Nam,Bến Cát,9/5/2018,9/12/2018,16816185,Tin thường,15,nha_dat_thue,Không xác định,NE2,Thới Hòa,triệu/tháng

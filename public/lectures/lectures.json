@@ -1,0 +1,219 @@
+{
+  "lectures": [
+    {
+      "id": "Lecture5",
+      "title": "Lecture 05 - Intro to Data Science",
+      "notebooks": [
+        {
+          "id": "Lecture_5.1_Practice_Importing_Data",
+          "title": "Lecture 5.1: Practice Importing Data",
+          "file": "Lecture_5.1_Practice_Importing_Data.ipynb",
+          "description": "Thực hành đọc dữ liệu từ nhiều định dạng file (CSV, JSON, Excel).",
+          "guide": "Trong bài học này, bạn sẽ thực hành cách nhập dữ liệu từ các nguồn khác nhau vào Python bằng thư viện Pandas.\n\n**Các bước thực hiện:**\n1. Import thư viện `pandas`.\n2. Đọc dữ liệu từ file **CSV** bằng `pd.read_csv()`.\n3. Đọc dữ liệu từ file **JSON** bằng `pd.read_json()`.\n4. Đọc dữ liệu từ file **Excel** bằng `pd.read_excel()`."
+        },
+        {
+          "id": "Lecture_5.2_database_connection",
+          "title": "Lecture 5.2: Database Connection",
+          "file": "Lecture_5.2_database_connection.ipynb",
+          "description": "Thực hành kết nối và truy vấn dữ liệu từ Database SQL.",
+          "guide": "Bài này hướng dẫn bạn cách kết nối và lấy dữ liệu trực tiếp từ một cơ sở dữ liệu (Database).\n\n**Các bước thực hiện:**\n1. Import thư viện `pymssql` và `pandas`.\n2. Thiết lập thông số kết nối: server, username, password, và database.\n3. Viết câu lệnh truy vấn SQL (ví dụ: `SELECT * FROM table`).\n4. Chuyển đổi kết quả truy vấn thành Pandas DataFrame để dễ dàng phân tích."
+        },
+        {
+          "id": "Lecture_5.3_getting_data_from_api",
+          "title": "Lecture 5.3: Getting Data From API",
+          "file": "Lecture_5.3_getting_data_from_api.ipynb",
+          "description": "Thực hành gọi API để lấy dữ liệu qua giao thức HTTP.",
+          "guide": "Bài học này giúp bạn thu thập dữ liệu từ các dịch vụ web thông qua API.\n\n**Các bước thực hiện:**\n1. Import thư viện `requests`.\n2. Gửi yêu cầu HTTP GET đến URL của API bằng `requests.get()`.\n3. Nhận và giải mã dữ liệu trả về (thường là định dạng JSON).\n4. Đưa dữ liệu JSON này vào DataFrame để xử lý tiếp."
+        }
+      ],
+      "datasetsDir": "L5_datasets",
+      "datasetFiles": [
+        "L5_datasets/automotive_data/data.csv",
+        "L5_datasets/automotive_data/names.txt",
+        "L5_datasets/batdongsan.csv",
+        "L5_datasets/batdongsan.json",
+        "L5_datasets/batdongsan.xlsx",
+        "L5_datasets/bds_10_head.csv",
+        "L5_datasets/bds_10_tail.json",
+        "L5_datasets/my_bds.csv",
+        "L5_datasets/student_survey.csv"
+      ],
+      "description": "Tìm hiểu về các kỹ thuật nhập xuất dữ liệu (I/O) trong Python, kết nối cơ sở dữ liệu và gọi API. Bao gồm thực hành với dữ liệu ô tô và bất động sản."
+    },
+    {
+      "id": "Lecture6",
+      "title": "Lecture 06 - Data Processing",
+      "notebooks": [
+        {
+          "id": "Lecture_6_Excercise_1_Pandas",
+          "title": "Lecture 6.1: Exercise 1 - Pandas",
+          "file": "Lecture_6_Excercise_1_Pandas.ipynb",
+          "description": "Bài tập thực hành về xử lý dữ liệu với thư viện Pandas (cơ bản).",
+          "guide": "Thực hành các thao tác cơ bản nhất khi làm việc với thư viện Pandas.\n\n**Nội dung chính:**\n- Quan sát dữ liệu bằng `.head()` và `.tail()`.\n- Lấy thông tin tổng quan bằng `.info()`.\n- Xem thống kê mô tả cơ bản bằng `.describe()`.\n- Lọc dữ liệu, trích xuất các cột và hàng cụ thể."
+        },
+        {
+          "id": "Lecture_6_Excercise_2_Data_Wrangling_Hand_On_Lab",
+          "title": "Lecture 6.2: Exercise 2 - Data Wrangling Hands-On Lab",
+          "file": "Lecture_6_Excercise_2_Data_Wrangling_Hand_On_Lab.ipynb",
+          "description": "Lab thực hành Data Wrangling: làm sạch và chuẩn bị dữ liệu trước khi phân tích.",
+          "guide": "Bài thực hành về **Tiền xử lý dữ liệu (Data Wrangling)**, bước quan trọng nhất trước khi phân tích chuyên sâu.\n\n**Nội dung chính:**\n- Nhận diện các giá trị bị thiếu (Missing Values).\n- Xử lý dữ liệu bị thiếu: thay thế bằng giá trị trung bình/trung vị hoặc loại bỏ.\n- Chuẩn hóa định dạng dữ liệu (Data Formatting) và ép kiểu (Data Casting)."
+        }
+      ],
+      "datasetsDir": "L06_datasets",
+      "datasetFiles": [
+        "L06_datasets/automotive_data/data.csv",
+        "L06_datasets/automotive_data/data_with_header.csv",
+        "L06_datasets/automotive_data/names.txt",
+        "L06_datasets/automotive_pams.csv"
+      ],
+      "description": "Các bài thực hành sử dụng thư viện Pandas để xử lý, làm sạch và phân tích dữ liệu (Data Wrangling)."
+    },
+    {
+      "id": "Lecture7",
+      "title": "Lecture 07 - Exploratory Data Analysis",
+      "notebooks": [
+        {
+          "id": "Lecture_07_Excercise_1_EDA_Hand_On_Lab",
+          "title": "Lecture 7.1: Exercise 1 - EDA Hands-On Lab",
+          "file": "Lecture_07_Excercise_1_EDA_Hand_On_Lab.ipynb",
+          "description": "Hướng dẫn phân tích dữ liệu chuyên sâu và trực quan hóa (Data Visualization).",
+          "guide": "Thực hành **Phân tích Khám phá Dữ liệu (Exploratory Data Analysis - EDA)**.\n\n**Nội dung chính:**\n- Khám phá các thuộc tính dữ liệu và sử dụng `groupby()` để phân tích theo nhóm.\n- Tạo bảng tổng hợp (Pivot Table).\n- Phân tích tương quan Pearson (Correlation) và kiểm định giả thuyết (P-value).\n- Áp dụng phân tích phương sai (ANOVA) để tìm ra các biến số quan trọng ảnh hưởng đến mô hình."
+        }
+      ],
+      "datasetsDir": "L07_datasets",
+      "datasetFiles": [
+        "L07_datasets/automotive_data/data.csv",
+        "L07_datasets/automotive_data/data_with_header.csv",
+        "L07_datasets/automotive_data/names.txt",
+        "L07_datasets/automotive_pams.csv",
+        "L07_datasets/clean_df.csv"
+      ],
+      "description": "Sử dụng các thư viện trực quan hóa dữ liệu như Matplotlib và Seaborn để vẽ biểu đồ và phân tích dữ liệu chuyên sâu."
+    },
+    {
+      "id": "Lecture8",
+      "title": "Lecture 08 - Advanced Data Visualization",
+      "notebooks": [
+        {
+          "id": "Lecture_8_Exercise_1_Introduction_to_Matplotlib_and_Line_Plots",
+          "title": "Lecture 8.1: Intro to Matplotlib & Line Plots",
+          "file": "Lecture_8_Exercise_1_Introduction_to_Matplotlib_and_Line_Plots.ipynb",
+          "description": "Trực quan hóa dữ liệu cơ bản với Matplotlib: Line Plots (Biểu đồ đường) và Area Plots (Biểu đồ diện tích).",
+          "guide": "Trong bài học này, bạn sẽ làm quen với thư viện **Matplotlib** để trực quan hóa dữ liệu xu hướng nhập cư Canada.\n\n**Các bước thực hiện:**\n1. Sử dụng Pandas đọc dữ liệu Excel: `pd.read_excel('datasets/canadian_immegration_data.xlsx')`.\n2. Tiền xử lý dữ liệu: xóa cột không cần thiết, đổi tên cột ngắn gọn, đặt cột Country làm index.\n3. Trích xuất chuỗi thời gian các năm (ví dụ: `years = list(map(str, range(1980, 2014)))`).\n4. Vẽ biểu đồ đường: `df.loc['Haiti', years].plot(kind='line')`.\n5. Tùy chỉnh biểu đồ với `plt.title()`, `plt.xlabel()`, `plt.ylabel()` và `plt.show()`."
+        },
+        {
+          "id": "Lecture_8_Exercise_2_Pie_Charts_Box_Plots_Scatter_Plots_and_Bubble_Plots",
+          "title": "Lecture 8.2: Pie, Box, Scatter & Bubble Plots",
+          "file": "Lecture_8_Exercise_2_Pie_Charts_Box_Plots_Scatter_Plots_and_Bubble_Plots.ipynb",
+          "description": "Thực hành các dạng biểu đồ chuyên sâu: Biểu đồ tròn (Pie), Biểu đồ hộp (Box), Phân tán (Scatter) và Bong bóng (Bubble).",
+          "guide": "Khám phá các kỹ thuật trực quan hóa dữ liệu nâng cao với Matplotlib.\n\n**Nội dung chính:**\n1. **Biểu đồ tròn (Pie Chart)**: So sánh tỷ lệ phần trăm theo lục địa bằng `df.plot(kind='pie', autopct='%1.1f%%', startangle=90)`.\n2. **Biểu đồ hộp (Box Plot)**: Đánh giá phân phối số lượng người nhập cư và phát hiện outliers bằng `df.plot(kind='box')`.\n3. **Biểu đồ phân tán (Scatter Plot)**: Khảo sát xu hướng tổng lượng nhập cư qua các năm bằng `df.plot(kind='scatter', x='year', y='total')`.\n4. **Biểu đồ bong bóng (Bubble Plot)**: Mở rộng Scatter Plot bằng cách gán trọng số kích thước điểm (s=normalized_weights) để thể hiện thêm chiều dữ liệu thứ ba."
+        }
+      ],
+      "datasetsDir": "L8_datasets",
+      "datasetFiles": [
+        "L8_datasets/canadian_immegration_data.xlsx"
+      ],
+      "description": "Khóa học trực quan hóa dữ liệu chuyên sâu với Matplotlib: Line Plots, Area Plots, Pie Charts, Box Plots, Scatter Plots và Bubble Plots."
+    },
+    {
+      "id": "Lecture9",
+      "title": "Lecture 09 - Linear Regression Models",
+      "notebooks": [
+        {
+          "id": "Lecture_9_Exercise_1_Linear_Model_Hand_on_Lab",
+          "title": "Lecture 9.1: Linear Regression Hands-on Lab",
+          "file": "Lecture_9_Exercise_1_Linear_Model_Hand_on_Lab.ipynb",
+          "description": "Xây dựng mô hình hồi quy tuyến tính đơn biến (SLR) và đa biến (MLR) với thư viện Scikit-learn.",
+          "guide": "Trong bài học này, bạn sẽ thực hành xây dựng mô hình Hồi quy tuyến tính để dự đoán giá xe ô tô bằng Scikit-learn.\n\n**Các bước thực hiện:**\n1. Import `LinearRegression` từ `sklearn.linear_model`.\n2. Chọn biến độc lập $X$ và biến mục tiêu $Y$.\n3. Khởi tạo mô hình và huấn luyện với `lm.fit(X, Y)`.\n4. Tìm hệ số chặn (`lm.intercept_`) và hệ số góc (`lm.coef_`).\n5. Dự đoán với `lm.predict(X)` và trực quan hóa bằng `sns.regplot()` & `sns.residplot()`.\n6. Đánh giá độ chính xác qua $R^2$ (R-squared) và Sai số toàn phương trung bình (MSE)."
+        }
+      ],
+      "datasetsDir": "L9_datasets",
+      "datasetFiles": [
+        "L9_datasets/clean_df.csv"
+      ],
+      "description": "Tìm hiểu và thực hành xây dựng mô hình Hồi quy tuyến tính đơn biến và đa biến (Linear Regression) để dự đoán giá trị liên tục."
+    },
+    {
+      "id": "Lecture10",
+      "title": "Lecture 10 - Polynomial & Logistic Regression",
+      "notebooks": [
+        {
+          "id": "Lecture_10_Exercise_1_Poly_Model_Hand_on_Lab",
+          "title": "Lecture 10.1: Polynomial Regression Hands-on Lab",
+          "file": "Lecture_10_Exercise_1_Poly_Model_Hand_on_Lab.ipynb",
+          "description": "Xây dựng mô hình Hồi quy đa thức (Polynomial Regression) và Pipeline chuẩn hóa dữ liệu tự động.",
+          "guide": "Thực hành xây dựng mô hình Hồi quy đa thức để nắm bắt các mối quan hệ phi tuyến tính trong dữ liệu.\n\n**Nội dung chính:**\n1. Sử dụng hàm `np.polyfit()` và `np.poly1d()` để huấn luyện hồi quy đa thức bậc 3 và bậc 11.\n2. Mở rộng cho nhiều biến bằng `PolynomialFeatures` từ `sklearn.preprocessing`.\n3. Chuẩn hóa đặc trưng với `StandardScaler`.\n4. Kết hợp các bước biến đổi và huấn luyện thành một luồng hoàn chỉnh với `Pipeline`.\n5. Đánh giá chất lượng mô hình thông qua MSE và chỉ số $R^2$."
+        },
+        {
+          "id": "Lecture_10_Exercise_2_Understanding_Logistic_Regression",
+          "title": "Lecture 10.2: Understanding Logistic Regression",
+          "file": "Lecture_10_Exercise_2_Understanding Logistic Regression.ipynb",
+          "description": "Khám phá thuật toán Hồi quy Logistic (Logistic Regression) cho bài toán phân loại nhị phân.",
+          "guide": "Tìm hiểu và áp dụng thuật toán Hồi quy Logistic vào bài toán dự đoán bệnh tiểu đường (Diabetes Classification).\n\n**Các bước thực hiện:**\n1. Phân chia tập dữ liệu huấn luyện và kiểm thử với `train_test_split`.\n2. Khởi tạo mô hình `LogisticRegression` từ `sklearn.linear_model` và huấn luyện bằng `fit(X_train, y_train)`.\n3. Dự đoán nhãn phân loại bằng `predict(X_test)`.\n4. Đánh giá mô hình bằng Confusion Matrix, Độ chính xác (Accuracy), Precision và Recall."
+        }
+      ],
+      "datasetsDir": "L10_datasets",
+      "datasetFiles": [
+        "L10_datasets/clean_df.csv",
+        "L10_datasets/diabetes.csv",
+        "L10_datasets/toy_dataset.csv"
+      ],
+      "description": "Nghiên cứu các phương pháp mô hình hóa nâng cao: Hồi quy Đa thức (Polynomial Regression) và Hồi quy Logistic (Logistic Regression)."
+    },
+    {
+      "id": "Lecture11",
+      "title": "Lecture 11 - Model Evaluation & Refinement",
+      "notebooks": [
+        {
+          "id": "Lecture_11_Excercise_1_Model_Evaluation_and_Refinement",
+          "title": "Lecture 11.1: Model Evaluation & Refinement",
+          "file": "Lecture_11_Excercise_1_Model_Evaluation_and_Refinement.ipynb",
+          "description": "Đánh giá mô hình chuyên sâu: Phân chia tập dữ liệu, Cross-Validation, Overfitting, Underfitting và Hồi quy Ridge.",
+          "guide": "Khóa học thực hành về kỹ thuật đánh giá và tinh chỉnh mô hình máy học để đạt hiệu năng tối ưu.\n\n**Nội dung chính:**\n1. Phân chia dữ liệu train/test bằng `train_test_split`.\n2. Đánh giá độ tin cậy của mô hình bằng kiểm định chéo K-Fold với `cross_val_score` và `cross_val_predict`.\n3. Nhận diện hiện tượng Underfitting và Overfitting qua đồ thị sai số dự đoán.\n4. Ứng dụng kỹ thuật chính quy hóa Ridge Regression (`Ridge`) với tham số alpha để kiểm soát phương sai.\n5. Tối ưu hóa siêu tham số alpha bằng `GridSearchCV`."
+        }
+      ],
+      "datasetsDir": "L11_datasets",
+      "datasetFiles": [
+        "L11_datasets/clean_df.csv"
+      ],
+      "description": "Các kỹ thuật đánh giá và tinh chỉnh mô hình học máy: Cross Validation, phát hiện Overfitting/Underfitting, Ridge Regression và Grid Search."
+    },
+    {
+      "id": "Lecture12",
+      "title": "Lecture 12 - End-to-End ML Project & Association Rules",
+      "notebooks": [
+        {
+          "id": "Lecture_12_Excercise_1_End_to_end_machine_learning_project",
+          "title": "Lecture 12.1: End-to-End Machine Learning Project",
+          "file": "Lecture_12_Excercise_1_End_to_end_machine_learning_project.ipynb",
+          "description": "Dự án Machine Learning hoàn chỉnh từ A đến Z: Phân tích khám phá, Tiền xử lý dữ liệu, Pipeline, Huấn luyện và Tối ưu mô hình.",
+          "guide": "Thực hiện một dự án Machine Learning thực tế từ đầu đến cuối trên tập dữ liệu giá nhà ở California (California Housing Data).\n\n**Quy trình 6 bước chuẩn mực:**\n1. **Khám phá dữ liệu:** Quan sát trực quan qua bản đồ địa lý, phân tích ma trận tương quan (Correlation Matrix).\n2. **Phân chia dữ liệu:** Stratified sampling theo khoảng thu nhập (`StratifiedShuffleSplit`).\n3. **Xử lý dữ liệu:** Điền giá trị thiếu (`SimpleImputer`), mã hóa biến phân loại (`OneHotEncoder`).\n4. **Xây dựng Pipeline:** Kết hợp tất cả bước biến đổi bằng `ColumnTransformer` và `Pipeline`.\n5. **Huấn luyện mô hình:** So sánh Linear Regression, Decision Tree và Random Forest.\n6. **Tối ưu hóa:** Tìm kiếm siêu tham số tối ưu bằng `GridSearchCV` và đánh giá trên Test set."
+        },
+        {
+          "id": "Lecture_12_Excercise_2_Association_Rules_Analysis",
+          "title": "Lecture 12.2: Association Rules Analysis",
+          "file": "Lecture_12_Excercise_2_Association Rules Analysis.ipynb",
+          "description": "Phân tích giỏ hàng (Market Basket Analysis) và khai phá tập mục thường xuyên với thuật toán Apriori.",
+          "guide": "Thực hành khai phá quy tắc kết hợp (Association Rules Mining) trong phân tích bán lẻ sử dụng thư viện Mlxtend.\n\n**Các bước thực hiện:**\n1. Biến đổi dữ liệu danh sách giao dịch sang dạng ma trận nhị phân với `TransactionEncoder`.\n2. Áp dụng thuật toán **Apriori** (`apriori`) để tìm các tập mục thường xuyên (Frequent Itemsets) với ngưỡng `min_support`.\n3. Tạo các quy tắc kết hợp bằng hàm `association_rules`.\n4. Đánh giá quy tắc thông qua các chỉ số: **Support**, **Confidence** và **Lift**.\n5. Lọc và sắp xếp các quy tắc tiềm năng để đưa ra chiến lược kinh doanh."
+        },
+        {
+          "id": "Lecture_12_Optional_Excercise_Statistic_and_Statistical_Inference",
+          "title": "Lecture 12.3: Statistics & Statistical Inference (Optional)",
+          "file": "Lecture_12_Optional_Excercise_Statistic_and_Statistical_Inference.ipynb",
+          "description": "Thực hành xác suất thống kê mô tả, các moment (Mean, Var, Skewness, Kurtosis), chọn mẫu và kiểm định giả thuyết.",
+          "guide": "Củng cố các khái niệm toán học nền tảng về Xác suất Thống kê và Suy luận Thống kê trong Data Science.\n\n**Nội dung chính:**\n1. **Thống kê mô tả:** Mean, Median, Mode, Variance, Standard Deviation.\n2. **Các Moment của phân phối:** Tính toán Skewness (độ lệch) và Kurtosis (độ nhọn).\n3. **Sai số & Độ chệch:** Bias, Sai số toàn phương trung bình (MSE), Sai số chuẩn (Standard Error).\n4. **Phương pháp chọn mẫu:** Lấy mẫu ngẫu nhiên, có hệ thống, phân tầng (Stratified), và theo cụm (Cluster).\n5. **Kiểm định giả thuyết:** Tính giá trị t-statistic và p-value để so sánh hai mẫu ngẫu nhiên."
+        }
+      ],
+      "datasetsDir": "L12_datasets",
+      "datasetFiles": [
+        "L12_datasets/housing/housing.csv",
+        "L12_datasets/housing/housing.tgz",
+        "L12_datasets/Market_Basket_Optimisation.csv",
+        "L12_datasets/toy_dataset.csv",
+        "L12_datasets/basket_quiz.csv",
+        "L12_datasets/Online Retail.xlsx"
+      ],
+      "description": "Khóa học dự án Machine Learning hoàn chỉnh theo chuẩn công nghiệp, khai phá quy tắc kết hợp Apriori trong thương mại điện tử, và xác suất thống kê nâng cao."
+    }
+  ]
+}

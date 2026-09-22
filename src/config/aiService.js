@@ -245,3 +245,76 @@ ${testContext}
   const providerNames = errors.map(e => `${e.provider} (${e.status || 'error'})`).join(', ');
   throw new Error(`Không thể kết nối AI. Đã thử: ${providerNames}. Vui lòng kiểm tra API Key hoặc thử lại sau.`);
 }
+
+// --- Learning AI Export ---
+export async function askAIForLearning(notebookTitle, cellCode, cellOutput, cellIndex, chatHistory = []) {
+  if (providers.length === 0) {
+    throw new Error('Chưa cấu hình API Key nào. Vui lòng thêm ít nhất 1 key vào file .env.');
+  }
+
+  const outputText = Array.isArray(cellOutput)
+    ? cellOutput.map(o => o.text).join('\n')
+    : (cellOutput || '');
+
+  const systemPrompt = `
+You are an AI programming assistant. Your name is "Zero". You must communicate in Vietnamese.
+IMPORTANT PERSONA RULES:
+- Always use the pronoun "mình" to refer to yourself, and "bạn" to refer to the user.
+- Do NOT be overly friendly or chatty. Do not use emojis unless necessary.
+- Provide direct, concise instructions and point out logical errors. Do not write long paragraphs.
+- Do NOT rewrite the entire code. Only explain concepts, point out errors, and suggest fixes.
+- If the student asks about a concept, explain it with a simple example.
+- If the code has an error, point out the line and suggest how to fix it (do not write the full code).
+
+### Notebook: ${notebookTitle}
+${cellCode ? `
+### Code hiện tại (Cell ${cellIndex !== null ? cellIndex + 1 : '?'}):
+\`\`\`python
+${cellCode}
+\`\`\`` : ''}
+${outputText ? `
+### Output:
+\`\`\`
+${outputText}
+\`\`\`` : ''}
+  `.trim();
+
+  let userMessage;
+  if (chatHistory.length === 0) {
+    userMessage = "Help me understand this code/notebook";
+  } else {
+    userMessage = chatHistory[chatHistory.length - 1]?.content || "Help me";
+  }
+
+  const errors = [];
+
+  for (const provider of providers) {
+    try {
+      console.log(`🎓 Learning AI: Trying ${provider.name}...`);
+
+      let resultText;
+      if (provider.type === 'gemini') {
+        resultText = await callGemini(provider, systemPrompt, chatHistory, userMessage);
+      } else {
+        resultText = await callOpenAICompatible(provider, systemPrompt, chatHistory, userMessage);
+      }
+
+      console.log(`✅ ${provider.name} responded.`);
+      return { text: resultText, providerName: provider.name, modelName: provider.model };
+
+    } catch (error) {
+      const status = error?.status;
+      const msg = error?.message || '';
+      console.warn(`❌ ${provider.name} failed: ${msg.substring(0, 150)}`);
+      errors.push({ provider: provider.name, status, message: msg });
+      continue;
+    }
+  }
+
+  console.error("All AI providers failed:", errors);
+  const allRateLimited = errors.every(e => e.status === 429 || e.message?.includes('429') || e.message?.includes('quota'));
+  if (allRateLimited) {
+    throw new Error(`AI đang quá tải. Vui lòng đợi 1 phút rồi thử lại!`);
+  }
+  throw new Error(`Không thể kết nối AI. Vui lòng thử lại sau.`);
+}

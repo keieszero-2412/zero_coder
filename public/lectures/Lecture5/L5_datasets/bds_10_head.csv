@@ -1,0 +1,11 @@
+,beds,category,city,direction,district,news_begin_date,news_end_date,news_id,news_type_level,price,root,square,street,ward,label_price
+0,,Nhà đất bán,Kiên Giang,Đông,Phú Quốc,9/10/2018,9/17/2018,17536888.0,Tin thường,,nha_dat_ban,120m²,Dương Tơ,Dương Tơ,
+1,,Nhà đất bán,Đồng Nai,,Nhơn Trạch,9/10/2018,9/17/2018,17288861.0,Tin thường,1.2,nha_dat_ban,262m²,,Vĩnh Thanh,tỷ
+2,3+,Nhà đất bán,Bình Dương,,Bến Cát,9/6/2018,9/13/2018,16667097.0,Tin thường,1.2,nha_dat_ban,67.5m²,NE2,Thới Hòa,tỷ
+3,,Nhà đất bán,Kiên Giang,,Phú Quốc,9/7/2018,9/14/2018,16338832.0,Tin thường,2.9,nha_dat_ban,Không xác định,Bào,Dương Tơ,tỷ
+4,,Nhà đất bán,Hồ Chí Minh,Tây-Nam,Quận 1,9/4/2018,9/11/2018,15120807.0,Tin thường,70.0,nha_dat_ban,225m²,Tôn Đức Thắng,Bến Nghé,tỷ
+5,2+,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Thủ Đức,9/7/2018,9/14/2018,16435218.0,Tin thường,1.65,nha_dat_ban,48m²,38,Hiệp Bình Chánh,tỷ
+6,,Nhà đất bán,Hồ Chí Minh,,Bình Thạnh,9/8/2018,9/15/2018,17526997.0,Tin thường,13.5,nha_dat_ban,52m²,Hoàng Hoa Thám,5,tỷ
+7,,Nhà đất bán,Hồ Chí Minh,,Quận 1,9/8/2018,9/15/2018,17525165.0,Tin thường,30.0,nha_dat_ban,112.5m²,Trần Quang Khải,Tân Định,tỷ
+8,,Nhà đất bán,Hồ Chí Minh,Đông-Nam,Quận 12,9/7/2018,9/14/2018,17512130.0,Tin Vip 3,45.0,nha_dat_ban,80m²,Nguyễn Văn Quá,Tân Hưng Thuận,triệu/m²
+9,,Nhà đất bán,Hồ Chí Minh,,Hóc Môn,9/7/2018,9/14/2018,17511416.0,Tin thường,800.0,nha_dat_ban,80m²,Đặng Thúc Vịnh,,triệu

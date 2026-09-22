@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { db } from '../config/firebase';
 import { collection, query, where, getDocs, doc, setDoc, deleteDoc, onSnapshot, orderBy } from 'firebase/firestore';
-import { X, Check, Trash2, Mail, Plus, MessageSquare, ImageIcon, Settings, Key, Shield } from 'lucide-react';
+import { X, Check, Trash2, Mail, Plus, MessageSquare, ImageIcon, Settings, Key, Shield, Database } from 'lucide-react';
 import { useNotification } from '../context/NotificationContext';
 import '../index.css';
 
@@ -58,6 +59,38 @@ export function AdminPanel({ onClose }) {
   const [loading, setLoading] = useState(true);
   const [manualEmail, setManualEmail] = useState('');
   const [bypassAuth, setBypassAuth] = useState(false);
+  const [isMigrating, setIsMigrating] = useState(false);
+
+  const handleMigrateData = async (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    showConfirm(`Are you sure you want to migrate problems from ${file.name} to Firestore?`, async () => {
+      setIsMigrating(true);
+      try {
+        const text = await file.text();
+        const backupProblems = JSON.parse(text);
+        
+        if (!Array.isArray(backupProblems)) {
+          throw new Error("Invalid JSON format. Expected an array of problems.");
+        }
+
+        let index = 0;
+        for (const p of backupProblems) {
+          await setDoc(doc(db, 'problems', p.id.toString()), { ...p, order: index });
+          index++;
+        }
+        showToast(`Successfully migrated ${backupProblems.length} problems!`, "success");
+      } catch (err) {
+        console.error("Migration failed:", err);
+        showToast("Error migrating data: " + err.message, "error");
+      } finally {
+        setIsMigrating(false);
+      }
+    });
+    // Reset file input
+    event.target.value = null;
+  };
   const [selectedImage, setSelectedImage] = useState(null);
   const [replyDrafts, setReplyDrafts] = useState({});
 
@@ -79,6 +112,28 @@ export function AdminPanel({ onClose }) {
     } catch (err) {
       console.error("Failed to send reply:", err);
       showToast("Error sending reply.", "error");
+    }
+  };
+
+  const handleResolveFeedback = async (feedbackId) => {
+    const replyText = replyDrafts[feedbackId]?.trim();
+    const adminReply = replyText || 'Vấn đề của bạn đã được Admin kiểm tra và xử lý thành công.';
+    
+    try {
+      await setDoc(doc(db, 'feedbacks', feedbackId), {
+        adminReply: adminReply,
+        resolvedAt: new Date(),
+        status: 'resolved'
+      }, { merge: true });
+      setReplyDrafts(prev => {
+        const next = { ...prev };
+        delete next[feedbackId];
+        return next;
+      });
+      showToast("Feedback marked as resolved!", "success");
+    } catch (err) {
+      console.error("Failed to resolve feedback:", err);
+      showToast("Error resolving feedback.", "error");
     }
   };
 
@@ -119,6 +174,9 @@ export function AdminPanel({ onClose }) {
       });
       setFeedbacks(fbList);
       setLoading(false);
+    }, (error) => {
+      console.error("Error fetching feedbacks:", error);
+      setLoading(false); // Ensure loading stops on error
     });
 
     const unsubscribeSettings = onSnapshot(doc(db, 'authorized_emails', 'bypass@zerocoder.admin'), (docSnap) => {
@@ -225,7 +283,7 @@ export function AdminPanel({ onClose }) {
     }
   };
 
-  return (
+  return createPortal(
     <div style={{
       position: 'fixed',
       top: 0, left: 0, right: 0, bottom: 0,
@@ -234,8 +292,7 @@ export function AdminPanel({ onClose }) {
       alignItems: 'center',
       justifyContent: 'center',
       zIndex: 1000,
-      padding: '1rem',
-      backdropFilter: 'blur(4px)'
+      padding: '1rem'
     }}>
       <div className="glass-panel" style={{
         width: '100%',
@@ -244,7 +301,9 @@ export function AdminPanel({ onClose }) {
         display: 'flex',
         borderRadius: 'var(--radius-lg)',
         overflow: 'hidden',
-        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+        backdropFilter: 'none',
+        WebkitBackdropFilter: 'none'
       }}>
         {/* Sidebar */}
         <div style={{
@@ -267,7 +326,7 @@ export function AdminPanel({ onClose }) {
             <Shield size={22} color="var(--accent-primary)" />
             Admin Panel
           </div>
-          <div style={{ padding: '1rem 0', flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+          <div className="smooth-scroll" style={{ padding: '1rem 0', flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
             <TabButton 
               label="Access Requests" icon={Mail} 
               active={activeTab === 'requests'} badge={accessRequests.length}
@@ -288,6 +347,11 @@ export function AdminPanel({ onClose }) {
               active={activeTab === 'settings'}
               onClick={() => setActiveTab('settings')}
             />
+            <TabButton 
+              label="Database" icon={Database} 
+              active={activeTab === 'database'}
+              onClick={() => setActiveTab('database')}
+            />
           </div>
         </div>
 
@@ -307,6 +371,7 @@ export function AdminPanel({ onClose }) {
               {activeTab === 'resets' && 'Password Resets'}
               {activeTab === 'feedbacks' && 'User Feedbacks'}
               {activeTab === 'settings' && 'Global Settings'}
+              {activeTab === 'database' && 'Database Migration'}
             </h2>
             <button 
               onClick={onClose}
@@ -319,7 +384,7 @@ export function AdminPanel({ onClose }) {
           </div>
 
           {/* Tab Content */}
-          <div style={{ flex: 1, overflowY: 'auto', padding: '2rem' }}>
+          <div className="smooth-scroll" style={{ flex: 1, overflowY: 'auto', padding: '2rem' }}>
             {loading ? (
               <div style={{ display: 'flex', justifyContent: 'center', padding: '3rem' }}>
                 <p style={{ color: 'var(--text-secondary)' }}>Loading...</p>
@@ -327,6 +392,31 @@ export function AdminPanel({ onClose }) {
             ) : (
               <div className="tab-content-anim" style={{ animation: 'fadeIn 0.3s ease-out' }}>
                 
+                {/* DATABASE TAB */}
+                {activeTab === 'database' && (
+                  <div style={{ padding: '1.5rem', backgroundColor: 'var(--bg-surface-elevated)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+                    <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>Migrate Problems to Firestore</h3>
+                    <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
+                      Upload the <code>problems.json</code> backup file from the <code>admin_backups</code> directory to seed the Firestore database.
+                    </p>
+                    
+                    <label 
+                      className="button-primary"
+                      style={{ padding: '0.75rem 1.5rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', cursor: isMigrating ? 'not-allowed' : 'pointer', opacity: isMigrating ? 0.7 : 1 }}
+                    >
+                      <Database size={18} />
+                      {isMigrating ? 'Migrating...' : 'Select problems.json to Seed DB'}
+                      <input 
+                        type="file" 
+                        accept=".json" 
+                        onChange={handleMigrateData} 
+                        disabled={isMigrating} 
+                        style={{ display: 'none' }} 
+                      />
+                    </label>
+                  </div>
+                )}
+
                 {/* SETTINGS TAB */}
                 {activeTab === 'settings' && (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -491,9 +581,8 @@ export function AdminPanel({ onClose }) {
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                         {feedbacks.map(fb => (
                           <div key={fb.id} style={{
-                            display: 'flex', flexDirection: 'column', gap: '1rem', padding: '1.5rem',
-                            backgroundColor: 'var(--bg-surface-elevated)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)',
-                            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                            display: 'flex', flexDirection: 'column', gap: '1rem', padding: '1.25rem',
+                            backgroundColor: 'var(--bg-surface)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)',
                           }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                               <div>
@@ -539,15 +628,18 @@ export function AdminPanel({ onClose }) {
 
                             {fb.adminReply ? (
                               <div style={{ 
-                                padding: '1rem', backgroundColor: 'var(--bg-surface)', borderLeft: '4px solid var(--accent-primary)',
+                                padding: '1rem', backgroundColor: 'var(--bg-surface)', borderLeft: `4px solid ${fb.status === 'resolved' ? '#10b981' : 'var(--accent-primary)'}`,
                                 borderRadius: '0 var(--radius-sm) var(--radius-sm) 0', border: '1px solid var(--border-color)'
                               }}>
-                                <div style={{ fontWeight: 600, color: 'var(--accent-primary)', marginBottom: '0.5rem', fontSize: '0.9rem' }}>Admin Reply</div>
+                                <div style={{ fontWeight: 600, color: fb.status === 'resolved' ? '#10b981' : 'var(--accent-primary)', marginBottom: '0.5rem', fontSize: '0.9rem' }}>
+                                  {fb.status === 'resolved' ? 'Resolved by Admin' : 'Admin Reply'}
+                                </div>
                                 <div style={{ color: 'var(--text-primary)', whiteSpace: 'pre-wrap', wordBreak: 'break-word', fontSize: '0.9rem', lineHeight: 1.5 }}>
                                   {fb.adminReply}
                                 </div>
                                 <div style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '0.75rem' }}>
-                                  {fb.repliedAt ? (fb.repliedAt.toDate ? fb.repliedAt.toDate().toLocaleString() : new Date(fb.repliedAt).toLocaleString()) : 'Unknown'}
+                                  {fb.resolvedAt ? (fb.resolvedAt.toDate ? fb.resolvedAt.toDate().toLocaleString() : new Date(fb.resolvedAt).toLocaleString()) :
+                                  fb.repliedAt ? (fb.repliedAt.toDate ? fb.repliedAt.toDate().toLocaleString() : new Date(fb.repliedAt).toLocaleString()) : 'Unknown'}
                                 </div>
                               </div>
                             ) : (
@@ -562,14 +654,21 @@ export function AdminPanel({ onClose }) {
                                     resize: 'vertical', fontSize: '0.9rem', fontFamily: 'inherit', outline: 'none'
                                   }}
                                 />
-                                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem' }}>
                                   <button
                                     onClick={() => handleSendReply(fb.id)}
                                     disabled={!replyDrafts[fb.id]?.trim()}
-                                    className="button-primary"
+                                    className="button-secondary"
                                     style={{ padding: '0.5rem 1rem' }}
                                   >
                                     Send Reply
+                                  </button>
+                                  <button
+                                    onClick={() => handleResolveFeedback(fb.id)}
+                                    className="button-primary"
+                                    style={{ padding: '0.5rem 1rem', backgroundColor: '#10b981', color: 'white' }}
+                                  >
+                                    Resolve
                                   </button>
                                 </div>
                               </div>
@@ -616,6 +715,7 @@ export function AdminPanel({ onClose }) {
           to { opacity: 1; transform: translateY(0); }
         }
       `}} />
-    </div>
+    </div>,
+    document.body
   );
 }

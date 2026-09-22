@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { X, Moon, Sun, Monitor, Type, Code } from 'lucide-react';
 import { useSettings } from '../context/SettingsContext';
 
 export function SettingsModal({ onClose }) {
   const { settings, updateSetting } = useSettings();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
+
+  if (!mounted) return null;
 
   return createPortal(
     <div 

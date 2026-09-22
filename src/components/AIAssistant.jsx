@@ -6,6 +6,7 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
+import { preprocessMarkdown } from '../utils/latexHelper';
 
 
 
@@ -50,17 +51,50 @@ const CodeBlock = ({ inline, className, children, onProposeFix, ...props }) => {
   return <code className={className} style={{ backgroundColor: 'var(--surface-color)', padding: '0.2rem 0.4rem', borderRadius: '0.25rem', fontSize: '0.85rem', fontFamily: 'monospace' }} {...props}>{children}</code>;
 };
 
-const MessageBubble = React.memo(({ msg, onProposeFix }) => (
-  <div className={`ai-chat-bubble ${msg.role}`}>
-    <ReactMarkdown 
-      remarkPlugins={[remarkGfm, remarkMath]} 
-      rehypePlugins={[rehypeKatex]}
-      components={{ code: (props) => <CodeBlock {...props} onProposeFix={onProposeFix} /> }}
-    >
-      {msg.content}
-    </ReactMarkdown>
-  </div>
-));
+const MessageBubble = React.memo(({ msg, onProposeFix }) => {
+  const [displayedContent, setDisplayedContent] = useState(msg.isNew ? '' : msg.content);
+
+  useEffect(() => {
+    if (!msg.isNew) {
+      setDisplayedContent(msg.content);
+      return;
+    }
+
+    let i = 0;
+    // Adaptive speed: finish in about 1.5 seconds regardless of length, minimum 1 char per tick
+    const charsPerTick = Math.max(1, Math.floor(msg.content.length / 100));
+    const interval = setInterval(() => {
+      setDisplayedContent(msg.content.slice(0, i));
+      i += charsPerTick;
+      
+      // Keep scrolling down while typing
+      const container = document.querySelector('.ai-chat-messages');
+      if (container) {
+        container.scrollTop = container.scrollHeight;
+      }
+      
+      if (i > msg.content.length) {
+        setDisplayedContent(msg.content);
+        clearInterval(interval);
+        msg.isNew = false; // Mark as done so it doesn't re-type on re-renders
+      }
+    }, 15);
+
+    return () => clearInterval(interval);
+  }, [msg.content, msg.isNew]);
+
+  return (
+    <div className={`ai-chat-bubble ${msg.role}`}>
+      <ReactMarkdown 
+        remarkPlugins={[remarkGfm, remarkMath]} 
+        rehypePlugins={[rehypeKatex]}
+        components={{ code: (props) => <CodeBlock {...props} onProposeFix={onProposeFix} /> }}
+      >
+        {preprocessMarkdown(displayedContent)}
+      </ReactMarkdown>
+    </div>
+  );
+});
 
 export function AIAssistant({ problem, userCode, testResults, onClose, onProposeFix }) {
   const sessionKey = `ai_chat_${problem?.id}`;
@@ -106,7 +140,8 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
     setError('');
     
     const intentMessage = { role: 'user', content: intentPrompt };
-    setMessages([intentMessage]);
+    // Do not add the intent prompt to the UI
+
     
     try {
       const { text, providerName, modelName } = await askAIForHelp(problem, userCode, testResults, [intentMessage]);
@@ -160,7 +195,7 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
       // For initial request, we don't send any user text, the AI will use the system prompt
       const { text, providerName, modelName } = await askAIForHelp(problem, userCode, testResults, []);
       setCurrentProvider(providerName || 'AI');
-      setMessages([{ role: 'assistant', content: text }]);
+      setMessages([{ role: 'assistant', content: text, isNew: true }]);
     } catch (err) {
       setError(err.message || 'An error occurred while communicating with the AI.');
     } finally {
@@ -184,7 +219,7 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
       // Send the entire chat history
       const { text, providerName, modelName } = await askAIForHelp(problem, userCode, testResults, updatedMessages);
       setCurrentProvider(providerName || 'AI');
-      setMessages(prev => [...prev, { role: 'assistant', content: text }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: text, isNew: true }]);
     } catch (err) {
       setError(err.message || 'An error occurred while communicating with the AI.');
       // Remove the user message if it failed so they can try again
