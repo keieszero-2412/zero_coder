@@ -118,14 +118,18 @@ export function Dashboard() {
   const categories = useMemo(() => {
     const cats = {};
     for (const p of problems) {
-      const isLastTerm = p.category === "Last-term practice";
+      const catLower = (p.category || '').toLowerCase();
+      const isLastTerm = catLower.includes("last-term") || catLower.includes("final");
       if (activeTerm === 'mid' && isLastTerm) continue;
       if (activeTerm === 'last' && !isLastTerm) continue;
 
-      let catName = p.category;
-      if (catName === "Mid-term practice") {
+      let catName = p.category || '';
+      if (catName === "Mid-term practice" || catName === "Last-term practice") {
         catName = "Coding practice";
+      } else if (catName.startsWith("Last-term ")) {
+        catName = catName.replace("Last-term ", "");
       }
+      
       if (!cats[catName]) cats[catName] = [];
       cats[catName].push(p);
     }

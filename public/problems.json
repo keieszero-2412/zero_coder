@@ -2552,5 +2552,875 @@
       }
     ],
     "hint": "Tính biên lợi nhuận (prices[k] - costs[k]) / prices[k] cho từng sản phẩm. Dùng sorted với key=lambda k: (-(prices[k]-costs[k])/prices[k], k)."
+  },
+  {
+    "id": "final_test1_1",
+    "category": "Last-term Test 1",
+    "title": "1. Tổng hợp giá",
+    "description": "<p><b>Bối cảnh:</b> Mai là sinh viên FTU đam mê tài chính định lượng (quantitative finance). Bạn ấy tải về dữ liệu giao dịch hằng ngày của một cổ phiếu và muốn dùng Python để phân tích, xây chiến lược giao dịch và dự báo thị trường.</p><p>Mai bắt đầu bằng việc tổng hợp dữ liệu giá: số ngày giao dịch, giá đóng cửa trung bình, ngày giá cao nhất và thấp nhất, tổng khối lượng.</p><p><b>Yêu cầu:</b> Viết hàm `price_summary(data)`. `data` là list of dicts, mỗi dict có keys `'day'`, `'open'`, `'high'`, `'low'`, `'close'`, `'volume'`:</p><ul><li>`days` = số ngày giao dịch</li><li>`avg_close` = giá đóng cửa trung bình, làm tròn 2dp</li><li>`max_close` = tuple `(day, close)` của ngày giá đóng cửa cao nhất; nếu hòa, lấy ngày sớm nhất</li><li>`min_close` = tuple `(day, close)` của ngày giá đóng cửa thấp nhất; nếu hòa, lấy ngày sớm nhất</li><li>`total_volume` = tổng khối lượng giao dịch</li></ul><p><b>Trả về:</b> `dict {'days', 'avg_close', 'max_close', 'min_close', 'total_volume'}`</p>",
+    "hint": "",
+    "initialCode": "def price_summary(data):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(price_summary([{'day':1,'open':99.0,'high':101.0,'low':98.0,'close':100.0,'volume':5000},\n               {'day':2,'open':100.0,'high':103.0,'low':99.0,'close':102.0,'volume':6000},\n               {'day':3,'open':102.0,'high':102.5,'low':100.0,'close':101.0,'volume':5500}]))",
+        "expected": "{'days': 3, 'avg_close': 101.0, 'max_close': (2, 102.0), 'min_close': (1, 100.0), 'total_volume': 16500}"
+      }
+    ]
+  },
+  {
+    "id": "final_test1_2",
+    "category": "Last-term Test 1",
+    "title": "2. Giao dịch tốt nhất",
+    "description": "<p><b>Bối cảnh:</b> Mai là sinh viên FTU đam mê tài chính định lượng (quantitative finance). Bạn ấy tải về dữ liệu giao dịch hằng ngày của một cổ phiếu và muốn dùng Python để phân tích, xây chiến lược giao dịch và dự báo thị trường.</p><p>Mai muốn biết: nếu nhìn lại lịch sử, đâu là cơ hội mua-rồi-bán tốt nhất? Tức là chọn một ngày mua và một ngày bán **sau đó** sao cho lợi nhuận lớn nhất.</p><p><b>Yêu cầu:</b> Viết hàm `best_trade(prices)`. `prices` là list of dicts có keys `'day'`, `'close'`, đã sắp theo thời gian. Tìm ngày mua `buy_day` và ngày bán `sell_day` với `buy_day` trước `sell_day` sao cho `profit = close_bán - close_mua` lớn nhất.</p><ul><li>Trả về tuple `(buy_day, sell_day, profit)`, `profit` làm tròn 2dp</li><li>Nếu hòa, chọn `buy_day` sớm nhất; nếu vẫn hòa, `sell_day` sớm nhất</li><li>Nếu không có giao dịch nào có lãi (hoặc < 2 ngày), trả về `(None, None, 0.0)`</li></ul>",
+    "hint": "",
+    "initialCode": "def best_trade(prices):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(best_trade([{'day':1,'close':100.0},{'day':2,'close':98.0},{'day':3,'close':105.0}]))",
+        "expected": "(2, 3, 7.0)"
+      }
+    ]
+  },
+  {
+    "id": "final_test1_3",
+    "category": "Last-term Test 1",
+    "title": "3. Xây dựng ma trận",
+    "description": "<p><b>Bối cảnh:</b> Mai là sinh viên FTU đam mê tài chính định lượng (quantitative finance). Bạn ấy tải về dữ liệu giao dịch hằng ngày của một cổ phiếu và muốn dùng Python để phân tích, xây chiến lược giao dịch và dự báo thị trường.</p><p>Để xây mô hình dự báo, Mai biến dữ liệu thành ma trận đặc trưng `X` và vector mục tiêu `y`. Mỗi dòng của `X` bắt đầu bằng `1.0` (hệ số chặn / intercept).</p><p><b>Yêu cầu:</b> Viết hàm `build_matrix(records, feature_keys, target_key)`:</p><ul><li>Với mỗi dòng có đủ `target_key` và tất cả khóa trong `feature_keys`: thêm `[1.0] + [float(r[k]) for k in feature_keys]` vào `X`, và `float(r[target_key])` vào `y`</li><li>Bỏ qua dòng thiếu bất kỳ khóa nào</li></ul><p><b>Trả về:</b> `(X, y)`</p>",
+    "hint": "",
+    "initialCode": "def build_matrix(records, feature_keys, target_key):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(build_matrix([{'day':1,'close':100.0,'open':99.0},{'day':2,'close':102.0,'open':100.0},\n              {'day':3,'close':101.0}], ['day','open'], 'close'))",
+        "expected": "([[1.0, 1.0, 99.0], [1.0, 2.0, 100.0]], [100.0, 102.0])"
+      }
+    ]
+  },
+  {
+    "id": "final_test1_4",
+    "category": "Last-term Test 1",
+    "title": "4. Tín hiệu KNN",
+    "description": "<p><b>Bối cảnh:</b> Mai là sinh viên FTU đam mê tài chính định lượng (quantitative finance). Bạn ấy tải về dữ liệu giao dịch hằng ngày của một cổ phiếu và muốn dùng Python để phân tích, xây chiến lược giao dịch và dự báo thị trường.</p><p>Mai thử một cách khác để dự báo tín hiệu tăng/giảm: **k láng giềng gần nhất (k-Nearest Neighbors)**. Dựa trên các ngày trong quá khứ (đã biết tăng=1 hay giảm=0), dự đoán cho một điểm dữ liệu mới.</p><p><b>Yêu cầu:</b> Viết hàm `knn_signal(train_X, train_y, query, k=3)`:</p><ul><li>`train_X`: list các vector đặc trưng; `train_y`: list nhãn 0/1; `query`: vector cần dự đoán</li><li>Khoảng cách Euclid: `sqrt(sum((q_i - x_i)^2))`</li><li>Sắp xếp theo (khoảng cách tăng, chỉ số tăng), lấy k điểm gần nhất</li><li>Bỏ phiếu đa số; nếu hòa -> dự đoán 1</li><li>`confidence = round(số_phiếu_thắng / k, 4)`</li></ul><p><b>Trả về:</b> `(label, confidence)`</p>",
+    "hint": "",
+    "initialCode": "def knn_signal(train_X, train_y, query, k=3):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(knn_signal([[2.0,1.0],[8.0,9.0],[3.0,2.0],[9.0,8.0],[2.5,1.5]], [0,1,0,1,0], [2.0,2.0], 3))",
+        "expected": "(0, 1.0)"
+      }
+    ]
+  },
+  {
+    "id": "final_test1_5",
+    "category": "Last-term Test 1",
+    "title": "5. Tỷ lệ Kelly",
+    "description": "<p>(Bonus)</p><p><b>Bối cảnh:</b> Mai là sinh viên FTU đam mê tài chính định lượng (quantitative finance). Bạn ấy tải về dữ liệu giao dịch hằng ngày của một cổ phiếu và muốn dùng Python để phân tích, xây chiến lược giao dịch và dự báo thị trường.</p><p>Mai đã có chiến lược, giờ cần biết nên đặt cược **bao nhiêu phần** vốn vào mỗi lệnh. Bạn ấy dùng **tiêu chuẩn Kelly (Kelly criterion)** để tối ưu tỷ lệ vốn.</p><p><b>Yêu cầu:</b> Viết hàm `kelly_fraction(win_prob, payoff_ratio)`:</p><ul><li>`p = win_prob` (xác suất thắng), `q = 1 - p` (xác suất thua)</li><li>`b = payoff_ratio` (tỷ lệ lời/lỗ, ví dụ b=2 nghĩa là thắng được gấp 2 lần số đặt)</li><li>Công thức Kelly: `f* = (b*p - q) / b`</li><li>Nếu `f*` âm (không có lợi thế) -> trả về `0.0`</li><li>Làm tròn 4dp</li></ul><p><b>Trả về:</b> `float`</p>",
+    "hint": "",
+    "initialCode": "def kelly_fraction(win_prob, payoff_ratio):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(kelly_fraction(0.6, 2.0))",
+        "expected": "0.4"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p1_q1",
+    "category": "Last-term EASY",
+    "title": "1. The Scroll (String)",
+    "description": "<ul><li>Gán chuỗi \"abracadabra\" cho biến spell.</li><li>Trả về độ dài chuỗi.</li><li>Đếm số lần xuất hiện của chữ \"a\".</li><li>Thay thế \"a\" bằng \"c\".</li><li>Đảo ngược chuỗi kết quả.</li></ul>",
+    "hint": "Answer key:\n```python\ndef process_scroll(spell):\n    length = len(spell)\n    count_a = spell.count(\"a\")\n    replaced = spell.replace(\"a\", \"c\")\n    reversed_str = replaced[::-1]\n    return length, count_a, replaced, reversed_str\n```",
+    "initialCode": "def process_scroll(spell):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(process_scroll())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p1_q2",
+    "category": "Last-term EASY",
+    "title": "2. The Inventory (List)",
+    "description": "<ul><li>Cho list backpack. Đếm số phần tử.</li><li>Đếm số phần tử là list con.</li><li>Thay thế phần tử list con bằng chuỗi \"0\".</li><li>Nhân đôi giá trị các phần tử (string nhân đôi, int nhân 2) và đảo ngược list.</li></ul>",
+    "hint": "Answer key:\n```python\ndef process_backpack(backpack):\n    count_items = len(backpack)\n    count_lists = sum(1 for item in backpack if isinstance(item, list))\n    step3_list = [\"0\" if isinstance(item, list) else item for item in backpack]\n    final_list = [item * 2 for item in step3_list]\n    final_list.reverse()\n    return count_items, count_lists, step3_list, final_list\n```",
+    "initialCode": "def process_backpack(backpack):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(process_backpack())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p1_q3",
+    "category": "Last-term EASY",
+    "title": "3. The Identification (Dict)",
+    "description": "<ul><li>Cho dict shield. Trả về list keys và list values.</li><li>Tìm key có value là string và đổi value thành 0.</li><li>Tìm key có value không phải nguyên tử (list, dict...).</li></ul>",
+    "hint": "Answer key:\n```python\ndef process_shield(shield):\n    keys_list = list(shield.keys())\n    values_list = list(shield.values())\n    modified_shield = shield.copy()\n    for k, v in modified_shield.items():\n        if isinstance(v, str):\n            modified_shield[k] = 0\n    non_atomic_key = None\n    for k, v in shield.items():\n        if isinstance(v, (list, dict, set)):\n            non_atomic_key = k\n            break\n    return keys_list, values_list, modified_shield, non_atomic_key\n```",
+    "initialCode": "def process_shield(shield):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(process_shield())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p1_q4",
+    "category": "Last-term EASY",
+    "title": "4. The Map Grid (Numpy)",
+    "description": "<ul><li>Tạo mảng 5x5 ngẫu nhiên.</li><li>In kích thước (shape).</li><li>Tìm Min thay bằng 0, Max thay bằng 1. Tính trung bình.</li><li>Cắt mảng con 2x2 góc trái trên.</li></ul>",
+    "hint": "Answer key:\n```python\nimport numpy as np\ndef process_map_grid():\n    grid = np.random.randint(1, 101, size=(5, 5))\n    shape = grid.shape\n    min_val = np.min(grid)\n    max_val = np.max(grid)\n    mean_val = np.mean(grid)\n    modified_grid = grid.copy()\n    modified_grid[grid == min_val] = 0\n    modified_grid[grid == max_val] = 1\n    top_left_slice = grid[:2, :2]\n    return shape, modified_grid, mean_val, top_left_slice\n```",
+    "initialCode": "def process_map_grid():\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(process_map_grid())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p1_q5",
+    "category": "Last-term EASY",
+    "title": "5. The Gatekeeper (Function)",
+    "description": "<ul><li>Viết hàm identify_type(x).</li><li>Viết hàm identify_types(*args) trả về list các type.</li><li>Viết hàm process_list(lst): String -> 0, Number giữ nguyên.</li></ul>",
+    "hint": "Answer key:\n```python\ndef identify_type(x):\n    return type(x)\n\ndef identify_types(*args):\n    return [type(x) for x in args]\n\ndef process_list(lst):\n    result = []\n    for x in lst:\n        if isinstance(x, str):\n            result.append(0)\n        elif isinstance(x, (int, float)):\n            result.append(x)\n    return result\n```",
+    "initialCode": "def identify_type(x):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(identify_type())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p1_q6",
+    "category": "Last-term EASY",
+    "title": "6. The Whispering Mirror (Conditionals)",
+    "description": "<ul><li>Viết hàm mirror_message(x).</li><li>Nếu là String: Đảo ngược.</li><li>Nếu là Int/Float: Trả về số âm.</li><li>Khác: Trả về \"Unsupported\".</li></ul>",
+    "hint": "Answer key:\n```python\ndef mirror_message(x):\n    if isinstance(x, str):\n        return x[::-1]\n    elif isinstance(x, (int, float)):\n        return -x\n    else:\n        return \"Unsupported\"\n```",
+    "initialCode": "def mirror_message(x):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(mirror_message())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p1_q7",
+    "category": "Last-term EASY",
+    "title": "7. The Selective Gate (Conditions)",
+    "description": "<ul><li>Tìm số chia hết cho 2 nhưng KHÔNG chia hết cho 3 trong list.</li><li>Trả về số lượng và tổng của chúng.</li></ul>",
+    "hint": "Answer key:\n```python\ndef filter_numbers(lst):\n    filtered = [x for x in lst if x % 2 == 0 and x % 3 != 0]\n    return len(filtered), sum(filtered)\n```",
+    "initialCode": "def filter_numbers(lst):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(filter_numbers())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p1_q8",
+    "category": "Last-term EASY",
+    "title": "8. The Enchanted Filter (List Processing)",
+    "description": "<ul><li>Lọc lấy các số lẻ trong list.</li><li>Trả về list bình phương của các số đó.</li></ul>",
+    "hint": "Answer key:\n```python\ndef process_list_odd_squared(lst):\n    return [x**2 for x in lst if x % 2 != 0]\n```",
+    "initialCode": "def process_list_odd_squared(lst):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(process_list_odd_squared())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p1_q9",
+    "category": "Last-term EASY",
+    "title": "9. The Silent Scribe (String Analysis)",
+    "description": "<ul><li>Tách từ trong câu (split).</li><li>Trả về tổng số từ.</li><li>Đếm số từ bắt đầu bằng nguyên âm (u, e, o, a, i).</li></ul>",
+    "hint": "Answer key:\n```python\ndef analyze_sentence(text):\n    words = text.split()\n    vowels = set(\"aeiouAEIOU\")\n    starts_with_vowel = sum(1 for w in words if w[0] in vowels)\n    return len(words), starts_with_vowel\n```",
+    "initialCode": "def analyze_sentence(text):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(analyze_sentence())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p1_q10",
+    "category": "Last-term EASY",
+    "title": "10. The Cipher of the Ancients",
+    "description": "<ul><li>Encode: A=1, B=2... Z=26. Giữ nguyên khoảng trắng/ký tự đặc biệt.</li><li>Decode: Dịch ngược từ số về chữ cái.</li></ul>",
+    "hint": "Answer key:\n```python\ndef encode_a1z26(text):\n    result = []\n    for char in text:\n        if char.isupper():\n            result.append(str(ord(char) - 64))\n        else:\n            result.append(char)\n    return \"-\".join(result).replace(\"- -\", \" \")\n\ndef decode_a1z26(code):\n    final_str = \"\"\n    i = 0\n    while i < len(code):\n        if code[i].isdigit():\n            num_str = \"\"\n            while i < len(code) and code[i].isdigit():\n                num_str += code[i]\n                i += 1\n            final_str += chr(int(num_str) + 64)\n        else:\n            if code[i] != '-':\n                final_str += code[i]\n            i += 1\n    return final_str\n```",
+    "initialCode": "def encode_a1z26(text):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(encode_a1z26())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p2_q1",
+    "category": "Last-term MEDIUM",
+    "title": "1. The Code Lock (Primes)",
+    "description": "<ul><li>Viết hàm is_prime(n).</li><li>Viết hàm get_nearest_prime(n): Nếu n là prime trả về n, không thì tìm prime lớn hơn gần nhất.</li><li>Áp dụng hàm cho list input.</li></ul>",
+    "hint": "Answer key:\n```python\nimport math\ndef is_prime(n):\n    if n < 2: return False\n    for i in range(2, int(math.sqrt(n)) + 1):\n        if n % i == 0: return False\n    return True\n\ndef get_nearest_prime(n):\n    if is_prime(n): return n\n    curr = n + 1\n    while not is_prime(curr):\n        curr += 1\n    return curr\n\ndef unlock_door(input_list):\n    return [get_nearest_prime(x) for x in input_list]\n```",
+    "initialCode": "def is_prime(n):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(is_prime())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p2_q2",
+    "category": "Last-term MEDIUM",
+    "title": "2. The Merchant's Ledger",
+    "description": "<ul><li>Tính tổng giá trị của tất cả vật phẩm.</li><li>Tìm tên vật phẩm đắt nhất.</li><li>Lọc ra list các vật phẩm có giá > 50.</li></ul>",
+    "hint": "Answer key:\n```python\ndef process_ledger(items):\n    total_price = sum(i['price'] for i in items)\n    most_expensive = max(items, key=lambda x: x['price'])['item']\n    filtered = [i for i in items if i['price'] > 50]\n    return total_price, most_expensive, filtered\n```",
+    "initialCode": "def process_ledger(items):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(process_ledger())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p2_q3",
+    "category": "Last-term MEDIUM",
+    "title": "3. The Tent (Heron's Formula)",
+    "description": "<ul><li>Tính khoảng cách giữa 3 điểm (độ dài các cạnh).</li><li>Tính diện tích tam giác bằng công thức Heron.</li></ul>",
+    "hint": "Answer key:\n```python\ndef calculate_distance(p1, p2):\n    return math.sqrt((p1[0]-p2[0])**2 + (p1[1]-p2[1])**2)\n\ndef tent_area(p1, p2, p3):\n    a = calculate_distance(p1, p2)\n    b = calculate_distance(p2, p3)\n    c = calculate_distance(p3, p1)\n    s = (a + b + c) / 2\n    return math.sqrt(s * (s - a) * (s - b) * (s - c))\n```",
+    "initialCode": "def calculate_distance(p1, p2):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(calculate_distance())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p2_q4",
+    "category": "Last-term MEDIUM",
+    "title": "4. The Moat (Circumference)",
+    "description": "<ul><li>Tính chu vi hình tròn (2 * pi * r).</li><li>Nếu bán kính r âm, trả về \"Invalid\".</li></ul>",
+    "hint": "Answer key:\n```python\ndef calc_circle(radius):\n    if radius < 0:\n        return \"Invalid\"\n    return round(2 * math.pi * radius, 2)\n```",
+    "initialCode": "def calc_circle(radius):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(calc_circle())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p2_q5",
+    "category": "Last-term MEDIUM",
+    "title": "5. The Fireball (Quadratic Equation)",
+    "description": "<ul><li>Giải phương trình bậc 2: ax^2 + bx + c = 0.</li><li>Tính Delta và trả về các nghiệm tương ứng.</li></ul>",
+    "hint": "Answer key:\n```python\ndef solve_quad(a, b, c):\n    delta = b**2 - 4*a*c\n    if delta < 0:\n        return \"No Solution\"\n    elif delta == 0:\n        return -b / (2*a)\n    else:\n        x1 = (-b + math.sqrt(delta)) / (2*a)\n        x2 = (-b - math.sqrt(delta)) / (2*a)\n        return (x1, x2)\n```",
+    "initialCode": "def solve_quad(a, b, c):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(solve_quad())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p2_q6",
+    "category": "Last-term MEDIUM",
+    "title": "6. The Archive of Words",
+    "description": "<ul><li>Làm sạch văn bản (lowercase, bỏ ký tự đặc biệt).</li><li>Đếm tần suất các từ.</li><li>Trả về top 3 từ phổ biến nhất và từ dài nhất.</li></ul>",
+    "hint": "Answer key:\n```python\nfrom collections import Counter\ndef analyze_archive(text):\n    clean_text = \"\".join([c.lower() if c.isalnum() or c.isspace() else \"\" for c in text])\n    words = clean_text.split()\n    freq_dict = dict(Counter(words))\n    sorted_words = sorted(freq_dict.items(), key=lambda item: item[1], reverse=True)\n    top_3 = [item[0] for item in sorted_words[:3]]\n    longest_word = max(words, key=len) if words else \"\"\n    return freq_dict, top_3, longest_word\n```",
+    "initialCode": "def analyze_archive(text):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(analyze_archive())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p2_q7",
+    "category": "Last-term MEDIUM",
+    "title": "7. The Echo of Repetition",
+    "description": "<ul><li>Trả về list các phần tử duy nhất.</li><li>Trả về dict tần suất xuất hiện.</li><li>Tìm phần tử xuất hiện nhiều nhất.</li></ul>",
+    "hint": "Answer key:\n```python\ndef echo_repetition(lst):\n    unique_elements = list(set(lst))\n    frequency = dict(Counter(lst))\n    most_frequent = max(frequency, key=frequency.get)\n    return unique_elements, frequency, most_frequent\n```",
+    "initialCode": "def echo_repetition(lst):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(echo_repetition())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p2_q8",
+    "category": "Last-term MEDIUM",
+    "title": "8. The Prime Oracle",
+    "description": "<ul><li>Lọc ra các số nguyên tố trong list input.</li><li>Đếm số lượng số nguyên tố.</li><li>Tìm số nguyên tố lớn nhất và số nguyên tố liền kề lớn hơn nó.</li></ul>",
+    "hint": "Answer key:\n```python\ndef prime_oracle(lst):\n    primes = [x for x in lst if is_prime(x)]\n    count = len(primes)\n    if count == 0:\n        return [], 0, None, None\n    largest_prime = max(primes)\n    closest_bigger = largest_prime + 1\n    while not is_prime(closest_bigger):\n        closest_bigger += 1\n    return primes, count, largest_prime, closest_bigger\n```",
+    "initialCode": "def prime_oracle(lst):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(prime_oracle())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p2_q9",
+    "category": "Last-term MEDIUM",
+    "title": "9. The Ancient Archive (Artifacts)",
+    "description": "<ul><li>Cho list các artifacts. Tìm artifact có giá trị cao nhất.</li><li>Tìm 5 artifacts khác gần vị trí artifact đó nhất (Euclidean distance).</li></ul>",
+    "hint": "Answer key:\n```python\ndef analyze_artifacts(artifacts):\n    count = len(artifacts)\n    most_valuable = max(artifacts, key=lambda x: x['Value'])\n    mv_loc = most_valuable['Location']\n    \n    def dist_to_mv(artifact):\n        loc = artifact['Location']\n        return math.sqrt((loc[0]-mv_loc[0])**2 + (loc[1]-mv_loc[1])**2)\n        \n    others = [a for a in artifacts if a['ID'] != most_valuable['ID']]\n    others.sort(key=dist_to_mv)\n    five_closest = others[:5]\n    result_closest = [(a['Name'], a['Value'], a['Location']) for a in five_closest]\n    return count, most_valuable, result_closest\n```",
+    "initialCode": "def analyze_artifacts(artifacts):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(analyze_artifacts())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p2_q10",
+    "category": "Last-term MEDIUM",
+    "title": "10. The Digit Oracle (Perfect Digit)",
+    "description": "<ul><li>Định nghĩa số \"perfect digit\": chia hết cho tổng các chữ số của nó.</li><li>Tìm tất cả các số như vậy trong list.</li><li>Đếm số lượng và tìm số lớn nhất.</li></ul>",
+    "hint": "Answer key:\n```python\ndef digit_sum(n):\n    return sum(int(d) for d in str(n))\n\ndef is_perfect(n):\n    ds = digit_sum(n)\n    return ds > 0 and n % ds == 0\n\ndef analyze_perfect(lst):\n    perfect_nums = [x for x in lst if is_perfect(x)]\n    count = len(perfect_nums)\n    largest = max(perfect_nums) if perfect_nums else None\n    return perfect_nums, count, largest\n```",
+    "initialCode": "def digit_sum(n):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(digit_sum())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p2_q11",
+    "category": "Last-term MEDIUM",
+    "title": "11. The Rope of Equal Segments",
+    "description": "<ul><li>Cho hai dây độ dài N và M.</li><li>Tìm độ dài đoạn cắt bằng nhau lớn nhất (GCD).</li><li>Tính tổng số đoạn dây cắt được.</li></ul>",
+    "hint": "Answer key:\n```python\ndef count_segments(N, M):\n    common_length = math.gcd(N, M)\n    return (N // common_length) + (M // common_length)\n```",
+    "initialCode": "def count_segments(N, M):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(count_segments())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p2_q12",
+    "category": "Last-term MEDIUM",
+    "title": "12. The Treasure Hoard",
+    "description": "<ul><li>Cho dict các món đồ và giá trị.</li><li>Chọn đúng 3 món đồ có giá trị cao nhất.</li></ul>",
+    "hint": "Answer key:\n```python\ndef select_items(items):\n    sorted_items = sorted(items.items(), key=lambda x: x[1], reverse=True)\n    top_3_names = [item[0] for item in sorted_items[:3]]\n    return top_3_names\n```",
+    "initialCode": "def select_items(items):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(select_items())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p2_q13",
+    "category": "Last-term MEDIUM",
+    "title": "13. The Mirror Pairs",
+    "description": "<ul><li>Cho một list input.</li><li>Đếm số cặp index (i, j) sao cho i < j và arr[i] == arr[j].</li></ul>",
+    "hint": "Answer key:\n```python\ndef count_mirror_pairs(lst):\n    count = 0\n    n = len(lst)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if lst[i] == lst[j]:\n                count += 1\n    return count\n```",
+    "initialCode": "def count_mirror_pairs(lst):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(count_mirror_pairs())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p3_q1",
+    "category": "Last-term HARD",
+    "title": "1. The Rabbit Population (Fibonacci)",
+    "description": "<ul><li>Viết hàm tính dãy Fibonacci.</li><li>Trả về số Fibonacci thứ n.</li></ul>",
+    "hint": "Answer key:\n```python\ndef rabbit_population(n):\n    if n <= 0: return []\n    if n == 1: return [0]\n    seq = [0, 1]\n    while len(seq) < n:\n        seq.append(seq[-1] + seq[-2])\n    return seq, seq[-1]\n```",
+    "initialCode": "def rabbit_population(n):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(rabbit_population())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p3_q2",
+    "category": "Last-term HARD",
+    "title": "2. The Signal (Convolution)",
+    "description": "<ul><li>Input: List signal và list kernel.</li><li>Tính tổng tích chập (sliding window sum).</li></ul>",
+    "hint": "Answer key:\n```python\ndef process_signal(signal, kernel):\n    result = []\n    k_len = len(kernel)\n    s_len = len(signal)\n    for i in range(s_len - k_len + 1):\n        segment = signal[i : i + k_len]\n        val = sum(s * k for s, k in zip(segment, kernel))\n        result.append(val)\n    return result\n```",
+    "initialCode": "def process_signal(signal, kernel):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(process_signal())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p3_q3",
+    "category": "Last-term HARD",
+    "title": "3. The Grid Path (Shortest Path)",
+    "description": "<ul><li>Cho lưới số (grid). Đi từ góc trái trên xuống phải dưới.</li><li>Chỉ được đi sang phải (Right) hoặc xuống dưới (Down).</li><li>Tìm đường đi có tổng chi phí nhỏ nhất (Min cost).</li></ul>",
+    "hint": "Answer key:\n```python\ndef min_path_sum(grid):\n    R = len(grid)\n    C = len(grid[0])\n    dp = [[0]*C for _ in range(R)]\n    dp[0][0] = grid[0][0]\n    for i in range(1, R):\n        dp[i][0] = dp[i-1][0] + grid[i][0]\n    for j in range(1, C):\n        dp[0][j] = dp[0][j-1] + grid[0][j]\n    for i in range(1, R):\n        for j in range(1, C):\n            dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j]\n    return dp[-1][-1]\n```",
+    "initialCode": "def min_path_sum(grid):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(min_path_sum())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p3_q4",
+    "category": "Last-term HARD",
+    "title": "4. The Maze (Validation)",
+    "description": "<ul><li>Cho bản đồ game (ma trận ký tự).</li><li>Kiểm tra tọa độ (x, y) có nằm trong bản đồ không.</li><li>Kiểm tra vị trí đó có phải là tường ('#') không.</li></ul>",
+    "hint": "Answer key:\n```python\ndef is_safe(x, y, game_map):\n    rows = len(game_map)\n    cols = len(game_map[0])\n    if not (0 <= x < rows and 0 <= y < cols):\n        return False\n    if game_map[x][y] == '#':\n        return False\n    return True\n```",
+    "initialCode": "def is_safe(x, y, game_map):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(is_safe())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p3_q5",
+    "category": "Last-term HARD",
+    "title": "5. The Trader (Maximize Profit)",
+    "description": "<ul><li>Cho list giá cổ phiếu theo ngày.</li><li>Chọn 1 ngày mua và 1 ngày bán (sau ngày mua).</li><li>Tìm mức lợi nhuận tối đa có thể đạt được.</li></ul>",
+    "hint": "Answer key:\n```python\ndef max_profit(prices):\n    if not prices:\n        return 0\n    min_price = prices[0]\n    max_profit_val = 0\n    for price in prices:\n        if price < min_price:\n            min_price = price\n        elif price - min_price > max_profit_val:\n            max_profit_val = price - min_price\n    return max_profit_val\n```",
+    "initialCode": "def max_profit(prices):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(max_profit())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p3_q6",
+    "category": "Last-term HARD",
+    "title": "6. The Clusters (kMeans Logic)",
+    "description": "<ul><li>Cho điểm A và 2 tâm cụm C1, C2.</li><li>Tính khoảng cách từ A đến C1 và C2.</li><li>Gán A vào cụm có khoảng cách gần hơn.</li></ul>",
+    "hint": "Answer key:\n```python\nimport math\ndef assign_cluster(point_a, c1, c2):\n    dist_c1 = math.sqrt((point_a[0]-c1[0])**2 + (point_a[1]-c1[1])**2)\n    dist_c2 = math.sqrt((point_a[0]-c2[0])**2 + (point_a[1]-c2[1])**2)\n    assigned = \"C1\" if dist_c1 < dist_c2 else \"C2\"\n    return dist_c1, dist_c2, assigned\n```",
+    "initialCode": "def assign_cluster(point_a, c1, c2):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(assign_cluster())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p3_q7",
+    "category": "Last-term HARD",
+    "title": "7. The Unknown Plant (kNN Logic)",
+    "description": "<ul><li>Cho dữ liệu train (X, y) và một điểm dữ liệu mới.</li><li>Tìm điểm dữ liệu train gần nhất (Nearest Neighbor).</li><li>Trả về nhãn (label) của điểm gần nhất đó.</li></ul>",
+    "hint": "Answer key:\n```python\ndef knn_predict(x_train, y_labels, target_y):\n    min_dist = float('inf')\n    nearest_index = -1\n    for i, val in enumerate(x_train):\n        dist = abs(val - target_y)\n        if dist < min_dist:\n            min_dist = dist\n            nearest_index = i\n    return y_labels[nearest_index]\n```",
+    "initialCode": "def knn_predict(x_train, y_labels, target_y):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(knn_predict())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p3_q8",
+    "category": "Last-term HARD",
+    "title": "8. The Geomancer's Trial (Colinearity & Distance)",
+    "description": "<ul><li>Kiểm tra 3 điểm bất kỳ có thẳng hàng không.</li><li>Kiểm tra một điểm có nằm trong tam giác tạo bởi 3 điểm còn lại không.</li><li>Tìm cặp điểm có khoảng cách gần nhau nhất trong 4 điểm.</li></ul>",
+    "hint": "Answer key:\n```python\nfrom itertools import combinations\nimport math\n\ndef geomancer_trial(p1, p2, p3, p4):\n    points = [p1, p2, p3, p4]\n    # 1. Check Colinearity\n    colinear_triplets = []\n    for triplet in combinations(points, 3):\n        (x1, y1), (x2, y2), (x3, y3) = triplet\n        area = x1*(y2-y3) + x2*(y3-y1) + x3*(y1-y2)\n        if area == 0:\n            colinear_triplets.append(triplet)\n    has_colinear = len(colinear_triplets) > 0\n    \n    # 2. Point inside triangle\n    def area(a, b, c):\n        return 0.5 * abs(a[0]*(b[1]-c[1]) + b[0]*(c[1]-a[1]) + c[0]*(a[1]-b[1]))\n        \n    inside_result = None\n    for i in range(4):\n        p_test = points[i]\n        others = points[:i] + points[i+1:]\n        A_abc = area(others[0], others[1], others[2])\n        A_pab = area(p_test, others[0], others[1])\n        A_pbc = area(p_test, others[1], others[2])\n        A_pac = area(p_test, others[0], others[2])\n        if abs(A_abc - (A_pab + A_pbc + A_pac)) < 1e-9:\n            inside_result = (True, p_test, others)\n            break\n            \n    if not inside_result:\n        inside_result = False\n        \n    # 3. Closest points\n    min_dist = float('inf')\n    closest_pair = None\n    for i in range(4):\n        for j in range(i+1, 4):\n            d = math.sqrt((points[i][0]-points[j][0])**2 + (points[i][1]-points[j][1])**2)\n            if d < min_dist:\n                min_dist = d\n                closest_pair = (points[i], points[j])\n                \n    return has_colinear, inside_result, closest_pair, min_dist\n```",
+    "initialCode": "def geomancer_trial(p1, p2, p3, p4):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(geomancer_trial())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p3_q9",
+    "category": "Last-term HARD",
+    "title": "9. The Triad of Balance (3SUM Problem)",
+    "description": "<ul><li>Cho một list các số nguyên.</li><li>Tìm bộ ba số (a, b, c) sao cho a + b + c = 0.</li><li>Trả về danh sách các bộ ba (không trùng lặp).</li></ul>",
+    "hint": "Answer key:\n```python\ndef find_triad_balance(nums):\n    nums.sort()\n    triplets = set()\n    n = len(nums)\n    for i in range(n-2):\n        left = i + 1\n        right = n - 1\n        while left < right:\n            total = nums[i] + nums[left] + nums[right]\n            if total == 0:\n                triplets.add((nums[i], nums[left], nums[right]))\n                left += 1\n                right -= 1\n            elif total < 0:\n                left += 1\n            else:\n                right -= 1\n    result_list = sorted(list(triplets))\n    return result_list, len(result_list)\n```",
+    "initialCode": "def find_triad_balance(nums):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(find_triad_balance())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p3_q10",
+    "category": "Last-term HARD",
+    "title": "10. The Forbidden Passage (BFS Pathfinding)",
+    "description": "<ul><li>Tìm đường đi ngắn nhất từ (1,1) đến (8,8) trên lưới 8x8.</li><li>Tránh các ô có quái vật.</li><li>Đếm số lượng đường đi an toàn (DP) nếu tìm được đường.</li></ul>",
+    "hint": "Answer key:\n```python\ndef forbidden_passage(monsters_list):\n    start = (1, 1)\n    end = (8, 8)\n    monsters = set(monsters_list)\n    queue = [[start]]\n    visited = {start}\n    shortest_path = None\n    safe_paths_count = 0\n    \n    # BFS\n    while queue:\n        path = queue.pop(0)\n        x, y = path[-1]\n        if (x, y) == end:\n            shortest_path = path\n            break\n        moves = [(x+1, y), (x, y+1)]\n        for nx, ny in moves:\n            if nx <= 8 and ny <= 8 and (nx, ny) not in monsters and (nx, ny) not in visited:\n                visited.add((nx, ny))\n                new_path = list(path)\n                new_path.append((nx, ny))\n                queue.append(new_path)\n                \n    # DP Counting\n    if shortest_path:\n        dp = [[0]*9 for _ in range(9)]\n        if (1,1) not in monsters:\n            dp[1][1] = 1\n            for i in range(1, 9):\n                for j in range(1, 9):\n                    if (i, j) == (1, 1): continue\n                    if (i, j) in monsters:\n                        dp[i][j] = 0\n                    else:\n                        dp[i][j] = dp[i-1][j] + dp[i][j-1]\n        safe_paths_count = dp[8][8]\n        return True, shortest_path, safe_paths_count\n    else:\n        return \"No safe path\"\n```",
+    "initialCode": "def forbidden_passage(monsters_list):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(forbidden_passage())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p3_q11",
+    "category": "Last-term HARD",
+    "title": "11. The Sage of Polynomials",
+    "description": "<ul><li>Input hai đa thức dưới dạng chuỗi (ví dụ \"2x^2 + 3x + 1\").</li><li>Parse chuỗi thành dict hệ số.</li><li>Thực hiện phép cộng và nhân hai đa thức, trả về kết quả dạng chuỗi.</li></ul>",
+    "hint": "Answer key:\n```python\ndef sage_polynomials(p1_str, p2_str):\n    def parse_poly(s):\n        s = s.replace(\" \", \"\").replace(\"-\", \"+-\")\n        terms = s.split(\"+\")\n        poly_dict = {}\n        for term in terms:\n            if not term: continue\n            if \"x^\" in term:\n                coef, exp = term.split(\"x^\")\n                coef = int(coef) if coef and coef != \"-\" else (-1 if coef == \"-\" else 1)\n                exp = int(exp)\n            elif \"x\" in term:\n                coef = term.replace(\"x\", \"\")\n                coef = int(coef) if coef and coef != \"-\" else (-1 if coef == \"-\" else 1)\n                exp = 1\n            else:\n                coef = int(term)\n                exp = 0\n            poly_dict[exp] = poly_dict.get(exp, 0) + coef\n        return poly_dict\n        \n    d1 = parse_poly(p1_str)\n    d2 = parse_poly(p2_str)\n    \n    # Addition\n    add_res = d1.copy()\n    for exp, coef in d2.items():\n        add_res[exp] = add_res.get(exp, 0) + coef\n        \n    # Multiplication\n    mul_res = {}\n    for e1, c1 in d1.items():\n        for e2, c2 in d2.items():\n            new_exp = e1 + e2\n            new_coef = c1 * c2\n            mul_res[new_exp] = mul_res.get(new_exp, 0) + new_coef\n            \n    def to_string(d):\n        terms = []\n        for exp in sorted(d.keys(), reverse=True):\n            coef = d[exp]\n            if coef == 0: continue\n            term_str = \"\"\n            if exp == 0: term_str = str(coef)\n            elif exp == 1: term_str = f\"{coef}x\" if coef != 1 else \"x\"\n            else: term_str = f\"{coef}x^{exp}\" if coef != 1 else f\"x^{exp}\"\n            terms.append(term_str)\n        return \"+\".join(terms).replace(\"+-\", \"-\")\n        \n    return to_string(add_res), to_string(mul_res)\n```",
+    "initialCode": "def sage_polynomials(p1_str, p2_str):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(sage_polynomials())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p3_q12",
+    "category": "Last-term HARD",
+    "title": "12. The Excavation Schedule",
+    "description": "<ul><li>Cho hai chu kỳ làm việc N ngày (nghỉ 1) và M ngày (nghỉ 1).</li><li>Tính từ đầu năm 2024 đến target_date.</li><li>Đếm số ngày cả hai cùng làm việc.</li></ul>",
+    "hint": "Answer key:\n```python\nfrom datetime import date\ndef count_working_days(N, M, target_date):\n    start_date = date(2024, 1, 1)\n    delta = target_date - start_date\n    total_days = delta.days + 1\n    overlap_count = 0\n    for day in range(total_days):\n        pos_a = day % (N + 1)\n        is_working_a = pos_a < N\n        pos_b = day % (M + 1)\n        is_working_b = pos_b < M\n        if is_working_a and is_working_b:\n            overlap_count += 1\n    return overlap_count\n```",
+    "initialCode": "def count_working_days(N, M, target_date):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(count_working_days())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p3_q13",
+    "category": "Last-term HARD",
+    "title": "Bonus: Data Normalization",
+    "description": "<ul><li>Input list điểm số thô.</li><li>Chuẩn hóa dữ liệu về thang [0, 1] bằng phương pháp Min-Max.</li></ul>",
+    "hint": "Answer key:\n```python\ndef normalize_data(raw_scores):\n    if not raw_scores: return []\n    x_min = min(raw_scores)\n    x_max = max(raw_scores)\n    if x_max == x_min:\n        return [0.0] * len(raw_scores)\n    return [(x - x_min) / (x_max - x_min) for x in raw_scores]\n```",
+    "initialCode": "def normalize_data(raw_scores):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(normalize_data())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p4_q1",
+    "category": "Last-term OMG",
+    "title": "1. Mất vé xe tháng",
+    "description": "<ul><li>Cho list ngày mất vé. Đếm số lần, tìm ngày sớm/muộn nhất.</li><li>Tính khoảng cách giữa các lần mất vé.</li><li>Dự đoán 3 ngày mất vé tiếp theo (dựa trên quy luật khoảng cách).</li></ul>",
+    "hint": "Answer key:\n```python\nimport statistics\ndef analyze_lost_tickets(days):\n    count = len(days)\n    earliest = min(days)\n    latest = max(days)\n    diffs = [days[i+1] - days[i] for i in range(len(days)-1)]\n    step = diffs[0] if diffs else 7\n    predicted_next_3 = [days[-1] + step * i for i in range(1, 4)]\n    return count, earliest, latest, diffs, predicted_next_3\n```",
+    "initialCode": "def analyze_lost_tickets(days):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(analyze_lost_tickets())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p4_q2",
+    "category": "Last-term OMG",
+    "title": "2. Conan nhà tập",
+    "description": "<ul><li>Cho y_true (thực tế) và y_pred (dự đoán).</li><li>Đếm số lượng TP, TN, FP, FN.</li><li>Tính Precision và Recall.</li></ul>",
+    "hint": "Answer key:\n```python\ndef analyze_camera_ai(y_true, y_pred):\n    tp = sum(1 for t, p in zip(y_true, y_pred) if t==1 and p==1)\n    tn = sum(1 for t, p in zip(y_true, y_pred) if t==0 and p==0)\n    fp = sum(1 for t, p in zip(y_true, y_pred) if t==0 and p==1)\n    fn = sum(1 for t, p in zip(y_true, y_pred) if t==1 and p==0)\n    precision = tp / (tp + fp) if (tp + fp) > 0 else 0\n    recall = tp / (tp + fn) if (tp + fn) > 0 else 0\n    return tp, tn, fp, fn, precision, recall\n```",
+    "initialCode": "def analyze_camera_ai(y_true, y_pred):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(analyze_camera_ai())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p4_q3",
+    "category": "Last-term OMG",
+    "title": "3. Đội bóng FTU",
+    "description": "<ul><li>Cho dict cầu thủ. Đếm số lượng mỗi vị trí.</li><li>Tìm cầu thủ skill cao nhất mỗi vị trí.</li><li>Chọn đội hình 11 người có skill cao nhất (Greedy skill).</li></ul>",
+    "hint": "Answer key:\n```python\nfrom collections import Counter\ndef analyze_football_team(players):\n    # 1. Đếm số lượng vị trí\n    positions = [data['pos'] for data in players.values()]\n    pos_count = dict(Counter(positions))\n    \n    # 2. Tìm cầu thủ giỏi nhất mỗi vị trí\n    best_by_pos = {}\n    for name, data in players.items():\n        p = data['pos']\n        s = data['skill']\n        if p not in best_by_pos or s > best_by_pos[p][1]:\n            best_by_pos[p] = (name, s)\n            \n    # 3. Chọn đội hình 11 người (Greedy - Top 11 skill cao nhất)\n    all_players_list = [(name, data['skill']) for name, data in players.items()]\n    all_players_list.sort(key=lambda x: x[1], reverse=True)\n    dream_team_11 = [p[0] for p in all_players_list[:11]]\n    \n    return pos_count, best_by_pos, dream_team_11\n```",
+    "initialCode": "def analyze_football_team(players):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(analyze_football_team())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p4_q4",
+    "category": "Last-term OMG",
+    "title": "4. Thường nhật của một Wibu",
+    "description": "<ul><li>Cho dict anime.</li><li>Tính % hoàn thành của từng anime.</li><li>Tìm anime < 100% nhưng gần xong nhất.</li><li>Tính số ngày cần để xem hết (tốc độ 5 tập/ngày).</li></ul>",
+    "hint": "Answer key:\n```python\nimport math\ndef wibu_schedule(anime_dict):\n    analysis = {}\n    remaining_dict = {}\n    \n    for name, (watched, total) in anime_dict.items():\n        rem = total - watched\n        percent = (watched / total) * 100 if total > 0 else 0\n        analysis[name] = f\"{percent:.1f}%\"\n        if rem > 0:\n            remaining_dict[name] = rem\n            \n    if not remaining_dict:\n        return analysis, None, 0\n        \n    closest_anime = min(remaining_dict, key=remaining_dict.get)\n    total_eps_needed = sum(remaining_dict.values())\n    days_needed = math.ceil(total_eps_needed / 5)\n    \n    return analysis, closest_anime, days_needed\n```",
+    "initialCode": "def wibu_schedule(anime_dict):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(wibu_schedule())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p4_q5",
+    "category": "Last-term OMG",
+    "title": "5. Bài tập nhóm",
+    "description": "<ul><li>Tính tổng số dòng code và số commits của cả nhóm.</li><li>Tính phần trăm đóng góp của từng thành viên.</li><li>Xác định \"free-rider\" (đóng góp <15% hoặc commits < 5).</li></ul>",
+    "hint": "Answer key:\n```python\ndef analyze_group_work(group_data):\n    total_lines = sum(m['lines'] for m in group_data.values())\n    total_commits = sum(m['commits'] for m in group_data.values())\n    results = {}\n    for name, data in group_data.items():\n        pct = (data['lines'] / total_lines) * 100 if total_lines > 0 else 0\n        is_freerider = (pct < 15) or (data['commits'] < 5)\n        results[name] = {'pct': pct, 'is_freerider': is_freerider}\n    return total_lines, total_commits, results\n```",
+    "initialCode": "def analyze_group_work(group_data):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(analyze_group_work())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p4_q6",
+    "category": "Last-term OMG",
+    "title": "6. WC nhà B",
+    "description": "<ul><li>Tìm các buồng vệ sinh còn trống.</li><li>Chọn buồng trống có khoảng cách xa nhất so với các buồng đang có người (tối ưu hóa sự riêng tư).</li><li>Cập nhật trạng thái sau khi chọn.</li></ul>",
+    "hint": "Answer key:\n```python\ndef wc_simulation(status, num_people=5):\n    current_status = status.copy()\n    for _ in range(num_people):\n        empty_indices = [i for i, x in enumerate(current_status) if x == 0]\n        if not empty_indices: break\n        best_idx = -1\n        max_dist = -1\n        occupied_indices = [i for i, x in enumerate(current_status) if x == 1]\n        \n        if not occupied_indices:\n            best_idx = 0\n        else:\n            for i in empty_indices:\n                dist = min(abs(i - occ) for occ in occupied_indices)\n                if dist > max_dist:\n                    max_dist = dist\n                    best_idx = i\n        if best_idx != -1:\n            current_status[best_idx] = 1\n    return current_status\n```",
+    "initialCode": "def wc_simulation(status, num_people=5):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(wc_simulation())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p4_q7",
+    "category": "Last-term OMG",
+    "title": "7. Cục đá trường F",
+    "description": "<ul><li>Xác suất đỗ cơ bản là 0.6.</li><li>Mỗi lần \"lạy cụ\" được cộng thêm 0.05.</li><li>Tính xác suất đỗ cuối cùng (tối đa là 1.0).</li></ul>",
+    "hint": "Answer key:\n```python\ndef calculate_pass_prob(k_bows):\n    base = 0.6\n    bonus = k_bows * 0.05\n    return min(base + bonus, 1.0)\n```",
+    "initialCode": "def calculate_pass_prob(k_bows):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(calculate_pass_prob())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p4_q8",
+    "category": "Last-term OMG",
+    "title": "8. FTU Losers Club",
+    "description": "<ul><li>Tính Max, Min, đếm số lượng qua môn (>= 5).</li><li>Tính Mean (trung bình), Median (trung vị), Mode (Yếu vị).</li><li>Phân cụm sinh viên thành 3 nhóm (Giỏi, TB, Yếu) bằng K-Means đơn giản.</li></ul>",
+    "hint": "Answer key:\n```python\nimport statistics\ndef analyze_scores(scores):\n    # 1. Cơ bản\n    max_s = max(scores)\n    min_s = min(scores)\n    passed = sum(1 for s in scores if s >= 5)\n    \n    # 2. Thống kê\n    mean_s = statistics.mean(scores)\n    median_s = statistics.median(scores)\n    try:\n        mode_s = statistics.mode(scores)\n    except statistics.StatisticsError:\n        mode_s = \"No unique mode\" \n        \n    # 3. K-Means đơn giản (3 cụm: Giỏi(9), TB(6), Yếu(3))\n    centroids = [9.0, 6.0, 3.0] \n    clusters = {0: [], 1: [], 2: []} \n    \n    for s in scores:\n        dists = [abs(s - c) for c in centroids]\n        chosen_cluster = dists.index(min(dists))\n        clusters[chosen_cluster].append(s)\n        \n    return (max_s, min_s, passed), (mean_s, median_s, mode_s), clusters\n```",
+    "initialCode": "def analyze_scores(scores):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(analyze_scores())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p4_q9",
+    "category": "Last-term OMG",
+    "title": "9. Ở trọ",
+    "description": "<ul><li>Lọc danh sách nhà trọ trong bán kính 3km. Tìm nhà rẻ nhất.</li><li>Tính Value Score = Rating/Price - Distance * 0.1.</li><li>Trả về top 3 nhà trọ có điểm cao nhất.</li></ul>",
+    "hint": "Answer key:\n```python\ndef find_accommodation(houses):\n    valid_houses = [h for h in houses if h['d'] <= 3.0]\n    cheapest = min(valid_houses, key=lambda x: x['p']) if valid_houses else None\n    ranked_houses = []\n    for h in houses:\n        score = (h['r'] / h['p']) - (h['d'] * 0.1)\n        ranked_houses.append((h['name'], score))\n    ranked_houses.sort(key=lambda x: x[1], reverse=True)\n    top_3 = ranked_houses[:3]\n    return cheapest, top_3\n```",
+    "initialCode": "def find_accommodation(houses):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(find_accommodation())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p4_q10",
+    "category": "Last-term OMG",
+    "title": "10. Làm thêm",
+    "description": "<ul><li>Tính mức lương theo giờ cho mỗi công việc.</li><li>Sắp xếp công việc theo mức lương giảm dần.</li><li>Chọn việc để tối đa hóa thu nhập trong 40h (cho phép làm lẻ giờ - Fractional Knapsack).</li></ul>",
+    "hint": "Answer key:\n```python\ndef optimize_income(jobs, max_hours=40):\n    job_data = []\n    for j in jobs:\n        rate = j['pay'] / j['h']\n        job_data.append({'pay': j['pay'], 'h': j['h'], 'rate': rate})\n    job_data.sort(key=lambda x: x['rate'], reverse=True)\n    \n    total_income = 0\n    remaining_hours = max_hours\n    \n    for j in job_data:\n        if remaining_hours <= 0: break\n        if remaining_hours >= j['h']:\n            total_income += j['pay']\n            remaining_hours -= j['h']\n        else:\n            total_income += j['rate'] * remaining_hours\n            remaining_hours = 0\n            \n    return total_income\n```",
+    "initialCode": "def optimize_income(jobs, max_hours=40):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(optimize_income())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p4_q11",
+    "category": "Last-term OMG",
+    "title": "11. Phòng quản lý đào tạo (Queue Simulation)",
+    "description": "<ul><li>Mô phỏng 1 hàng đợi đơn (FIFO): Tính thời gian chờ TB.</li><li>Mô phỏng hàng đợi ưu tiên (Priority Queue): Sinh viên năm 4 được phục vụ trước.</li><li>Mô phỏng 2 hàng đợi song song: Chia sinh viên vào quầy vắng hơn.</li></ul>",
+    "hint": "Answer key:\n```python\nimport heapq\ndef pd_training_simulation(students_list):\n    service_time = 10\n    \n    # 1. Single Queue\n    wait_times_1 = []\n    current_time = 0\n    for _ in students_list:\n        wait_times_1.append(current_time)\n        current_time += service_time\n    avg_wait_1 = sum(wait_times_1) / len(students_list)\n    \n    # 2. Priority Queue (Year 4 first)\n    sorted_students = sorted(students_list, key=lambda x: x['year'], reverse=True)\n    wait_times_2 = []\n    current_time = 0\n    for _ in sorted_students:\n        wait_times_2.append(current_time)\n        current_time += service_time\n    avg_wait_2 = sum(wait_times_2) / len(sorted_students)\n    \n    # 3. Parallel Queues\n    counters = [0, 0]\n    completion_times = []\n    for _ in students_list:\n        idx = 0 if counters[0] <= counters[1] else 1\n        start_time = counters[idx]\n        end_time = start_time + service_time\n        counters[idx] = end_time\n        completion_times.append(end_time)\n    total_time_parallel = max(counters)\n    \n    return avg_wait_1, avg_wait_2, total_time_parallel\n```",
+    "initialCode": "def pd_training_simulation(students_list):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(pd_training_simulation())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p4_q12",
+    "category": "Last-term OMG",
+    "title": "12. Chạm mặt ex (Prob & Danger Zones)",
+    "description": "<ul><li>Tính xác suất an toàn (1 - Xác suất gặp Ex) tại mỗi địa điểm.</li><li>So sánh lịch trình của Nam và Ex.</li><li>Liệt kê các \"Danger Zones\" (trùng thời gian và địa điểm).</li></ul>",
+    "hint": "Answer key:\n```python\ndef avoid_ex(ex_loc_probs, nam_schedule, ex_schedule):\n    safe_probs = {loc: round(1 - prob, 2) for loc, prob in ex_loc_probs.items()}\n    danger_zones = []\n    nam_dict = {item['time']: item['location'] for item in nam_schedule}\n    \n    for item in ex_schedule:\n        t = item['time']\n        loc = item['location']\n        if t in nam_dict and nam_dict[t] == loc:\n            danger_zones.append((t, loc))\n            \n    return safe_probs, danger_zones\n```",
+    "initialCode": "def avoid_ex(ex_loc_probs, nam_schedule, ex_schedule):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(avoid_ex())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p4_q13",
+    "category": "Last-term OMG",
+    "title": "13. First Date (Budget & Compatibility)",
+    "description": "<ul><li>Lọc địa điểm theo ngân sách cho phép.</li><li>Tính điểm tương hợp (Compatibility Score) dựa trên sở thích của Crush.</li><li>Kiểm tra tính khả thi của lịch trình (tổng chi phí <= ngân sách).</li></ul>",
+    "hint": "Answer key:\n```python\ndef plan_first_date(places, crush_prefs, budget_minh):\n    affordable = [p for p in places if p['cost'] <= budget_minh]\n    avg_cost = sum(p['cost'] for p in affordable) / len(affordable) if affordable else 0\n    \n    scored_places = []\n    for p in affordable:\n        score = 0\n        if p['vibe'] in crush_prefs['likes']: score += 1\n        if p['vibe'] in crush_prefs['dislikes']: score -= 0.5\n        scored_places.append((p['name'], score))\n        \n    scored_places.sort(key=lambda x: x[1], reverse=True)\n    top_3 = [x[0] for x in scored_places[:3]]\n    \n    def check_schedule(activity_list):\n        total_cost = sum(act['cost'] for act in activity_list)\n        return total_cost <= 800\n        \n    return affordable, avg_cost, top_3, check_schedule\n```",
+    "initialCode": "def plan_first_date(places, crush_prefs, budget_minh):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(plan_first_date())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p4_q14",
+    "category": "Last-term OMG",
+    "title": "14. Xuân Hòa (Military Training)",
+    "description": "<ul><li>Sắp xếp danh sách sinh viên theo chiều cao. Tính trung vị.</li><li>Chia 40 sinh viên thành 4 đội theo kiểu Round-robin.</li><li>Phân loại vai trò: Shooters (bắn súng giỏi) và Scouts (thể lực tốt).</li></ul>",
+    "hint": "Answer key:\n```python\nimport statistics\ndef xuan_hoa_training(students):\n    students.sort(key=lambda x: x['height'])\n    heights = [s['height'] for s in students]\n    med_h = statistics.median(heights)\n    range_h = max(heights) - min(heights)\n    \n    teams = [[], [], [], []]\n    for i, s in enumerate(students):\n        teams[i % 4].append(s)\n        \n    roles = {'Shooters': [], 'Scouts': []}\n    for s in students:\n        if s.get('shooting', 0) > 8:\n            roles['Shooters'].append(s['name'])\n        if s.get('fitness', 0) > 7 and s.get('marching', 0) > 7:\n            roles['Scouts'].append(s['name'])\n            \n    return med_h, range_h, teams, roles\n```",
+    "initialCode": "def xuan_hoa_training(students):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(xuan_hoa_training())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p4_q15",
+    "category": "Last-term OMG",
+    "title": "15. Xuân Hòa 2 (Attendance)",
+    "description": "<ul><li>Tìm 5 sinh viên có tỷ lệ đi học thấp nhất.</li><li>Phát hiện nguy cơ: Nếu nghỉ 2 ngày liên tiếp -> Tăng gấp đôi xác suất vắng.</li><li>Đưa vào \"Watch List\" nếu xác suất vắng dự đoán > 0.3.</li></ul>",
+    "hint": "Answer key:\n```python\ndef attendance_analytics(attendance_data):\n    for sv in attendance_data:\n        sv['rate'] = sum(sv['days']) / len(sv['days'])\n        \n    sorted_sv = sorted(attendance_data, key=lambda x: x['rate'])\n    bottom_5 = [sv['name'] for sv in sorted_sv[:5]]\n    watch_list = []\n    \n    for sv in attendance_data:\n        absent_count = sv['days'].count(0)\n        p_absent = absent_count / len(sv['days'])\n        if len(sv['days']) >= 2 and sv['days'][-1] == 0 and sv['days'][-2] == 0:\n            p_absent *= 2\n        if p_absent > 0.3:\n            watch_list.append(sv['name'])\n            \n    return bottom_5, watch_list\n```",
+    "initialCode": "def attendance_analytics(attendance_data):\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(attendance_analytics())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p4_q16",
+    "category": "Last-term OMG",
+    "title": "16. Điểm cuối kỳ",
+    "description": "<ul><li>Bối cảnh: Dự đoán điểm cuối kỳ môn TIN314 dựa trên số giờ tự học mỗi tuần.</li><li>Dataset: `hours = [5, 10, 15, 20, 8, 12, 18, 6, 14, 16]`, `scores = [5.0, 6.0, 7.5, 8.5, 5.5, 6.5, 8.0, 5.2, 7.0, 7.8]`</li><li>Yêu cầu:</li></ul><p>  - Chuẩn bị dữ liệu: Reshape hours thành mảng 2D shape (10,1). Chia dữ liệu thành tập train (8 mẫu đầu) và test (2 mẫu cuối). Trả về tuple chứa kích thước các tập: `(X_train.shape, X_test.shape, y_train.shape, y_test.shape)`.</p><p>  - Huấn luyện model: Sử dụng LinearRegression từ thư viện sklearn. Fit model với dữ liệu train. Trả về tuple các tham số làm tròn 2 chữ số thập phân: `(round(coef, 2), round(intercept, 2))`.</p><p>  - Dự đoán và đánh giá: Dự đoán (predict) trên tập test. Tính MAE (Mean Absolute Error) bằng hàm của sklearn. Trả về dictionary: `{'predictions': [...], 'actual': [...], 'MAE': round(mae, 2)}`.</p><p>  - (Bonus) Manual Predict: Viết hàm manual_predict(hours, coef, intercept) tính toán thủ công theo công thức y = ax + b. Test với hours=10, so sánh kết quả với sklearn xem sai số có nhỏ hơn 0.01 không. Trả về tuple: `(manual_result, sklearn_result, is_close)`.</p>",
+    "hint": "Answer key:\n```python\nimport numpy as np\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import mean_absolute_error\n\ndef solve_question_20():\n    # Dataset\n    hours = [5, 10, 15, 20, 8, 12, 18, 6, 14, 16]\n    scores = [5.0, 6.0, 7.5, 8.5, 5.5, 6.5, 8.0, 5.2, 7.0, 7.8]\n    \n    # --- 1. Chuẩn bị dữ liệu ---\n    X = np.array(hours).reshape(-1, 1)\n    y = np.array(scores)\n    \n    # Chia train (8 mẫu) và test (2 mẫu)\n    X_train, X_test = X[:8], X[8:]\n    y_train, y_test = y[:8], y[8:]\n    result_1 = (X_train.shape, X_test.shape, y_train.shape, y_test.shape)\n    \n    # --- 2. Huấn luyện model ---\n    model = LinearRegression()\n    model.fit(X_train, y_train)\n    \n    coef = model.coef_[0]\n    intercept = model.intercept_\n    result_2 = (round(coef, 2), round(intercept, 2))\n    \n    # --- 3. Dự đoán và đánh giá ---\n    y_pred = model.predict(X_test)\n    mae = mean_absolute_error(y_test, y_pred)\n    \n    result_3 = {\n        'predictions': list(y_pred),\n        'actual': list(y_test),\n        'MAE': round(mae, 2)\n    }\n    \n    # --- 4. Bonus: Manual Predict ---\n    def manual_predict(h, c, i):\n        return c * h + i\n        \n    test_h = 10\n    manual_val = manual_predict(test_h, coef, intercept)\n    sklearn_val = model.predict([[test_h]])[0]\n    is_close = abs(manual_val - sklearn_val) < 0.01\n    \n    result_4 = (manual_val, sklearn_val, is_close)\n    \n    # Trả về kết quả để hệ thống check\n    return result_1, result_2, result_3, result_4\n```",
+    "initialCode": "def solve_question_20():\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(solve_question_20())",
+        "expected": "See answer key logic"
+      }
+    ]
+  },
+  {
+    "id": "tin314_p4_q17",
+    "category": "Last-term OMG",
+    "title": "17. Bạn có qua môn TIN314 không?",
+    "description": "<ul><li>Bối cảnh: Dự đoán sinh viên đỗ/trượt môn học dựa trên số buổi đi học (tổng 15 buổi).</li><li>Dataset: `attendance = [12, 8, 14, 6, 13, 7, 15, 5, 11, 9]`, `passed = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0]` (1: Đỗ, 0: Trượt)</li><li>Yêu cầu:</li></ul><p>  - Chuẩn bị dữ liệu: Reshape attendance thành mảng 2D shape (10,1). Chia dữ liệu thành tập train (8 mẫu đầu) và test (2 mẫu cuối). Đếm số lượng sinh viên ĐỖ trong tập train. Trả về tuple: `(X_train.shape, X_test.shape, count_passed_in_train)`.</p><p>  - Huấn luyện model: Sử dụng LogisticRegression từ thư viện sklearn. Fit model với dữ liệu train. Dự đoán cho một sinh viên mới đi học 10 buổi. Trả về tuple gồm nhãn dự đoán và xác suất đỗ (làm tròn 2 chữ số): `(prediction, probability_of_passing)`.</p><p>  - Dự đoán và đánh giá: Dự đoán trên tập test. Tính độ chính xác (Accuracy). Tự tính tay Confusion Matrix (đếm số TP, TN, FP, FN). Trả về dictionary: `{'predictions': [...], 'actual': [...], 'accuracy': acc, 'confusion': {'TP': ?, 'TN': ?, 'FP': ?, 'FN': ?}}`.</p><p>  - (Bonus) Precision vs Recall: Trong bối cảnh hệ thống cần cảnh báo sớm sinh viên yếu (nguy cơ trượt), chỉ số nào quan trọng hơn? Tính giá trị Precision và Recall. Trả về dictionary: `{'precision': ?, 'recall': ?, 'which_more_important': 'precision' hoặc 'recall'}`.</p>",
+    "hint": "Answer key:\n```python\nimport numpy as np\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import accuracy_score, precision_score, recall_score\n\ndef solve_question_21():\n    # Dataset\n    attendance = [12, 8, 14, 6, 13, 7, 15, 5, 11, 9]\n    passed = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0]\n    \n    # --- 1. Chuẩn bị dữ liệu ---\n    X = np.array(attendance).reshape(-1, 1)\n    y = np.array(passed)\n    \n    # Chia train (8 mẫu) và test (2 mẫu)\n    X_train, X_test = X[:8], X[8:]\n    y_train, y_test = y[:8], y[8:]\n    \n    count_passed_in_train = int(np.sum(y_train == 1))\n    result_1 = (X_train.shape, X_test.shape, count_passed_in_train)\n    \n    # --- 2. Huấn luyện model ---\n    model = LogisticRegression()\n    model.fit(X_train, y_train)\n    \n    # Predict cho attendance = 10\n    sample = [[10]]\n    prediction = model.predict(sample)[0]\n    probability = round(model.predict_proba(sample)[0][1], 2)\n    result_2 = (prediction, probability)\n    \n    # --- 3. Dự đoán và đánh giá ---\n    y_pred = model.predict(X_test)\n    acc = accuracy_score(y_test, y_pred)\n    \n    # Confusion matrix thủ công\n    tp = sum(1 for yt, yp in zip(y_test, y_pred) if yt == 1 and yp == 1)\n    tn = sum(1 for yt, yp in zip(y_test, y_pred) if yt == 0 and yp == 0)\n    fp = sum(1 for yt, yp in zip(y_test, y_pred) if yt == 0 and yp == 1)\n    fn = sum(1 for yt, yp in zip(y_test, y_pred) if yt == 1 and yp == 0)\n    \n    result_3 = {\n        'predictions': list(y_pred),\n        'actual': list(y_test),\n        'accuracy': acc,\n        'confusion': {'TP': tp, 'TN': tn, 'FP': fp, 'FN': fn}\n    }\n    \n    # --- 4. Bonus: Precision vs Recall ---\n    prec = precision_score(y_test, y_pred, zero_division=0)\n    rec = recall_score(y_test, y_pred, zero_division=0)\n    \n    result_4 = {\n        'precision': float(prec),\n        'recall': float(rec),\n        'which_more_important': 'recall'\n    }\n    \n    # Trả về kết quả để hệ thống check\n    return result_1, result_2, result_3, result_4\n```",
+    "initialCode": "def solve_question_21():\n    # Write your code here\n    pass\n",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(solve_question_21())",
+        "expected": "See answer key logic"
+      }
+    ]
   }
 ]

@@ -1,5 +1,11 @@
 import { BookOpen, Lightbulb, ChevronDown, ChevronUp } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import rehypeRaw from 'rehype-raw';
+import 'katex/dist/katex.min.css';
 
 export function ProblemDescription({ problem, failedAttempts = 0, userCode, testResults }) {
   const [showHint, setShowHint] = useState(false);
@@ -20,7 +26,14 @@ export function ProblemDescription({ problem, failedAttempts = 0, userCode, test
 
       <h2 className="problem-title">{problem.title}</h2>
 
-      <div className="problem-description-content" dangerouslySetInnerHTML={{ __html: problem.description }} />
+      <div className="problem-description-content">
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm, remarkMath]}
+          rehypePlugins={[rehypeRaw, rehypeKatex]}
+        >
+          {problem.description || ''}
+        </ReactMarkdown>
+      </div>
 
       {problem.examples && problem.examples.map((ex, i) => (
         <div key={i} className="example-box">
@@ -46,8 +59,13 @@ export function ProblemDescription({ problem, failedAttempts = 0, userCode, test
         </button>
         
         {showHint && (
-          <div style={{ padding: '0 1rem 1rem 1rem', fontSize: '0.95rem', lineHeight: '1.6', color: 'var(--text-primary)' }}>
-            {problem.hint || "Hãy đọc kỹ lại yêu cầu đề bài, chú ý đến các trường hợp đặc biệt (edge cases), và kiểm tra xem hàm của bạn đã return đúng giá trị yêu cầu (thay vì chỉ dùng lệnh print) hay chưa."}
+          <div style={{ padding: '1rem', fontSize: '0.95rem', lineHeight: '1.6', color: 'var(--text-primary)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm, remarkMath]}
+              rehypePlugins={[rehypeRaw, rehypeKatex]}
+            >
+              {problem.hint || "Hãy đọc kỹ lại yêu cầu đề bài, chú ý đến các trường hợp đặc biệt (edge cases), và kiểm tra xem hàm của bạn đã return đúng giá trị yêu cầu (thay vì chỉ dùng lệnh print) hay chưa."}
+            </ReactMarkdown>
           </div>
         )}
       </div>
