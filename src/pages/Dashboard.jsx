@@ -141,7 +141,23 @@ export function Dashboard() {
         }
       }
       
-      const enrichedP = { ...p, subCategory };
+      let enrichedP = { ...p, subCategory };
+      if (catName === "Summer Course Test") {
+        if (p.defaultCode?.includes('max_profit')) {
+          enrichedP.title = 'Bài 1';
+          enrichedP._sortOrder = 1;
+        } else if (p.defaultCode?.includes('kelly_fractions')) {
+          enrichedP.title = 'Bài 2';
+          enrichedP._sortOrder = 2;
+        } else if (p.defaultCode?.includes('sharpe_ratio')) {
+          enrichedP.title = 'Bài 3';
+          enrichedP._sortOrder = 3;
+        } else if (p.defaultCode?.includes('optimal_weights')) {
+          enrichedP.title = 'Bài 4';
+          enrichedP._sortOrder = 4;
+        }
+      }
+
       if (!cats[catName]) cats[catName] = [];
       cats[catName].push(enrichedP);
     }
@@ -165,7 +181,9 @@ export function Dashboard() {
     // 3. Summer tests
     for (const key of keys) {
       if (key.toLowerCase().includes("summer")) {
-        sortedCats[key] = cats[key];
+        const summerItems = [...(cats[key] || [])];
+        summerItems.sort((a, b) => (a._sortOrder || 0) - (b._sortOrder || 0));
+        sortedCats[key] = summerItems;
       }
     }
     // 4. Others (excluding Coding practice)
@@ -199,52 +217,45 @@ export function Dashboard() {
         ) : (
           <>
 
-        {activeTerm === 'last' && (
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem', marginTop: '1rem' }}>
-            <div style={{ display: 'inline-flex', backgroundColor: 'var(--bg-surface-elevated)', borderRadius: '9999px', padding: '0.35rem', border: '1px solid var(--border-color)' }}>
-              <button 
-                onClick={() => setLastTermTab('learning')}
-                style={{ 
-                  padding: '0.6rem 2rem', 
-                  borderRadius: '9999px', 
-                  backgroundColor: lastTermTab === 'learning' ? 'var(--accent-primary)' : 'transparent',
-                  color: lastTermTab === 'learning' ? 'var(--text-on-accent)' : 'var(--text-primary)',
-                  border: 'none',
-                  fontWeight: lastTermTab === 'learning' ? 600 : 500,
-                  fontSize: '1rem',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease'
-                }}>
-                Interactive Learning
-              </button>
-              <button 
-                onClick={() => setLastTermTab('exams')}
-                style={{ 
-                  padding: '0.6rem 2rem', 
-                  borderRadius: '9999px', 
-                  backgroundColor: lastTermTab === 'exams' ? 'var(--accent-primary)' : 'transparent',
-                  color: lastTermTab === 'exams' ? 'var(--text-on-accent)' : 'var(--text-primary)',
-                  border: 'none',
-                  fontWeight: lastTermTab === 'exams' ? 600 : 500,
-                  fontSize: '1rem',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease'
-                }}>
-                Your Exams
-              </button>
-            </div>
+        {/* Unified Dashboard Header with integrated Section Switcher */}
+        <div className="dashboard-header-wrapper">
+          <div className="dashboard-header-text">
+            <h1 className="dashboard-header-title">
+              {activeTerm === 'mid' 
+                ? 'Your Exams' 
+                : (lastTermTab === 'learning' ? 'Interactive Learning' : 'Your Exams')}
+            </h1>
+            <p className="dashboard-header-subtitle">
+              {activeTerm === 'mid' || (activeTerm === 'last' && lastTermTab === 'exams')
+                ? 'Select a problem to start coding. Your progress is automatically saved.'
+                : 'Explore interactive hands-on lessons via Jupyter Notebooks and reference the general syntax guide.'}
+            </p>
           </div>
-        )}
+
+          {activeTerm === 'last' && (
+            <div className="segmented-pill-container">
+              <div className="segmented-pill-track">
+                <button 
+                  onClick={() => setLastTermTab('learning')}
+                  className={`segmented-pill-btn ${lastTermTab === 'learning' ? 'active' : ''}`}
+                  title="Interactive Learning"
+                >
+                  <span>Interactive Learning</span>
+                </button>
+                <button 
+                  onClick={() => setLastTermTab('exams')}
+                  className={`segmented-pill-btn ${lastTermTab === 'exams' ? 'active' : ''}`}
+                  title="Your Exams"
+                >
+                  <span>Your Exams</span>
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
 
         {activeTerm === 'last' && lastTermTab === 'learning' && (
           <div style={{ marginBottom: '4rem' }}>
-            <h1 style={{ marginBottom: '0.75rem', marginTop: '1.5rem', fontSize: '2.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              Interactive Learning
-            </h1>
-            <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem', fontSize: '1.125rem', maxWidth: '800px' }}>
-              Explore interactive hands-on lessons via Jupyter Notebooks and reference the general syntax guide.
-            </p>
-
             {/* Cheatsheet Card */}
             <div className="master-cheatsheet-card">
               <div className="master-cheatsheet-content">
@@ -370,18 +381,11 @@ export function Dashboard() {
                 </div>
               )}
             </div>
-            
-            <div style={{ height: '2px', backgroundColor: 'var(--border-color)', margin: '4rem 0' }}></div>
           </div>
         )}
 
         {(activeTerm === 'mid' || (activeTerm === 'last' && lastTermTab === 'exams')) && (
           <>
-            <h1 style={{ marginBottom: '0.5rem', fontSize: '2.5rem', marginTop: '1rem' }}>Your Exams</h1>
-            <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', paddingBottom: '0.5rem', fontSize: '1.125rem', position: 'relative', zIndex: 1 }}>
-              Select a problem to start coding. Your progress is automatically saved.
-            </p>
-
         {/* Cheatsheet for Mid-term */}
         {activeTerm === 'mid' && (
           <div className="master-cheatsheet-card" style={{ marginBottom: '2.5rem' }}>
@@ -474,11 +478,9 @@ export function Dashboard() {
                 color: 'var(--text-primary)', 
                 borderLeft: '4px solid var(--accent-primary)', 
                 paddingLeft: '1rem',
-                lineHeight: '40px',
-                height: '40px',
-                whiteSpace: 'nowrap',
-                display: 'flex',
-                alignItems: 'center'
+                lineHeight: 1.35,
+                whiteSpace: 'normal',
+                wordBreak: 'break-word'
               }}>
                 {category}
               </h2>

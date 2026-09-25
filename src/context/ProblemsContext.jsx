@@ -8,13 +8,21 @@ export function useProblems() {
   return useContext(ProblemsContext);
 }
 
+const CACHE_VERSION = 'v4_summer_order';
+
 export function ProblemsProvider({ children }) {
   // Initialize from localStorage for instant load (SWR pattern)
   const [problems, setProblems] = useState(() => {
     try {
-      const cached = localStorage.getItem('cached_problems');
-      if (cached) {
-        return JSON.parse(cached);
+      const version = localStorage.getItem('problems_cache_version');
+      if (version === CACHE_VERSION) {
+        const cached = localStorage.getItem('cached_problems');
+        if (cached) {
+          return JSON.parse(cached);
+        }
+      } else {
+        localStorage.removeItem('cached_problems');
+        localStorage.setItem('problems_cache_version', CACHE_VERSION);
       }
     } catch (e) {
       console.error('Failed to parse cached problems', e);
@@ -31,40 +39,31 @@ export function ProblemsProvider({ children }) {
     const fetchProblems = async () => {
       setIsFetching(true);
       try {
-        const q = query(collection(db, 'problems'), orderBy('order', 'asc'));
-        const querySnapshot = await getDocs(q);
-        const fetchedProblems = [];
-        querySnapshot.forEach((doc) => {
-          fetchedProblems.push(doc.data());
-        });
+        const isFreshVersion = localStorage.getItem('problems_cache_version') === CACHE_VERSION;
+        let fetchedProblems = [];
+
+        try {
+          const q = query(collection(db, 'problems'), orderBy('order', 'asc'));
+          const querySnapshot = await getDocs(q);
+          querySnapshot.forEach((doc) => {
+            fetchedProblems.push(doc.data());
+          });
+        } catch (dbErr) {
+          console.warn("Could not query DB directly, falling back to local problems.json:", dbErr);
+        }
         
-        if (fetchedProblems.length === 0) {
+        if (fetchedProblems.length === 0 || !isFreshVersion) {
           try {
-            console.log("Database empty. Auto-seeding from /problems.json...");
             const res = await fetch('/problems.json');
             if (res.ok) {
               const seedData = await res.json();
               if (seedData && seedData.length > 0) {
-                const batch = writeBatch(db);
-                let index = 0;
-                for (const p of seedData) {
-                  const docRef = doc(db, 'problems', String(p.id));
-                  batch.set(docRef, { ...p, order: index });
-                  index++;
-                }
-                await batch.commit();
-                
-                if (isMounted) {
-                  setProblems(seedData);
-                  localStorage.setItem('cached_problems', JSON.stringify(seedData));
-                  setIsLoading(false);
-                  setIsFetching(false);
-                }
-                return;
+                fetchedProblems = seedData;
+                localStorage.setItem('problems_cache_version', CACHE_VERSION);
               }
             }
           } catch (e) {
-            console.error("Auto-seed failed:", e);
+            console.error("Local fetch failed:", e);
           }
         }
 

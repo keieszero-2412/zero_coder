@@ -1775,3 +1775,125 @@ body.theme-amber {
     width: 100%;
   }
 }
+
+/* ==========================================================================
+   Dashboard Unified Header & Compact Tab Switcher
+   ========================================================================== */
+.dashboard-header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.dashboard-header-text {
+  flex: 1;
+  min-width: 280px;
+}
+
+.dashboard-header-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.dashboard-header-subtitle {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  margin: 0;
+  line-height: 1.5;
+  max-width: 650px;
+}
+
+.segmented-pill-container {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.segmented-pill-track {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  padding: 3px;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--bg-base) 80%, #000 20%);
+  border: 1px solid color-mix(in srgb, var(--border-color) 75%, transparent);
+  box-shadow: 
+    inset 0 1.5px 4px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.15);
+  gap: 2px;
+}
+
+.segmented-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.42rem 1.15rem;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  font-size: 0.86rem;
+  font-weight: 550;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-secondary);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  white-space: nowrap;
+  user-select: none;
+  letter-spacing: 0.01em;
+}
+
+.segmented-pill-btn:hover:not(.active) {
+  color: var(--text-primary);
+  background: color-mix(in srgb, var(--text-primary) 8%, transparent);
+}
+
+.segmented-pill-btn.active {
+  background: var(--accent-primary);
+  color: var(--text-on-accent);
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 0 16px 2px color-mix(in srgb, var(--accent-primary) 50%, transparent),
+    0 2px 6px rgba(0, 0, 0, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.35);
+  transform: translateY(-0.5px);
+}
+
+@media (max-width: 768px) {
+  .dashboard-header-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .dashboard-header-title {
+    font-size: 1.85rem;
+  }
+
+  .segmented-pill-container {
+    width: 100%;
+  }
+
+  .segmented-pill-track {
+    width: 100%;
+    max-width: 100%;
+    padding: 3px;
+  }
+
+  .segmented-pill-btn {
+    flex: 1;
+    padding: 0.48rem 0.75rem;
+    font-size: 0.84rem;
+  }
+}

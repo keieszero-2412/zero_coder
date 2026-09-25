@@ -29,7 +29,17 @@ export function Workspace() {
   
   // Find problem based on URL param
   const currentProblem = useMemo(() => {
-    return problems.find(p => p.id === id || p.id === Number(id));
+    const found = problems.find(p => p.id === id || p.id === Number(id));
+    if (!found) return null;
+    if (found.category === 'Last-term Summer Course Test') {
+      let title = found.title;
+      if (found.defaultCode?.includes('max_profit')) title = 'Bài 1';
+      else if (found.defaultCode?.includes('kelly_fractions')) title = 'Bài 2';
+      else if (found.defaultCode?.includes('sharpe_ratio')) title = 'Bài 3';
+      else if (found.defaultCode?.includes('optimal_weights')) title = 'Bài 4';
+      return { ...found, title };
+    }
+    return found;
   }, [id, problems]);
 
   const currentTerm = useMemo(() => {
@@ -65,8 +75,26 @@ export function Workspace() {
           catName = "Coding practice";
         }
       }
+
+      let enrichedP = { ...p };
+      if (catName === "Summer Course Test") {
+        if (p.defaultCode?.includes('max_profit')) {
+          enrichedP.title = 'Bài 1';
+          enrichedP._sortOrder = 1;
+        } else if (p.defaultCode?.includes('kelly_fractions')) {
+          enrichedP.title = 'Bài 2';
+          enrichedP._sortOrder = 2;
+        } else if (p.defaultCode?.includes('sharpe_ratio')) {
+          enrichedP.title = 'Bài 3';
+          enrichedP._sortOrder = 3;
+        } else if (p.defaultCode?.includes('optimal_weights')) {
+          enrichedP.title = 'Bài 4';
+          enrichedP._sortOrder = 4;
+        }
+      }
+
       if (!cats[catName]) cats[catName] = [];
-      cats[catName].push(p);
+      cats[catName].push(enrichedP);
     }
     
     const result = [];
@@ -79,7 +107,12 @@ export function Workspace() {
     // 2. Others (excluding Coding practice)
     for (const key of Object.keys(cats)) {
       if (!key.toLowerCase().includes("mock") && key !== "Coding practice") {
-        result.push(...cats[key]);
+        if (key === "Summer Course Test") {
+          const items = [...cats[key]].sort((a, b) => (a._sortOrder || 0) - (b._sortOrder || 0));
+          result.push(...items);
+        } else {
+          result.push(...cats[key]);
+        }
       }
     }
     // 3. Coding practice last
