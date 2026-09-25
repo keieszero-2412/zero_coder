@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, Fragment } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useProblems } from '../context/ProblemsContext';
 import { Code2, ChevronRight, Terminal, CheckCircle, Circle, LogOut, User, Bell, Flag, Settings, ArrowLeft } from 'lucide-react';
@@ -13,6 +13,7 @@ import { getLecturesManifest, getCachedLecturesManifest } from '../utils/lecture
 
 export function Dashboard() {
   const { activeTerm } = useTerm();
+  const [lastTermTab, setLastTermTab] = useState('learning');
   const [completedProblems, setCompletedProblems] = useState({});
   const [flaggedProblems, setFlaggedProblems] = useState({});
   const { currentUser, logout } = useAuth();
@@ -21,6 +22,7 @@ export function Dashboard() {
 
   useEffect(() => {
     if (location.state?.returnToId) {
+      setLastTermTab('exams');
       setTimeout(() => {
         const el = document.getElementById(`problem-${location.state.returnToId}`);
         if (el) {
@@ -124,22 +126,56 @@ export function Dashboard() {
       if (activeTerm === 'last' && !isLastTerm) continue;
 
       let catName = p.category || '';
-      if (catName === "Mid-term practice" || catName === "Last-term practice") {
+      let subCategory = null;
+      if (catName === "Mid-term practice" || catName === "Last-term practice" || catName === "FTDS coding practice") {
         catName = "Coding practice";
       } else if (catName.startsWith("Last-term ")) {
-        catName = catName.replace("Last-term ", "");
+        const remaining = catName.replace("Last-term ", "");
+        if (remaining.toLowerCase().includes("mock")) {
+          catName = "Mock test"; // Changed from Mock Test
+        } else if (remaining.toLowerCase().includes("test")) {
+          catName = remaining; // e.g. "Summer Course Test", "Test 1"
+        } else {
+          catName = "Coding practice";
+          subCategory = remaining; // e.g. "EASY", "MEDIUM", "HARD", "OMG"
+        }
       }
       
+      const enrichedP = { ...p, subCategory };
       if (!cats[catName]) cats[catName] = [];
-      cats[catName].push(p);
+      cats[catName].push(enrichedP);
     }
     
     const sortedCats = {};
-    for (const key of Object.keys(cats)) {
-      if (key !== "Coding practice") {
+    const keys = Object.keys(cats).sort((a,b) => a.localeCompare(b));
+    
+    // 1. Normal tests
+    for (const key of keys) {
+      const lower = key.toLowerCase();
+      if (lower.includes("test") && !lower.includes("mock") && !lower.includes("summer")) {
         sortedCats[key] = cats[key];
       }
     }
+    // 2. Mock tests
+    for (const key of keys) {
+      if (key.toLowerCase().includes("mock")) {
+        sortedCats[key] = cats[key];
+      }
+    }
+    // 3. Summer tests
+    for (const key of keys) {
+      if (key.toLowerCase().includes("summer")) {
+        sortedCats[key] = cats[key];
+      }
+    }
+    // 4. Others (excluding Coding practice)
+    for (const key of keys) {
+      const lower = key.toLowerCase();
+      if (!lower.includes("test") && !lower.includes("mock") && !lower.includes("summer") && key !== "Coding practice") {
+        sortedCats[key] = cats[key];
+      }
+    }
+    // 5. Coding practice last
     if (cats["Coding practice"]) {
       sortedCats["Coding practice"] = cats["Coding practice"];
     }
@@ -164,6 +200,43 @@ export function Dashboard() {
           <>
 
         {activeTerm === 'last' && (
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem', marginTop: '1rem' }}>
+            <div style={{ display: 'inline-flex', backgroundColor: 'var(--bg-surface-elevated)', borderRadius: '9999px', padding: '0.35rem', border: '1px solid var(--border-color)' }}>
+              <button 
+                onClick={() => setLastTermTab('learning')}
+                style={{ 
+                  padding: '0.6rem 2rem', 
+                  borderRadius: '9999px', 
+                  backgroundColor: lastTermTab === 'learning' ? 'var(--accent-primary)' : 'transparent',
+                  color: lastTermTab === 'learning' ? 'var(--text-on-accent)' : 'var(--text-primary)',
+                  border: 'none',
+                  fontWeight: lastTermTab === 'learning' ? 600 : 500,
+                  fontSize: '1rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}>
+                Interactive Learning
+              </button>
+              <button 
+                onClick={() => setLastTermTab('exams')}
+                style={{ 
+                  padding: '0.6rem 2rem', 
+                  borderRadius: '9999px', 
+                  backgroundColor: lastTermTab === 'exams' ? 'var(--accent-primary)' : 'transparent',
+                  color: lastTermTab === 'exams' ? 'var(--text-on-accent)' : 'var(--text-primary)',
+                  border: 'none',
+                  fontWeight: lastTermTab === 'exams' ? 600 : 500,
+                  fontSize: '1rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}>
+                Your Exams
+              </button>
+            </div>
+          </div>
+        )}
+
+        {activeTerm === 'last' && lastTermTab === 'learning' && (
           <div style={{ marginBottom: '4rem' }}>
             <h1 style={{ marginBottom: '0.75rem', marginTop: '1.5rem', fontSize: '2.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               Interactive Learning
@@ -302,10 +375,12 @@ export function Dashboard() {
           </div>
         )}
 
-        <h1 style={{ marginBottom: '0.5rem', fontSize: '2.5rem', marginTop: '1rem' }}>Your Exams</h1>
-        <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', paddingBottom: '0.5rem', fontSize: '1.125rem', position: 'relative', zIndex: 1 }}>
-          Select a problem to start coding. Your progress is automatically saved.
-        </p>
+        {(activeTerm === 'mid' || (activeTerm === 'last' && lastTermTab === 'exams')) && (
+          <>
+            <h1 style={{ marginBottom: '0.5rem', fontSize: '2.5rem', marginTop: '1rem' }}>Your Exams</h1>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', paddingBottom: '0.5rem', fontSize: '1.125rem', position: 'relative', zIndex: 1 }}>
+              Select a problem to start coding. Your progress is automatically saved.
+            </p>
 
         {/* Cheatsheet for Mid-term */}
         {activeTerm === 'mid' && (
@@ -393,7 +468,18 @@ export function Dashboard() {
             style={{ marginBottom: '4rem', scrollMarginTop: '70px' }}
           >
             <div className="category-header-sticky">
-              <h2 style={{ fontSize: '1.75rem', margin: 0, color: 'var(--text-primary)', borderLeft: '4px solid var(--accent-primary)', paddingLeft: '1rem' }}>
+              <h2 style={{ 
+                fontSize: '1.75rem', 
+                margin: 0, 
+                color: 'var(--text-primary)', 
+                borderLeft: '4px solid var(--accent-primary)', 
+                paddingLeft: '1rem',
+                lineHeight: '40px',
+                height: '40px',
+                whiteSpace: 'nowrap',
+                display: 'flex',
+                alignItems: 'center'
+              }}>
                 {category}
               </h2>
             </div>
@@ -404,37 +490,57 @@ export function Dashboard() {
               </div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                {items.map((problem) => {
+                {items.map((problem, index) => {
                   const isCompleted = completedProblems[problem.id];
+                  const prevSubCat = index > 0 ? items[index-1].subCategory : null;
+                  const showSubCatHeader = problem.subCategory && problem.subCategory !== prevSubCat;
+                  
                   return (
-                    <Link to={`/workspace/${problem.id}`} key={problem.id} id={`problem-${problem.id}`} className="problem-list-item glass-panel">
-                      <div className="problem-list-icon">
-                        {isCompleted ? (
-                          <CheckCircle size={20} color="var(--accent-primary)" />
-                        ) : (
-                          <Circle size={20} color="var(--text-tertiary)" />
-                        )}
-                      </div>
-                      <div className="problem-list-content">
-                        <h3 className="problem-list-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                          {problem.title}
-                          {flaggedProblems[problem.id] && (
-                            <Flag size={14} fill="#fbbf24" color="#fbbf24" title="Flagged for review" />
-                          )}
+                    <Fragment key={problem.id}>
+                      {showSubCatHeader && (
+                        <h3 style={{ 
+                          marginTop: index === 0 ? '0' : '1.5rem', 
+                          marginBottom: '0.25rem', 
+                          color: 'var(--accent-primary)', 
+                          fontSize: '1rem', 
+                          textTransform: 'uppercase', 
+                          letterSpacing: '0.5px',
+                          fontWeight: '600' 
+                        }}>
+                          {problem.subCategory}
                         </h3>
-                        <div className="problem-list-desc" dangerouslySetInnerHTML={{ __html: problem.description.substring(0, 80) + '...' }} />
-                      </div>
-                      <div className="problem-list-action">
-                        <span style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>Solve</span>
-                        <ChevronRight size={18} color="var(--text-secondary)" />
-                      </div>
-                    </Link>
+                      )}
+                      <Link to={`/workspace/${problem.id}`} id={`problem-${problem.id}`} className="problem-list-item glass-panel">
+                        <div className="problem-list-icon">
+                          {isCompleted ? (
+                            <CheckCircle size={20} color="var(--accent-primary)" />
+                          ) : (
+                            <Circle size={20} color="var(--text-tertiary)" />
+                          )}
+                        </div>
+                        <div className="problem-list-content">
+                          <h3 className="problem-list-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            {problem.title}
+                            {flaggedProblems[problem.id] && (
+                              <Flag size={14} fill="#fbbf24" color="#fbbf24" title="Flagged for review" />
+                            )}
+                          </h3>
+                          <div className="problem-list-desc" dangerouslySetInnerHTML={{ __html: problem.description }} />
+                        </div>
+                        <div className="problem-list-action">
+                          <span style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>Solve</span>
+                          <ChevronRight size={18} color="var(--text-secondary)" />
+                        </div>
+                      </Link>
+                    </Fragment>
                   );
                 })}
               </div>
             )}
           </div>
         ))}
+          </>
+        )}
           </>
         )}
       </main>

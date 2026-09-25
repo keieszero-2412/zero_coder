@@ -46,6 +46,41 @@ const CodeBlock = ({ inline, className, children, ...props }) => {
 
 const notebookCache = new Map();
 
+const MemoizedMarkdownCell = React.memo(({ source, attachments }) => {
+  const attachmentMap = useMemo(() => {
+    const map = {};
+    if (attachments) {
+      Object.keys(attachments).forEach(filename => {
+        const mimeType = Object.keys(attachments[filename])[0];
+        let base64Data = attachments[filename][mimeType];
+        if (Array.isArray(base64Data)) {
+          base64Data = base64Data.join('');
+        }
+        base64Data = base64Data.replace(/\s+/g, '');
+        map[`attachment:${filename}`] = `data:${mimeType};base64,${base64Data}`;
+      });
+    }
+    return map;
+  }, [attachments]);
+
+  return (
+    <ReactMarkdown 
+      urlTransform={(value) => value}
+      remarkPlugins={[remarkGfm, remarkMath]} 
+      rehypePlugins={[rehypeRaw, rehypeKatex]}
+      components={{ 
+        code: CodeBlock,
+        img: ({node, src, ...props}) => {
+          const resolvedSrc = attachmentMap[src] || src;
+          return <ImagePreview src={resolvedSrc} {...props} />;
+        }
+      }}
+    >
+      {preprocessMarkdown(source)}
+    </ReactMarkdown>
+  );
+});
+
 export const NotebookViewer = React.forwardRef(function NotebookViewer(
   { notebookUrl, datasetsDir, datasetFiles, onCellSelect, onRunningChange },
   ref
@@ -544,20 +579,7 @@ export const NotebookViewer = React.forwardRef(function NotebookViewer(
           {notebook.cells.map((cell, index) => {
             if (cell.cell_type === 'markdown') {
               let source = Array.isArray(cell.source) ? cell.source.join('') : cell.source;
-              // Build attachment lookup map — resolve data URLs in img component,
-              // NOT in the markdown source, to avoid parser corruption of long base64 strings
-              const attachmentMap = {};
-              if (cell.attachments) {
-                Object.keys(cell.attachments).forEach(filename => {
-                  const mimeType = Object.keys(cell.attachments[filename])[0];
-                  let base64Data = cell.attachments[filename][mimeType];
-                  if (Array.isArray(base64Data)) {
-                    base64Data = base64Data.join('');
-                  }
-                  base64Data = base64Data.replace(/\s+/g, '');
-                  attachmentMap[`attachment:${filename}`] = `data:${mimeType};base64,${base64Data}`;
-                });
-              }
+              
               return (
                 <div
                   key={index}
@@ -565,20 +587,7 @@ export const NotebookViewer = React.forwardRef(function NotebookViewer(
                   className="notebook-cell markdown-cell"
                   style={{ scrollMarginTop: '60px', marginBottom: '1.25rem', color: 'var(--text-primary)', lineHeight: 1.7 }}
                 >
-                  <ReactMarkdown 
-                    urlTransform={(value) => value}
-                    remarkPlugins={[remarkGfm, remarkMath]} 
-                    rehypePlugins={[rehypeRaw, rehypeKatex]}
-                    components={{ 
-                      code: CodeBlock,
-                      img: ({node, src, ...props}) => {
-                        const resolvedSrc = attachmentMap[src] || src;
-                        return <ImagePreview src={resolvedSrc} {...props} />;
-                      }
-                    }}
-                  >
-                    {preprocessMarkdown(source)}
-                  </ReactMarkdown>
+                  <MemoizedMarkdownCell source={source} attachments={cell.attachments} />
                 </div>
               );
             } else if (cell.cell_type === 'code') {

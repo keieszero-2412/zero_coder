@@ -65,7 +65,7 @@ export function AdminPanel({ onClose }) {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    showConfirm(`Are you sure you want to migrate problems from ${file.name} to Firestore?`, async () => {
+    showConfirm(`Are you sure you want to migrate problems from ${file.name} to Firestore? This will replace all existing problems.`, async () => {
       setIsMigrating(true);
       try {
         const text = await file.text();
@@ -75,12 +75,21 @@ export function AdminPanel({ onClose }) {
           throw new Error("Invalid JSON format. Expected an array of problems.");
         }
 
+        // Clear existing problems first to remove deleted ones
+        const { collection, getDocs, deleteDoc } = await import('firebase/firestore');
+        const problemsRef = collection(db, 'problems');
+        const snapshot = await getDocs(problemsRef);
+        for (const document of snapshot.docs) {
+          await deleteDoc(doc(db, 'problems', document.id));
+        }
+
         let index = 0;
         for (const p of backupProblems) {
           await setDoc(doc(db, 'problems', p.id.toString()), { ...p, order: index });
           index++;
         }
-        showToast(`Successfully migrated ${backupProblems.length} problems!`, "success");
+        localStorage.removeItem('cached_problems');
+        showToast(`Successfully migrated ${backupProblems.length} problems! Please refresh the page to see changes.`, "success");
       } catch (err) {
         console.error("Migration failed:", err);
         showToast("Error migrating data: " + err.message, "error");

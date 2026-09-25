@@ -273,8 +273,12 @@ export function Auth() {
               gap: '0.5rem', 
               padding: '0.75rem', 
               borderRadius: 'var(--radius-md)',
-              backgroundColor: emailStatus.colorCode !== 'Red' ? 'rgba(34, 197, 94, 0.1)' : 'rgba(239, 68, 68, 0.1)',
-              color: emailStatus.colorCode !== 'Red' ? '#22c55e' : 'var(--error)'
+              backgroundColor: emailStatus.colorCode === 'Red' ? 'rgba(239, 68, 68, 0.1)' : 
+                               emailStatus.colorCode === 'Gray' ? 'rgba(156, 163, 175, 0.1)' :
+                               'rgba(34, 197, 94, 0.1)',
+              color: emailStatus.colorCode === 'Red' ? 'var(--error)' :
+                     emailStatus.colorCode === 'Gray' ? '#9ca3af' :
+                     '#22c55e'
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <div style={{ 
@@ -283,6 +287,7 @@ export function Auth() {
                   borderRadius: '50%', 
                   backgroundColor: emailStatus.colorCode === 'Green' ? '#22c55e' :
                                    emailStatus.colorCode === 'Blue' ? '#3b82f6' : 
+                                   emailStatus.colorCode === 'Gray' ? '#9ca3af' :
                                    'var(--error)'
                 }} />
                 <span style={{ fontWeight: 600 }}>Access Code: {emailStatus.colorCode}</span>

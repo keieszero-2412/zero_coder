@@ -2,17 +2,38 @@ import { useState } from 'react';
 import { CheckCircle2, XCircle, Activity, ChevronDown, ChevronRight } from 'lucide-react';
 
 function TestCaseResult({ res, index }) {
+  const [showAnswer, setShowAnswer] = useState(false);
   const [showDiff, setShowDiff] = useState(false);
+
+  const isMCQ = res.isMCQ || (typeof res.code === 'string' && (res.code.startsWith('Câu') || res.code.startsWith('Question')));
+  const expStr = String(res.expected ?? '');
+  const gotStr = String(res.got ?? '');
 
   return (
     <div style={{ marginBottom: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
       <div className={`test-case ${res.passed ? 'pass' : 'fail'}`} style={{ marginBottom: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           {res.passed ? <CheckCircle2 color="var(--success)" size={20} /> : <XCircle color="var(--error)" size={20} />}
-          <span style={{ fontWeight: 500 }}>Test Case {index + 1}</span>
+          <span style={{ fontWeight: 500 }}>{res.code ? res.code : `Test Case ${index + 1}`}</span>
         </div>
-        <div className={`badge ${res.passed ? 'pass' : 'fail'}`}>
-          {res.passed ? 'Passed' : 'Failed'}
+        <div className={`badge ${res.passed ? 'pass' : 'fail'}`} style={{ display: 'flex', alignItems: 'center' }}>
+          <span>{res.passed ? 'Passed' : 'Failed'}</span>
+          <button
+            onClick={() => setShowAnswer(prev => !prev)}
+            style={{
+              marginLeft: '0.5rem',
+              padding: '0.2rem 0.5rem',
+              fontSize: '0.75rem',
+              backgroundColor: 'transparent',
+              border: '1px solid var(--border-color)',
+              color: 'var(--text-secondary)',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              transition: 'all 0.2s'
+            }}
+          >
+            {showAnswer ? 'Hide Answer' : 'View Answer'}
+          </button>
         </div>
       </div>
       
@@ -23,7 +44,7 @@ function TestCaseResult({ res, index }) {
             {res.code}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', fontFamily: 'monospace', wordBreak: 'break-word' }}>
-            <div style={{ color: 'var(--success)' }}>Expected: {res.expected}</div>
+            {showAnswer && <div style={{ color: 'var(--success)' }}>Expected: {expStr}</div>}
             <div style={{ color: 'var(--error)', whiteSpace: 'pre-wrap', wordBreak: 'break-word', marginTop: '0.5rem', borderTop: '1px solid rgba(239, 68, 68, 0.2)', paddingTop: '0.5rem' }}>
               <strong>Execution Error:</strong><br/>
               {res.error}
@@ -39,51 +60,55 @@ function TestCaseResult({ res, index }) {
             {res.code}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', fontFamily: 'monospace', wordBreak: 'break-word' }}>
-            <div style={{ color: 'var(--success)' }}>Expected: {res.expected}</div>
-            <div style={{ color: 'var(--error)' }}>Got: {res.got}</div>
+            {showAnswer && <div style={{ color: 'var(--success)' }}>Expected: {expStr}</div>}
+            <div style={{ color: 'var(--error)' }}>Got: {gotStr}</div>
           </div>
-          <button 
-            style={{ 
-              marginTop: '0.75rem', 
-              padding: '0.25rem 0.75rem', 
-              fontSize: '0.75rem', 
-              backgroundColor: 'transparent', 
-              border: '1px solid var(--border-color)', 
-              color: 'var(--text-secondary)',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              transition: 'all 0.2s'
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = 'var(--bg-surface-highlight)';
-              e.currentTarget.style.color = 'var(--text-primary)';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = 'transparent';
-              e.currentTarget.style.color = 'var(--text-secondary)';
-            }}
-            onClick={() => setShowDiff(!showDiff)}
-          >
-            {showDiff ? 'Hide differences' : 'Show differences'}
-          </button>
-          
-          {showDiff && (
-            <div style={{ marginTop: '0.5rem', padding: '0.5rem', backgroundColor: 'rgba(0,0,0,0.2)', fontFamily: 'monospace', borderRadius: 'var(--radius-sm)', wordBreak: 'break-all', whiteSpace: 'pre-wrap' }}>
-              <div>
-                {res.expected.split('').map((char, i) => (
-                  <span key={`exp-${i}`} style={res.got[i] === char ? { color: 'var(--text-tertiary)' } : { backgroundColor: 'rgba(34, 197, 94, 0.2)', color: 'var(--success)' }}>
-                    {char === ' ' ? '·' : char}
-                  </span>
-                ))}
-              </div>
-              <div>
-                {res.got.split('').map((char, i) => (
-                  <span key={`got-${i}`} style={res.expected[i] === char ? { color: 'var(--text-tertiary)' } : { backgroundColor: 'rgba(239, 68, 68, 0.2)', color: 'var(--error)' }}>
-                    {char === ' ' ? '·' : char}
-                  </span>
-                ))}
-              </div>
-            </div>
+          {!isMCQ && (
+            <>
+              <button 
+                style={{ 
+                  marginTop: '0.75rem', 
+                  padding: '0.25rem 0.75rem', 
+                  fontSize: '0.75rem', 
+                  backgroundColor: 'transparent', 
+                  border: '1px solid var(--border-color)', 
+                  color: 'var(--text-secondary)',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--bg-surface-highlight)';
+                  e.currentTarget.style.color = 'var(--text-primary)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = 'var(--text-secondary)';
+                }}
+                onClick={() => setShowDiff(!showDiff)}
+              >
+                {showDiff ? 'Hide differences' : 'Show differences'}
+              </button>
+              
+              {showDiff && (
+                <div style={{ marginTop: '0.5rem', padding: '0.5rem', backgroundColor: 'rgba(0,0,0,0.2)', fontFamily: 'monospace', borderRadius: 'var(--radius-sm)', wordBreak: 'break-all', whiteSpace: 'pre-wrap' }}>
+                  <div>
+                    {expStr.split('').map((char, i) => (
+                      <span key={`exp-${i}`} style={gotStr[i] === char ? { color: 'var(--text-tertiary)' } : { backgroundColor: 'rgba(34, 197, 94, 0.2)', color: 'var(--success)' }}>
+                        {char === ' ' ? '·' : char}
+                      </span>
+                    ))}
+                  </div>
+                  <div>
+                    {gotStr.split('').map((char, i) => (
+                      <span key={`got-${i}`} style={expStr[i] === char ? { color: 'var(--text-tertiary)' } : { backgroundColor: 'rgba(239, 68, 68, 0.2)', color: 'var(--error)' }}>
+                        {char === ' ' ? '·' : char}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </div>
       )}
@@ -95,8 +120,8 @@ function TestCaseResult({ res, index }) {
             {res.code}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', fontFamily: 'monospace', wordBreak: 'break-word' }}>
-            <div style={{ color: 'var(--success)' }}>Expected: {res.expected}</div>
-            <div style={{ color: 'var(--success)' }}>Got: {res.expected}</div>
+            {showAnswer && <div style={{ color: 'var(--success)' }}>Expected: {expStr}</div>}
+            <div style={{ color: 'var(--success)' }}>Got: {gotStr}</div>
           </div>
         </div>
       )}
@@ -104,14 +129,31 @@ function TestCaseResult({ res, index }) {
   );
 }
 
-export function TestResults({ results }) {
+export function TestResults({ results, onReset }) {
   if (!results || results.length === 0) return null;
 
   return (
     <div className="test-results glass-panel">
-      <div className="section-header" style={{ marginBottom: '1rem', backgroundColor: 'transparent', padding: '0', border: 'none' }}>
-        <Activity size={18} color="var(--accent-secondary)" />
-        <span style={{ color: 'var(--text-primary)', fontSize: '1rem' }}>Test Results</span>
+      <div className="section-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', backgroundColor: 'transparent', padding: '0', border: 'none' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Activity size={18} color="var(--accent-secondary)" />
+          <span style={{ color: 'var(--text-primary)', fontSize: '1rem', marginLeft: '0.5rem' }}>Test Results</span>
+        </div>
+        <button
+          onClick={() => onReset && onReset()}
+          style={{
+            padding: '0.25rem 0.5rem',
+            fontSize: '0.75rem',
+            backgroundColor: 'transparent',
+            border: '1px solid var(--border-color)',
+            color: 'var(--text-secondary)',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            transition: 'all 0.2s'
+          }}
+        >
+          Reset All
+        </button>
       </div>
       
       <div>

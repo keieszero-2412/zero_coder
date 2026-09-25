@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { CodeEditor } from '../components/CodeEditor';
+import { MultipleChoiceViewer } from '../components/MultipleChoiceViewer';
 import { TerminalOutput } from '../components/TerminalOutput';
 import { ProblemDescription } from '../components/ProblemDescription';
 import { TestResults } from '../components/TestResults';
@@ -34,7 +35,7 @@ export function Workspace() {
   const currentTerm = useMemo(() => {
     if (!currentProblem) return 'mid';
     const cat = (currentProblem.category || '').toLowerCase();
-    if (cat.includes('final') || cat.includes('last')) return 'final';
+    if (cat.includes('final') || cat.includes('last-term') || cat.includes('last')) return 'final';
     return 'mid';
   }, [currentProblem]);
 
@@ -44,26 +45,44 @@ export function Workspace() {
     const cats = {};
     for (const p of problems) {
       const catLower = (p.category || '').toLowerCase();
-      const isMid = p.category === 'FTDS coding practice' || catLower.includes('mid') || catLower.includes('mock');
-      const isFinal = p.category === 'FTDS coding practice' || catLower.includes('final') || catLower.includes('last');
+      const isLastTerm = catLower.includes('final') || catLower.includes('last');
+      const isMid = p.category === 'FTDS coding practice' || !isLastTerm;
+      const isFinal = p.category === 'FTDS coding practice' || isLastTerm;
 
       if (currentTerm === 'mid' && !isMid) continue;
       if (currentTerm === 'final' && !isFinal) continue;
       
-      let catName = p.category;
-      if (catName === 'FTDS coding practice' || catName === 'Mid-term practice') {
+      let catName = p.category || '';
+      if (catName === 'FTDS coding practice' || catName === 'Mid-term practice' || catName === "Last-term practice") {
         catName = "Coding practice";
+      } else if (catName.startsWith("Last-term ")) {
+        const remaining = catName.replace("Last-term ", "");
+        if (remaining.toLowerCase().includes("mock")) {
+          catName = "Mock test";
+        } else if (remaining.toLowerCase().includes("test")) {
+          catName = remaining;
+        } else {
+          catName = "Coding practice";
+        }
       }
       if (!cats[catName]) cats[catName] = [];
       cats[catName].push(p);
     }
     
     const result = [];
+    // 1. Mock tests first
     for (const key of Object.keys(cats)) {
-      if (key !== "Coding practice") {
+      if (key.toLowerCase().includes("mock")) {
         result.push(...cats[key]);
       }
     }
+    // 2. Others (excluding Coding practice)
+    for (const key of Object.keys(cats)) {
+      if (!key.toLowerCase().includes("mock") && key !== "Coding practice") {
+        result.push(...cats[key]);
+      }
+    }
+    // 3. Coding practice last
     if (cats["Coding practice"]) {
       result.push(...cats["Coding practice"]);
     }
@@ -200,7 +219,33 @@ export function Workspace() {
     }
   };
 
+  const handleResetAll = () => {
+    const isMCQ = currentProblem?.type === 'multiple_choice';
+    const message = isMCQ
+      ? 'Are you sure you want to reset all your answers and start over?'
+      : 'Are you sure you want to reset your code? This will erase your current progress.';
+    
+    showConfirm(message, async () => {
+      setTestResults([]);
+      setFailedAttempts(0);
+      clearOutput();
+      
+      const resetCode = isMCQ ? '{}' : (currentProblem?.initialCode || '');
+      setCode(resetCode);
+      
+      if (currentUser && currentProblem) {
+        const draftRef = doc(db, 'code_drafts', `${currentUser.uid}_${id}`);
+        setDoc(draftRef, { code: resetCode, problemId: id, uid: currentUser.uid }, { merge: true }).catch(console.error);
+      }
+      showToast(isMCQ ? "All answers have been reset." : "Code reset to starter template.", "info");
+    });
+  };
+
   const handleRun = async () => {
+    if (currentProblem?.type === 'multiple_choice') {
+      showToast("Multiple-choice problems do not require running code.", "info");
+      return;
+    }
     setIsRunning(true);
     await runCode(code);
     setIsRunning(false);
@@ -210,6 +255,61 @@ export function Workspace() {
     if (!currentProblem) return;
     setIsRunning(true);
     setTestResults([]); // clear old results
+
+    if (currentProblem.type === 'multiple_choice') {
+      try {
+        const userAnswers = JSON.parse(code || '{}');
+        const correct = currentProblem.correctAnswers || {};
+        const results = [];
+        
+        const questions = currentProblem.questions || [];
+        for (let i = 0; i < questions.length; i++) {
+          let expected = correct[i] || 'A';
+          let got = userAnswers[i] || 'Not answered';
+          let passed = false;
+          
+          if (Array.isArray(expected) || Array.isArray(got)) {
+            const expArray = Array.isArray(expected) ? [...expected] : [expected];
+            const gotArray = Array.isArray(got) ? [...got] : (got === 'Not answered' || got === 'Chưa chọn' ? [] : [got]);
+            expArray.sort();
+            gotArray.sort();
+            passed = expArray.join(',') === gotArray.join(',');
+            
+            // Format for display
+            expected = expArray.join(', ');
+            got = gotArray.length > 0 ? gotArray.join(', ') : 'Not answered';
+          } else {
+            passed = got === expected;
+          }
+          
+          results.push({
+            passed,
+            expected,
+            got,
+            code: `Question ${i + 1}`,
+            error: null,
+            isMCQ: true
+          });
+        }
+        
+        setTestResults(results);
+        const hasFailure = results.some(r => !r.passed);
+        if (hasFailure) {
+          setFailedAttempts(prev => prev + 1);
+        } else if (results.length > 0) {
+          if (currentUser) {
+            const progressRef = doc(db, 'user_progress', currentUser.uid);
+            setDoc(progressRef, { [currentProblem.id]: true }, { merge: true })
+              .catch(console.error);
+          }
+        }
+      } catch (e) {
+        console.error("Lỗi khi chấm điểm trắc nghiệm:", e);
+      }
+      setIsRunning(false);
+      return;
+    }
+
     const results = await runTests(code, currentProblem.testCases);
     setTestResults(results);
     
@@ -313,17 +413,8 @@ export function Workspace() {
           <button 
             className="button-secondary"
             style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-            onClick={() => {
-              showConfirm('Are you sure you want to reset your code? This will erase your current progress.', async () => {
-                setCode(currentProblem.initialCode);
-                if (currentUser) {
-                  const draftRef = doc(db, 'code_drafts', `${currentUser.uid}_${id}`);
-                  setDoc(draftRef, { code: currentProblem.initialCode }, { merge: true }).catch(console.error);
-                }
-                showToast("Code reset to starter template.", "info");
-              });
-            }}
-            title="Reset Code"
+            onClick={handleResetAll}
+            title={currentProblem?.type === 'multiple_choice' ? "Reset Answers" : "Reset Code"}
           >
             <RotateCcw size={16} />
             <span className="hide-on-mobile">Reset</span>
@@ -384,50 +475,6 @@ export function Workspace() {
                 <FileCode size={15} />
                 <span>Cheatsheet</span>
               </button>
-              <FeedbackWidget iconOnly={true} />
-              <button onClick={() => setShowSettings(true)} className="button-secondary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: 0, borderRadius: '9999px' }} title="Settings">
-                <Settings size={16} />
-              </button>
-              <button
-                onClick={() => setShowAbout(true)}
-                className="button-secondary"
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: 0, borderRadius: '9999px' }}
-                title="About Project"
-              >
-                <img 
-                  src="/zerocoder-logo-transparent.png" 
-                  alt="logo" 
-                  className="about-btn-logo" 
-                  style={{ width: '18px', height: '18px', objectFit: 'contain' }} 
-                />
-              </button>
-
-              <div style={{ height: '20px', width: '1px', backgroundColor: 'var(--border-color)', margin: '0 0.25rem' }} />
-
-              <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: '0.375rem', rowGap: '0.125rem', alignItems: 'center' }}>
-                <span style={{ gridColumn: 2, fontSize: '0.875rem', fontWeight: 500, lineHeight: 1 }}>
-                  {currentUser.username}
-                </span>
-                <div style={{ 
-                  width: '8px', 
-                  height: '8px', 
-                  borderRadius: '50%', 
-                  backgroundColor: currentUser.colorCode === 'Green' ? '#10b981' : 
-                                   currentUser.colorCode === 'Blue' ? '#3b82f6' : 'var(--error)' 
-                }} />
-                <div style={{ 
-                  fontSize: '0.75rem', 
-                  lineHeight: 1,
-                  color: currentUser.colorCode === 'Green' ? '#10b981' : 
-                         currentUser.colorCode === 'Blue' ? '#3b82f6' : 'var(--text-secondary)'
-                }}>
-                  {currentUser.colorCode}
-                </div>
-              </div>
-
-              <button onClick={logout} className="button-secondary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: 0 }} title="Sign Out">
-                <LogOut size={16} />
-              </button>
             </div>
           )}
         </div>
@@ -436,7 +483,7 @@ export function Workspace() {
       <main className="main-content">
         <aside className="sidebar glass-panel" style={{ width: `${sidebarWidth}px`, flexShrink: 0 }}>
           <ProblemDescription problem={currentProblem} failedAttempts={failedAttempts} userCode={code} testResults={testResults} />
-          <TestResults results={testResults} />
+          <TestResults results={testResults} onReset={handleResetAll} />
         </aside>
         
         {/* Sidebar Drag Handle */}
@@ -456,60 +503,70 @@ export function Workspace() {
         
         <div className="workspace" style={{ flexDirection: 'row', flex: 1, minWidth: 0 }}>
           
-          {/* Left Panel: Editor + Terminal */}
+          {/* Left Panel: Editor + Terminal OR MCQ */}
           <div style={{ 
             width: showAIInEditor ? `${editorWidth}%` : '100%', 
             height: '100%',
-            display: 'grid', 
-            gridTemplateRows: '1fr 110px',
+            display: currentProblem.type === 'multiple_choice' ? 'block' : 'grid', 
+            gridTemplateRows: currentProblem.type === 'multiple_choice' ? undefined : '1fr 110px',
             flexShrink: 0, 
             overflow: 'hidden' 
           }}>
-            <div className="editor-section" style={{ display: 'flex', flexDirection: 'column', minHeight: 0 }}>
-              <div className="section-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span>main.py</span>
-                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                  {proposedCode !== null && (
-                    <div style={{ display: 'flex', gap: '0.5rem', background: 'rgba(59, 130, 246, 0.1)', padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid rgba(59, 130, 246, 0.3)' }}>
-                      <span style={{ fontSize: '0.75rem', color: '#3b82f6', marginRight: '0.25rem' }}>Reviewing AI Fix</span>
-                      <button 
-                        className="button-primary" 
-                        style={{ padding: '0.2rem 0.5rem', fontSize: '0.75rem', minHeight: 0 }}
-                        onClick={() => { setCode(proposedCode); setProposedCode(null); }}
-                      >
-                        Accept
-                      </button>
-                      <button 
-                        className="button-secondary" 
-                        style={{ padding: '0.2rem 0.5rem', fontSize: '0.75rem', minHeight: 0 }}
-                        onClick={() => setProposedCode(null)}
-                      >
-                        Reject
-                      </button>
+            {currentProblem.type === 'multiple_choice' ? (
+              <MultipleChoiceViewer 
+                problem={currentProblem} 
+                value={code} 
+                onChange={setCode} 
+              />
+            ) : (
+              <>
+                <div className="editor-section" style={{ display: 'flex', flexDirection: 'column', minHeight: 0 }}>
+                  <div className="section-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span>main.py</span>
+                    <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                      {proposedCode !== null && (
+                        <div style={{ display: 'flex', gap: '0.5rem', background: 'rgba(59, 130, 246, 0.1)', padding: '0.2rem 0.5rem', borderRadius: '4px', border: '1px solid rgba(59, 130, 246, 0.3)' }}>
+                          <span style={{ fontSize: '0.75rem', color: '#3b82f6', marginRight: '0.25rem' }}>Reviewing AI Fix</span>
+                          <button 
+                            className="button-primary" 
+                            style={{ padding: '0.2rem 0.5rem', fontSize: '0.75rem', minHeight: 0 }}
+                            onClick={() => { setCode(proposedCode); setProposedCode(null); }}
+                          >
+                            Accept
+                          </button>
+                          <button 
+                            className="button-secondary" 
+                            style={{ padding: '0.2rem 0.5rem', fontSize: '0.75rem', minHeight: 0 }}
+                            onClick={() => setProposedCode(null)}
+                          >
+                            Reject
+                          </button>
+                        </div>
+                      )}
+                      <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                        {/* Ask AI button was moved to the top header */}
+                      </div>
                     </div>
-                  )}
-                  <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                    {/* Ask AI button was moved to the top header */}
+                  </div>
+                  
+                  <div style={{ flex: '1', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                    <CodeEditor 
+                      value={proposedCode !== null ? proposedCode : code} 
+                      originalCode={proposedCode !== null ? code : undefined}
+                      onChange={(val) => {
+                        if (proposedCode !== null) {
+                          setProposedCode(val);
+                        } else {
+                          setCode(val);
+                        }
+                      }} 
+                    />
                   </div>
                 </div>
-              </div>
-              
-              <div style={{ flex: '1', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                <CodeEditor 
-                  value={proposedCode !== null ? proposedCode : code} 
-                  originalCode={proposedCode !== null ? code : undefined}
-                  onChange={(val) => {
-                    if (proposedCode !== null) {
-                      setProposedCode(val);
-                    } else {
-                      setCode(val);
-                    }
-                  }} 
-                />
-              </div>
-            </div>
-            
-            <TerminalOutput output={output} isLoaded={isLoaded} error={error} />
+                
+                <TerminalOutput output={output} isLoaded={isLoaded} error={error} />
+              </>
+            )}
           </div>
           
           {/* Right Panel: AI Assistant */}

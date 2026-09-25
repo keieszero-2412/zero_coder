@@ -6,6 +6,7 @@ import { AdminPanel } from './AdminPanel';
 import { SettingsModal } from './SettingsModal';
 import { AboutModal } from './AboutModal';
 import { useTerm } from '../context/TermContext';
+import { useProblems } from '../context/ProblemsContext';
 import FeedbackWidget from './FeedbackWidget';
 
 export function GlobalHeader() {
@@ -16,6 +17,7 @@ export function GlobalHeader() {
   const [showAbout, setShowAbout] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { problems } = useProblems();
   
   const pendingAccessCount = 0; // Simplified for now, or fetch from context
   const pendingResetCount = 0;
@@ -24,8 +26,15 @@ export function GlobalHeader() {
   let visualTerm = activeTerm;
   if (location.pathname.startsWith('/learn')) {
     visualTerm = 'last';
-  } else if (location.pathname.startsWith('/workspace')) {
-    visualTerm = 'mid';
+  } else if (location.pathname.startsWith('/workspace/')) {
+    const id = location.pathname.split('/workspace/')[1];
+    const currentProblem = problems.find(p => p.id === id || p.id === Number(id));
+    if (currentProblem) {
+      const cat = (currentProblem.category || '').toLowerCase();
+      visualTerm = (cat.includes('final') || cat.includes('last')) ? 'last' : 'mid';
+    } else {
+      visualTerm = 'mid';
+    }
   }
 
   const handleTabClick = (term) => {
@@ -189,13 +198,15 @@ export function GlobalHeader() {
                 height: '8px', 
                 borderRadius: '50%', 
                 backgroundColor: currentUser.colorCode === 'Green' ? '#10b981' : 
-                                 currentUser.colorCode === 'Blue' ? '#3b82f6' : 'var(--error)' 
+                                 currentUser.colorCode === 'Blue' ? '#3b82f6' : 
+                                 currentUser.colorCode === 'Gray' ? '#9ca3af' : 'var(--error)' 
               }} />
               <div style={{ 
                 fontSize: '0.75rem', 
                 lineHeight: 1,
                 color: currentUser.colorCode === 'Green' ? '#10b981' : 
-                       currentUser.colorCode === 'Blue' ? '#3b82f6' : 'var(--text-secondary)',
+                       currentUser.colorCode === 'Blue' ? '#3b82f6' : 
+                       currentUser.colorCode === 'Gray' ? '#9ca3af' : 'var(--text-secondary)',
                 whiteSpace: 'nowrap'
               }}>
                 Code: {currentUser.colorCode}

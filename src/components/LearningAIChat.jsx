@@ -1,11 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Loader2, X, Send, Check, Copy, BookOpen, Wand2 } from 'lucide-react';
+import { Loader2, X, Send, Check, Copy, BookOpen, Wand2, Lock, Sparkles } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 import { preprocessMarkdown } from '../utils/latexHelper';
+import { useAuth } from '../context/AuthContext';
+import { db } from '../config/firebase';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 
 const CodeBlock = ({ inline, className, children, ...props }) => {
   const [copied, setCopied] = useState(false);
@@ -81,6 +84,23 @@ const MessageBubble = React.memo(({ msg }) => {
 });
 
 export function LearningAIChat({ isOpen, onClose, notebookTitle, activeCellCode, activeCellOutput, activeCellIndex }) {
+  const { currentUser } = useAuth();
+  const [requestSent, setRequestSent] = useState(false);
+  
+  const handleRequestBlueCode = async () => {
+    try {
+      await addDoc(collection(db, 'access_requests'), {
+        email: currentUser.email,
+        username: currentUser.username,
+        requestedAt: serverTimestamp(),
+        status: 'pending'
+      });
+      setRequestSent(true);
+    } catch (error) {
+      console.error("Failed to request Blue Code:", error);
+    }
+  };
+
   const sessionKey = `ai_learning_chat_${notebookTitle}`;
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState(() => {
@@ -254,132 +274,163 @@ export function LearningAIChat({ isOpen, onClose, notebookTitle, activeCellCode,
         </div>
       </div>
 
-      {/* Chat Area */}
-      <div ref={chatContainerRef} className="learning-ai-chat-messages" style={{ flex: '1', overflowY: 'auto', display: 'flex', flexDirection: 'column', padding: '1rem' }}>
-        
-        {messages.length === 0 && !isLoading && !error && (
-          <div style={{ margin: 'auto', textAlign: 'center', color: 'var(--text-secondary)', padding: '2rem' }}>
-            <div style={{ 
-              width: 32, 
-              height: 32, 
-              backgroundColor: 'var(--accent-primary)', 
-              maskImage: 'url(/zerocoder-logo.png)', 
-              maskSize: 'contain', 
-              maskRepeat: 'no-repeat', 
-              maskPosition: 'center',
-              WebkitMaskImage: 'url(/zerocoder-logo.png)',
-              WebkitMaskSize: 'contain',
-              WebkitMaskRepeat: 'no-repeat',
-              WebkitMaskPosition: 'center',
-              margin: '0 auto 1rem',
-              opacity: 0.8
-            }} />
-            <p style={{ color: 'var(--text-primary)', fontWeight: 500 }}>How can I help you?</p>
-            <p style={{ fontSize: '0.85rem', marginTop: '0.25rem' }}>Ask a question or use the suggestions below.</p>
+      {currentUser?.colorCode === 'Gray' ? (
+        <div style={{ flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem', textAlign: 'center' }}>
+          <div style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }}>
+            <Lock size={48} style={{ opacity: 0.5 }} />
           </div>
-        )}
-
-        {messages.map((msg, index) => (
-          <MessageBubble key={index} msg={msg} />
-        ))}
-
-        {isLoading && (
-          <div className="ai-chat-bubble assistant" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Loader2 size={16} className="spinner" style={{ animation: 'spin 2s linear infinite' }} />
-            Thinking...
-          </div>
-        )}
-
-        {error && (
-          <div style={{ color: 'var(--error)', padding: '0.75rem', backgroundColor: 'rgba(239, 68, 68, 0.1)', borderRadius: '8px', margin: '1rem 0' }}>
-            {error}
-          </div>
-        )}
-        
-      </div>
-
-      {/* Cell Context Indicator */}
-      {activeCellCode && (
-        <div style={{
-          padding: '0.4rem 1rem',
-          fontSize: '0.7rem',
-          color: 'var(--text-tertiary)',
-          borderTop: '1px solid var(--border-color)',
-          backgroundColor: 'var(--bg-base)',
-          display: 'flex', alignItems: 'center', gap: '0.4rem',
-        }}>
-          <BookOpen size={11} />
-          Đang xem Cell [{activeCellIndex !== null ? activeCellIndex + 1 : '?'}]
+          <h3 style={{ margin: '0 0 0.5rem 0', color: 'var(--text-primary)' }}>Access Denied</h3>
+          <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', fontSize: '0.95rem' }}>
+            You don't have access to this feature.
+          </p>
+          <button 
+            onClick={handleRequestBlueCode}
+            disabled={requestSent}
+            className={requestSent ? "button-secondary" : "button-primary"}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', borderRadius: 'var(--radius-full)' }}
+          >
+            {requestSent ? (
+              <>
+                <Check size={18} />
+                Request Sent to Admin
+              </>
+            ) : (
+              <>
+                Request for Blue Code
+              </>
+            )}
+          </button>
         </div>
+      ) : (
+        <>
+          {/* Chat Area */}
+          <div ref={chatContainerRef} className="learning-ai-chat-messages" style={{ flex: '1', overflowY: 'auto', display: 'flex', flexDirection: 'column', padding: '1rem' }}>
+            
+            {messages.length === 0 && !isLoading && !error && (
+              <div style={{ margin: 'auto', textAlign: 'center', color: 'var(--text-secondary)', padding: '2rem' }}>
+                <div style={{ 
+                  width: 32, 
+                  height: 32, 
+                  backgroundColor: 'var(--accent-primary)', 
+                  maskImage: 'url(/zerocoder-logo.png)', 
+                  maskSize: 'contain', 
+                  maskRepeat: 'no-repeat', 
+                  maskPosition: 'center',
+                  WebkitMaskImage: 'url(/zerocoder-logo.png)',
+                  WebkitMaskSize: 'contain',
+                  WebkitMaskRepeat: 'no-repeat',
+                  WebkitMaskPosition: 'center',
+                  margin: '0 auto 1rem',
+                  opacity: 0.8
+                }} />
+                <p style={{ color: 'var(--text-primary)', fontWeight: 500 }}>How can I help you?</p>
+                <p style={{ fontSize: '0.85rem', marginTop: '0.25rem' }}>Ask a question or use the suggestions below.</p>
+              </div>
+            )}
+
+            {messages.map((msg, index) => (
+              <MessageBubble key={index} msg={msg} />
+            ))}
+
+            {isLoading && (
+              <div className="ai-chat-bubble assistant" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <Loader2 size={16} className="spinner" style={{ animation: 'spin 2s linear infinite' }} />
+                Thinking...
+              </div>
+            )}
+
+            {error && (
+              <div style={{ color: 'var(--error)', padding: '0.75rem', backgroundColor: 'rgba(239, 68, 68, 0.1)', borderRadius: '8px', margin: '1rem 0' }}>
+                {error}
+              </div>
+            )}
+            
+          </div>
+
+          {/* Cell Context Indicator */}
+          {activeCellCode && (
+            <div style={{
+              padding: '0.4rem 1rem',
+              fontSize: '0.7rem',
+              color: 'var(--text-tertiary)',
+              borderTop: '1px solid var(--border-color)',
+              backgroundColor: 'var(--bg-base)',
+              display: 'flex', alignItems: 'center', gap: '0.4rem',
+            }}>
+              <BookOpen size={11} />
+              Đang xem Cell [{activeCellIndex !== null ? activeCellIndex + 1 : '?'}]
+            </div>
+          )}
+
+          {/* Persistent Suggestion Buttons */}
+          {!isLoading && (
+            <div style={{ display: 'flex', gap: '0.5rem', padding: '0.75rem 1rem', overflowX: 'auto', borderTop: '1px solid var(--border-color)', whiteSpace: 'nowrap' }}>
+              <button 
+                onClick={() => handleIntent('Giải thích chi tiết code và logic trong cell hiện tại cho mình hiểu. Nếu không có cell nào đang chọn, hãy tóm tắt nội dung chính của notebook.')}
+                style={{ background: 'var(--bg-base)', border: '1px solid var(--border-color)', borderRadius: '1.25rem', padding: '0.35rem 0.75rem', color: 'var(--text-secondary)', fontSize: '0.75rem', cursor: 'pointer', transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                onMouseOver={(e) => { e.target.style.background = 'var(--bg-surface-highlight)'; e.target.style.color = 'var(--text-primary)'; }}
+                onMouseOut={(e) => { e.target.style.background = 'var(--bg-base)'; e.target.style.color = 'var(--text-secondary)'; }}
+              >
+                Explain this code
+              </button>
+              <button 
+                onClick={() => handleIntent('Mình chạy code bị lỗi. Hãy phân tích output và chỉ ra lỗi ở đâu, hướng dẫn cách sửa.')}
+                style={{ background: 'var(--bg-base)', border: '1px solid var(--border-color)', borderRadius: '1.25rem', padding: '0.35rem 0.75rem', color: 'var(--text-secondary)', fontSize: '0.75rem', cursor: 'pointer', transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                onMouseOver={(e) => { e.target.style.background = 'var(--bg-surface-highlight)'; e.target.style.color = 'var(--text-primary)'; }}
+                onMouseOut={(e) => { e.target.style.background = 'var(--bg-base)'; e.target.style.color = 'var(--text-secondary)'; }}
+              >
+                Debug error
+              </button>
+            </div>
+          )}
+
+          {/* Input Area */}
+          <div style={{ padding: '0 1rem 1rem 1rem', backgroundColor: 'var(--bg-surface-elevated)' }}>
+            <form onSubmit={handleSendMessage} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', backgroundColor: 'var(--bg-base)', border: '1px solid var(--border-color)', borderRadius: '1.5rem', padding: '0.25rem 0.25rem 0.25rem 1rem' }}>
+              <input
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                placeholder={messages.length === 0 ? "Ask a question..." : "Follow up..."}
+                disabled={isLoading}
+                style={{
+                  flex: '1',
+                  padding: '0.5rem 0',
+                  border: 'none',
+                  backgroundColor: 'transparent',
+                  color: 'var(--text-primary)',
+                  fontSize: '0.85rem',
+                  outline: 'none'
+                }}
+              />
+              <button 
+                type="submit" 
+                disabled={!inputValue.trim() || isLoading}
+                style={{
+                  backgroundColor: inputValue.trim() && !isLoading ? 'var(--accent-primary)' : 'transparent',
+                  color: inputValue.trim() && !isLoading ? 'white' : 'var(--text-tertiary)',
+                  border: 'none',
+                  borderRadius: '50%',
+                  width: '32px',
+                  height: '32px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: inputValue.trim() && !isLoading ? 'pointer' : 'default',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <Send size={14} style={{ marginLeft: inputValue.trim() && !isLoading ? '2px' : '0' }} />
+              </button>
+            </form>
+            
+            {/* Disclaimer */}
+            <div style={{ textAlign: 'center', fontSize: '0.65rem', color: 'var(--text-tertiary)', marginTop: '0.5rem' }}>
+              Powered by {currentProvider}. AI can make mistakes.
+            </div>
+          </div>
+        </>
       )}
-
-      {/* Persistent Suggestion Buttons */}
-      {!isLoading && (
-        <div style={{ display: 'flex', gap: '0.5rem', padding: '0.75rem 1rem', overflowX: 'auto', borderTop: '1px solid var(--border-color)', whiteSpace: 'nowrap' }}>
-          <button 
-            onClick={() => handleIntent('Giải thích chi tiết code và logic trong cell hiện tại cho mình hiểu. Nếu không có cell nào đang chọn, hãy tóm tắt nội dung chính của notebook.')}
-            style={{ background: 'var(--bg-base)', border: '1px solid var(--border-color)', borderRadius: '1.25rem', padding: '0.35rem 0.75rem', color: 'var(--text-secondary)', fontSize: '0.75rem', cursor: 'pointer', transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
-            onMouseOver={(e) => { e.target.style.background = 'var(--bg-surface-highlight)'; e.target.style.color = 'var(--text-primary)'; }}
-            onMouseOut={(e) => { e.target.style.background = 'var(--bg-base)'; e.target.style.color = 'var(--text-secondary)'; }}
-          >
-            Explain this code
-          </button>
-          <button 
-            onClick={() => handleIntent('Mình chạy code bị lỗi. Hãy phân tích output và chỉ ra lỗi ở đâu, hướng dẫn cách sửa.')}
-            style={{ background: 'var(--bg-base)', border: '1px solid var(--border-color)', borderRadius: '1.25rem', padding: '0.35rem 0.75rem', color: 'var(--text-secondary)', fontSize: '0.75rem', cursor: 'pointer', transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
-            onMouseOver={(e) => { e.target.style.background = 'var(--bg-surface-highlight)'; e.target.style.color = 'var(--text-primary)'; }}
-            onMouseOut={(e) => { e.target.style.background = 'var(--bg-base)'; e.target.style.color = 'var(--text-secondary)'; }}
-          >
-            Debug error
-          </button>
-        </div>
-      )}
-
-      {/* Input Area */}
-      <div style={{ padding: '0 1rem 1rem 1rem', backgroundColor: 'var(--bg-surface-elevated)' }}>
-        <form onSubmit={handleSendMessage} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', backgroundColor: 'var(--bg-base)', border: '1px solid var(--border-color)', borderRadius: '1.5rem', padding: '0.25rem 0.25rem 0.25rem 1rem' }}>
-          <input
-            type="text"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            placeholder={messages.length === 0 ? "Ask a question..." : "Follow up..."}
-            disabled={isLoading}
-            style={{
-              flex: '1',
-              padding: '0.5rem 0',
-              border: 'none',
-              backgroundColor: 'transparent',
-              color: 'var(--text-primary)',
-              fontSize: '0.85rem',
-              outline: 'none'
-            }}
-          />
-          <button 
-            type="submit" 
-            disabled={!inputValue.trim() || isLoading}
-            style={{
-              backgroundColor: inputValue.trim() && !isLoading ? 'var(--accent-primary)' : 'transparent',
-              color: inputValue.trim() && !isLoading ? 'white' : 'var(--text-tertiary)',
-              border: 'none',
-              borderRadius: '50%',
-              width: '32px',
-              height: '32px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: inputValue.trim() && !isLoading ? 'pointer' : 'default',
-              transition: 'all 0.2s'
-            }}
-          >
-            <Send size={14} style={{ marginLeft: inputValue.trim() && !isLoading ? '2px' : '0' }} />
-          </button>
-        </form>
-        
-        {/* Disclaimer */}
-        <div style={{ textAlign: 'center', fontSize: '0.65rem', color: 'var(--text-tertiary)', marginTop: '0.5rem' }}>
-          Powered by {currentProvider}. AI can make mistakes.
-        </div>
-      </div>
       
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes spin {

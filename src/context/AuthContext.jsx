@@ -35,12 +35,10 @@ export const AuthProvider = ({ children }) => {
         // Fetch extended user info from Firestore
         try {
           const userDoc = await getDoc(doc(db, 'users', user.uid));
+          const { role, colorCode } = await determineRole(user.email);
+          
           if (userDoc.exists()) {
             const userData = userDoc.data();
-            
-            // Re-verify role just in case email access changed
-            const { role, colorCode } = await determineRole(user.email);
-            
             setCurrentUser({
               uid: user.uid,
               email: user.email,
@@ -49,11 +47,24 @@ export const AuthProvider = ({ children }) => {
               colorCode: colorCode
             });
           } else {
-            setCurrentUser(user);
+            setCurrentUser({
+              uid: user.uid,
+              email: user.email,
+              username: user.email.split('@')[0],
+              role: role,
+              colorCode: colorCode
+            });
           }
         } catch (error) {
           console.error("Error fetching user data:", error);
-          setCurrentUser(user);
+          const { role, colorCode } = await determineRole(user.email);
+          setCurrentUser({
+            uid: user.uid,
+            email: user.email,
+            username: user.email.split('@')[0],
+            role: role,
+            colorCode: colorCode
+          });
         }
       } else {
         setCurrentUser(null);
@@ -71,18 +82,30 @@ export const AuthProvider = ({ children }) => {
       return { role: 'Admin', colorCode: 'Green' };
     }
 
-    // 2. Check if global bypass is active
-    try {
-      const settingsRef = doc(db, 'authorized_emails', 'bypass@zerocoder.admin');
-      const settingsSnap = await getDoc(settingsRef);
-      if (settingsSnap.exists() && settingsSnap.data().bypassBlueCode) {
-        return { role: 'User', colorCode: 'Blue' };
-      }
-    } catch (e) {
-      console.error("Failed to fetch settings:", e);
+    // 2. Hardcoded specific emails to get Blue code
+    const hardcodedBlueEmails = [
+      'huyenhoang070106@gmail.com',
+      'gnahcquynh2811@gmail.com',
+      'k63.2415410082@ftu.edu.vn',
+      'ttna06nd@gmail.com',
+      'k63.2411410134@ftu.edu.vn'
+    ];
+    if (hardcodedBlueEmails.includes(email.toLowerCase())) {
+      return { role: 'User', colorCode: 'Blue' };
     }
 
-    // 3. Fallback to normal authorized_emails check
+    // 3. Check if global bypass is active (DISABLED to enforce Gray Code test)
+    // try {
+    //   const settingsRef = doc(db, 'authorized_emails', 'bypass@zerocoder.admin');
+    //   const settingsSnap = await getDoc(settingsRef);
+    //   if (settingsSnap.exists() && settingsSnap.data().bypassBlueCode) {
+    //     return { role: 'User', colorCode: 'Blue' };
+    //   }
+    // } catch (e) {
+    //   console.error("Failed to fetch settings:", e);
+    // }
+
+    // 4. Fallback to normal authorized_emails check
     try {
       const authRef = doc(db, 'authorized_emails', email);
       const snap = await getDoc(authRef);
@@ -92,7 +115,9 @@ export const AuthProvider = ({ children }) => {
     } catch (e) {
       console.error(e);
     }
-    return { role: 'Unauthorized', colorCode: 'Red' };
+    
+    // 5. Everyone else gets Gray Code
+    return { role: 'User', colorCode: 'Gray' };
   };
 
   const checkEmailStatus = async (email) => {

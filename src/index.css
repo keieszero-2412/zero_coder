@@ -881,7 +881,35 @@ a.button-primary {
   margin: 0;
   font-size: 0.8125rem;
   color: var(--text-secondary);
-  line-height: 1.3;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.problem-list-desc ul,
+.problem-list-desc ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.problem-list-desc li {
+  margin: 0;
+  padding: 0;
+  display: inline;
+}
+
+.problem-list-desc li:not(:last-child)::after {
+  content: " • ";
+  color: var(--text-tertiary);
+  margin: 0 0.25rem;
+}
+
+.problem-list-desc p {
+  margin: 0;
+  display: inline;
 }
 
 .problem-list-action {
@@ -1020,7 +1048,7 @@ a.button-primary {
 /* Category Layout */
 .category-section {
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 260px minmax(0, 1fr);
   gap: 2rem;
   align-items: start;
 }
@@ -1153,7 +1181,7 @@ a.button-primary {
   
   /* Category Layout Mobile */
   .category-section {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 1rem;
     margin-bottom: 2rem !important;
   }

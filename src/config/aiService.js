@@ -160,6 +160,11 @@ Please provide a clear and concise hint. Do NOT just give them the exact correct
     testContext = "The student hasn't run the tests yet or test results are unavailable. Review the code for obvious logical errors or ask them to run the code to see the results.";
   }
 
+  let problemFullDescription = problem.description;
+  if (problem.type === 'multiple_choice' && problem.questions) {
+    problemFullDescription += '\n\n### Questions:\n' + JSON.stringify(problem.questions, null, 2);
+  }
+
   const systemPrompt = `
 You are an AI programming assistant. Your name is "Zero". You must communicate in Vietnamese.
 IMPORTANT PERSONA RULES:
@@ -173,7 +178,7 @@ A student is working on the following problem.
 ${problem.title}
 
 ### Problem Description:
-${problem.description}
+${problemFullDescription}
 
 ### Student's Current Code:
 \`\`\`python
