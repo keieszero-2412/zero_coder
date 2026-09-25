@@ -5,7 +5,7 @@
     "title": "1. Tính chu vi hình chữ nhật",
     "description": "<p>Viết hàm <code>cal_perimeter(a, b)</code> thực hiện tính chu vi hình chữ nhật, với chiều dài và chiều rộng lần lượt là <code>a</code> và <code>b</code> (số thực).</p><p>Hàm trả về kết quả chu vi hình chữ nhật đó.</p><p><strong>Lưu ý:</strong> Nếu chiều dài hoặc chiều rộng <= 0, hoặc nếu chiều dài nhỏ hơn chiều rộng (<code>a < b</code>), hãy trả về <code>None</code>.</p>",
     "hint": "Kiểm tra điều kiện a > 0, b > 0 và a >= b trước khi tính. Chu vi hình chữ nhật bằng (chiều dài + chiều rộng) * 2. Nhớ dùng lệnh return để trả về kết quả thay vì dùng lệnh print nhé.",
-    "initialCode": "def cal_perimeter(a, b):\n    # Write your code here\n",
+    "initialCode": "def cal_perimeter(a, b):",
     "testCases": [
       {
         "id": 1,
@@ -35,7 +35,7 @@
     "title": "2. Lọc danh sách",
     "description": "<p>Viết hàm <code>filter_list(lst)</code> nhận vào một danh sách các số nguyên, và đếm xem trong danh sách ban đầu có bao nhiêu số thoả mãn <strong>chia hết cho 2 nhưng không chia hết cho 3</strong>.</p><p>Hàm trả về số lượng các số thỏa mãn điều kiện. Nếu như không có số nào thoả mãn, hãy trả về số <code>0</code>.</p>",
     "hint": "Sử dụng vòng lặp duyệt qua list. Dùng toán tử chia lấy dư (%) để kiểm tra: x % 2 == 0 và x % 3 != 0. Tạo một biến đếm và cộng thêm 1 nếu phần tử thỏa mãn điều kiện.",
-    "initialCode": "def filter_list(lst):\n    # Write your code here\n",
+    "initialCode": "def filter_list(lst):",
     "testCases": [
       {
         "id": 1,
@@ -65,7 +65,7 @@
     "title": "3. Đảo ngược chuỗi",
     "description": "<p>Viết hàm <code>reverse_string(a)</code> trong đó <code>a</code> là chuỗi ký tự (tiếng Việt hoặc tiếng Anh).</p><p>Yêu cầu: Đảo thứ tự các từ, <strong>không</strong> đảo ký tự trong từ. Các từ cách nhau bởi khoảng trắng.</p>",
     "hint": "Bạn có thể dùng a.split() để tách chuỗi thành danh sách các từ. Sau đó đảo ngược danh sách này (dùng [::-1] hoặc .reverse()) và nối lại thành chuỗi bằng \" \".join(danh_sach).",
-    "initialCode": "def reverse_string(a):\n    # Write your code here\n",
+    "initialCode": "def reverse_string(a):",
     "testCases": [
       {
         "id": 1,
@@ -95,7 +95,7 @@
     "title": "4. Đếm số cặp bằng nhau",
     "description": "<p>Cho một danh sách <code>a</code> gồm N số nguyên dương, các phần tử được đánh chỉ số từ 0 đến N-1.</p><p>Hãy viết hàm <code>count_similar(a)</code> để đếm số lượng bộ chỉ số (i, j) thỏa mãn <code>0 <= i < j < N</code> và <code>a[i] == a[j]</code>.</p>",
     "hint": "Sử dụng 2 vòng lặp lồng nhau. Vòng lặp ngoài duyệt i từ 0 đến len(a)-1, vòng lặp trong duyệt j từ i+1 đến len(a)-1. Nếu a[i] == a[j] thì tăng biến đếm.",
-    "initialCode": "def count_similar(a):\n    # Write your code here\n",
+    "initialCode": "def count_similar(a):",
     "testCases": [
       {
         "id": 1,
@@ -119,7 +119,7 @@
     "category": "Mid-term practice",
     "title": "Question 1",
     "description": "<p>Trong bài toán này, bạn cần kiểm tra số nghiệm của phương trình:</p><p>a x^2 + b x + c = 0</p><p>với a, b, c là các số thực.</p><p>Yêu cầu<br/>Hãy viết hàm check_quadratic_equation(a, b, c) để xác định phương trình trên có nghiệm hay không, và có bao nhiêu nghiệm.</p><p>Hàm cần xét đầy đủ mọi trường hợp có thể xảy ra, bao gồm cả trường hợp phương trình không còn là phương trình bậc hai.</p><p>Kết quả cần trả về<br/>Trả về \"No solution\" nếu phương trình không có nghiệm</p><p>Trả về \"Infinitely many solution\" nếu phương trình có vô số nghiệm</p><p>Nếu phương trình có số nghiệm hữu hạn, trả về một số nguyên dương biểu thị số nghiệm của phương trình</p><p>Ví dụ<br/>Input: a = 1, b = -2, c = 1<br/>Output: 1</p><p>Input: a = 1, b = 1, c = 1<br/>Output: No solution</p><p>Input: a = 0, b = 0, c = 0<br/>Output: Infinitely many solution</p>",
-    "initialCode": "def check_quadratic_equation(a, b, c):\n    # Write your code here\n",
+    "initialCode": "def check_quadratic_equation(a, b, c):",
     "testCases": [
       {
         "id": 1,
@@ -174,7 +174,7 @@
     "category": "Mid-term practice",
     "title": "Question 2",
     "description": "<p>Bạn được cung cấp một danh sách gồm các số nguyên dương đôi một phân biệt (không có hai số nào giống nhau).</p><p>Một số nguyên dương được gọi là nguyên tố nếu nó lớn hơn 1 và chỉ chia hết cho đúng hai số nguyên dương là 1 và chính nó.</p><p>Viết hàm largest_prime(nums) với:</p><p>nums là danh sách các số nguyên dương đôi một phân biệt.</p><p>Hàm phải tìm số nguyên tố lớn nhất trong danh sách.</p><p>Nếu không tồn tại số nguyên tố, hàm trả về -1.</p>",
-    "initialCode": "def largest_prime(nums):\n    # Write your code here\n",
+    "initialCode": "def largest_prime(nums):",
     "testCases": [
       {
         "id": 1,
@@ -234,7 +234,7 @@
     "category": "Mid-term practice",
     "title": "Question 3",
     "description": "<p>Viết hàm compare_lists(list1, list2) nhận vào hai danh sách các số nguyên và trả về True nếu hai danh sách “giống nhau”, và False nếu không giống nhau. Hai danh sách được coi là giống nhau nếu chúng chứa các phần tử giống hệt nhau và số lần xuất hiện của mỗi phần tử trong hai danh sách là như nhau, không phụ thuộc vào thứ tự các phần tử.</p><p>Ví dụ:</p><p>list1 = [1, 2, 2, 3], list2 = [3, 2, 1, 2] → True</p><p>list1 = [1, 2, 3], list2 = [1, 2, 2, 3] → False</p><p>list1 = [4, 5, 6], list2 = [6, 5, 4] → True</p>",
-    "initialCode": "def compare_lists(list1, list2):\n    # Write your code here\n",
+    "initialCode": "def compare_lists(list1, list2):",
     "testCases": [
       {
         "id": 1,
@@ -289,7 +289,7 @@
     "category": "Mid-term practice",
     "title": "Question 5",
     "description": "<p>Viết một hàm có tên process_list(lst) nhận vào một danh sách gồm các số nguyên.</p><p>Yêu cầu của hàm:</p><p>Lọc và giữ lại các số lẻ trong danh sách đầu vào.</p><p>Tạo một danh sách mới, trong đó mỗi phần tử là bình phương của các số lẻ vừa chọn.</p><p>Trả về danh sách mới đó, nếu như trong danh sách đầu vào không có số nào thoả mãn thì hãy trả lại danh sách rỗng</p><p>For example:</p><p>Test\tResult<br/>print(process_list([1, 2, 3, 4, 5]))<br/>[1, 9, 25]</p>",
-    "initialCode": "def process_list(lst):\n    # Write your code here\n",
+    "initialCode": "def process_list(lst):",
     "testCases": [
       {
         "id": 1,
@@ -349,7 +349,7 @@
     "category": "Mid-term practice",
     "title": "Question 6",
     "description": "<p>Bạn Trường có hai đoạn dây, đoạn thứ nhất dài N mét và đoạn thứ hai dài M mét (N và M là các số nguyên dương).</p><p>Trường muốn cắt hai đoạn dây này thành các đoạn dây nhỏ sao cho:</p><p>Tất cả các đoạn dây nhỏ đều có cùng một độ dài.</p><p>Không có phần dây thừa.</p><p>Độ dài mỗi đoạn dây nhỏ là lớn nhất có thể.</p><p>Khi đó, hỏi Trường có thể cắt được tổng cộng bao nhiêu đoạn dây nhỏ từ hai đoạn dây ban đầu.</p><p>Viết hàm count_segments(N, M) nhận vào hai số nguyên dương N và M, và trả về một số nguyên là tổng số đoạn dây nhỏ có thể cắt được theo quy tắc trên.</p>",
-    "initialCode": "def count_segments(N, M):\n    # Write your code here\n",
+    "initialCode": "def count_segments(N, M):",
     "testCases": [],
     "hint": "Bạn có thể dùng vòng lặp while hoặc tìm ƯCLN (GCD) của N và M bằng thư viện math.gcd."
   },
@@ -358,7 +358,7 @@
     "category": "Mid-term practice",
     "title": "Question 7",
     "description": "<p>Cho một dãy các số nguyên. Người ta được phép đặt dấu + hoặc dấu - trước mỗi số trong dãy.</p><p>Lưu ý: nếu đặt dấu - trước một số âm thì ví dụ -(-3) sẽ trở thành +3.</p><p>Viết hàm: def max_signed_sum(arr):</p><p>Trong đó:</p><p>arr là một danh sách (list) các số nguyên.</p><p>Hàm trả về giá trị tổng lớn nhất có thể đạt được bằng cách đặt dấu + hoặc - trước mỗi phần tử.</p><p>Ví dụ:<br/>Nếu arr = [1, -2, 3] thì kết quả lớn nhất là 1 + 2 + 3 = 6.</p>",
-    "initialCode": "def max_signed_sum(arr):\n    # Write your code here\n",
+    "initialCode": "def max_signed_sum(arr):",
     "testCases": [
       {
         "id": 1,
@@ -418,7 +418,7 @@
     "category": "Mid-term practice",
     "title": "Question 8",
     "description": "<p>Bạn Việt được cho một tấm bìa hình chữ nhật kích thước N x M, trong đó N và M là hai số nguyên dương, biểu diễn chiều dài và chiều rộng của tấm bìa (theo cùng một đơn vị đo).</p><p>Bạn Việt muốn cắt tấm bìa này thành các hình vuông giống hệt nhau, sao cho:</p><p>Mỗi hình vuông đều có cạnh là số nguyên dương.</p><p>Không có phần bìa nào bị bỏ đi (tức là tấm bìa được chia hết hoàn toàn bởi các hình vuông đó).</p><p>Diện tích của mỗi hình vuông là lớn nhất có thể.</p><p>Viết hàm max_square_area(N, M) với:</p><p>N, M là hai số nguyên dương (kích thước tấm bìa).</p><p>Hàm trả về diện tích của hình vuông lớn nhất (tính theo đơn vị diện tích) mà bạn có thể dùng để cắt tấm bìa N x M thành các hình vuông giống hệt nhau, không thừa.</p>",
-    "initialCode": "def max_square_area(N, M):\n    # Write your code here\n",
+    "initialCode": "def max_square_area(N, M):",
     "testCases": [
       {
         "id": 1,
@@ -478,7 +478,7 @@
     "category": "Mid-term practice",
     "title": "Question 9",
     "description": "<p>Viết một hàm count(lst) nhận vào một danh sách lst chỉ chứa các số nguyên.<br/>Hàm trả về phần tử xuất hiện nhiều nhất trong danh sách.</p><p>Nếu có nhiều phần tử có cùng số lần xuất hiện cao nhất, trả về phần tử có giá trị nhỏ nhất trong số đó.</p>",
-    "initialCode": "def count(lst):\n    # Write your code here\n",
+    "initialCode": "def count(lst):",
     "testCases": [
       {
         "id": 1,
@@ -538,7 +538,7 @@
     "category": "Mid-term practice",
     "title": "Question 10",
     "description": "<p>Bạn được cung cấp một danh sách prices, trong đó prices[i] là giá của một loại đá quý vào ngày thứ i.</p><p>Bạn chỉ được phép thực hiện đúng một lần giao dịch, bao gồm:</p><p>Mua vào một ngày bất kỳ</p><p>Bán vào một ngày phía sau ngày mua (không được bán trước khi mua)</p><p>Mục tiêu của bạn là tính lợi nhuận tối đa có thể đạt được.</p><p>Lợi nhuận được tính bằng  giá bán - giá mua</p><p>Nếu không thể thu được lợi nhuận (giá luôn giảm), trả về 0. Viết hàm  max_profit(prices). Hàm nhận vào một list prices và trả về một số nguyên là lợi nhuận lớn nhất có thể đạt được.</p>",
-    "initialCode": "def max_profit(prices):\n    # Write your code here\n",
+    "initialCode": "def max_profit(prices):",
     "testCases": [
       {
         "id": 1,
@@ -593,7 +593,7 @@
     "category": "Mid-term practice",
     "title": "Question 11",
     "description": "<p>Viết hàm mirror_message(x) với yêu cầu như sau:</p><p>Nếu x là chuỗi (string), hàm trả về chuỗi đảo ngược của x.<br/>(Ví dụ: hello → olleh)</p><p>Nếu x là số nguyên (int) hoặc số thực (float), hàm trả về số đối của x.<br/>(Ví dụ: 5 → -5, -3.2 → 3.2)</p><p>Nếu x thuộc kiểu dữ liệu khác, hàm trả về chuỗi Unsupported.</p>",
-    "initialCode": "def mirror_message(x):\n    # Write your code here\n",
+    "initialCode": "def mirror_message(x):",
     "testCases": [
       {
         "id": 1,
@@ -643,7 +643,7 @@
     "category": "Mid-term practice",
     "title": "Question 12",
     "description": "<p>Cho một số nguyên dương N.</p><p>Hãy viết hàm nearest_prime(N) để tìm số nguyên tố nhỏ nhất p thoả mãn p ≥ N.</p><p>Ví dụ<br/>nearest_prime(10)<br/>→ trả về: 11</p><p>nearest_prime(17)<br/>→ trả về: 17</p><p>nearest_prime(1)<br/>→ trả về: 2</p>",
-    "initialCode": "def nearest_prime(N):\n    # Write your code here\n",
+    "initialCode": "def nearest_prime(N):",
     "testCases": [
       {
         "id": 1,
@@ -703,7 +703,7 @@
     "category": "Mid-term practice",
     "title": "Question 13",
     "description": "<p>Bạn Nam có một danh sách list gồm các số nguyên. Nam chơi một trò như sau:</p><p>Ở mỗi bước, Nam chọn ngẫu nhiên hai số a và b trong list, xóa chúng khỏi list, sau đó thêm vào cuối list một số mới có giá trị bằng a + b + 1.</p><p>Nam lặp lại quá trình này cho đến khi list chỉ còn lại đúng một số duy nhất.</p><p>Hỏi: Số cuối cùng còn lại trong list là bao nhiêu?</p><p>Viết hàm: final_number(lst)</p><p>Hàm nhận vào một list các số nguyên và trả về số cuối cùng còn lại trong list sau khi thực hiện trò chơi nêu trên.</p>",
-    "initialCode": "def final_number(lst):\n    # Write your code here\n",
+    "initialCode": "def final_number(lst):",
     "testCases": [
       {
         "id": 1,
@@ -763,7 +763,7 @@
     "category": "Mid-term practice",
     "title": "Question 15",
     "description": "<p>Một số nguyên được gọi là số hoàn hảo nếu nó chia hết cho tổng các chữ số của chính nó. Số 0 không được coi là số hoàn hảo.</p><p>Ví dụ:</p><p>18 có tổng các chữ số là 1 + 8 = 9, và 18 % 9 == 0 → là số hoàn hảo</p><p>23 có tổng chữ số là 2 + 3 = 5, nhưng 23 % 5 != 0 → không phải số hoàn hảo</p><p>-12 có tổng chữ số là 1 + 2 = 3, và -12 % 3 == 0 → là số hoàn hảo<br/>Viết hàm find_perfect_numbers(lst) nhận vào một danh sách các số nguyên.</p><p>Hàm trả về một danh sách mới gồm các phần tử trong danh sách ban đầu là số hoàn hảo (dựa theo định nghĩa trên).</p>",
-    "initialCode": "def find_perfect_numbers(lst):\n    # Write your code here\n",
+    "initialCode": "def find_perfect_numbers(lst):",
     "testCases": [
       {
         "id": 1,
@@ -823,7 +823,7 @@
     "category": "Mid-term practice",
     "title": "Question 16",
     "description": "<p>Viết hàm count_three_sum(lst) nhận vào một danh sách các số nguyên đôi một phân biệt và trả về số lượng cách có thể chọn ra 3 phần tử trong danh sách sao cho tổng của chúng bằng 0.</p>",
-    "initialCode": "def count_three_sum(lst):\n    # Write your code here\n",
+    "initialCode": "def count_three_sum(lst):",
     "testCases": [
       {
         "id": 1,
@@ -883,7 +883,7 @@
     "category": "Mid-term practice",
     "title": "Question 17",
     "description": "<p>Viết hàm binomial_coefficient(n, k) nhận vào hai số nguyên không âm n và k (với 0 ≤ k ≤ n) và trả về giá trị của số tổ hợp chập k của tập n phần tử: nCk.</p><p>TnCk được định nghĩa là số cách chọn k phần tử từ n phần tử khác nhau mà không quan tâm đến thứ tự. Giá trị này có thể được tính bằng công thức:</p><p>nCk = n! / (k! * (n - k)!)</p><p>Ví dụ:</p><p>binomial_coefficient(5, 2) → 10</p><p>binomial_coefficient(6, 0) → 1</p><p>binomial_coefficient(6, 6) → 1</p><p>binomial_coefficient(10, 3) → 120</p>",
-    "initialCode": "def binomial_coefficient(n, k):\n    # Write your code here\n",
+    "initialCode": "def binomial_coefficient(n, k):",
     "testCases": [
       {
         "id": 1,
@@ -968,7 +968,7 @@
     "category": "Mid-term practice",
     "title": "Question 18",
     "description": "<p>Cho một danh sách a gồm N số nguyên dương đôi một phân biệt, và một số nguyên dương x.</p><p>Hãy viết hàm count_sum(a, x) để tìm xem có bao nhiêu bộ chỉ số (i, j, k) thỏa mãn:</p><p>1 <= i < j < k <= N</p><p>a[i] + a[j] + a[k] = x</p><p>Hàm count_sum(a, x) nhận vào danh sách a (các số nguyên dương phân biệt) và số nguyên dương x, trả về một số nguyên là số bộ ba phần tử có tổng bằng x.</p>",
-    "initialCode": "def count_sum(a, x):\n    # Write your code here\n",
+    "initialCode": "def count_sum(a, x):",
     "testCases": [
       {
         "id": 1,
@@ -1028,7 +1028,7 @@
     "category": "Mid-term practice",
     "title": "Question 19",
     "description": "<p>Danh sách các công việc được biểu diễn dưới dạng một list các dictionary, mỗi phần tử có cấu trúc:</p><p>{'name': 'Gia sư', 'hours': 10, 'pay': 150}</p><p>Trong đó:</p><p>name: tên công việc (string)</p><p>hours: số giờ cần để hoàn thành công việc (số nguyên dương)</p><p>pay: tổng tiền nhận được khi hoàn thành công việc (số thực hoặc số nguyên)</p><p>Giả sử rằng mỗi công việc phải được làm trọn gói, không được chia nhỏ số giờ.</p><p>Yêu cầu<br/>Sinh viên có tối đa 40 giờ làm việc mỗi tuần.</p><p>Hãy viết hàm max_income(jobs) để lựa chọn một tập con các công việc sao cho:</p><p>Tổng số giờ làm không vượt quá 40</p><p>Tổng thu nhập nhận được là lớn nhất có thể</p><p>Giá trị trả về<br/>Hàm chỉ trả về một giá trị duy nhất</p><p>Giá trị đó là tổng thu nhập lớn nhất mà sinh viên có thể kiếm được</p><p>Kết quả là một số thực hoặc số nguyên, tùy dữ liệu đầu vào</p><p>Ví dụ<br/>Input:<br/>jobs = [{'name': 'Gia sư', 'hours': 10, 'pay': 150}, {'name': 'Bán hàng', 'hours': 15, 'pay': 180}, {'name': 'Giao hàng', 'hours': 8, 'pay': 120}, {'name': 'Phục vụ', 'hours': 20, 'pay': 200}]</p><p>Output:<br/>450</p>",
-    "initialCode": "def max_income(jobs):\n    # Write your code here\n",
+    "initialCode": "def max_income(jobs):",
     "testCases": [
       {
         "id": 1,
@@ -1088,7 +1088,7 @@
     "category": "Mid-term practice",
     "title": "Question 22",
     "description": "<p>Bạn Nam có một danh sách các đồ vật, mỗi đồ vật có một giá trị (value) tương ứng.<br/>Danh sách này được lưu dưới dạng dictionary, với key là tên đồ vật (string), và value là giá trị (số nguyên). Các value là đôi một phân biệt.</p><p>Nam muốn mang theo chính xác 3 đồ vật sao cho tổng giá trị của 3 đồ vật này là lớn nhất. Viết hàm select_items(items) nhận vào một dictionary items và trả về một danh sách gồm đúng 3 tên đồ vật (key) có giá trị cao nhất, sắp xếp theo thứ tự giảm dần của value.</p>",
-    "initialCode": "def select_items(items):\n    # Write your code here\n",
+    "initialCode": "def select_items(items):",
     "testCases": [
       {
         "id": 1,
@@ -1138,7 +1138,7 @@
     "category": "Mid-term practice",
     "title": "Question 23",
     "description": "<p>Hãy viết hàm count_distinct(a)</p><p>trong đó:</p><p>a là một danh sách (list) các số nguyên dương: a = [a₁, a₂, …, a_N].</p><p>để đếm số các giá trị đôi một phân biệt trong danh sách a.</p><p>Ví dụ:</p><p>count_distinct([1, 2, 2, 3, 1]) → 3</p><p>count_distinct([5, 5, 5]) → 1</p><p>count_distinct([1, 2, 3, 4]) → 4</p>",
-    "initialCode": "def count_distinct(a):\n    # Write your code here\n",
+    "initialCode": "def count_distinct(a):",
     "testCases": [
       {
         "id": 1,
@@ -1218,7 +1218,7 @@
     "category": "Mid-term practice",
     "title": "Question 24",
     "description": "<p>Hãy viết hàm list_distinct(a)</p><p>trong đó:</p><p>a là một danh sách (list) các số nguyên dương: a = [a₁, a₂, …, a_N].</p><p>để trả lại danh sách các giá trị đôi một phân biệt trong danh sách a theo thứ tự tăng dần.</p><p>Ví dụ:</p><p>list_distinct([1, 2, 2, 3, 1]) → [1, 2, 3]</p><p>list_distinct([5, 5, 5]) → [5]</p><p>list_distinct([1, 2, 3, 4]) → [1, 2, 3, 4]</p>",
-    "initialCode": "def list_distinct(a):\n    # Write your code here\n",
+    "initialCode": "def list_distinct(a):",
     "testCases": [
       {
         "id": 1,
@@ -1273,7 +1273,7 @@
     "category": "Mid-term practice",
     "title": "Question 25",
     "description": "<p>Trong hệ mã Vigenère, việc mã hóa sử dụng từ khóa key để dịch chuyển từng chữ cái trong bản rõ plaintext. Nếu key ngắn hơn plaintext, thì phải lặp lại tuần hoàn để đủ độ dài. Ví dụ: plaintext = HELLOWORLD, key = KEY → lặp thành KEYKEYKEYK.</p><p>Cách mã hóa từng chữ cái:</p><p>Chuyển mỗi chữ cái sang vị trí số trong bảng chữ cái: A = 0, B = 1, ..., Z = 25</p><p>Dùng công thức: Ci = (Pi + Ki) % 26</p><p>Pi: vị trí chữ cái của plaintext</p><p>Ki: vị trí chữ cái của key (đã lặp lại)</p><p>Ci: vị trí chữ cái kết quả (ciphertext)</p><p>Cuối cùng chuyển Ci thành chữ cái IN HOA</p><p>% là phép chia lấy dư, ví dụ: 7 % 3 = 1</p><p>Viết hàm: def vigenere_encrypt(plaintext, key):</p><p>Trong đó:</p><p>plaintext là chuỗi chữ cái, không chứa khoảng trắng, không phân biệt chữ hoa/thường</p><p>key là chuỗi chữ cái, không chứa khoảng trắng, không phân biệt chữ hoa/thường</p><p>Hàm trả về chuỗi ciphertext viết IN HOA</p><p>Ví dụ mã hóa cụ thể với plaintext = HELLO và key = KEY:</p><p>Lặp key: KEYKE</p><p>Đổi sang số:<br/>H = 7, E = 4, L = 11, L = 11, O = 14<br/>K = 10, E = 4, Y = 24, K = 10, E = 4</p><p>Áp dụng công thức Ci = (Pi + Ki) % 26:<br/>(7 + 10) % 26 = 17 → R<br/>(4 + 4) % 26 = 8 → I<br/>(11 + 24) % 26 = 9 → J<br/>(11 + 10) % 26 = 21 → V<br/>(14 + 4) % 26 = 18 → S</p><p>Kết quả cuối cùng: RIJVS.</p>",
-    "initialCode": "def vigenere_encrypt(plaintext, key):\n    # Write your code here\n",
+    "initialCode": "def vigenere_encrypt(plaintext, key):",
     "testCases": [
       {
         "id": 1,
@@ -1333,7 +1333,7 @@
     "category": "Mid-term practice",
     "title": "Question 26",
     "description": "<p>Ông An đi làm N ngày liên tiếp rồi nghỉ 1 ngày, sau đó lặp lại chu kỳ đó đều đặn.</p><p>Ông Bình đi làm M ngày liên tiếp rồi nghỉ 1 ngày, sau đó cũng lặp lại đều đặn.</p><p>Biết rằng cả hai đều bắt đầu đi làm từ ngày 01/01/2024, và lịch làm việc lặp lại đúng theo chu kỳ của mỗi người.</p><p>Hỏi: Trong khoảng từ ngày 01/01/2024 đến ngày A (tính cả ngày A), có bao nhiêu ngày mà cả ông An và ông Bình cùng đi làm?</p><p>Viết hàm:</p><p>def count_working_days(N, M, A):</p><p>Hàm trả về một số nguyên là số ngày cả hai người cùng đi làm trong khoảng từ ngày 01/01/2024 cho đến ngày A. Bạn được cung cấp mốc thời gian A dưới dạng đối tượng datetime.date của Python.</p>",
-    "initialCode": "def count_working_days(N, M, A):\n    # Write your code here\n",
+    "initialCode": "def count_working_days(N, M, A):",
     "testCases": [
       {
         "id": 1,
@@ -1393,7 +1393,7 @@
     "category": "Mid-term practice",
     "title": "Question 27",
     "description": "<p>Trong hệ mã A1Z26, mỗi chữ cái tương ứng với một số: A = 1, B = 2, C = 3, ..., Z = 26. Việc mã hoá được thực hiện theo từng chữ cái của một từ, và các số được nối với nhau bằng dấu gạch ngang -.</p><p>Viết hàm: def encode_a1z26(word):</p><p>Trong đó:</p><p>word là một chuỗi ký tự (string), chỉ gồm 1 từ, không chứa khoảng trắng và không phân biệt chữ hoa hay chữ thường.</p><p>Hàm trả về một chuỗi là kết quả mã hoá từ word theo hệ A1Z26, với các số tương ứng của từng chữ cái được nối với nhau bằng dấu -.</p><p>Ví dụ: nếu word = \"HAPPY\" thì hàm phải trả về: 8-1-16-16-25.</p>",
-    "initialCode": "def encode_a1z26(word):\n    # Write your code here\n",
+    "initialCode": "def encode_a1z26(word):",
     "testCases": [
       {
         "id": 1,
@@ -1453,7 +1453,7 @@
     "category": "Mid-term practice",
     "title": "Question 28",
     "description": "<p>Xét các đồ thị có hướng được biểu diễn bằng một dictionary Python, trong đó:</p><p>Mỗi key là một đỉnh (vertex).</p><p>Giá trị tương ứng là một dictionary chứa các đỉnh kề và trọng số của cạnh nối đến những đỉnh đó</p><p>Hãy viết hàm find_adjacency_list(graph).</p><p>Trong đó:</p><p>graph là một dictionary mô tả đồ thị như ở trên.</p><p>Hàm phải trả về adjacency list, tức là một dictionary mới ánh xạ mỗi đỉnh sang danh sách các đỉnh kề với nó (không xét trọng số).</p><p>Ví dụ, xét đồ thị được biểu diễn bằng dictionary graph = {'A': {'B': 5, 'C': 10}, 'B': {'C': 3, 'D': 8}, 'C': {'D': 2}, 'D': {}}</p><p>thì hàm phải trả về:</p><p>{'A': ['B', 'C'], 'B': ['C', 'D'], 'C': ['D'], 'D': []}</p>",
-    "initialCode": "def find_adjacency_list(graph):\n    # Write your code here\n",
+    "initialCode": "def find_adjacency_list(graph):",
     "testCases": [
       {
         "id": 1,
@@ -1508,7 +1508,7 @@
     "category": "Mid-term practice",
     "title": "Question 29",
     "description": "<p>Trong hệ mã Atbash, mỗi chữ cái được mã hóa bằng cách ánh xạ với chữ cái đối xứng trong bảng chữ cái tiếng Anh:</p><p>A ↔ Z, B ↔ Y, C ↔ X, ..., M ↔ N</p><p>Do đó, mã Atbash là loại mã đối xứng, nghĩa là quá trình mã hóa và giải mã đều dùng chung một quy tắc chuyển đổi.</p><p>Viết hàm: def atbash_decode(code):</p><p>Trong đó:</p><p>code là một chuỗi ký tự (string), chỉ gồm các chữ cái A–Z hoặc a–z, không có khoảng trắng hay ký tự đặc biệt.</p><p>Không phân biệt chữ hoa hay chữ thường.</p><p>Kết quả trả về là chuỗi chữ cái in hoa, là bản giải mã (decode) Atbash của chuỗi code.</p><p>Ví dụ: nếu code = \"SVOOL\" thì hàm phải trả về: HELLO.</p>",
-    "initialCode": "def atbash_decode(code):\n    # Write your code here\n",
+    "initialCode": "def atbash_decode(code):",
     "testCases": [
       {
         "id": 1,
@@ -1568,7 +1568,7 @@
     "category": "Mid-term practice",
     "title": "Question 30",
     "description": "<p>Trong hệ mã Atbash, mỗi chữ cái trong bảng chữ cái tiếng Anh được mã hóa bằng cách ánh xạ với chữ cái đối xứng trong bảng chữ cái. Quy tắc như sau:</p><p>A ↔ Z, B ↔ Y, C ↔ X, ..., M ↔ N</p><p>Nói cách khác, chữ cái thứ 1 đổi thành chữ thứ 26, chữ thứ 2 đổi thành chữ thứ 25, ..., chữ thứ 26 đổi thành chữ thứ 1.</p><p>Viết hàm: def atbash_cipher(word):</p><p>Trong đó:</p><p>word là một chuỗi ký tự (string), chỉ gồm các chữ cái tiếng Anh (A–Z hoặc a–z), không chứa khoảng trắng hoặc ký tự đặc biệt.</p><p>Không phân biệt chữ hoa hay chữ thường, và kết quả trả về là chữ in hoa.</p><p>Hàm trả về một chuỗi là kết quả mã hóa Atbash của từ word.</p><p>Ví dụ: nếu word = \"HELLO\" thì hàm phải trả về: SVOOL.</p>",
-    "initialCode": "def atbash_cipher(word):\n    # Write your code here\n",
+    "initialCode": "def atbash_cipher(word):",
     "testCases": [
       {
         "id": 1,
@@ -1628,7 +1628,7 @@
     "category": "Mid-term practice",
     "title": "Question 31",
     "description": "<p>Hãy viết hàm compute_area(s, x).</p><p>Trong đó:</p><p>s là một ký tự (string), dùng để xác định loại phép tính:</p><p>Nếu s = 'p' → tính chu vi hình tròn</p><p>Nếu s = 'a' → tính diện tích hình tròn</p><p>Nếu s có giá trị khác → in ra \"Invalid\"</p><p>x là bán kính của hình tròn (số thực hoặc số nguyên dương).</p><p>Trong bài này, ta lấy π = 3.14.</p><p>Yêu cầu<br/>Nếu s = 'p' hoặc s = 'a':</p><p>Hàm trả về giá trị chu vi hoặc diện tích tương ứng</p><p>Giá trị trả về là số thực, đã được làm tròn đến 2 chữ số thập phân</p><p>Nếu s không hợp lệ:</p><p>Hàm trả về chuỗi \"Invalid\"</p>",
-    "initialCode": "def compute_area(s, x):\n    # Write your code here\n",
+    "initialCode": "def compute_area(s, x):",
     "testCases": [
       {
         "id": 1,
@@ -1688,7 +1688,7 @@
     "category": "Mid-term practice",
     "title": "Question 32",
     "description": "<p>Danh sách nhà trọ được biểu diễn dưới dạng một list các dictionary, mỗi phần tử có cấu trúc:</p><p>{'name': 'A', 'price': 1.5, 'distance': 2.0, 'rating': 4.5}</p><p>Trong đó:</p><p>name: tên nhà trọ (string)</p><p>price: giá thuê (số thực, đơn vị triệu/tháng)</p><p>distance: khoảng cách đến trường (km)</p><p>rating: điểm đánh giá (từ 0 đến 5)</p><p>Để đánh giá tổng thể mức độ “đáng ở” của mỗi nhà trọ, ta định nghĩa value score theo công thức:</p><p>score = rating / price − distance * 0.1</p><p>Hãy viết hàm top_value_hostels(hostels).</p><p>Trong đó:</p><p>hostels là danh sách các nhà trọ như mô tả ở trên.</p><p>Hàm cần thực hiện:</p><p>Tính value score cho từng nhà trọ theo công thức đã cho</p><p>Sắp xếp các nhà trọ theo score giảm dần</p><p>Trả về 03 nhà trọ có score cao nhất</p><p>Giá trị trả về <br/>Hàm trả về một list gồm đúng 03 phần tử</p><p>Mỗi phần tử là một dictionary đại diện cho nhà trọ, có cấu trúc giống hệt các phần tử trong danh sách ban đầu</p><p>Giả sử danh sách đầu vào luôn có ít nhất 03 nhà trọ.</p><p>For example:</p><p>Test\tResult<br/>print(top_value_hostels([<br/> {'name':'A','price':1.5,'distance':2.0,'rating':4.5},<br/> {'name':'B','price':1.8,'distance':1.5,'rating':4.2},<br/> {'name':'C','price':1.2,'distance':2.5,'rating':4.0},<br/> {'name':'D','price':2.0,'distance':1.0,'rating':4.8},<br/> {'name':'E','price':1.6,'distance':2.2,'rating':4.1},<br/> {'name':'F','price':2.2,'distance':0.8,'rating':4.6},<br/> {'name':'G','price':1.9,'distance':1.9,'rating':4.3},<br/> {'name':'H','price':1.4,'distance':2.8,'rating':3.9},<br/> {'name':'I','price':2.5,'distance':0.5,'rating':4.7},<br/> {'name':'J','price':1.7,'distance':1.7,'rating':4.0}<br/>]))<br/>[{'name': 'C', 'price': 1.2, 'distance': 2.5, 'rating': 4.0}, {'name': 'A', 'price': 1.5, 'distance': 2.0, 'rating': 4.5}, {'name': 'H', 'price': 1.4, 'distance': 2.8, 'rating': 3.9}]</p>",
-    "initialCode": "def top_value_hostels(hostels):\n    # Write your code here\n",
+    "initialCode": "def top_value_hostels(hostels):",
     "testCases": [
       {
         "id": 1,
@@ -1748,7 +1748,7 @@
     "category": "Mid-term practice",
     "title": "Question 33",
     "description": "<p>Danh sách sinh viên được biểu diễn dưới dạng một list các dictionary, mỗi phần tử có cấu trúc:</p><p>{'name': 'Minh', 'height': 168}</p><p>Trong đó:</p><p>name: tên sinh viên (string)</p><p>height: chiều cao của sinh viên (số nguyên, đơn vị cm)</p><p>Yêu cầu<br/>Hãy viết hàm sort_students_by_height(students) để:</p><p>Sắp xếp danh sách sinh viên theo height tăng dần</p><p>Giá trị trả về<br/>Hàm trả về danh sách sinh viên đã được sắp xếp</p><p>Mỗi phần tử trong danh sách kết quả là một dictionary có cấu trúc giống hệt phần tử ban đầu</p><p>Ví dụ<br/>Input:<br/>students = [{'name': 'Minh', 'height': 168}, {'name': 'Huy', 'height': 175}, {'name': 'Lan', 'height': 160}]</p><p>Output:<br/>[{'name': 'Lan', 'height': 160}, {'name': 'Minh', 'height': 168}, {'name': 'Huy', 'height': 175}]</p>",
-    "initialCode": "def sort_students_by_height(students):\n    # Write your code here\n",
+    "initialCode": "def sort_students_by_height(students):",
     "testCases": [
       {
         "id": 1,
@@ -1798,7 +1798,7 @@
     "category": "Mid-term practice",
     "title": "Question 34",
     "description": "<p>Cho một dictionary lưu thông tin của các thành viên trong nhóm lập trình, với cấu trúc như sau:</p><p>{'Minh': {'lines': 150, 'commits': 12}, 'Huy': {'lines': 200, 'commits': 15}, ...}</p><p>Mỗi phần tử có dạng:</p><p>Tên thành viên (string)</p><p>Một dictionary gồm:</p><p>lines: số dòng code</p><p>commits: số lần commit</p><p>Hãy viết hàm count_commits(group) để tính tổng số lần commit của tất cả thành viên trong nhóm.</p><p>Kết quả trả về là một số nguyên (integer), thể hiện tổng commits của toàn bộ nhóm.</p><p>Ví dụ:<br/>Nếu group = {'Minh': {'lines':150, 'commits':12}, 'Huy': {'lines':200, 'commits':15}}<br/>thì kết quả phải là 27.</p>",
-    "initialCode": "def count_commits(group):\n    # Write your code here\n",
+    "initialCode": "def count_commits(group):",
     "testCases": [
       {
         "id": 1,
@@ -1858,7 +1858,7 @@
     "category": "FTDS coding practice",
     "title": "5. Đếm từ hợp lệ",
     "description": "<p>Viết hàm <code>count_words(sentence)</code> để đếm xem trong câu sentence có bao nhiêu từ hợp lệ. Một từ được định nghĩa là một chuỗi ký tự liên tiếp không chứa dấu cách.</p>",
-    "initialCode": "def count_words(sentence):\n",
+    "initialCode": "def count_words(sentence):",
     "testCases": [
       {
         "id": 1,
@@ -1883,7 +1883,7 @@
     "category": "FTDS coding practice",
     "title": "6. Tìm nhà trọ rẻ nhất",
     "description": "<p>Viết hàm <code>find_cheapest(hostels)</code>. Chỉ xét nhà trọ có distance ≤ 3. Sắp xếp các nhà trọ thỏa mãn điều kiện theo price tăng dần. Trả về 03 nhà trọ rẻ nhất trong phạm vi này (hoặc trả về mảng rỗng nếu không có).</p>",
-    "initialCode": "def find_cheapest(hostels):\n",
+    "initialCode": "def find_cheapest(hostels):",
     "testCases": [
       {
         "id": 1,
@@ -1899,7 +1899,7 @@
     "title": "1. Tính tổng doanh thu",
     "description": "<p>Một cửa hàng bán <code>n</code> mặt hàng. Danh sách <code>prices</code> là đơn giá của từng mặt hàng, <code>quantities</code> là số lượng bán được tương ứng.</p><p>Yêu cầu: Viết hàm <code>total_revenue(prices, quantities)</code> trả về tổng doanh thu, làm tròn 2 chữ số thập phân.</p><ul><li>Doanh thu mỗi mặt hàng = đơn giá × số lượng.</li><li>Nếu hai danh sách có độ dài khác nhau, trả về None. Nếu rỗng thì trả về 0.0.</li></ul>",
     "hint": "Dùng vòng lặp for kết hợp hàm zip(prices, quantities) để tính tổng các tích p*q, sau đó trả về round(total, 2).",
-    "initialCode": "def total_revenue(prices, quantities):\n    # Write your code here\n",
+    "initialCode": "def total_revenue(prices, quantities):",
     "testCases": [
       {
         "id": 1,
@@ -1939,7 +1939,7 @@
     "title": "2. Tính hoa hồng luỹ tiến",
     "description": "<p>Công ty trả hoa hồng cho nhân viên bán hàng theo bậc thang (đơn vị: triệu đồng). Giống thuế lũy tiến: mỗi bậc chỉ áp cho phần doanh số nằm trong bậc đó.</p><ul><li>Phần doanh số 0 - 100: 2%</li><li>Phần doanh số trên 100 - 500: 4%</li><li>Phần doanh số trên 500: 6%</li></ul><p>Yêu cầu: Viết hàm <code>commission(sales)</code> trả về tiền hoa hồng (triệu đồng), làm tròn 2 chữ số thập phân.</p>",
     "hint": "Tính hoa hồng lũy tiến bằng if/elif/else: Nếu > 500 thì (sales-500)*0.06 + 400*0.04 + 100*0.02, vv. Chú ý tính đúng các mốc trước đó.",
-    "initialCode": "def commission(sales):\n    # Write your code here\n",
+    "initialCode": "def commission(sales):",
     "testCases": [
       {
         "id": 1,
@@ -1974,7 +1974,7 @@
     "title": "3. Tổng doanh thu theo khu vực",
     "description": "<p>Phòng kinh doanh gửi bạn một danh sách giao dịch. Mỗi phần tử là một tuple <code>(khu_vuc, doanh_thu)</code>; một khu vực có thể xuất hiện nhiều lần.</p><p>Yêu cầu: Viết hàm <code>revenue_by_region(records)</code> trả về một dict gộp tổng doanh thu theo từng khu vực.</p><ul><li>Mỗi giá trị làm tròn 2 chữ số thập phân.</li><li>Thứ tự các khoá theo lần xuất hiện đầu tiên trong records.</li><li>Danh sách rỗng → trả về {}.</li></ul>",
     "hint": "Khởi tạo dict rỗng, duyệt qua vòng lặp for kv, dt in transactions, rồi cộng dồn bằng d[kv] = d.get(kv, 0) + dt.",
-    "initialCode": "def revenue_by_region(records):\n    # Write your code here\n",
+    "initialCode": "def revenue_by_region(records):",
     "testCases": [
       {
         "id": 1,
@@ -1994,7 +1994,7 @@
     "title": "4. Tốc độ tăng trưởng",
     "description": "<p>Bạn có doanh thu của một chuỗi tháng liên tiếp trong danh sách <code>revenues</code>.</p><p>Yêu cầu: Viết hàm <code>growth_rates(revenues)</code> trả về danh sách tốc độ tăng trưởng theo tháng (đơn vị %), làm tròn 2 chữ số thập phân.</p><ul><li>Tăng trưởng tháng i = (revenues[i] - revenues[i-1]) / revenues[i-1] × 100.</li><li>Danh sách kết quả ngắn hơn revenues đúng 1 phần tử; nếu có ≤ 1 tháng → trả về [].</li><li>Doanh thu giảm → giá trị âm.</li></ul>",
     "hint": "Dùng list comprehension: [round((revenues[i] - revenues[i-1]) / revenues[i-1] * 100, 2) for i in range(1, len(revenues))].",
-    "initialCode": "def growth_rates(revenues):\n    # Write your code here\n",
+    "initialCode": "def growth_rates(revenues):",
     "testCases": [
       {
         "id": 1,
@@ -2019,7 +2019,7 @@
     "title": "5. Sản phẩm bán chạy nhất",
     "description": "<p>Doanh thu theo sản phẩm được lưu trong một dict: khoá là tên sản phẩm, giá trị là doanh thu.</p><p>Yêu cầu: Viết hàm <code>top_products(sales, n)</code> trả về danh sách tên của <code>n</code> sản phẩm có doanh thu cao nhất, xếp từ cao xuống thấp.</p><ul><li>Nếu hai sản phẩm bằng doanh thu → xếp theo thứ tự bảng chữ cái (A → Z).</li><li>Nếu n lớn hơn số sản phẩm → trả về tất cả.</li><li>Chỉ trả về tên sản phẩm, không kèm doanh thu.</li></ul>",
     "hint": "Dùng sorted() trên sales.items() với key=lambda x: (-x[1], x[0]) rồi dùng vòng lặp hoặc list comprehension cắt [:n] để lấy tên sản phẩm.",
-    "initialCode": "def top_products(sales, n):\n    # Write your code here\n",
+    "initialCode": "def top_products(sales, n):",
     "testCases": [
       {
         "id": 1,
@@ -2043,7 +2043,7 @@
     "category": "Mock test 2",
     "title": "1. Giá bán bình quân",
     "description": "<p>Cùng một mặt hàng được bán ở nhiều mức giá khác nhau trong tháng. <code>prices</code> là các mức giá, <code>quantities</code> là số lượng bán ở mỗi mức giá.</p><p>Yêu cầu: Viết hàm <code>average_price(prices, quantities)</code> trả về giá bán bình quân gia quyền, làm tròn 2 chữ số thập phân.</p><p>Giá bình quân = tổng doanh thu ÷ tổng số lượng.<br/>Nếu tổng số lượng bằng 0 (hoặc danh sách rỗng) → trả về <code>0.0</code>.</p>",
-    "initialCode": "def average_price(prices, quantities):\n    # Write your code here\n",
+    "initialCode": "def average_price(prices, quantities):",
     "testCases": [
       {
         "id": 1,
@@ -2078,7 +2078,7 @@
     "category": "Mock test 2",
     "title": "2. Chiết khấu theo số lượng",
     "description": "<p>Cửa hàng bán sỉ áp dụng chiết khấu theo số lượng. Khác với thuế bậc thang: toàn bộ đơn hàng được hưởng một mức chiết khấu duy nhất, xác định theo tổng số lượng mua.</p><ul><li>Dưới 10: 0%</li><li>10 - 49: 5%</li><li>50 - 99: 10%</li><li>Từ 100 trở lên: 15%</li></ul><p>Yêu cầu: Viết hàm <code>bulk_price(unit_price, quantity)</code> trả về số tiền phải trả sau chiết khấu, làm tròn 2 chữ số thập phân.</p>",
-    "initialCode": "def bulk_price(unit_price, quantity):\n    # Write your code here\n",
+    "initialCode": "def bulk_price(unit_price, quantity):",
     "testCases": [
       {
         "id": 1,
@@ -2113,7 +2113,7 @@
     "category": "Mock test 2",
     "title": "3. Đếm số lượng sản phẩm theo nhóm",
     "description": "<p>Danh mục hàng hoá được lưu thành danh sách các tuple <code>(ten_san_pham, nhom_hang)</code>.</p><p>Yêu cầu: Viết hàm <code>count_by_category(products)</code> trả về một dict cho biết mỗi nhóm hàng có bao nhiêu sản phẩm.</p><p>Giá trị là số nguyên (số lượng sản phẩm trong nhóm).<br/>Thứ tự các khoá theo lần xuất hiện đầu tiên của nhóm hàng.<br/>Danh sách rỗng → trả về <code>{}</code>.</p>",
-    "initialCode": "def count_by_category(products):\n    # Write your code here\n",
+    "initialCode": "def count_by_category(products):",
     "testCases": [
       {
         "id": 1,
@@ -2148,7 +2148,7 @@
     "category": "Mock test 2",
     "title": "4. Doanh thu luỹ kế",
     "description": "<p>Kế toán cần báo cáo doanh thu luỹ kế: đến hết mỗi kỳ, tổng doanh thu tính từ đầu là bao nhiêu.</p><p>Yêu cầu: Viết hàm <code>cumulative(revenues)</code> trả về danh sách doanh thu luỹ kế, mỗi giá trị làm tròn 2 chữ số thập phân.</p><p>Phần tử thứ <code>i</code> = tổng của <code>revenues[0]</code> đến <code>revenues[i]</code>.<br/>Kết quả có cùng độ dài với <code>revenues</code>; danh sách rỗng → trả về <code>[]</code>.<br/>Doanh thu có thể âm (hàng bị trả lại).</p>",
-    "initialCode": "def cumulative(revenues):\n    # Write your code here\n",
+    "initialCode": "def cumulative(revenues):",
     "testCases": [
       {
         "id": 1,
@@ -2183,7 +2183,7 @@
     "category": "Mock test 2",
     "title": "5. Doanh thu theo sản phẩm",
     "description": "<p>Doanh thu theo sản phẩm nằm trong một dict. Giám đốc chỉ muốn xem những sản phẩm bán trên mức trung bình.</p><p>Yêu cầu: Viết hàm <code>above_average(sales)</code> trả về danh sách tên các sản phẩm có doanh thu lớn hơn doanh thu trung bình, xếp từ cao xuống thấp.</p><ul><li>So sánh lớn hơn hẳn (bằng trung bình thì loại).</li><li>Nếu hai sản phẩm bằng doanh thu → xếp theo thứ tự bảng chữ cái (A → Z).</li><li>dict rỗng → trả về <code>[]</code>.</li></ul>",
-    "initialCode": "def above_average(sales):\n    # Write your code here\n",
+    "initialCode": "def above_average(sales):",
     "testCases": [
       {
         "id": 1,
@@ -2218,7 +2218,7 @@
     "category": "Mock test 3",
     "title": "1. Lãi kép",
     "description": "<p>Bạn gửi tiết kiệm <code>principal</code> triệu đồng với lãi suất <code>rate</code> %/năm, lãi nhập gốc mỗi năm (lãi kép), trong <code>years</code> năm.</p><p>Yêu cầu: Viết hàm <code>compound_balance(principal, rate, years)</code> trả về số dư cuối kỳ, làm tròn 2 chữ số thập phân.</p><ul><li>Mỗi năm: số dư mới = số dư cũ × (1 + rate/100).</li><li>rate nhập theo phần trăm (ví dụ 7.5 nghĩa là 7.5%/năm).</li></ul>",
-    "initialCode": "def compound_balance(principal, rate, years):\n    # Write your code here\n",
+    "initialCode": "def compound_balance(principal, rate, years):",
     "testCases": [
       {
         "id": 1,
@@ -2253,7 +2253,7 @@
     "category": "Mock test 3",
     "title": "2. Phân loại nhóm nợ",
     "description": "<p>Ngân hàng phân loại khoản vay thành 5 nhóm nợ theo số ngày quá hạn thanh toán.</p><ul><li>0 - 9 ngày: Nhóm 1 (đủ tiêu chuẩn)</li><li>10 - 89 ngày: Nhóm 2 (cần chú ý)</li><li>90 - 179 ngày: Nhóm 3 (dưới tiêu chuẩn)</li><li>180 - 359 ngày: Nhóm 4 (nghi ngờ)</li><li>Từ 360 ngày trở lên: Nhóm 5 (có khả năng mất vốn)</li></ul><p>Yêu cầu: Viết hàm <code>debt_group(days_late)</code> trả về số nhóm nợ dưới dạng số nguyên từ 1 đến 5.</p>",
-    "initialCode": "def debt_group(days_late):\n    # Write your code here\n",
+    "initialCode": "def debt_group(days_late):",
     "testCases": [
       {
         "id": 1,
@@ -2288,7 +2288,7 @@
     "category": "Mock test 3",
     "title": "3. Tổng chi tiêu theo hạng mục",
     "description": "<p>Ứng dụng ngân hàng xuất lịch sử giao dịch thành danh sách các dict, mỗi giao dịch có khoá <code>category</code> và <code>amount</code>.</p><p>Yêu cầu: Viết hàm <code>spending_by_category(transactions)</code> trả về một dict gộp tổng chi tiêu theo từng hạng mục.</p><ul><li>Mỗi giá trị làm tròn 2 chữ số thập phân.</li><li>Thứ tự các khoá theo lần xuất hiện đầu tiên của hạng mục.</li><li>Danh sách rỗng → trả về <code>{}</code>.</li></ul>",
-    "initialCode": "def spending_by_category(transactions):\n    # Write your code here\n",
+    "initialCode": "def spending_by_category(transactions):",
     "testCases": [
       {
         "id": 1,
@@ -2323,7 +2323,7 @@
     "category": "Mock test 3",
     "title": "4. Trung bình trượt (Moving Average)",
     "description": "<p>Để làm mượt biến động giá, nhà phân tích dùng trung bình trượt (moving average): lấy trung bình của <code>k</code> kỳ liên tiếp, rồi trượt cửa sổ sang phải một kỳ.</p><p>Yêu cầu: Viết hàm <code>moving_average(values, k)</code> trả về danh sách các trung bình trượt <code>k</code> kỳ, làm tròn 2 chữ số thập phân.</p><ul><li>Kết quả có <code>len(values) - k + 1</code> phần tử.</li><li>Nếu <code>k</code> lớn hơn số phần tử, hoặc <code>k &lt;= 0</code> → trả về <code>[]</code>.</li></ul>",
-    "initialCode": "def moving_average(values, k):\n    # Write your code here\n",
+    "initialCode": "def moving_average(values, k):",
     "testCases": [
       {
         "id": 1,
@@ -2358,7 +2358,7 @@
     "category": "Mock test 3",
     "title": "5. Bảng xếp hạng quỹ đầu tư",
     "description": "<p>Một dict lưu lợi suất năm (%) của các quỹ đầu tư. Bản tin chỉ đăng những quỹ có lãi.</p><p>Yêu cầu: Viết hàm <code>fund_ranking(returns)</code> trả về danh sách các tuple <code>(tên_quỹ, lợi_suất)</code> của những quỹ có lợi suất dương, xếp từ cao xuống thấp.</p><ul><li>Loại bỏ quỹ có lợi suất bằng 0 hoặc âm.</li><li>Hai quỹ cùng lợi suất → xếp theo thứ tự bảng chữ cái (A → Z).</li><li>Không còn quỹ nào → trả về <code>[]</code>.</li></ul>",
-    "initialCode": "def fund_ranking(returns):\n    # Write your code here\n",
+    "initialCode": "def fund_ranking(returns):",
     "testCases": [
       {
         "id": 1,
@@ -2393,7 +2393,7 @@
     "category": "Mock test 4",
     "title": "1. Tổng tiền đơn hàng",
     "description": "<p>Một đơn hàng gồm nhiều mặt hàng. <code>prices</code> là đơn giá, <code>quantities</code> là số lượng, <code>vat_rate</code> là thuế VAT tính theo phần trăm (ví dụ 8 nghĩa là 8%).</p><p>Yêu cầu: Viết hàm <code>order_total(prices, quantities, vat_rate)</code> trả về tổng tiền phải trả đã bao gồm VAT, làm tròn 2 chữ số thập phân.</p><ul><li>Tiền hàng = tổng của đơn giá × số lượng; sau đó cộng VAT trên tổng tiền hàng.</li><li>Đơn hàng rỗng → trả về <code>0.0</code>.</li></ul>",
-    "initialCode": "def order_total(prices, quantities, vat_rate):\n    # Write your code here\n",
+    "initialCode": "def order_total(prices, quantities, vat_rate):",
     "testCases": [
       {
         "id": 1,
@@ -2418,7 +2418,7 @@
     "category": "Mock test 4",
     "title": "2. Phí giao hàng",
     "description": "<p>Sàn thương mại điện tử tính phí giao hàng theo cân nặng (đơn vị: nghìn đồng).</p><ul><li>Đến 1 kg: 20</li><li>Trên 1 đến 3 kg: 20 + 10 × (số kg vượt quá 1)</li><li>Trên 3 kg: 40 + 8 × (số kg vượt quá 3)</li></ul><p>Yêu cầu: Viết hàm <code>shipping_fee(weight)</code> trả về phí giao hàng, làm tròn 2 chữ số thập phân.</p>",
-    "initialCode": "def shipping_fee(weight):\n    # Write your code here\n",
+    "initialCode": "def shipping_fee(weight):",
     "testCases": [
       {
         "id": 1,
@@ -2453,7 +2453,7 @@
     "category": "Mock test 4",
     "title": "3. Doanh thu theo kênh bán",
     "description": "<p>Đơn hàng được xuất thành danh sách các dict, mỗi đơn có khoá <code>channel</code> (kênh bán), <code>price</code> và <code>quantity</code>.</p><p>Yêu cầu: Viết hàm <code>revenue_by_channel(orders)</code> trả về một dict gộp doanh thu theo từng kênh bán.</p><ul><li>Doanh thu mỗi đơn = price × quantity.</li><li>Mỗi giá trị làm tròn 2 chữ số thập phân; thứ tự khoá theo lần xuất hiện đầu tiên.</li><li>Danh sách rỗng → trả về <code>{}</code>.</li></ul>",
-    "initialCode": "def revenue_by_channel(orders):\n    # Write your code here\n",
+    "initialCode": "def revenue_by_channel(orders):",
     "testCases": [
       {
         "id": 1,
@@ -2488,7 +2488,7 @@
     "category": "Mock test 4",
     "title": "4. Tỷ trọng tích luỹ (Quy tắc Pareto)",
     "description": "<p>Nguyên lý Pareto (80/20): thường một số ít sản phẩm tạo ra phần lớn doanh thu. Để kiểm chứng, ta xếp doanh thu từ cao xuống thấp rồi xem tỷ trọng tích luỹ.</p><p>Yêu cầu: Viết hàm <code>cumulative_share(revenues)</code> trả về danh sách tỷ trọng tích luỹ (%), làm tròn 2 chữ số thập phân.</p><ul><li>Sắp xếp doanh thu giảm dần trước khi cộng dồn.</li><li>Phần tử thứ <code>i</code> = (tổng <code>i+1</code> giá trị lớn nhất ÷ tổng tất cả) × 100.</li><li>Danh sách rỗng (hoặc tổng bằng 0) → trả về <code>[]</code>. Phần tử cuối luôn là <code>100.0</code>.</li></ul>",
-    "initialCode": "def cumulative_share(revenues):\n    # Write your code here\n",
+    "initialCode": "def cumulative_share(revenues):",
     "testCases": [
       {
         "id": 1,
@@ -2523,7 +2523,7 @@
     "category": "Mock test 4",
     "title": "5. Xếp hạng biên lợi nhuận",
     "description": "<p>Hai dict có cùng bộ khoá: <code>prices</code> là giá bán, <code>costs</code> là giá vốn của từng sản phẩm.</p><p>Yêu cầu: Viết hàm <code>margin_ranking(prices, costs)</code> trả về danh sách tên sản phẩm xếp theo biên lợi nhuận từ cao xuống thấp.</p><ul><li>Biên lợi nhuận (%) = (giá bán − giá vốn) / giá bán × 100.</li><li>Bỏ qua sản phẩm có giá bán nhỏ hơn hoặc bằng 0.</li><li>Hai sản phẩm cùng biên lợi nhuận → xếp theo thứ tự bảng chữ cái (A → Z).</li></ul>",
-    "initialCode": "def margin_ranking(prices, costs):\n    # Write your code here\n",
+    "initialCode": "def margin_ranking(prices, costs):",
     "testCases": [
       {
         "id": 1,
@@ -2559,7 +2559,7 @@
     "title": "1. Tổng hợp giá",
     "description": "<p><b>Bối cảnh:</b> Mai là sinh viên FTU đam mê tài chính định lượng (quantitative finance). Bạn ấy tải về dữ liệu giao dịch hằng ngày của một cổ phiếu và muốn dùng Python để phân tích, xây chiến lược giao dịch và dự báo thị trường.</p><p>Mai bắt đầu bằng việc tổng hợp dữ liệu giá: số ngày giao dịch, giá đóng cửa trung bình, ngày giá cao nhất và thấp nhất, tổng khối lượng.</p><p><b>Yêu cầu:</b> Viết hàm `price_summary(data)`. `data` là list of dicts, mỗi dict có keys `'day'`, `'open'`, `'high'`, `'low'`, `'close'`, `'volume'`:</p><ul><li>`days` = số ngày giao dịch</li><li>`avg_close` = giá đóng cửa trung bình, làm tròn 2dp</li><li>`max_close` = tuple `(day, close)` của ngày giá đóng cửa cao nhất; nếu hòa, lấy ngày sớm nhất</li><li>`min_close` = tuple `(day, close)` của ngày giá đóng cửa thấp nhất; nếu hòa, lấy ngày sớm nhất</li><li>`total_volume` = tổng khối lượng giao dịch</li></ul><p><b>Trả về:</b> `dict {'days', 'avg_close', 'max_close', 'min_close', 'total_volume'}`</p>",
     "hint": "",
-    "initialCode": "def price_summary(data):\n    # Write your code here\n    pass\n",
+    "initialCode": "def price_summary(data):",
     "testCases": [
       {
         "id": 1,
@@ -2574,7 +2574,7 @@
     "title": "2. Giao dịch tốt nhất",
     "description": "<p><b>Bối cảnh:</b> Mai là sinh viên FTU đam mê tài chính định lượng (quantitative finance). Bạn ấy tải về dữ liệu giao dịch hằng ngày của một cổ phiếu và muốn dùng Python để phân tích, xây chiến lược giao dịch và dự báo thị trường.</p><p>Mai muốn biết: nếu nhìn lại lịch sử, đâu là cơ hội mua-rồi-bán tốt nhất? Tức là chọn một ngày mua và một ngày bán **sau đó** sao cho lợi nhuận lớn nhất.</p><p><b>Yêu cầu:</b> Viết hàm `best_trade(prices)`. `prices` là list of dicts có keys `'day'`, `'close'`, đã sắp theo thời gian. Tìm ngày mua `buy_day` và ngày bán `sell_day` với `buy_day` trước `sell_day` sao cho `profit = close_bán - close_mua` lớn nhất.</p><ul><li>Trả về tuple `(buy_day, sell_day, profit)`, `profit` làm tròn 2dp</li><li>Nếu hòa, chọn `buy_day` sớm nhất; nếu vẫn hòa, `sell_day` sớm nhất</li><li>Nếu không có giao dịch nào có lãi (hoặc < 2 ngày), trả về `(None, None, 0.0)`</li></ul>",
     "hint": "",
-    "initialCode": "def best_trade(prices):\n    # Write your code here\n    pass\n",
+    "initialCode": "def best_trade(prices):",
     "testCases": [
       {
         "id": 1,
@@ -2589,7 +2589,7 @@
     "title": "3. Xây dựng ma trận",
     "description": "<p><b>Bối cảnh:</b> Mai là sinh viên FTU đam mê tài chính định lượng (quantitative finance). Bạn ấy tải về dữ liệu giao dịch hằng ngày của một cổ phiếu và muốn dùng Python để phân tích, xây chiến lược giao dịch và dự báo thị trường.</p><p>Để xây mô hình dự báo, Mai biến dữ liệu thành ma trận đặc trưng `X` và vector mục tiêu `y`. Mỗi dòng của `X` bắt đầu bằng `1.0` (hệ số chặn / intercept).</p><p><b>Yêu cầu:</b> Viết hàm `build_matrix(records, feature_keys, target_key)`:</p><ul><li>Với mỗi dòng có đủ `target_key` và tất cả khóa trong `feature_keys`: thêm `[1.0] + [float(r[k]) for k in feature_keys]` vào `X`, và `float(r[target_key])` vào `y`</li><li>Bỏ qua dòng thiếu bất kỳ khóa nào</li></ul><p><b>Trả về:</b> `(X, y)`</p>",
     "hint": "",
-    "initialCode": "def build_matrix(records, feature_keys, target_key):\n    # Write your code here\n    pass\n",
+    "initialCode": "def build_matrix(records, feature_keys, target_key):",
     "testCases": [
       {
         "id": 1,
@@ -2604,7 +2604,7 @@
     "title": "4. Tín hiệu KNN",
     "description": "<p><b>Bối cảnh:</b> Mai là sinh viên FTU đam mê tài chính định lượng (quantitative finance). Bạn ấy tải về dữ liệu giao dịch hằng ngày của một cổ phiếu và muốn dùng Python để phân tích, xây chiến lược giao dịch và dự báo thị trường.</p><p>Mai thử một cách khác để dự báo tín hiệu tăng/giảm: **k láng giềng gần nhất (k-Nearest Neighbors)**. Dựa trên các ngày trong quá khứ (đã biết tăng=1 hay giảm=0), dự đoán cho một điểm dữ liệu mới.</p><p><b>Yêu cầu:</b> Viết hàm `knn_signal(train_X, train_y, query, k=3)`:</p><ul><li>`train_X`: list các vector đặc trưng; `train_y`: list nhãn 0/1; `query`: vector cần dự đoán</li><li>Khoảng cách Euclid: `sqrt(sum((q_i - x_i)^2))`</li><li>Sắp xếp theo (khoảng cách tăng, chỉ số tăng), lấy k điểm gần nhất</li><li>Bỏ phiếu đa số; nếu hòa -> dự đoán 1</li><li>`confidence = round(số_phiếu_thắng / k, 4)`</li></ul><p><b>Trả về:</b> `(label, confidence)`</p>",
     "hint": "",
-    "initialCode": "def knn_signal(train_X, train_y, query, k=3):\n    # Write your code here\n    pass\n",
+    "initialCode": "def knn_signal(train_X, train_y, query, k=3):",
     "testCases": [
       {
         "id": 1,
@@ -2619,7 +2619,7 @@
     "title": "5. Tỷ lệ Kelly",
     "description": "<p>(Bonus)</p><p><b>Bối cảnh:</b> Mai là sinh viên FTU đam mê tài chính định lượng (quantitative finance). Bạn ấy tải về dữ liệu giao dịch hằng ngày của một cổ phiếu và muốn dùng Python để phân tích, xây chiến lược giao dịch và dự báo thị trường.</p><p>Mai đã có chiến lược, giờ cần biết nên đặt cược **bao nhiêu phần** vốn vào mỗi lệnh. Bạn ấy dùng **tiêu chuẩn Kelly (Kelly criterion)** để tối ưu tỷ lệ vốn.</p><p><b>Yêu cầu:</b> Viết hàm `kelly_fraction(win_prob, payoff_ratio)`:</p><ul><li>`p = win_prob` (xác suất thắng), `q = 1 - p` (xác suất thua)</li><li>`b = payoff_ratio` (tỷ lệ lời/lỗ, ví dụ b=2 nghĩa là thắng được gấp 2 lần số đặt)</li><li>Công thức Kelly: `f* = (b*p - q) / b`</li><li>Nếu `f*` âm (không có lợi thế) -> trả về `0.0`</li><li>Làm tròn 4dp</li></ul><p><b>Trả về:</b> `float`</p>",
     "hint": "",
-    "initialCode": "def kelly_fraction(win_prob, payoff_ratio):\n    # Write your code here\n    pass\n",
+    "initialCode": "def kelly_fraction(win_prob, payoff_ratio):",
     "testCases": [
       {
         "id": 1,
@@ -2634,7 +2634,7 @@
     "title": "1. The Scroll (String)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Gán chuỗi \"abracadabra\" cho biến spell.</li><li>Trả về độ dài chuỗi.</li><li>Đếm số lần xuất hiện của chữ \"a\".</li><li>Thay thế \"a\" bằng \"c\".</li><li>Đảo ngược chuỗi kết quả.</li></ul>",
     "hint": "Để giải bài toán này, chúng ta cần thực hiện các bước sau: Đầu tiên, gán chuỗi \"abracadabra\" cho biến `spell`. Tiếp theo, sử dụng hàm `len()` để lấy độ dài của chuỗi. Sau đó, dùng phương thức `count()` để đếm số lần xuất hiện của ký tự 'a'. Kế đến, sử dụng phương thức `replace()` để thay thế tất cả các ký tự 'a' bằng 'c'. Cuối cùng, dùng slicing `[::-1]` để đảo ngược chuỗi đã được thay thế. Kết quả trả về sẽ là một tuple chứa độ dài, số lần đếm, chuỗi đã thay thế và chuỗi đã đảo ngược.",
-    "initialCode": "def process_scroll(spell):\n    # Write your code here\n    pass\n",
+    "initialCode": "def process_scroll(spell):",
     "testCases": [
       {
         "id": 1,
@@ -2665,7 +2665,7 @@
     "title": "2. The Inventory (List)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Cho list backpack. Đếm số phần tử.</li><li>Đếm số phần tử là list con.</li><li>Thay thế phần tử list con bằng chuỗi \"0\".</li><li>Nhân đôi giá trị các phần tử (string nhân đôi, int nhân 2) và đảo ngược list.</li></ul>",
     "hint": "Để giải bài toán này, chúng ta cần thực hiện các bước sau:\n\n1.  **Đếm tổng số phần tử:** Sử dụng hàm `len()` để lấy tổng số phần tử trong `backpack`.\n2.  **Đếm số phần tử là list con:** Duyệt qua từng phần tử trong `backpack` và kiểm tra xem phần tử đó có phải là một `list` hay không bằng cách sử dụng `isinstance(item, list)`. Cộng dồn số lượng các phần tử là list.\n3.  **Thay thế list con:** Tạo một list mới. Duyệt qua `backpack`, nếu phần tử hiện tại là một `list`, thay thế nó bằng chuỗi \"0\". Ngược lại, giữ nguyên phần tử đó.\n4.  **Nhân đôi giá trị và đảo ngược:** Tạo một list mới từ list đã được xử lý ở bước 3. Duyệt qua từng phần tử: nếu là chuỗi, nhân đôi chuỗi đó (ví dụ: \"a\" thành \"aa\"); nếu là số nguyên, nhân đôi giá trị số đó (ví dụ: 5 thành 10). Cuối cùng, đảo ngược thứ tự các phần tử trong list này.",
-    "initialCode": "def process_backpack(backpack):\n    # Write your code here\n    pass\n",
+    "initialCode": "def process_backpack(backpack):",
     "testCases": [
       {
         "id": 1,
@@ -2696,7 +2696,7 @@
     "title": "3. The Identification (Dict)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Cho dict shield. Trả về list keys và list values.</li><li>Tìm key có value là string và đổi value thành 0.</li><li>Tìm key có value không phải nguyên tử (list, dict...).</li></ul>",
     "hint": "Để giải quyết bài toán này, chúng ta cần thực hiện các bước sau:\n\n1.  **Trích xuất keys và values:** Đầu tiên, chuyển đổi các keys và values của dict `shield` thành hai list riêng biệt.\n2.  **Thay đổi giá trị string:** Tạo một bản sao của dict gốc để tránh làm thay đổi dict ban đầu. Sau đó, duyệt qua bản sao này, kiểm tra kiểu dữ liệu của từng value. Nếu value là một chuỗi (string), hãy thay thế nó bằng số 0.\n3.  **Tìm key có value không phải nguyên tử:** Duyệt qua dict gốc một lần nữa. Đối với mỗi cặp key-value, kiểm tra xem value có phải là một kiểu dữ liệu 'không nguyên tử' (ví dụ: list, dict, set) hay không. Nếu tìm thấy, lưu lại key đó và dừng tìm kiếm (vì chỉ cần tìm key đầu tiên).\n4.  **Trả về kết quả:** Cuối cùng, trả về ba list/dict đã xử lý và key không nguyên tử đã tìm được.",
-    "initialCode": "def process_shield(shield):\n    # Write your code here\n    pass\n",
+    "initialCode": "def process_shield(shield):",
     "testCases": [
       {
         "id": 1,
@@ -2727,7 +2727,7 @@
     "title": "4. The Map Grid (Numpy)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Tạo mảng 5x5 ngẫu nhiên.</li><li>In kích thước (shape).</li><li>Tìm Min thay bằng 0, Max thay bằng 1. Tính trung bình.</li><li>Cắt mảng con 2x2 góc trái trên.</li></ul>",
     "hint": "Để giải bài toán này, chúng ta cần thực hiện các bước sau:\n\n1.  **Tạo mảng ngẫu nhiên:** Sử dụng thư viện NumPy để tạo một mảng 5x5 chứa các số nguyên ngẫu nhiên trong một phạm vi nhất định (ví dụ: từ 1 đến 100).\n2.  **Lấy kích thước (shape):** Sử dụng thuộc tính `.shape` của mảng NumPy để lấy kích thước của mảng.\n3.  **Tìm và thay thế giá trị Min/Max:**\n    *   Tìm giá trị nhỏ nhất (min) và lớn nhất (max) trong mảng gốc.\n    *   Tạo một bản sao của mảng gốc để thực hiện thay đổi, tránh làm mất dữ liệu của mảng gốc nếu cần dùng lại.\n    *   Trong bản sao này, thay thế tất cả các vị trí có giá trị bằng min thành 0 và tất cả các vị trí có giá trị bằng max thành 1.\n4.  **Tính trung bình:** Tính giá trị trung bình của mảng gốc.\n5.  **Cắt mảng con:** Trích xuất một mảng con 2x2 từ góc trên bên trái của mảng gốc (chứ không phải mảng đã được sửa đổi).",
-    "initialCode": "def process_map_grid():\n    # Write your code here\n    pass\n",
+    "initialCode": "def process_map_grid():",
     "testCases": [
       {
         "id": 1,
@@ -2753,7 +2753,7 @@
     "title": "5. The Gatekeeper (Function)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Viết hàm identify_type(x).</li><li>Viết hàm identify_types(*args) trả về list các type.</li><li>Viết hàm process_list(lst): String -> 0, Number giữ nguyên.</li></ul>",
     "hint": "Để giải bài toán này, chúng ta cần định nghĩa ba hàm riêng biệt:\n\n1.  **Hàm `identify_type(x)`**: Hàm này nhận một đối số `x` và trả về kiểu dữ liệu của `x` bằng cách sử dụng hàm `type()` có sẵn trong Python.\n\n2.  **Hàm `identify_types(*args)`**: Hàm này nhận một số lượng đối số thay đổi (`*args`). Nó sẽ duyệt qua từng đối số và thu thập kiểu dữ liệu của chúng vào một danh sách. Cuối cùng, danh sách các kiểu dữ liệu này sẽ được trả về.\n\n3.  **Hàm `process_list(lst)`**: Hàm này nhận một danh sách `lst` làm đối số. Nó sẽ tạo một danh sách mới để lưu trữ kết quả. Duyệt qua từng phần tử trong `lst`:\n    *   Nếu phần tử là một chuỗi (string), thêm số `0` vào danh sách kết quả.\n    *   Nếu phần tử là một số (int hoặc float), thêm chính phần tử đó vào danh sách kết quả.\n    *   Các kiểu dữ liệu khác sẽ bị bỏ qua (không được thêm vào danh sách kết quả). Cuối cùng, trả về danh sách kết quả đã được xử lý.",
-    "initialCode": "def identify_type(x):\n    # Write your code here\n    pass\n\ndef identify_types(*args):\n    # Write your code here\n    pass\n\ndef process_list(lst):\n    # Write your code here\n    pass\n",
+    "initialCode": "def identify_type(x):\n\ndef identify_types(*args):\n\ndef process_list(lst):",
     "testCases": [
       {
         "id": 1,
@@ -2784,7 +2784,7 @@
     "title": "6. The Whispering Mirror (Conditionals)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Viết hàm mirror_message(x).</li><li>Nếu là String: Đảo ngược.</li><li>Nếu là Int/Float: Trả về số âm.</li><li>Khác: Trả về \"Unsupported\".</li></ul>",
     "hint": "Để giải bài toán này, chúng ta cần sử dụng cấu trúc điều kiện (if-elif-else) để kiểm tra kiểu dữ liệu của biến đầu vào. Đầu tiên, kiểm tra xem biến có phải là kiểu chuỗi (string) hay không. Nếu đúng, sử dụng kỹ thuật cắt chuỗi (string slicing) để đảo ngược chuỗi. Tiếp theo, nếu biến là kiểu số nguyên (int) hoặc số thực (float), trả về giá trị âm của số đó. Cuối cùng, nếu biến không thuộc bất kỳ kiểu dữ liệu nào đã nêu, trả về chuỗi \"Unsupported\".",
-    "initialCode": "def mirror_message(x):\n    # Write your code here\n    pass\n",
+    "initialCode": "def mirror_message(x):",
     "testCases": [
       {
         "id": 1,
@@ -2815,7 +2815,7 @@
     "title": "7. The Selective Gate (Conditions)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Tìm số chia hết cho 2 nhưng KHÔNG chia hết cho 3 trong list.</li><li>Trả về số lượng và tổng của chúng.</li></ul>",
     "hint": "Để giải bài toán này, chúng ta cần duyệt qua từng số trong danh sách đầu vào. Với mỗi số, chúng ta kiểm tra hai điều kiện: thứ nhất, số đó phải chia hết cho 2 (số chẵn); thứ hai, số đó KHÔNG được chia hết cho 3. Nếu một số thỏa mãn cả hai điều kiện này, chúng ta sẽ thêm nó vào một danh sách tạm thời. Cuối cùng, kết quả trả về sẽ là số lượng các phần tử trong danh sách tạm thời đó và tổng của chúng.",
-    "initialCode": "def filter_numbers(lst):\n    # Write your code here\n    pass\n",
+    "initialCode": "def filter_numbers(lst):",
     "testCases": [
       {
         "id": 1,
@@ -2846,7 +2846,7 @@
     "title": "8. The Enchanted Filter (List Processing)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Lọc lấy các số lẻ trong list.</li><li>Trả về list bình phương của các số đó.</li></ul>",
     "hint": "Để giải bài toán này, chúng ta cần thực hiện hai bước chính:\n\n1.  **Lọc các số lẻ:** Duyệt qua từng phần tử trong danh sách đầu vào. Với mỗi phần tử, kiểm tra xem nó có phải là số lẻ hay không. Một số là số lẻ nếu phần dư khi chia cho 2 khác 0.\n2.  **Bình phương các số đã lọc:** Đối với mỗi số lẻ đã được xác định ở bước 1, tính bình phương của nó (nhân số đó với chính nó).\n\nCuối cùng, thu thập tất cả các kết quả bình phương này vào một danh sách mới và trả về danh sách đó.",
-    "initialCode": "def process_list_odd_squared(lst):\n    # Write your code here\n    pass\n",
+    "initialCode": "def process_list_odd_squared(lst):",
     "testCases": [
       {
         "id": 1,
@@ -2877,7 +2877,7 @@
     "title": "9. The Silent Scribe (String Analysis)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Tách từ trong câu (split).</li><li>Trả về tổng số từ.</li><li>Đếm số từ bắt đầu bằng nguyên âm (u, e, o, a, i).</li></ul>",
     "hint": "Để giải quyết bài toán này, chúng ta cần thực hiện các bước sau:\n\n1.  **Tách từ:** Sử dụng phương thức `split()` của chuỗi để chia câu thành một danh sách các từ. Mặc định, `split()` sẽ tách chuỗi dựa trên khoảng trắng và xử lý nhiều khoảng trắng liên tiếp.\n2.  **Đếm tổng số từ:** Sau khi có danh sách các từ, chỉ cần lấy độ dài của danh sách đó để có tổng số từ.\n3.  **Xác định nguyên âm:** Tạo một tập hợp (set) chứa tất cả các nguyên âm (cả chữ hoa và chữ thường) để việc kiểm tra nhanh chóng và hiệu quả.\n4.  **Đếm từ bắt đầu bằng nguyên âm:** Duyệt qua từng từ trong danh sách. Với mỗi từ, kiểm tra ký tự đầu tiên của nó có nằm trong tập hợp nguyên âm đã định nghĩa hay không. Nếu có, tăng bộ đếm lên một. Cần xử lý trường hợp chuỗi rỗng hoặc từ rỗng nếu có (mặc dù `split()` thường xử lý tốt).\n5.  **Trả về kết quả:** Cuối cùng, trả về một tuple chứa tổng số từ và số từ bắt đầu bằng nguyên âm.",
-    "initialCode": "def analyze_sentence(text):\n    # Write your code here\n    pass\n",
+    "initialCode": "def analyze_sentence(text):",
     "testCases": [
       {
         "id": 1,
@@ -2908,7 +2908,7 @@
     "title": "10. The Cipher of the Ancients",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Encode: A=1, B=2... Z=26. Giữ nguyên khoảng trắng/ký tự đặc biệt.</li><li>Decode: Dịch ngược từ số về chữ cái.</li></ul>",
     "hint": "Để mã hóa (encode), duyệt qua từng ký tự trong chuỗi đầu vào. Nếu ký tự là chữ cái in hoa hoặc in thường, chuyển đổi nó thành số tương ứng (A/a=1, B/b=2,... Z/z=26). Giữ nguyên các ký tự không phải chữ cái (khoảng trắng, số, ký tự đặc biệt). Các số được mã hóa sẽ được phân tách bằng khoảng trắng.\n\nĐể giải mã (decode), tách chuỗi đầu vào thành các phần dựa trên khoảng trắng. Với mỗi phần, kiểm tra xem nó có phải là một số hay không. Nếu là số và nằm trong khoảng từ 1 đến 26, chuyển đổi nó ngược lại thành chữ cái in hoa tương ứng. Giữ nguyên các phần không phải số hoặc số nằm ngoài phạm vi 1-26. Cuối cùng, nối các phần đã chuyển đổi lại để tạo thành chuỗi giải mã.",
-    "initialCode": "def encode_a1z26(text):\n    # Write your code here\n    pass\n\ndef decode_a1z26(code):\n    # Write your code here\n    pass\n",
+    "initialCode": "def encode_a1z26(text):\n\ndef decode_a1z26(code):",
     "testCases": [
       {
         "id": 1,
@@ -2939,7 +2939,7 @@
     "title": "1. The Code Lock (Primes)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Viết hàm is_prime(n).</li><li>Viết hàm get_nearest_prime(n): Nếu n là prime trả về n, không thì tìm prime lớn hơn gần nhất.</li><li>Áp dụng hàm cho list input.</li></ul>",
     "hint": "Để giải bài toán này, chúng ta cần thực hiện ba bước chính:\n\n1.  **Kiểm tra số nguyên tố (is_prime):** Xây dựng một hàm nhận vào một số nguyên `n` và trả về `True` nếu `n` là số nguyên tố, ngược lại trả về `False`. Một số nguyên tố là số tự nhiên lớn hơn 1 không có ước số nào khác ngoài 1 và chính nó. Để tối ưu, chỉ cần kiểm tra các ước số từ 2 đến căn bậc hai của `n`.\n\n2.  **Tìm số nguyên tố gần nhất (get_nearest_prime):** Xây dựng một hàm nhận vào một số nguyên `n`. Đầu tiên, kiểm tra xem `n` có phải là số nguyên tố hay không bằng cách sử dụng hàm `is_prime` đã viết. Nếu `n` là số nguyên tố, trả về `n`. Nếu không, bắt đầu từ `n + 1` và tăng dần từng bước, kiểm tra từng số xem có phải là số nguyên tố hay không. Số nguyên tố đầu tiên tìm được sẽ là số nguyên tố lớn hơn gần nhất.\n\n3.  **Áp dụng cho danh sách (unlock_door):** Cuối cùng, viết một hàm nhận vào một danh sách các số nguyên. Duyệt qua từng phần tử trong danh sách và áp dụng hàm `get_nearest_prime` cho mỗi phần tử. Thu thập tất cả các kết quả này vào một danh sách mới và trả về danh sách đó.",
-    "initialCode": "def is_prime(n):\n    # Write your code here\n    pass\n\ndef get_nearest_prime(n):\n    # Write your code here\n    pass\n\ndef unlock_door(input_list):\n    # Write your code here\n    pass\n",
+    "initialCode": "def is_prime(n):\n\ndef get_nearest_prime(n):\n\ndef unlock_door(input_list):",
     "testCases": [
       {
         "id": 1,
@@ -2970,7 +2970,7 @@
     "title": "2. The Merchant's Ledger",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Tính tổng giá trị của tất cả vật phẩm.</li><li>Tìm tên vật phẩm đắt nhất.</li><li>Lọc ra list các vật phẩm có giá > 50.</li></ul>",
     "hint": "Để giải bài toán này, chúng ta cần thực hiện ba bước chính. Đầu tiên, để tính tổng giá trị của tất cả vật phẩm, ta sẽ duyệt qua từng vật phẩm trong danh sách và cộng dồn giá của chúng. Thứ hai, để tìm tên vật phẩm đắt nhất, ta cần tìm vật phẩm có giá trị 'price' cao nhất trong danh sách và sau đó lấy tên ('item') của vật phẩm đó. Cần xử lý trường hợp danh sách rỗng. Cuối cùng, để lọc ra danh sách các vật phẩm có giá lớn hơn 50, ta sẽ duyệt qua danh sách và chỉ giữ lại những vật phẩm thỏa mãn điều kiện này.",
-    "initialCode": "def process_ledger(items):\n    # Write your code here\n    pass\n",
+    "initialCode": "def process_ledger(items):",
     "testCases": [
       {
         "id": 1,
@@ -3001,7 +3001,7 @@
     "title": "3. The Tent (Heron's Formula)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Tính khoảng cách giữa 3 điểm (độ dài các cạnh).</li><li>Tính diện tích tam giác bằng công thức Heron.</li></ul>",
     "hint": "Để tính diện tích tam giác từ ba điểm, chúng ta cần thực hiện các bước sau:\n\n1.  **Tính độ dài các cạnh:** Sử dụng công thức khoảng cách Euclid giữa hai điểm `(x1, y1)` và `(x2, y2)` là `sqrt((x2-x1)^2 + (y2-y1)^2)` để tính độ dài của ba cạnh của tam giác.\n2.  **Tính nửa chu vi (s):** Cộng tổng độ dài ba cạnh lại và chia cho 2.\n3.  **Áp dụng công thức Heron:** Sử dụng công thức `sqrt(s * (s - a) * (s - b) * (s - c))` để tính diện tích tam giác, trong đó `a`, `b`, `c` là độ dài ba cạnh và `s` là nửa chu vi.\n4.  **Xử lý trường hợp đặc biệt:** Nếu ba điểm thẳng hàng, diện tích tam giác sẽ bằng 0. Công thức Heron sẽ tự động cho kết quả 0 trong trường hợp này (hoặc một số rất nhỏ gần 0 do lỗi dấu phẩy động, cần cân nhắc làm tròn hoặc kiểm tra điều kiện `s * (s - a) * (s - b) * (s - c)` không âm).",
-    "initialCode": "import math\n\ndef calculate_distance(p1, p2):\n    # Write your code here\n    pass\n\ndef tent_area(p1, p2, p3):\n    # Write your code here\n    pass\n",
+    "initialCode": "import math\n\ndef calculate_distance(p1, p2):\n\ndef tent_area(p1, p2, p3):",
     "testCases": [
       {
         "id": 1,
@@ -3032,7 +3032,7 @@
     "title": "4. The Moat (Circumference)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Tính chu vi hình tròn (2 * pi * r).</li><li>Nếu bán kính r âm, trả về \"Invalid\".</li></ul>",
     "hint": "Để tính chu vi hình tròn, trước tiên cần kiểm tra xem bán kính có hợp lệ hay không. Nếu bán kính là một số âm, hàm sẽ trả về chuỗi \"Invalid\". Nếu bán kính không âm, áp dụng công thức chu vi hình tròn C = 2 * pi * r. Cuối cùng, làm tròn kết quả đến hai chữ số thập phân.",
-    "initialCode": "def calc_circle(radius):\n    # Write your code here\n    pass\n",
+    "initialCode": "def calc_circle(radius):",
     "testCases": [
       {
         "id": 1,
@@ -3063,7 +3063,7 @@
     "title": "5. The Fireball (Quadratic Equation)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Giải phương trình bậc 2: ax^2 + bx + c = 0.</li><li>Tính Delta và trả về các nghiệm tương ứng.</li></ul>",
     "hint": "1. Tính Delta = b^2 - 4ac.\n2. Nếu Delta < 0: Phương trình vô nghiệm.\n3. Nếu Delta == 0: Phương trình có nghiệm kép x = -b / (2a).\n4. Nếu Delta > 0: Phương trình có hai nghiệm phân biệt x1, x2.",
-    "initialCode": "def solve_quad(a, b, c):\n    # Write your code here\n    pass\n",
+    "initialCode": "def solve_quad(a, b, c):",
     "testCases": [
       {
         "id": 1,
@@ -3089,7 +3089,7 @@
     "title": "6. The Archive of Words",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Làm sạch văn bản (lowercase, bỏ ký tự đặc biệt).</li><li>Đếm tần suất các từ.</li><li>Trả về top 3 từ phổ biến nhất và từ dài nhất.</li></ul>",
     "hint": "Để giải quyết bài toán này, chúng ta cần thực hiện các bước sau:\n\n1.  **Làm sạch văn bản:** Duyệt qua từng ký tự trong văn bản gốc. Nếu ký tự đó là chữ cái hoặc số (isalnum) hoặc là khoảng trắng (isspace), giữ lại nó và chuyển thành chữ thường. Các ký tự khác sẽ bị loại bỏ. Sau đó, nối các ký tự đã làm sạch lại thành một chuỗi.\n2.  **Tách từ:** Chia chuỗi văn bản đã làm sạch thành một danh sách các từ dựa trên khoảng trắng.\n3.  **Đếm tần suất:** Sử dụng `collections.Counter` để đếm số lần xuất hiện của mỗi từ trong danh sách. Chuyển kết quả này thành một từ điển.\n4.  **Sắp xếp từ theo tần suất:** Sắp xếp các cặp (từ, tần suất) trong từ điển theo tần suất giảm dần. Điều này giúp dễ dàng lấy ra các từ phổ biến nhất.\n5.  **Tìm 3 từ phổ biến nhất:** Lấy 3 từ đầu tiên từ danh sách đã sắp xếp.\n6.  **Tìm từ dài nhất:** Duyệt qua danh sách các từ gốc (sau khi đã làm sạch và tách), tìm từ có độ dài lớn nhất. Cần xử lý trường hợp danh sách từ rỗng.\n7.  **Trả về kết quả:** Trả về từ điển tần suất, danh sách 3 từ phổ biến nhất và từ dài nhất.",
-    "initialCode": "def analyze_archive(text):\n    # Write your code here\n    pass\n",
+    "initialCode": "def analyze_archive(text):",
     "testCases": [
       {
         "id": 1,
@@ -3125,7 +3125,7 @@
     "title": "7. The Echo of Repetition",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Trả về list các phần tử duy nhất.</li><li>Trả về dict tần suất xuất hiện.</li><li>Tìm phần tử xuất hiện nhiều nhất.</li></ul>",
     "hint": "Để giải quyết bài toán này, chúng ta cần thực hiện ba bước chính. Đầu tiên, để tìm các phần tử duy nhất, chúng ta có thể chuyển đổi danh sách đầu vào thành một tập hợp (set) để loại bỏ các phần tử trùng lặp, sau đó chuyển lại thành danh sách. Thứ hai, để đếm tần suất xuất hiện của mỗi phần tử, chúng ta có thể sử dụng một đối tượng đếm (Counter) từ module `collections` để tạo một từ điển (dictionary) ánh xạ phần tử với số lần xuất hiện của nó. Cuối cùng, để tìm phần tử xuất hiện nhiều nhất, chúng ta sẽ duyệt qua từ điển tần suất và tìm khóa có giá trị (tần suất) lớn nhất.",
-    "initialCode": "def echo_repetition(lst):\n    # Write your code here\n    pass\n",
+    "initialCode": "def echo_repetition(lst):",
     "testCases": [
       {
         "id": 1,
@@ -3156,7 +3156,7 @@
     "title": "8. The Prime Oracle",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Lọc ra các số nguyên tố trong list input.</li><li>Đếm số lượng số nguyên tố.</li><li>Tìm số nguyên tố lớn nhất và số nguyên tố liền kề lớn hơn nó.</li></ul>",
     "hint": "Để giải bài toán này, chúng ta cần thực hiện các bước sau:\n\n1.  **Định nghĩa hàm kiểm tra số nguyên tố (is_prime):** Viết một hàm phụ `is_prime(num)` nhận vào một số nguyên và trả về `True` nếu đó là số nguyên tố, `False` nếu không. Một số nguyên tố là số tự nhiên lớn hơn 1 và chỉ có hai ước số dương phân biệt là 1 và chính nó. Cần xử lý trường hợp số nhỏ hơn 2 không phải là số nguyên tố.\n\n2.  **Lọc danh sách số nguyên tố:** Duyệt qua danh sách đầu vào `lst` và sử dụng hàm `is_prime` để tạo một danh sách mới chỉ chứa các số nguyên tố.\n\n3.  **Đếm số lượng số nguyên tố:** Lấy độ dài của danh sách số nguyên tố vừa lọc được.\n\n4.  **Xử lý trường hợp không có số nguyên tố:** Nếu danh sách số nguyên tố rỗng (không có số nguyên tố nào trong `lst`), trả về một tuple với các giá trị mặc định: danh sách rỗng, số lượng 0, và `None` cho số nguyên tố lớn nhất và số nguyên tố liền kề lớn hơn.\n\n5.  **Tìm số nguyên tố lớn nhất:** Nếu có số nguyên tố, tìm số lớn nhất trong danh sách các số nguyên tố đã lọc.\n\n6.  **Tìm số nguyên tố liền kề lớn hơn:** Bắt đầu từ số nguyên lớn hơn số nguyên tố lớn nhất một đơn vị. Tăng dần số này lên từng bước một và kiểm tra bằng hàm `is_prime` cho đến khi tìm thấy số nguyên tố đầu tiên. Đó chính là số nguyên tố liền kề lớn hơn.\n\n7.  **Trả về kết quả:** Cuối cùng, trả về một tuple chứa danh sách các số nguyên tố, số lượng số nguyên tố, số nguyên tố lớn nhất và số nguyên tố liền kề lớn hơn.",
-    "initialCode": "def prime_oracle(lst):\n    # Write your code here\n    pass\n",
+    "initialCode": "def prime_oracle(lst):",
     "testCases": [
       {
         "id": 1,
@@ -3187,7 +3187,7 @@
     "title": "9. The Ancient Archive (Artifacts)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Cho list các artifacts. Tìm artifact có giá trị cao nhất.</li><li>Tìm 5 artifacts khác gần vị trí artifact đó nhất (Euclidean distance).</li></ul>",
     "hint": "Đầu tiên, đếm tổng số lượng hiện vật. Sau đó, tìm hiện vật có giá trị cao nhất bằng cách duyệt qua danh sách và so sánh thuộc tính 'Value'. Lấy tọa độ của hiện vật giá trị nhất. Tiếp theo, tạo một hàm tính khoảng cách Euclidean giữa hai điểm tọa độ. Lọc ra tất cả các hiện vật khác (không phải hiện vật giá trị nhất). Sắp xếp danh sách các hiện vật còn lại theo khoảng cách tăng dần đến hiện vật giá trị nhất. Cuối cùng, chọn 5 hiện vật đầu tiên từ danh sách đã sắp xếp và định dạng kết quả theo yêu cầu.",
-    "initialCode": "def analyze_artifacts(artifacts):\n    # Write your code here\n    pass\n",
+    "initialCode": "def analyze_artifacts(artifacts):",
     "testCases": [
       {
         "id": 1,
@@ -3218,7 +3218,7 @@
     "title": "10. The Digit Oracle (Perfect Digit)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Định nghĩa số \"perfect digit\": chia hết cho tổng các chữ số của nó.</li><li>Tìm tất cả các số như vậy trong list.</li><li>Đếm số lượng và tìm số lớn nhất.</li></ul>",
     "hint": "Để giải bài toán này, chúng ta cần thực hiện các bước sau:\n\n1.  **Tính tổng các chữ số của một số:** Viết một hàm nhận vào một số nguyên và trả về tổng các chữ số của nó. Có thể chuyển số thành chuỗi để duyệt qua từng chữ số, sau đó chuyển lại thành số nguyên để cộng dồn.\n\n2.  **Kiểm tra số \"perfect digit\":** Viết một hàm nhận vào một số nguyên. Trong hàm này, trước tiên gọi hàm ở bước 1 để lấy tổng các chữ số. Sau đó, kiểm tra xem số ban đầu có chia hết cho tổng các chữ số của nó hay không. Cần lưu ý trường hợp tổng các chữ số bằng 0 (ví dụ với số 0 hoặc số âm) để tránh lỗi chia cho 0. Nếu tổng các chữ số bằng 0, số đó không phải là \"perfect digit\" theo định nghĩa chia hết.\n\n3.  **Phân tích danh sách các số:** Viết một hàm chính nhận vào một danh sách các số. Duyệt qua từng số trong danh sách. Với mỗi số, gọi hàm kiểm tra \"perfect digit\" ở bước 2. Nếu là \"perfect digit\", thêm số đó vào một danh sách mới.\n\n4.  **Đếm và tìm số lớn nhất:** Sau khi có danh sách tất cả các số \"perfect digit\" tìm được, đếm số lượng phần tử trong danh sách đó. Để tìm số lớn nhất, sử dụng hàm `max()` trên danh sách này. Cần xử lý trường hợp danh sách rỗng (không có số \"perfect digit\" nào) để tránh lỗi khi gọi `max()` trên một danh sách rỗng, trong trường hợp này có thể trả về `None` hoặc một giá trị mặc định khác.",
-    "initialCode": "def digit_sum(n):\n    # Write your code here\n    pass\n\ndef is_perfect(n):\n    # Write your code here\n    pass\n\ndef analyze_perfect(lst):\n    # Write your code here\n    pass\n",
+    "initialCode": "def digit_sum(n):\n\ndef is_perfect(n):\n\ndef analyze_perfect(lst):",
     "testCases": [
       {
         "id": 1,
@@ -3249,7 +3249,7 @@
     "title": "11. The Rope of Equal Segments",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Cho hai dây độ dài N và M.</li><li>Tìm độ dài đoạn cắt bằng nhau lớn nhất (GCD).</li><li>Tính tổng số đoạn dây cắt được.</li></ul>",
     "hint": "Để giải bài toán này, chúng ta cần tìm **ước số chung lớn nhất (GCD)** của hai độ dài N và M. GCD sẽ là độ dài đoạn cắt bằng nhau lớn nhất mà cả hai sợi dây đều có thể chia hết. Sau khi tìm được GCD, chúng ta sẽ chia độ dài của từng sợi dây cho GCD để tìm số đoạn cắt được từ mỗi sợi dây. Cuối cùng, tổng số đoạn cắt được từ cả hai sợi dây sẽ là kết quả.",
-    "initialCode": "def count_segments(N, M):\n    # Write your code here\n    pass\n",
+    "initialCode": "def count_segments(N, M):",
     "testCases": [
       {
         "id": 1,
@@ -3280,7 +3280,7 @@
     "title": "12. The Treasure Hoard",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Cho dict các món đồ và giá trị.</li><li>Chọn đúng 3 món đồ có giá trị cao nhất.</li></ul>",
     "hint": "Để chọn 3 món đồ có giá trị cao nhất, chúng ta cần thực hiện các bước sau:\n1. Sắp xếp các món đồ dựa trên giá trị của chúng theo thứ tự giảm dần. Điều này có thể được thực hiện bằng cách chuyển đổi dictionary thành một danh sách các cặp (tên món đồ, giá trị) và sử dụng hàm `sorted()` với một hàm `key` tùy chỉnh.\n2. Sau khi sắp xếp, lấy ra 3 món đồ đầu tiên từ danh sách đã sắp xếp.\n3. Trích xuất tên của 3 món đồ này để tạo thành danh sách kết quả.",
-    "initialCode": "def select_items(items):\n    # Write your code here\n    pass\n",
+    "initialCode": "def select_items(items):",
     "testCases": [
       {
         "id": 1,
@@ -3311,7 +3311,7 @@
     "title": "13. The Mirror Pairs",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Cho một list input.</li><li>Đếm số cặp index (i, j) sao cho i < j và arr[i] == arr[j].</li></ul>",
     "hint": "Để đếm số cặp index (i, j) sao cho i < j và arr[i] == arr[j], chúng ta có thể sử dụng hai vòng lặp lồng nhau. Vòng lặp ngoài duyệt qua từng phần tử với index 'i' từ đầu đến gần cuối danh sách. Vòng lặp trong sẽ duyệt qua các phần tử với index 'j' bắt đầu từ 'i + 1' đến cuối danh sách. Trong mỗi lần lặp, nếu giá trị của arr[i] bằng arr[j], chúng ta tăng biến đếm lên 1. Cuối cùng, trả về tổng số đếm được.",
-    "initialCode": "def count_mirror_pairs(lst):\n    # Write your code here\n    pass\n",
+    "initialCode": "def count_mirror_pairs(lst):",
     "testCases": [
       {
         "id": 1,
@@ -3342,7 +3342,7 @@
     "title": "1. The Rabbit Population (Fibonacci)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Viết hàm tính dãy Fibonacci.</li><li>Trả về số Fibonacci thứ n.</li></ul>",
     "hint": "Để tính số Fibonacci thứ n, chúng ta có thể sử dụng phương pháp lặp. Khởi tạo hai biến `a` và `b` với giá trị ban đầu là 0 và 1, tương ứng với hai số đầu tiên trong dãy Fibonacci. Sau đó, lặp từ 2 đến n. Trong mỗi lần lặp, cập nhật `a` thành giá trị của `b` trước đó, và `b` thành tổng của `a` và `b` trước đó. Cuối cùng, trả về giá trị của `b` sau khi vòng lặp kết thúc. Cần xử lý các trường hợp cơ bản: nếu n là 0, trả về 0; nếu n là 1, trả về 1.",
-    "initialCode": "def rabbit_population(n):\n    # Write your code here\n    pass\n",
+    "initialCode": "def rabbit_population(n):",
     "testCases": [
       {
         "id": 1,
@@ -3373,7 +3373,7 @@
     "title": "2. The Signal (Convolution)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Input: List signal và list kernel.</li><li>Tính tổng tích chập (sliding window sum).</li></ul>",
     "hint": "Để tính tổng tích chập (convolution) của một tín hiệu (signal) và một kernel, chúng ta thực hiện các bước sau:\n\n1.  **Khởi tạo danh sách kết quả:** Tạo một danh sách rỗng để lưu trữ các giá trị tích chập.\n2.  **Xác định độ dài:** Lấy độ dài của `signal` và `kernel`.\n3.  **Lặp qua tín hiệu:** Duyệt qua `signal` bằng một cửa sổ trượt (sliding window) có kích thước bằng độ dài của `kernel`. Vòng lặp sẽ chạy từ đầu `signal` cho đến khi cửa sổ không thể trượt thêm nữa mà vẫn nằm hoàn toàn trong `signal`.\n4.  **Trích xuất phân đoạn:** Trong mỗi lần lặp, trích xuất một phân đoạn của `signal` có độ dài bằng `kernel`.\n5.  **Tính tổng tích:** Nhân từng phần tử tương ứng của phân đoạn `signal` vừa trích xuất với từng phần tử của `kernel`, sau đó tính tổng các kết quả nhân này.\n6.  **Lưu kết quả:** Thêm tổng vừa tính vào danh sách kết quả.\n7.  **Trả về kết quả:** Sau khi duyệt hết `signal`, trả về danh sách kết quả.",
-    "initialCode": "def process_signal(signal, kernel):\n    # Write your code here\n    pass\n",
+    "initialCode": "def process_signal(signal, kernel):",
     "testCases": [
       {
         "id": 1,
@@ -3404,7 +3404,7 @@
     "title": "3. The Grid Path (Shortest Path)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Cho lưới số (grid). Đi từ góc trái trên xuống phải dưới.</li><li>Chỉ được đi sang phải (Right) hoặc xuống dưới (Down).</li><li>Tìm đường đi có tổng chi phí nhỏ nhất (Min cost).</li></ul>",
     "hint": "Bài toán này có thể giải quyết bằng Quy hoạch động (Dynamic Programming). Chúng ta sẽ tạo một ma trận `dp` cùng kích thước với `grid` để lưu trữ chi phí nhỏ nhất để đến từng ô. \n\n1. Khởi tạo `dp[0][0]` bằng giá trị của `grid[0][0]` vì đây là điểm xuất phát.\n2. Điền vào hàng đầu tiên: Để đến bất kỳ ô nào trong hàng đầu tiên `dp[0][j]`, chỉ có một cách là đi từ ô bên trái `dp[0][j-1]` cộng với chi phí của ô hiện tại `grid[0][j]`.\n3. Điền vào cột đầu tiên: Tương tự, để đến bất kỳ ô nào trong cột đầu tiên `dp[i][0]`, chỉ có một cách là đi từ ô phía trên `dp[i-1][0]` cộng với chi phí của ô hiện tại `grid[i][0]`.\n4. Đối với các ô còn lại `dp[i][j]`, chi phí nhỏ nhất để đến ô đó là giá trị nhỏ nhất giữa việc đi từ ô phía trên `dp[i-1][j]` hoặc đi từ ô bên trái `dp[i][j-1]`, sau đó cộng với chi phí của ô hiện tại `grid[i][j]`.\n5. Cuối cùng, giá trị `dp[-1][-1]` (ô cuối cùng bên phải dưới) sẽ là tổng chi phí nhỏ nhất của đường đi.",
-    "initialCode": "def min_path_sum(grid):\n    # Write your code here\n    pass\n",
+    "initialCode": "def min_path_sum(grid):",
     "testCases": [
       {
         "id": 1,
@@ -3435,7 +3435,7 @@
     "title": "4. The Maze (Validation)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Cho bản đồ game (ma trận ký tự).</li><li>Kiểm tra tọa độ (x, y) có nằm trong bản đồ không.</li><li>Kiểm tra vị trí đó có phải là tường ('#') không.</li></ul>",
     "hint": "Để kiểm tra một vị trí có an toàn trong bản đồ mê cung hay không, chúng ta cần thực hiện hai bước chính:\n\n1.  **Kiểm tra giới hạn bản đồ:** Đầu tiên, xác định kích thước của bản đồ (số hàng và số cột). Sau đó, kiểm tra xem tọa độ `(x, y)` được cung cấp có nằm trong phạm vi hợp lệ của bản đồ hay không. Nếu `x` nhỏ hơn 0 hoặc lớn hơn hoặc bằng số hàng, hoặc `y` nhỏ hơn 0 hoặc lớn hơn hoặc bằng số cột, thì vị trí đó nằm ngoài bản đồ và không an toàn.\n\n2.  **Kiểm tra chướng ngại vật:** Nếu vị trí `(x, y)` nằm trong giới hạn bản đồ, bước tiếp theo là kiểm tra xem ô tại vị trí đó có phải là tường (ký tự '#') hay không. Nếu là tường, vị trí đó không an toàn. Nếu không phải là tường, thì vị trí đó được coi là an toàn.",
-    "initialCode": "def is_safe(x, y, game_map):\n    # Write your code here\n    pass\n",
+    "initialCode": "def is_safe(x, y, game_map):",
     "testCases": [
       {
         "id": 1,
@@ -3466,7 +3466,7 @@
     "title": "5. The Trader (Maximize Profit)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Cho list giá cổ phiếu theo ngày.</li><li>Chọn 1 ngày mua và 1 ngày bán (sau ngày mua).</li><li>Tìm mức lợi nhuận tối đa có thể đạt được.</li></ul>",
     "hint": "Để tìm lợi nhuận tối đa, chúng ta cần duyệt qua danh sách giá cổ phiếu chỉ một lần. Chúng ta sẽ duy trì hai biến: một để lưu trữ giá thấp nhất đã thấy cho đến thời điểm hiện tại (`min_price`) và một để lưu trữ lợi nhuận tối đa đã đạt được (`max_profit_val`).\n\n1. Khởi tạo `min_price` bằng giá của ngày đầu tiên và `max_profit_val` bằng 0.\n2. Duyệt qua từng giá cổ phiếu trong danh sách:\n   a. Nếu giá hiện tại thấp hơn `min_price`, cập nhật `min_price` thành giá hiện tại (vì chúng ta muốn mua ở mức giá thấp nhất có thể).\n   b. Ngược lại (nếu giá hiện tại không thấp hơn `min_price`), tính toán lợi nhuận nếu bán vào ngày hiện tại (`price - min_price`). Nếu lợi nhuận này lớn hơn `max_profit_val`, cập nhật `max_profit_val`.\n3. Sau khi duyệt hết danh sách, `max_profit_val` sẽ chứa lợi nhuận tối đa có thể đạt được.",
-    "initialCode": "def max_profit(prices):\n    # Write your code here\n    pass\n",
+    "initialCode": "def max_profit(prices):",
     "testCases": [
       {
         "id": 1,
@@ -3497,7 +3497,7 @@
     "title": "6. The Clusters (kMeans Logic)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Cho điểm A và 2 tâm cụm C1, C2.</li><li>Tính khoảng cách từ A đến C1 và C2.</li><li>Gán A vào cụm có khoảng cách gần hơn.</li></ul>",
     "hint": "Để giải bài toán này, chúng ta cần thực hiện các bước sau:\n1. **Tính khoảng cách Euclidean từ điểm A đến tâm cụm C1:** Sử dụng công thức khoảng cách Euclidean: `sqrt((x2-x1)^2 + (y2-y1)^2)`. Áp dụng công thức này cho điểm A và C1.\n2. **Tính khoảng cách Euclidean từ điểm A đến tâm cụm C2:** Tương tự, áp dụng công thức khoảng cách Euclidean cho điểm A và C2.\n3. **So sánh hai khoảng cách:** So sánh khoảng cách từ A đến C1 và khoảng cách từ A đến C2.\n4. **Gán điểm A vào cụm gần hơn:** Nếu khoảng cách đến C1 nhỏ hơn, gán A vào C1. Ngược lại, gán A vào C2. Trong trường hợp khoảng cách bằng nhau, theo quy ước của code mẫu, nó sẽ được gán vào C2.",
-    "initialCode": "def assign_cluster(point_a, c1, c2):\n    # Write your code here\n    pass\n",
+    "initialCode": "def assign_cluster(point_a, c1, c2):",
     "testCases": [
       {
         "id": 1,
@@ -3528,7 +3528,7 @@
     "title": "7. The Unknown Plant (kNN Logic)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Cho dữ liệu train (X, y) và một điểm dữ liệu mới.</li><li>Tìm điểm dữ liệu train gần nhất (Nearest Neighbor).</li><li>Trả về nhãn (label) của điểm gần nhất đó.</li></ul>",
     "hint": "Để giải bài toán này, chúng ta cần thực hiện các bước sau:\n1. Khởi tạo một biến `min_dist` với giá trị vô cùng lớn để lưu khoảng cách nhỏ nhất tìm được và một biến `nearest_index` để lưu chỉ số của điểm gần nhất.\n2. Lặp qua từng điểm dữ liệu trong tập `x_train`.\n3. Với mỗi điểm dữ liệu trong `x_train`, tính khoảng cách tuyệt đối giữa điểm đó và `target_x` (điểm dữ liệu mới cần dự đoán).\n4. So sánh khoảng cách vừa tính với `min_dist` hiện tại:\n    - Nếu khoảng cách này nhỏ hơn `min_dist`, cập nhật `min_dist` bằng khoảng cách mới và `nearest_index` bằng chỉ số của điểm dữ liệu hiện tại.\n5. Sau khi duyệt qua tất cả các điểm trong `x_train`, `nearest_index` sẽ chứa chỉ số của điểm gần nhất.\n6. Trả về nhãn tương ứng với `nearest_index` từ tập `y_labels`.",
-    "initialCode": "def knn_predict(x_train, y_labels, target_y):\n    # Write your code here\n    pass\n",
+    "initialCode": "def knn_predict(x_train, y_labels, target_y):",
     "testCases": [
       {
         "id": 1,
@@ -3559,7 +3559,7 @@
     "title": "8. The Geomancer's Trial (Colinearity & Distance)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Kiểm tra 3 điểm bất kỳ có thẳng hàng không.</li><li>Kiểm tra một điểm có nằm trong tam giác tạo bởi 3 điểm còn lại không.</li><li>Tìm cặp điểm có khoảng cách gần nhau nhất trong 4 điểm.</li></ul>",
     "hint": "1. Duyệt qua tất cả các bộ 3 điểm để kiểm tra tính thẳng hàng (diện tích tam giác = 0).\n2. Để kiểm tra điểm nằm trong tam giác, so sánh diện tích tam giác lớn với tổng diện tích 3 tam giác nhỏ.\n3. Tính khoảng cách Euclide giữa tất cả các cặp điểm để tìm cặp gần nhất.",
-    "initialCode": "def geomancer_trial(p1, p2, p3, p4):\n    # Write your code here\n    pass\n",
+    "initialCode": "def geomancer_trial(p1, p2, p3, p4):",
     "testCases": [
       {
         "id": 1,
@@ -3575,7 +3575,7 @@
     "title": "9. The Triad of Balance (3SUM Problem)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Cho một list các số nguyên.</li><li>Tìm bộ ba số (a, b, c) sao cho a + b + c = 0.</li><li>Trả về danh sách các bộ ba (không trùng lặp).</li></ul>",
     "hint": "1. Sắp xếp danh sách các số nguyên đầu vào để dễ dàng tìm kiếm và loại bỏ các bộ ba trùng lặp.\n2. Duyệt qua danh sách bằng một con trỏ chính `i` từ đầu đến `n-2` (vì cần ít nhất hai phần tử nữa).\n3. Với mỗi `nums[i]`, sử dụng hai con trỏ `left` (bắt đầu từ `i+1`) và `right` (bắt đầu từ cuối danh sách `n-1`).\n4. Trong khi `left` nhỏ hơn `right`:\n    a. Tính tổng `total = nums[i] + nums[left] + nums[right]`.\n    b. Nếu `total == 0`, tìm thấy một bộ ba. Thêm bộ ba này vào một tập hợp (set) để đảm bảo tính duy nhất. Sau đó, tăng `left` và giảm `right` để tìm các bộ ba khác.\n    c. Nếu `total < 0`, tổng quá nhỏ, cần tăng giá trị bằng cách tăng `left`.\n    d. Nếu `total > 0`, tổng quá lớn, cần giảm giá trị bằng cách giảm `right`.\n5. Sau khi duyệt xong, chuyển tập hợp các bộ ba thành danh sách và sắp xếp để có kết quả cuối cùng theo thứ tự mong muốn. Trả về danh sách các bộ ba và số lượng bộ ba tìm được.",
-    "initialCode": "def find_triad_balance(nums):\n    # Write your code here\n    pass\n",
+    "initialCode": "def find_triad_balance(nums):",
     "testCases": [
       {
         "id": 1,
@@ -3606,7 +3606,7 @@
     "title": "10. The Forbidden Passage (BFS Pathfinding)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Tìm đường đi ngắn nhất từ (1,1) đến (8,8) trên lưới 8x8.</li><li>Tránh các ô có quái vật.</li><li>Đếm số lượng đường đi an toàn (DP) nếu tìm được đường.</li></ul>",
     "hint": "1. Sử dụng BFS để tìm đường đi ngắn nhất từ (1,1) đến (8,8), tránh các ô có quái vật.\n2. Nếu có đường đi, sử dụng Quy hoạch động (DP) để đếm số lượng đường đi an toàn.\n3. Trạng thái DP: dp[i][j] = dp[i-1][j] + dp[i][j-1] (nếu không có quái vật).",
-    "initialCode": "def forbidden_passage(monsters_list):\n    # Write your code here\n    pass\n",
+    "initialCode": "def forbidden_passage(monsters_list):",
     "testCases": [
       {
         "id": 1,
@@ -3622,7 +3622,7 @@
     "title": "11. The Sage of Polynomials",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Input hai đa thức dưới dạng chuỗi (ví dụ \"2x^2 + 3x + 1\").</li><li>Parse chuỗi thành dict hệ số.</li><li>Thực hiện phép cộng và nhân hai đa thức, trả về kết quả dạng chuỗi.</li></ul>",
     "hint": "1. Viết hàm phân tích chuỗi đa thức thành một dictionary với key là số mũ, value là hệ số.\n2. Phép cộng: Cộng các hệ số có cùng số mũ.\n3. Phép nhân: Nhân từng số hạng của đa thức 1 với đa thức 2, số mũ cộng lại, hệ số nhân nhau.\n4. Chuyển dictionary kết quả về lại định dạng chuỗi.",
-    "initialCode": "def sage_polynomials(p1_str, p2_str):\n    # Write your code here\n    pass\n",
+    "initialCode": "def sage_polynomials(p1_str, p2_str):",
     "testCases": [
       {
         "id": 1,
@@ -3638,7 +3638,7 @@
     "title": "12. The Excavation Schedule",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Cho hai chu kỳ làm việc N ngày (nghỉ 1) và M ngày (nghỉ 1).</li><li>Tính từ đầu năm 2024 đến target_date.</li><li>Đếm số ngày cả hai cùng làm việc.</li></ul>",
     "hint": "1. Tính tổng số ngày từ 1/1/2024 đến target_date.\n2. Duyệt qua từng ngày, kiểm tra xem ngày đó có thuộc chu kỳ làm việc của cả A (mod N+1 < N) và B (mod M+1 < M) hay không.\n3. Đếm số ngày cả hai cùng làm việc.",
-    "initialCode": "def count_working_days(N, M, target_date):\n    # Write your code here\n    pass\n",
+    "initialCode": "def count_working_days(N, M, target_date):",
     "testCases": [
       {
         "id": 1,
@@ -3654,7 +3654,7 @@
     "title": "Bonus: Data Normalization",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Input list điểm số thô.</li><li>Chuẩn hóa dữ liệu về thang [0, 1] bằng phương pháp Min-Max.</li></ul>",
     "hint": "1. Tìm giá trị lớn nhất (max) và nhỏ nhất (min) trong danh sách.\n2. Nếu max == min, tất cả các điểm đều giống nhau, trả về mảng toàn 0.0.\n3. Áp dụng công thức (x - min) / (max - min) cho từng phần tử.",
-    "initialCode": "def normalize_data(raw_scores):\n    # Write your code here\n    pass\n",
+    "initialCode": "def normalize_data(raw_scores):",
     "testCases": [
       {
         "id": 1,
@@ -3675,7 +3675,7 @@
     "title": "1. Mất vé xe tháng",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Cho list ngày mất vé. Đếm số lần, tìm ngày sớm/muộn nhất.</li><li>Tính khoảng cách giữa các lần mất vé.</li><li>Dự đoán 3 ngày mất vé tiếp theo (dựa trên quy luật khoảng cách).</li></ul>",
     "hint": "1. Tính số lượng, ngày sớm nhất (min), ngày muộn nhất (max).\n2. Tính khoảng cách giữa các ngày liên tiếp.\n3. Dự đoán 3 ngày tiếp theo bằng cách cộng dồn khoảng cách đầu tiên (hoặc 7 nếu không có) vào ngày cuối cùng.",
-    "initialCode": "def analyze_lost_tickets(days):\n    # Write your code here\n    pass\n",
+    "initialCode": "def analyze_lost_tickets(days):",
     "testCases": [
       {
         "id": 1,
@@ -3691,7 +3691,7 @@
     "title": "2. Conan nhà tập",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Cho y_true (thực tế) và y_pred (dự đoán).</li><li>Đếm số lượng TP, TN, FP, FN.</li><li>Tính Precision và Recall.</li></ul>",
     "hint": "1. So sánh từng cặp (y_true, y_pred) để đếm TP, TN, FP, FN.\n2. Precision = TP / (TP + FP).\n3. Recall = TP / (TP + FN).",
-    "initialCode": "def analyze_camera_ai(y_true, y_pred):\n    # Write your code here\n    pass\n",
+    "initialCode": "def analyze_camera_ai(y_true, y_pred):",
     "testCases": [
       {
         "id": 1,
@@ -3707,7 +3707,7 @@
     "title": "3. Đội bóng FTU",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Cho dict cầu thủ. Đếm số lượng mỗi vị trí.</li><li>Tìm cầu thủ skill cao nhất mỗi vị trí.</li><li>Chọn đội hình 11 người có skill cao nhất (Greedy skill).</li></ul>",
     "hint": "1. Duyệt danh sách cầu thủ để đếm số lượng mỗi vị trí.\n2. Cập nhật cầu thủ có skill cao nhất cho từng vị trí.\n3. Lấy danh sách tất cả cầu thủ, sắp xếp giảm dần theo skill, chọn 11 người đứng đầu.",
-    "initialCode": "def analyze_football_team(players):\n    # Write your code here\n    pass\n",
+    "initialCode": "def analyze_football_team(players):",
     "testCases": [
       {
         "id": 1,
@@ -3723,7 +3723,7 @@
     "title": "4. Thường nhật của một Wibu",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Cho dict anime.</li><li>Tính % hoàn thành của từng anime.</li><li>Tìm anime < 100% nhưng gần xong nhất.</li><li>Tính số ngày cần để xem hết (tốc độ 5 tập/ngày).</li></ul>",
     "hint": "1. Tính phần trăm hoàn thành = (watched / total) * 100.\n2. Lưu số tập còn lại của các anime chưa hoàn thành (rem > 0).\n3. Tìm anime có số tập còn lại ít nhất và tính tổng số ngày cần (tổng tập còn lại / 5).",
-    "initialCode": "def wibu_schedule(anime_dict):\n    # Write your code here\n    pass\n",
+    "initialCode": "def wibu_schedule(anime_dict):",
     "testCases": [
       {
         "id": 1,
@@ -3739,7 +3739,7 @@
     "title": "5. Bài tập nhóm",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Tính tổng số dòng code và số commits của cả nhóm.</li><li>Tính phần trăm đóng góp của từng thành viên.</li><li>Xác định \"free-rider\" (đóng góp <15% hoặc commits < 5).</li></ul>",
     "hint": "1. Tính tổng số dòng code và commits của cả nhóm.\n2. Tính % dòng code của từng thành viên.\n3. Đánh dấu free-rider nếu % code < 15% hoặc số commits < 5.",
-    "initialCode": "def analyze_group_work(group_data):\n    # Write your code here\n    pass\n",
+    "initialCode": "def analyze_group_work(group_data):",
     "testCases": [
       {
         "id": 1,
@@ -3755,7 +3755,7 @@
     "title": "6. WC nhà B",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Tìm các buồng vệ sinh còn trống.</li><li>Chọn buồng trống có khoảng cách xa nhất so với các buồng đang có người (tối ưu hóa sự riêng tư).</li><li>Cập nhật trạng thái sau khi chọn.</li></ul>",
     "hint": "1. Duyệt qua số lượng người cần xếp (num_people).\n2. Tìm tất cả các buồng trống.\n3. Nếu chưa có ai trong buồng, chọn buồng 0. Ngược lại, chọn buồng trống sao cho khoảng cách tối thiểu tới các buồng có người là lớn nhất (tối ưu hóa riêng tư).",
-    "initialCode": "def wc_simulation(status, num_people=5):\n    # Write your code here\n    pass\n",
+    "initialCode": "def wc_simulation(status, num_people=5):",
     "testCases": [
       {
         "id": 1,
@@ -3771,7 +3771,7 @@
     "title": "7. Cục đá trường F",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Xác suất đỗ cơ bản là 0.6.</li><li>Mỗi lần \"lạy cụ\" được cộng thêm 0.05.</li><li>Tính xác suất đỗ cuối cùng (tối đa là 1.0).</li></ul>",
     "hint": "1. Xác suất đỗ cơ bản là 0.6.\n2. Mỗi lần lạy cộng thêm 0.05.\n3. Trả về min(0.6 + k_bows * 0.05, 1.0) vì xác suất không vượt quá 1.",
-    "initialCode": "def calculate_pass_prob(k_bows):\n    # Write your code here\n    pass\n",
+    "initialCode": "def calculate_pass_prob(k_bows):",
     "testCases": [
       {
         "id": 1,
@@ -3792,7 +3792,7 @@
     "title": "8. FTU Losers Club",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Tính Max, Min, đếm số lượng qua môn (>= 5).</li><li>Tính Mean (trung bình), Median (trung vị), Mode (Yếu vị).</li><li>Phân cụm sinh viên thành 3 nhóm (Giỏi, TB, Yếu) bằng K-Means đơn giản.</li></ul>",
     "hint": "1. Tìm min, max và đếm số điểm >= 5.\n2. Sử dụng thư viện statistics để tính Mean, Median, Mode.\n3. Phân cụm bằng cách so sánh khoảng cách từ mỗi điểm đến các centroids (9, 6, 3).",
-    "initialCode": "def analyze_scores(scores):\n    # Write your code here\n    pass\n",
+    "initialCode": "def analyze_scores(scores):",
     "testCases": [
       {
         "id": 1,
@@ -3808,7 +3808,7 @@
     "title": "9. Ở trọ",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Lọc danh sách nhà trọ trong bán kính 3km. Tìm nhà rẻ nhất.</li><li>Tính Value Score = Rating/Price - Distance * 0.1.</li><li>Trả về top 3 nhà trọ có điểm cao nhất.</li></ul>",
     "hint": "1. Lọc các nhà trọ có khoảng cách (d) <= 3.0.\n2. Tìm nhà rẻ nhất (min price).\n3. Tính Value Score = (Rating / Price) - (Distance * 0.1) cho tất cả nhà trọ và sắp xếp lấy top 3.",
-    "initialCode": "def find_accommodation(houses):\n    # Write your code here\n    pass\n",
+    "initialCode": "def find_accommodation(houses):",
     "testCases": [
       {
         "id": 1,
@@ -3824,7 +3824,7 @@
     "title": "10. Làm thêm",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Tính mức lương theo giờ cho mỗi công việc.</li><li>Sắp xếp công việc theo mức lương giảm dần.</li><li>Chọn việc để tối đa hóa thu nhập trong 40h (cho phép làm lẻ giờ - Fractional Knapsack).</li></ul>",
     "hint": "1. Tính mức lương theo giờ (rate = pay / h) cho từng công việc.\n2. Sắp xếp công việc theo rate giảm dần (Greedy Fractional Knapsack).\n3. Lần lượt làm các công việc có rate cao nhất cho đến khi hết 40 giờ (làm lẻ giờ phần cuối).",
-    "initialCode": "def optimize_income(jobs, max_hours=40):\n    # Write your code here\n    pass\n",
+    "initialCode": "def optimize_income(jobs, max_hours=40):",
     "testCases": [
       {
         "id": 1,
@@ -3840,7 +3840,7 @@
     "title": "11. Phòng quản lý đào tạo (Queue Simulation)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Mô phỏng 1 hàng đợi đơn (FIFO): Tính thời gian chờ TB.</li><li>Mô phỏng hàng đợi ưu tiên (Priority Queue): Sinh viên năm 4 được phục vụ trước.</li><li>Mô phỏng 2 hàng đợi song song: Chia sinh viên vào quầy vắng hơn.</li></ul>",
     "hint": "1. Hàng đợi đơn: Tính thời gian chờ của từng người (tích lũy thời gian phục vụ 10p).\n2. Hàng đợi ưu tiên: Sắp xếp theo năm học (year giảm dần) trước khi tính.\n3. Hai hàng đợi: Gán sinh viên vào quầy nào đang có thời gian hoàn thành sớm hơn.",
-    "initialCode": "def pd_training_simulation(students_list):\n    # Write your code here\n    pass\n",
+    "initialCode": "def pd_training_simulation(students_list):",
     "testCases": [
       {
         "id": 1,
@@ -3856,7 +3856,7 @@
     "title": "12. Chạm mặt ex (Prob & Danger Zones)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Tính xác suất an toàn (1 - Xác suất gặp Ex) tại mỗi địa điểm.</li><li>So sánh lịch trình của Nam và Ex.</li><li>Liệt kê các \"Danger Zones\" (trùng thời gian và địa điểm).</li></ul>",
     "hint": "1. Tạo dictionary xác suất an toàn (1 - prob).\n2. Dùng dictionary/set để lưu lịch trình của Nam (time: location).\n3. Duyệt lịch trình của Ex, nếu trùng cả thời gian và địa điểm với Nam thì thêm vào Danger Zones.",
-    "initialCode": "def avoid_ex(ex_loc_probs, nam_schedule, ex_schedule):\n    # Write your code here\n    pass\n",
+    "initialCode": "def avoid_ex(ex_loc_probs, nam_schedule, ex_schedule):",
     "testCases": [
       {
         "id": 1,
@@ -3872,7 +3872,7 @@
     "title": "13. First Date (Budget & Compatibility)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Lọc địa điểm theo ngân sách cho phép.</li><li>Tính điểm tương hợp (Compatibility Score) dựa trên sở thích của Crush.</li><li>Kiểm tra tính khả thi của lịch trình (tổng chi phí <= ngân sách).</li></ul>",
     "hint": "1. Lọc địa điểm affordable (cost <= budget).\n2. Tính điểm tương hợp: +1 nếu like, -0.5 nếu dislike. Lấy top 3 điểm cao nhất.\n3. Kiểm tra tính khả thi của lịch trình: tổng cost <= 800 (trả về boolean).",
-    "initialCode": "def plan_first_date(places, crush_prefs, budget_minh):\n    # Write your code here\n    pass\n",
+    "initialCode": "def plan_first_date(places, crush_prefs, budget_minh):",
     "testCases": [
       {
         "id": 1,
@@ -3888,7 +3888,7 @@
     "title": "14. Xuân Hòa (Military Training)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Sắp xếp danh sách sinh viên theo chiều cao. Tính trung vị.</li><li>Chia 40 sinh viên thành 4 đội theo kiểu Round-robin.</li><li>Phân loại vai trò: Shooters (bắn súng giỏi) và Scouts (thể lực tốt).</li></ul>",
     "hint": "1. Sắp xếp sinh viên theo chiều cao, tính trung vị (median) và khoảng biến thiên (max - min).\n2. Chia 4 đội (Round-Robin): sinh viên i vào đội (i % 4).\n3. Lọc danh sách Shooters (shooting > 8) và Scouts (fitness > 7 và marching > 7).",
-    "initialCode": "def xuan_hoa_training(students):\n    # Write your code here\n    pass\n",
+    "initialCode": "def xuan_hoa_training(students):",
     "testCases": [
       {
         "id": 1,
@@ -3904,7 +3904,7 @@
     "title": "15. Xuân Hòa 2 (Attendance)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Tìm 5 sinh viên có tỷ lệ đi học thấp nhất.</li><li>Phát hiện nguy cơ: Nếu nghỉ 2 ngày liên tiếp -> Tăng gấp đôi xác suất vắng.</li><li>Đưa vào \"Watch List\" nếu xác suất vắng dự đoán > 0.3.</li></ul>",
     "hint": "1. Tính tỷ lệ đi học (sum(days) / len(days)) và lấy 5 bạn thấp nhất.\n2. Tính xác suất vắng (p_absent = absent / total). Nếu nghỉ 2 ngày cuối liên tiếp, p_absent *= 2.\n3. Thêm vào watch_list nếu p_absent > 0.3.",
-    "initialCode": "def attendance_analytics(attendance_data):\n    # Write your code here\n    pass\n",
+    "initialCode": "def attendance_analytics(attendance_data):",
     "testCases": [
       {
         "id": 1,
@@ -3920,7 +3920,7 @@
     "title": "16. Điểm cuối kỳ",
     "description": "<ul><li>Bối cảnh: Dự đoán điểm cuối kỳ môn TIN314 dựa trên số giờ tự học mỗi tuần.</li><li>Dataset: `hours = [5, 10, 15, 20, 8, 12, 18, 6, 14, 16]`, `scores = [5.0, 6.0, 7.5, 8.5, 5.5, 6.5, 8.0, 5.2, 7.0, 7.8]`</li><li>Yêu cầu:</li></ul><p>  - Chuẩn bị dữ liệu: Reshape hours thành mảng 2D shape (10,1). Chia dữ liệu thành tập train (8 mẫu đầu) và test (2 mẫu cuối). Trả về tuple chứa kích thước các tập: `(X_train.shape, X_test.shape, y_train.shape, y_test.shape)`.</p><p>  - Huấn luyện model: Sử dụng LinearRegression từ thư viện sklearn. Fit model với dữ liệu train. Trả về tuple các tham số làm tròn 2 chữ số thập phân: `(round(coef, 2), round(intercept, 2))`.</p><p>  - Dự đoán và đánh giá: Dự đoán (predict) trên tập test. Tính MAE (Mean Absolute Error) bằng hàm của sklearn. Trả về dictionary: `{'predictions': [...], 'actual': [...], 'MAE': round(mae, 2)}`.</p><p>  - (Bonus) Manual Predict: Viết hàm manual_predict(hours, coef, intercept) tính toán thủ công theo công thức y = ax + b. Test với hours=10, so sánh kết quả với sklearn xem sai số có nhỏ hơn 0.01 không. Trả về tuple: `(manual_result, sklearn_result, is_close)`.</p>",
     "hint": "1. Reshape dữ liệu 1D thành 2D, chia train/test theo chỉ định (8 train, 2 test).\n2. Fit mô hình Linear Regression với (X_train, y_train).\n3. Dùng model.predict dự đoán X_test và tính MAE.\n4. Bonus: Viết hàm y = coef*x + intercept để dự đoán thủ công.",
-    "initialCode": "def solve_question_20():\n    # Write your code here\n    pass\n",
+    "initialCode": "def solve_question_20():",
     "testCases": [
       {
         "id": 1,
@@ -3936,7 +3936,7 @@
     "title": "17. Bạn có qua môn TIN314 không?",
     "description": "<ul><li>Bối cảnh: Dự đoán sinh viên đỗ/trượt môn học dựa trên số buổi đi học (tổng 15 buổi).</li><li>Dataset: `attendance = [12, 8, 14, 6, 13, 7, 15, 5, 11, 9]`, `passed = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0]` (1: Đỗ, 0: Trượt)</li><li>Yêu cầu:</li></ul><p>  - Chuẩn bị dữ liệu: Reshape attendance thành mảng 2D shape (10,1). Chia dữ liệu thành tập train (8 mẫu đầu) và test (2 mẫu cuối). Đếm số lượng sinh viên ĐỖ trong tập train. Trả về tuple: `(X_train.shape, X_test.shape, count_passed_in_train)`.</p><p>  - Huấn luyện model: Sử dụng LogisticRegression từ thư viện sklearn. Fit model với dữ liệu train. Dự đoán cho một sinh viên mới đi học 10 buổi. Trả về tuple gồm nhãn dự đoán và xác suất đỗ (làm tròn 2 chữ số): `(prediction, probability_of_passing)`.</p><p>  - Dự đoán và đánh giá: Dự đoán trên tập test. Tính độ chính xác (Accuracy). Tự tính tay Confusion Matrix (đếm số TP, TN, FP, FN). Trả về dictionary: `{'predictions': [...], 'actual': [...], 'accuracy': acc, 'confusion': {'TP': ?, 'TN': ?, 'FP': ?, 'FN': ?}}`.</p><p>  - (Bonus) Precision vs Recall: Trong bối cảnh hệ thống cần cảnh báo sớm sinh viên yếu (nguy cơ trượt), chỉ số nào quan trọng hơn? Tính giá trị Precision và Recall. Trả về dictionary: `{'precision': ?, 'recall': ?, 'which_more_important': 'precision' hoặc 'recall'}`.</p>",
     "hint": "1. Reshape dữ liệu, chia train/test. Đếm số lượng nhãn 1 trong train.\n2. Fit mô hình Logistic Regression. Dùng predict để ra nhãn và predict_proba để ra xác suất.\n3. Tính Accuracy và tự viết logic đếm TP, TN, FP, FN cho test set.\n4. Tính Precision và Recall, kết luận recall quan trọng hơn (tránh bỏ lót sinh viên trượt).",
-    "initialCode": "def solve_question_21():\n    # Write your code here\n    pass\n",
+    "initialCode": "def solve_question_21():",
     "testCases": [
       {
         "id": 1,
@@ -4172,7 +4172,7 @@
     "category": "Last-term Mock Test",
     "title": "Bài 1: Tính chuỗi lợi nhuận hằng ngày",
     "description": "<p><strong>Bối cảnh:</strong> Quân là sinh viên FTU mê thị trường chứng khoán. Bạn ấy tải về dữ liệu giá đóng cửa hằng ngày của một cổ phiếu và muốn dùng Python để phân tích biến động và dự báo giá ngày mai. Nhà đầu tư quan tâm lợi nhuận hằng ngày (%). Quân tính chuỗi lợi nhuận từ giá đóng cửa.</p><p><strong>Yêu cầu:</strong> Viết hàm <code>daily_returns(prices)</code>.</p><ul><li><code>prices</code> là list of dicts có key <code>'close'</code>, đã sắp theo ngày.</li><li>Với mỗi cặp ngày liên tiếp tính: <code>round((close_i - close_{i-1}) / close_{i-1} * 100, 2)</code>.</li><li>Trả về: <code>list of float</code></li></ul><p><strong>Ví dụ:</strong></p><pre><code>prices = [{'day': 1, 'close': 100.0}, {'day': 2, 'close': 102.0}, {'day': 3, 'close': 101.0}]\nprint(daily_returns(prices))\n# Kết quả mong đợi: [2.0, -0.98]</code></pre>",
-    "initialCode": "def daily_returns(prices):\n    # Write your code here\n",
+    "initialCode": "def daily_returns(prices):",
     "testCases": [
       {
         "id": 1,
@@ -4197,7 +4197,7 @@
     "category": "Last-term Mock Test",
     "title": "Bài 2: Mô hình KNN Match",
     "description": "<p><strong>Bối cảnh:</strong> Trang thực tập tại một ứng dụng hẹn hò. Nhiệm vụ: phân tích hồ sơ người dùng và xây mô hình gợi ý xem hai người có hợp nhau hay không bằng <strong>k-Nearest Neighbors</strong>.</p><p><strong>Yêu cầu:</strong> Viết hàm <code>knn_match(train_X, train_y, query, k=3)</code>:</p><ul><li><code>train_X</code>: list các vector đặc trưng; <code>train_y</code>: nhãn 0/1; <code>query</code>: vector cần dự đoán.</li><li>Tính Khoảng cách Euclid: $\\sqrt{\\sum (q_i - x_i)^2}$</li><li>Sắp xếp theo (distance tăng, index tăng), lấy <code>k</code> điểm gần nhất.</li><li>Bỏ phiếu đa số; nếu hòa -> dự đoán <strong>1</strong> (match).</li><li><code>confidence = round(số_phiếu_cho_nhãn / k, 4)</code>.</li><li>Trả về: <code>(label, confidence)</code></li></ul><p><strong>Ví dụ:</strong></p><pre><code>train_X = [[1.0, 3.0, 40.0], [8.0, 0.0, 5.0], [2.0, 4.0, 55.0], [10.0, 1.0, 3.0], [3.0, 2.0, 30.0]]\ntrain_y = [1, 0, 1, 0, 1]\nquery = [2.0, 3.0, 45.0]\nprint(knn_match(train_X, train_y, query, 3))\n# Kết quả mong đợi: (1, 1.0)</code></pre>",
-    "initialCode": "def knn_match(train_X, train_y, query, k=3):\n    # Write your code here\n",
+    "initialCode": "def knn_match(train_X, train_y, query, k=3):",
     "testCases": [
       {
         "id": 1,
@@ -4217,7 +4217,7 @@
     "category": "Last-term Mock Test",
     "title": "Bài 3: Đếm ngày làm việc chung",
     "description": "<p>Ông An đi làm N ngày liên tiếp rồi nghỉ 1 ngày, sau đó lặp lại chu kỳ đó đều đặn.</p><p>Ông Bình đi làm M ngày liên tiếp rồi nghỉ 1 ngày, sau đó cũng lặp lại đều đặn.</p><p>Cả hai đều bắt đầu đi làm từ <strong>ngày 01/01/2024</strong>. </p><p><strong>Yêu cầu:</strong> Viết hàm <code>def count_working_days(N, M, A):</code> trả về số ngày cả hai người cùng đi làm trong khoảng từ ngày 01/01/2024 cho đến ngày A (A là đối tượng datetime.date).</p>",
-    "initialCode": "from datetime import date\n\ndef count_working_days(N, M, A):\n    # Write your code here\n",
+    "initialCode": "from datetime import date\n\ndef count_working_days(N, M, A):",
     "testCases": [
       {
         "id": 1,
@@ -4237,7 +4237,7 @@
     "category": "Last-term Mock Test",
     "title": "Bài 4: Đếm số bộ ba chỉ số",
     "description": "<p>Cho một danh sách số nguyên <code>a</code> gồm <code>n</code> phần tử.</p><p>Hãy viết hàm <code>count_triples(a)</code> đếm số bộ chỉ số <code>(i, j, k)</code> thỏa mãn: <code>a[i] + 2 * a[j] + 3 * a[k] = 0</code></p><p>Trong bài toán này, <code>i</code>, <code>j</code> và <code>k</code> <strong>không nhất thiết phải đôi một khác nhau</strong>.</p>",
-    "initialCode": "def count_triples(a):\n    # Write your code here\n",
+    "initialCode": "def count_triples(a):",
     "testCases": [
       {
         "id": 1,
@@ -4263,7 +4263,7 @@
     "description": "<p>An giờ quản lý <strong>nhiều</strong> cổ phiếu cùng lúc, và sàn bắt đầu thu phí: mỗi lần <strong>bán</strong> bị trừ <code>fee</code> đồng. Tham lam cộng mọi chênh lệch dương <strong>không còn đúng</strong> khi có phí.</p>\n<p><strong>Yêu cầu:</strong> Viết hàm <code>max_profit(prices, fee)</code>, trong đó <code>prices</code> là danh sách các chuỗi giá - <code>prices[k]</code> là chuỗi giá theo ngày của cổ phiếu thứ $k$ (các chuỗi có thể dài ngắn khác nhau). Trả về <strong>tổng</strong> lợi nhuận tối đa trên tất cả cổ phiếu:\n* Các cổ phiếu độc lập với nhau (giao dịch cổ phiếu này không ảnh hưởng cổ phiếu khác).\n* Với từng cổ phiếu: mua trước khi bán, giữ tối đa 1 đơn vị, không bán khống, mỗi lần <strong>bán</strong> trừ phí <code>fee</code>, được mua/bán nhiều lần, không bắt buộc giao dịch.</p>\n<p>Gợi ý: giải từng cổ phiếu một rồi cộng lại. Với mỗi chuỗi giá, dùng quy hoạch động 2 trạng thái: <code>cash</code> (không giữ cổ phiếu) và <code>hold</code> (đang giữ): <code>cash = max(cash, hold + p - fee)</code>; <code>hold = max(hold, cash - p)</code>, khởi tạo <code>cash = 0</code>, <code>hold = -vô cùng</code>.</p>\n<p>Trả về: <code>int</code>.</p>\n<p><strong>Ví dụ:</strong></p>\n<p><strong>Đầu vào:</strong>\n<code>python\nprint(max_profit([[1, 3, 2, 8, 4, 9], [5, 4, 3]], 2))</code></p>\n<p><strong>Kết quả mong đợi:</strong>\n<code>text\n8</code></p>\n<p><em>Cổ phiếu 1: mua 1 $\\rightarrow$ bán 8 ($8-1-2=5$), mua 4 $\\rightarrow$ bán 9 ($9-4-2=3$) $\\rightarrow$ 8. Cổ phiếu 2: giá chỉ giảm $\\rightarrow$ 0. Tổng: 8.</em></p>\n<p>| :--- | :--- |\n| <code>print(max_profit([[1, 3, 2, 8, 4, 9], [5, 4, 3]], 2))</code> | <code>8</code> |</p>",
     "category": "Last-term Summer Course Test",
     "difficulty": "Hard",
-    "defaultCode": "def max_profit(prices, fee):\n    pass\n",
+    "defaultCode": "def max_profit(prices, fee):",
     "testCases": [
       {
         "id": 1,
@@ -4281,7 +4281,7 @@
         "expected": "5"
       }
     ],
-    "initialCode": "def max_profit(prices_list, fee):\n    # Write your code here\n    pass\n"
+    "initialCode": "def max_profit(prices_list, fee):"
   },
   {
     "id": 2,
@@ -4289,7 +4289,7 @@
     "description": "<p>An theo dõi <strong>nhiều tài sản</strong>, mỗi tài sản có xác suất thắng và mức lời/lỗ riêng (không phải \"được ăn cả, ngã về không\": thắng thì tăng <code>win_return</code>, ví dụ 0.2 = +20%; thua thì giảm <code>loss_return</code>, ví dụ 0.25 = −25%). An dùng <strong>công thức Kelly tổng quát</strong> để tính tỷ lệ đặt cược tối ưu cho <strong>từng</strong> tài sản.</p>\n<p><strong>Yêu cầu:</strong> Viết hàm <code>kelly_fractions(assets)</code>, trong đó <code>assets</code> là danh sách, mỗi phần tử là <code>[win_prob, win_return, loss_return]</code> của một tài sản. Trả về <strong>danh sách</strong> tỷ lệ Kelly tương ứng:\n* Với từng tài sản: $p = win_prob$, $q = 1 - p$\n* Kelly tổng quát: $f^<em> = p / loss_return - q / win_return$\n* Nếu $f^</em>$ âm $\\rightarrow$ 0.0 (không có lợi thế); nếu $f^* &gt; 1 \\rightarrow$ 1.0 (không đòn bẩy)\n* Làm tròn từng giá trị 4dp</p>\n<p>Gợi ý: lặp qua danh sách (vòng <code>for</code> hoặc list comprehension), có thể tách bộ ba bằng <code>for p, w, l in assets:</code>; nhớ xử lý chặn 0/1 trước khi làm tròn.</p>\n<p>Trả về: <code>list</code> các <code>float</code></p>\n<p><strong>Ví dụ:</strong></p>\n<p><strong>Đầu vào:</strong>\n<code>python\nprint(kelly_fractions([[0.6, 0.2, 0.25], [0.65, 0.2, 0.4]]))</code></p>\n<p><strong>Kết quả mong đợi:</strong>\n<code>text\n[0.4, 0.0]</code></p>\n<p><em>Tài sản 1: $f^</em> = 0.6/0.25 - 0.4/0.2 = 2.4 - 2.0 = 0.4$. Tài sản 2: $f^<em> = 0.65/0.4 - 0.35/0.2 = 1.625 - 1.75 &lt; 0 \\rightarrow 0.0$.</em></p>\n<p>| :--- | :--- |\n| <code>print(kelly_fractions([[0.6, 0.2, 0.25], [0.65, 0.2, 0.4]]))</code> | <code>[0.4, 0.0]</code> |</p>",
     "category": "Last-term Summer Course Test",
     "difficulty": "Hard",
-    "defaultCode": "def kelly_fractions(assets):\n    pass\n",
+    "defaultCode": "def kelly_fractions(assets):",
     "testCases": [
       {
         "id": 1,
@@ -4307,7 +4307,7 @@
         "expected": "[1.0]"
       }
     ],
-    "initialCode": "def kelly_fractions(assets):\n    # Write your code here\n    pass\n"
+    "initialCode": "def kelly_fractions(assets):"
   },
   {
     "id": 3,
@@ -4315,7 +4315,7 @@
     "description": "<p>Lần này quỹ <strong>không</strong> cho sẵn ma trận hiệp phương sai - chỉ có <strong>dữ liệu lợi suất lịch sử</strong>. An phải tự tính lợi suất danh mục từng kỳ rồi đánh giá bằng tỷ số Sharpe.</p>\n<p><strong>Tỷ số Sharpe là gì?</strong> Là thước đo hiệu quả đầu tư: phần lợi nhuận vượt trội so với lãi suất phi rủi ro ($rf$) trên <strong>mỗi đơn vị rủi ro</strong> phải chịu (rủi ro đo bằng độ lệch chuẩn $\\sigma$ của lợi suất). Sharpe càng cao, danh mục sinh lời càng \"đáng\" so với rủi ro bỏ ra.</p>\n<p><strong>Cách tính:</strong> Sharpe $= (R - rf) / \\sigma$, trong đó $R$ là lợi suất (kỳ vọng hoặc trung bình) của danh mục và $\\sigma$ là độ lệch chuẩn lợi suất danh mục.</p>\n<p><strong>Yêu cầu:</strong> Viết hàm <code>sharpe_ratio(weights, returns, rf)</code>, trong đó <code>returns</code> là ma trận: <code>returns[t][i]</code> = lợi suất của tài sản $i$ ở kỳ $t$:\n* Lợi suất danh mục kỳ $t$: $r_t = \\sum w[i] \\cdot returns[t][i]$\n* Trung bình: $mean = \\sum r_t / N$ ($N =$ số kỳ)\n* Độ lệch chuẩn <strong>tổng thể</strong> (chia $N$, không phải $N-1$): $\\sigma = \\sqrt{ ( \\sum (r_t - mean)^2 / N ) }$\n* Tỷ số Sharpe: $(mean - rf) / \\sigma$, làm tròn 4dp $\\rightarrow$ <code>float</code></p>\n<p>Gợi ý numpy: <code>np.array(returns) @ np.array(weights)</code>, <code>.mean()</code>, <code>.std()</code> (mặc định chia N).</p>\n<p><strong>Ví dụ:</strong></p>\n<p><strong>Đầu vào:</strong>\n<code>python\nprint(sharpe_ratio([0.5, 0.5], [[0.02, 0.01], [0.03, -0.01], [-0.01, 0.02], [0.04, 0.0]], 0.005))</code></p>\n<p><strong>Kết quả mong đợi:</strong>\n<code>text\n1.3416</code></p>\n<p><em>$r = [0.015, 0.01, 0.005, 0.02]$; $mean = 0.0125$; $\\sigma = \\sqrt{(\\sum(r_t-mean)^2/4)} \\approx 0.00559$; $(0.0125-0.005)/0.00559 \\approx 1.3416$.</em></p>\n<p>| :--- | :--- |\n| <code>print(sharpe_ratio([0.5, 0.5], [[0.02, 0.01], [0.03, -0.01], [-0.01, 0.02], [0.04, 0.0]], 0.005))</code> | <code>1.3416</code> |</p>",
     "category": "Last-term Summer Course Test",
     "difficulty": "Hard",
-    "defaultCode": "def sharpe_ratio(weights, returns, rf):\n    pass\n",
+    "defaultCode": "def sharpe_ratio(weights, returns, rf):",
     "testCases": [
       {
         "id": 1,
@@ -4323,7 +4323,7 @@
         "expected": "1.3416"
       }
     ],
-    "initialCode": "def sharpe_ratio(weights, returns, rf):\n    # Write your code here\n    pass\n"
+    "initialCode": "def sharpe_ratio(weights, returns, rf):"
   },
   {
     "id": 4,
@@ -4331,7 +4331,7 @@
     "description": "<p>Bước cuối: tìm danh mục tiếp tuyến <strong>và</strong> báo cáo luôn chất lượng của nó. Sếp muốn <strong>một hàm duy nhất</strong> trả về cả trọng số tối ưu lẫn tỷ số Sharpe của danh mục đó.</p>\n<p><strong>Trọng số tối ưu là gì?</strong> Là cách chia vốn $w$ cho từng tài sản sao cho danh mục đạt tỷ số Sharpe cao nhất (nhắc lại: Sharpe = $(R - rf) / \\sigma$ - lợi nhuận vượt trội trên mỗi đơn vị rủi ro). Trong lý thuyết Markowitz, danh mục này gọi là <strong>danh mục tiếp tuyến</strong> (tangency portfolio).</p>\n<p><strong>Cách tính (nghiệm đóng):</strong> lấy lợi suất vượt trội $excess = \\mu - rf$; giải hệ $z = cov^{-1} \\cdot excess$; chuẩn hoá $w = z / sum(z)$ để tổng trọng số bằng 1.</p>\n<p><strong>Yêu cầu:</strong> Viết hàm <code>optimal_weights(exp_returns, cov, rf)</code> trả về <strong>tuple</strong> <code>(weights, sharpe)</code>:\n* $excess = \\mu - rf$; giải $z = cov^{-1} \\cdot excess$; $w = z / sum(z)$\n* <code>weights</code>: <code>list</code> các <code>float</code>, từng phần tử làm tròn 4dp\n* <code>sharpe</code> của danh mục $w$ (dùng $w$ <strong>chưa</strong> làm tròn): $( \\mathbf{w}^T\\mu - rf ) / \\sqrt{(\\mathbf{w}^T \\cdot cov \\cdot \\mathbf{w})}$, làm tròn 4dp</p>\n<p>Gợi ý numpy: <code>np.linalg.inv(S) @ (mu - rf)</code>, <code>w @ mu</code>, <code>np.sqrt(w @ S @ w)</code>. Python thuần (khử Gauss) cũng được chấp nhận.</p>\n<p><strong>Ví dụ:</strong></p>\n<p><strong>Đầu vào:</strong>\n<code>python\nprint(optimal_weights([0.10, 0.05], [[0.04, 0.01], [0.01, 0.02]], 0.02))</code></p>\n<p><strong>Kết quả mong đợi:</strong>\n<code>text\n([0.7647, 0.2353], 0.4071)</code></p>\n<p><em>$w$ như câu trước; Sharpe $= (0.7647 \\cdot 0.10 + 0.2353 \\cdot 0.05 - 0.02) / \\sqrt{(\\mathbf{w}^T \\Sigma \\mathbf{w})} \\approx 0.4071$.</em></p>\n<p>| :--- | :--- |\n| <code>print(optimal_weights([0.10, 0.05], [[0.04, 0.01], [0.01, 0.02]], 0.02))</code> | <code>([0.7647, 0.2353], 0.4071)</code> |</p>",
     "category": "Last-term Summer Course Test",
     "difficulty": "Hard",
-    "defaultCode": "def optimal_weights(exp_returns, cov, rf):\n    pass\n",
+    "defaultCode": "def optimal_weights(exp_returns, cov, rf):",
     "testCases": [
       {
         "id": 1,
@@ -4339,6 +4339,797 @@
         "expected": "([0.7647, 0.2353], 0.4071)"
       }
     ],
-    "initialCode": "def optimal_weights(exp_returns, cov, rf):\n    # Write your code here\n    pass\n"
+    "initialCode": "def optimal_weights(exp_returns, cov, rf):"
+  },
+  {
+    "id": "last_term_quiz_8",
+    "category": "Last-term Quiz",
+    "subcategory": "Quiz 8",
+    "title": "Quiz 8: Model Development",
+    "description": "Bài kiểm tra trắc nghiệm lý thuyết <b>Quiz 8: Model Development</b> (18 câu hỏi) bao gồm các kiến thức về nền tảng học máy, mô hình hồi quy tuyến tính (Linear Regression), đánh giá R², hàm mất mát, và chuẩn hoá dữ liệu.",
+    "type": "multiple_choice",
+    "initialCode": "{}",
+    "questions": [
+      {
+        "text": "**Câu 1:** Nền tảng lý thuyết của học máy (Machine Learning) được xây dựng dựa trên các cơ sở lý thuyết của các lĩnh vực nào?\n\n*The theoretical foundation of Machine Learning is built upon the theoretical bases of which fields?*",
+        "options": [
+          "A. Khoa học máy tính (Computer Science)",
+          "B. Tri thức miền ứng dụng (Domain expertise)",
+          "C. Toán học và thống kê (Maths and Statistics)",
+          "D. Kinh tế và kinh doanh (Business and economic)"
+        ]
+      },
+      {
+        "text": "**Câu 2:** Đâu là điểm khác biệt chính của các thuật toán học máy so với những thuật toán thông thường?\n\n*What is the main difference between machine learning algorithms and traditional algorithms?*",
+        "options": [
+          "A. Các thuật toán học máy được thiết kế để chạy trên GPU, còn các thuật toán thông thường sử dụng CPU (Machine learning algorithms are designed to run on GPUs, while traditional algorithms use CPUs)",
+          "B. Mục tiêu của các thuật toán học máy là để máy tính tự học dựa trên dữ liệu đầu vào, chứ không cần lập trình tường minh (The goal of machine learning algorithms is for computers to learn from input data without explicit programming)",
+          "C. Các thuật toán học máy có tính khả mở (scalability) tốt hơn (Machine learning algorithms have better scalability)",
+          "D. Các thuật toán học máy thường chạy lâu hơn so với các thuật toán khác (Machine learning algorithms usually take longer to run than other algorithms)"
+        ]
+      },
+      {
+        "text": "**Câu 3:** Sự khác nhau giữa học có giám sát và không giám sát nằm ở đâu?\n\n*Where does the difference between supervised and unsupervised learning lie?*",
+        "options": [
+          "A. Mục tiêu của thuật toán, học không giám sát thường không thực hiện phán đoán nào cả (The goal of the algorithm, unsupervised learning usually does not make any predictions)",
+          "B. Kiểu đầu ra, trong đó học có giám sát thường có đầu ra là số thực (The output type, where supervised learning usually has real number outputs)",
+          "C. Tập huấn luyện, trong đó học có giám sát thường yêu cầu nhãn/đầu ra cho mỗi mẫu dữ liệu (The training set, where supervised learning usually requires labels/outputs for each data sample)",
+          "D. Cách chúng ta huấn luyện một mô hình, học có giám sát thường yêu cầu chỉ dẫn chi tiết từng bước học ra sao (How we train a model, supervised learning usually requires detailed step-by-step instructions on how to learn)"
+        ]
+      },
+      {
+        "text": "**Câu 4:** Tại sao chúng ta không nên huấn luyện các mô hình học máy trên toàn bộ tập dữ liệu?\n\n*Why shouldn't we train machine learning models on the entire dataset?*",
+        "options": [
+          "A. Do khi đó ta không còn dữ liệu để kiểm tra khả năng dự đoán của mô hình khi có dữ liệu mới (Because then we have no data left to test the model's predictive ability on new data)",
+          "B. Do huấn luyện trên toàn bộ dữ liệu sẽ làm giảm kích thước mô hình, từ đó làm mất thông tin của dữ liệu. (Because training on the entire data will reduce the model size, thereby losing data information)",
+          "C. Do tập dữ liệu có thể có nhiều nhiễu, do đó chỉ nên huấn luyện mô hình học máy trên một phần của tập dữ liệu (Because the dataset may have a lot of noise, so the machine learning model should only be trained on a part of the dataset)",
+          "D. Do quá trình huấn luyện dữ liệu sẽ lâu hơn vì toàn bộ tập dữ liệu thường có kích thước rất lớn (Because the training process will take longer as the entire dataset is usually very large)"
+        ]
+      },
+      {
+        "text": "**Câu 5:** Những tình huống nào sau đây phù hợp để áp dụng các thuật toán học máy giám sát?\n\n*Which of the following situations are suitable for applying supervised machine learning algorithms?*",
+        "options": [
+          "A. Dự đoán xem một email có phải là thư rác hay không (Predicting whether an email is spam or not)",
+          "B. Dự đoán giá nhà dựa trên diện tích, vị trí và số phòng ngủ (Predicting house prices based on area, location, and number of bedrooms)",
+          "C. Tìm các nhóm sản phẩm hay được mua cùng nhau trong giỏ hàng (Market Basket Analysis) (Finding groups of products frequently bought together in a shopping cart)",
+          "D. Gom nhóm khách hàng dựa trên hành vi mua sắm khi không có nhãn (Grouping customers based on shopping behavior without labels)",
+          "E. Nhận dạng chữ viết tay từ hình ảnh đã gán nhãn ký tự tương ứng (Recognizing handwriting from images with corresponding character labels)"
+        ]
+      },
+      {
+        "text": "**Câu 6:** Một phương pháp học máy có khả năng học được gì?\n\n*What is a machine learning method capable of learning?*",
+        "options": [
+          "A. Một hàm mà có khả năng ánh xạ một điểm dữ liệu đầu vào đến một điểm đầu ra (A function capable of mapping an input data point to an output point)",
+          "B. Tri thức mới để phán đoán đầu ra (New knowledge to judge the output)",
+          "C. Bất kỳ thứ gì (Anything)",
+          "D. Học để mô phỏng khả năng của con người (Learning to simulate human capabilities)"
+        ]
+      },
+      {
+        "text": "**Câu 7:** Những phát biểu nào sau đây về mô hình hồi quy tuyến tính là chính xác?\n\n*Which of the following statements about the linear regression model are correct?*",
+        "options": [
+          "A. Hồi quy tuyến tính chỉ có thể áp dụng cho bài toán dự đoán (Linear regression can only be applied to prediction problems)",
+          "B. Mục tiêu của hồi quy tuyến tính 1 biến là tìm đường thẳng phù hợp nhất (best fit line) sao cho sai số giữa đường thẳng và các điểm dữ liệu là nhỏ nhất. (The goal of 1-variable linear regression is to find the best fit line such that the error between the line and data points is minimized)",
+          "C. Hồi quy tuyến tính chỉ có thể áp dụng cho bài toán phân loại (Linear regression can only be applied to classification problems)",
+          "D. (Trong hồi quy tuyến tính, mô hình tìm đường thẳng sao cho khoảng cách từ các điểm dữ liệu đến đường thẳng (đo bằng khoảng cách vuông góc) là nhỏ nhất. - In linear regression, the model finds a line such that the distance from data points to the line (measured by perpendicular distance) is minimized)"
+        ]
+      },
+      {
+        "text": "**Câu 8:** Hạn chế của mô hình hồi quy tuyến tính là gì?\n\n*What are the limitations of the linear regression model?*",
+        "options": [
+          "A. Mô hình hồi quy tuyến tính nhạy cảm với nhiễu trong tập dữ liệu (Linear regression models are sensitive to noise in the dataset)",
+          "B. Mô hình hồi quy tuyến tính quá đơn giản và có thể không thể hiện được mối liên hệ giữa biến độc lập và biến phụ thuộc (Linear regression models are too simple and may not capture the relationship between independent and dependent variables)",
+          "C. Quá trình huấn luyện có khối lượng tính toán lớn và phức tạp (The training process involves large and complex computational load)",
+          "D. Thời gian huấn luyện lâu (Long training time)"
+        ]
+      },
+      {
+        "text": "**Câu 9:** Một mô hình dự đoán giá nhà sử dụng hồi quy tuyến tính có dạng: y=50.000+30.000x, trong đó y là giá dự đoán của ngôi nhà (USD) và x là số phòng ngủ. Trong những phát biểu sau đây, những phát biểu nào là chính xác?\n\n*A house price prediction model using linear regression has the form: y=50,000+30,000x, where y is the predicted price (USD) and x is the number of bedrooms. Which of the following statements are correct?*",
+        "options": [
+          "A. 30,000 là chi phí cố định của ngôi nhà ngay cả khi không có phòng ngủ (30,000 is the fixed cost of the house even when there are no bedrooms)",
+          "B. Nếu tăng thêm 1 phòng ngủ thì giá nhà dự đoán tăng 30,000 USD (If 1 bedroom is added, the predicted house price increases by 30,000 USD)",
+          "C. Nếu ngôi nhà có 2 phòng ngủ thì giá dự đoán là 80,000 USD (If the house has 2 bedrooms, the predicted price is 80,000 USD)",
+          "D. Chi phí cơ bản của ngôi nhà là 50,000 USD (The base cost of the house is 50,000 USD)"
+        ]
+      },
+      {
+        "text": "**Câu 10:** Một mô hình hồi quy tuyến tính ban đầu có chỉ số R^2=0.95 (đo trên tập kiểm thử), được huấn luyện trên một tập dữ liệu gồm 100 điểm. Sau khi loại bỏ ngẫu nhiên 5 điểm dữ liệu trong tập huấn luyện, chỉ số R^2 trên tập kiểm thử giảm xuống còn 0.87. Những phát biểu nào sau đây có thể chính xác?\n\n*An initial linear regression model has an R^2=0.95 (measured on the test set), trained on a dataset of 100 points. After randomly removing 5 data points in the training set, the R^2 on the test set drops to 0.87. Which of the following statements could be correct?*",
+        "options": [
+          "A. Mô hình hồi quy tuyến tính sau đó có khả năng dự đoán chính xác hơn so với mô hình tuyến tính ban đầu (The subsequent linear regression model has better predictive accuracy than the initial one)",
+          "B. Việc loại bỏ dữ liệu có thể đã làm mô hình ít phù hợp hơn với cấu trúc thực của dữ liệu, dẫn đến giảm độ chính xác dự đoán trên tập kiểm thử. (Removing data may have made the model less fitted to the true structure of the data, leading to reduced predictive accuracy on the test set)",
+          "C. Những điểm bị loại có chứa thông tin quan trọng về tập dữ liệu, việc loại bỏ đi các điểm đó có thể đã làm giảm độ chính xác của mô hình hồi quy tuyến tính (The removed points contained important information about the dataset; removing them may have reduced the accuracy of the linear regression model)",
+          "D. Việc loại bỏ dữ liệu luôn làm giảm khả năng dự đoán chính xác của hồi quy tuyến tính (Removing data always reduces the predictive accuracy of linear regression)"
+        ]
+      },
+      {
+        "text": "**Câu 11:** Một mô hình hồi quy tuyến tính có chỉ số R^2 đo trên tập huấn luyện là 0.95, nhưng chỉ số R^2 khi đo trên tập kiểm thử là 0.75. Trong những phát biểu sau đây, những phát biểu nào là chính xác?\n\n*A linear regression model has an R^2 of 0.95 on the training set, but an R^2 of 0.75 on the test set. Which of the following statements are correct?*",
+        "options": [
+          "A. Tập dữ liệu này đã có mối quan hệ phi tuyến, do đó mô hình hồi quy tuyến tính không phù hợp cho tập dữ liệu này. (This dataset has a non-linear relationship, so the linear regression model is not suitable for it)",
+          "B. Mô hình hồi quy tuyến tính này có khả năng dự đoán trên tập huấn luyện tốt hơn so với trên tập kiểm thử (This linear regression model has better predictive capability on the training set compared to the test set)",
+          "C. Mô hình hồi quy tuyến tính này có thể đã sa vào dự đoán các đặc trưng cục bộ của tập huấn luyện và đã không học được đặc trưng toàn cục của cả tập dữ liệu (This linear regression model may have fallen into predicting local features of the training set and failed to learn the global features of the entire dataset)"
+        ]
+      },
+      {
+        "text": "**Câu 12:** Phương trình đường thẳng hồi quy tuyến tính cho tập dữ liệu {(1;1),(2;3),(3;2);(4;5)} là?\n\n*The linear regression line equation for the dataset {(1;1),(2;3),(3;2);(4;5)} is?*",
+        "options": [
+          "A. y=0.5x+1",
+          "B. y=1.1x",
+          "C. y=2x−1.5",
+          "D. y=1.5x−1"
+        ]
+      },
+      {
+        "text": "**Câu 13:** Trong bài toán hồi quy tuyến tính đa biến, mô hình hồi quy tuyến tính là duy nhất khi và chỉ khi?\n\n*In multivariate linear regression, the linear regression model is unique if and only if?*",
+        "options": [
+          "A. Không tồn tại mối quan hệ tuyến tính giữa các biến độc lập (No linear relationship exists between the independent variables)",
+          "B. Số lượng mẫu dữ liệu lớn hơn số lượng biến độc lập (The number of data samples is greater than the number of independent variables)",
+          "C. Các biến độc lập có tương quan cao với biến phụ thuộc (Independent variables are highly correlated with the dependent variable)",
+          "D. Chỉ số R^2 lớn hơn 0.8 (The R^2 score is greater than 0.8)"
+        ]
+      },
+      {
+        "text": "**Câu 14:** Trong trường hợp nào chỉ số R^2 của mô hình hồi quy tuyến tính có thể nhận giá trị âm?\n\n*In what case can the R^2 score of a linear regression model take a negative value?*",
+        "options": [
+          "A. Khi mô hình dự đoán kém hơn so với việc dự đoán bằng cách dùng giá trị trung bình của tập dữ liệu (When the model predicts worse than simply predicting using the mean value of the dataset)",
+          "B. Khi số biến độc lập quá nhiều (When there are too many independent variables)",
+          "C. Khi mô hình này không có tính tổng quát hoá tốt (When this model does not have good generalization)",
+          "D. Khi dữ liệu có quan hệ phi tuyến (When the data has non-linear relationships)"
+        ]
+      },
+      {
+        "text": "**Câu 15:** Những phát biểu nào sau đây là chính xác về chuẩn hoá dữ liệu?\n\n*Which of the following statements about data normalization are correct?*",
+        "options": [
+          "A. Chuẩn hoá dữ liệu giúp đưa các đặc trưng về cùng một thang đo (scale), nhờ đó các thuật toán học máy hoạt động ổn định hơn và tránh việc một đặc trưng có giá trị quá lớn chi phối các đặc trưng khác. (Normalizing data helps bring features to the same scale, making machine learning algorithms work more stably and avoiding one feature with large values dominating others)",
+          "B. Chuẩn hoá dữ liệu giúp làm giảm ảnh hưởng của nhiễu, từ đó giúp các thuật toán học máy có thể dự đoán chính xác hơn (Normalizing data helps reduce the effect of noise, thereby helping machine learning algorithms predict more accurately)",
+          "C. Chuẩn hoá dữ liệu giúp đưa các đặc trưng về cùng một thang đo (scale), từ đó giúp các thuật toán học máy hội tụ nhanh hơn. (Normalizing data helps bring features to the same scale, thereby helping machine learning algorithms converge faster)",
+          "D. Chuẩn hoá dữ liệu là bước ánh xạ dữ liệu sang một không gian có số chiều cao hơn, mà trong không gian này các dữ liệu nằm trên một siêu phẳng (Normalizing data is a step of mapping data to a higher-dimensional space where the data lies on a hyperplane)"
+        ]
+      },
+      {
+        "text": "**Câu 16:** Những yếu tố nào sau đây có thể làm tăng thời gian huấn luyện mô hình hồi quy tuyến tính?\n\n*Which of the following factors can increase the training time of a linear regression model?*",
+        "options": [
+          "A. Dữ liệu chưa được chuẩn hóa (feature scaling không đồng đều) (Data is not normalized (uneven feature scaling)",
+          "B. Số lượng đặc trưng (features) quá nhiều (The number of features is too high)",
+          "C. Tồn tại mối liên hệ tuyến tính giữa các biến độc lập (Existence of linear relationships between independent variables)",
+          "D. Số lượng mẫu dữ liệu (data points) quá lớn (The number of data points is too large)"
+        ]
+      },
+      {
+        "text": "**Câu 17:** Đâu là những nhược điểm của việc tìm phương trình hồi quy tuyến tính bằng phương pháp sử dụng normal equation?\n\n*What are the disadvantages of finding the linear regression equation using the normal equation method?*",
+        "options": [
+          "A. Số chiều của dữ liệu lớn, từ đó dẫn đến kích thước của ma trận tính toán lớn (High data dimensionality leads to large computational matrix size)",
+          "B. Độ phức tạp thời gian của việc tìm ma trận khả nghịch lớn (Time complexity of finding the inverse matrix is high)",
+          "C. Tồn tại mối liên hệ tuyến tính giữa các biến độc lập, dễn đến ma trận không khả nghịch (Existence of linear relationships between independent variables leads to a non-invertible matrix)",
+          "D. Normal equation có thể vô nghiệm (Normal equation can have no solution)"
+        ]
+      },
+      {
+        "text": "**Câu 18:** Trong những phát biểu nào sau đây về mô hình hồi quy tuyến tính, những phát biểu nào là chính xác?\n\n*Which of the following statements about the linear regression model are correct?*",
+        "options": [
+          "A. Hệ số tự do (intercept) của mô hình hồi quy tuyến tính thể hiện giá trị dự đoán của biến phụ thuộc khi tất cả các biến độc lập bằng 0. (The intercept of the linear regression model represents the predicted value of the dependent variable when all independent variables are 0)",
+          "B. Hệ số hồi quy ứng với từng đặc trưng bằng với giá trị trung bình của tập dữ liệu khi xét trên đặc trưng đó (The regression coefficient corresponding to each feature equals the mean value of the dataset for that feature)",
+          "C. Việc thêm một biến độc lập mới vào mô hình hồi quy tuyến tính không làm giảm chỉ số R^2 (Adding a new independent variable to the linear regression model does not decrease the R^2 score)",
+          "D. Ta có thể sử dụng ma trận hiệp phương sai (covariance matrix) để tìm độ lệch chuẩn (standard error) của các hệ số hồi quy. (We can use the covariance matrix to find the standard error of the regression coefficients)"
+        ]
+      }
+    ],
+    "correctAnswers": {
+      "0": [
+        "A",
+        "C"
+      ],
+      "1": "B",
+      "2": "C",
+      "3": "A",
+      "4": [
+        "A",
+        "B",
+        "E"
+      ],
+      "5": "A",
+      "6": "B",
+      "7": [
+        "A",
+        "B"
+      ],
+      "8": [
+        "B",
+        "D"
+      ],
+      "9": [
+        "B",
+        "C"
+      ],
+      "10": [
+        "B",
+        "C"
+      ],
+      "11": "B",
+      "12": "A",
+      "13": "A",
+      "14": [
+        "A",
+        "C"
+      ],
+      "15": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "16": [
+        "A",
+        "B",
+        "C"
+      ],
+      "17": [
+        "A",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "id": "last_term_quiz_11",
+    "category": "Last-term Quiz",
+    "subcategory": "Quiz 11",
+    "title": "Quiz 11: Monitoring System",
+    "description": "Bài kiểm tra trắc nghiệm lý thuyết <b>Quiz 11: Monitoring System</b> (12 câu hỏi) bao gồm các kiến thức về hàm Sigmoid, Hồi quy Logistic, Maximum Likelihood Estimation (MLE), hàm Entropy, và các chỉ số đánh giá mô hình (Precision, Recall, F1-Score).",
+    "type": "multiple_choice",
+    "initialCode": "{}",
+    "questions": [
+      {
+        "text": "**Câu 1:** Cho s(x) là hàm sigmoid, trong những phát biểu sau đây, những phát biểu nào là chính xác?\n\n*Let s(x) be the sigmoid function. Which of the following statements are correct?*",
+        "options": [
+          "A. s(x) xác định và có đạo hàm liên tục trên R (s(x) is defined and has a continuous derivative on R.)",
+          "B. Tập giá trị của $s(x)$ là [0;1] (The range of $s(x)$ is [0;1].)",
+          "C. s(x) là hàm đồng biến trên R (s(x) is a monotonically increasing function on R.)",
+          "D. s'(x) = s(x) * (s(x) - 1)"
+        ]
+      },
+      {
+        "text": "**Câu 2:** Logistic regression có thể được áp dụng trong những tình huống nào sau đây?\n\n*Logistic regression can be applied in which of the following situations?*",
+        "options": [
+          "A. Dự đoán khả năng khách hàng rời bỏ dịch vụ (churn prediction) (Predicting customer churn probability.)",
+          "B. Dự đoán giá nhà liên tục theo mét vuông (Predicting continuous house prices based on square meters.)",
+          "C. Phân cụm khách hàng thành nhiều nhóm không nhãn (Clustering customers into unlabeled groups.)",
+          "D. Phân loại email thành spam hoặc không spam (Classifying emails as spam or not spam.)"
+        ]
+      },
+      {
+        "text": "**Câu 3:** Đâu là sự khác biệt cơ bản giữa bài toán hồi quy và bài toán phân loại?\n\n*What is the fundamental difference between regression and classification problems?*",
+        "options": [
+          "A. Hồi quy luôn dùng Linear Regression, phân loại luôn dùng Logistic Regression. (Regression always uses Linear Regression, classification always uses Logistic Regression.)",
+          "B. Hồi quy dự đoán giá trị liên tục, còn phân loại dự đoán nhãn rời rạc. (Regression predicts continuous values, whereas classification predicts discrete labels.)",
+          "C. Phân loại dự đoán xem một mẫu thuộc lớp nào, trong khi hồi quy dự đoán một giá trị số. (Classification predicts which class a sample belongs to, while regression predicts a numerical value.)",
+          "D. Hồi quy không cần dữ liệu đầu vào, còn phân loại thì cần. (Regression requires no input data, while classification does.)"
+        ]
+      },
+      {
+        "text": "**Câu 4:** Hàm mất mát (loss function) trong Logistic Regression được xây dựng dựa trên nguyên lý nào dưới đây?\n\n*The loss function in Logistic Regression is built based on which principle below?*",
+        "options": [
+          "A. Cross-Entropy (Log Loss)",
+          "B. Maximum Likelihood Estimation (MLE)",
+          "C. Hàm khoảng cách Euclid",
+          "D. Mean Squared Error (MSE)"
+        ]
+      },
+      {
+        "text": "**Câu 5:** Trong thống kê Bayes, xác suất tiên nghiệm (prior) và xác suất hậu nghiệm (posterior) được hiểu như thế nào?\n\n*In Bayesian statistics, how are prior probability and posterior probability understood?*",
+        "options": [
+          "A. Xác suất hậu nghiệm có thể được tính bằng công thức Bayes (Posterior probability can be calculated using Bayes' theorem.)",
+          "B. Xác suất tiên nghiệm luôn bằng 0 hoặc bằng 1 (Prior probability is always 0 or 1.)",
+          "C. Xác suất hậu nghiệm (posterior) là xác suất được cập nhật sau khi quan sát dữ liệu. (Posterior probability is the updated probability after observing data.)",
+          "D. Xác suất tiên nghiệm (prior) là niềm tin ban đầu về sự kiện trước khi quan sát dữ liệu. (Prior probability is the initial belief about an event before observing data.)"
+        ]
+      },
+      {
+        "text": "**Câu 6:** Trong Logistic Regression, ước lượng MLE (Maximum Likelihood Estimation) được hiểu là gì?\n\n*In Logistic Regression, what is understood by MLE (Maximum Likelihood Estimation)?*",
+        "options": [
+          "A. Tìm bộ tham số làm cho xác suất dự đoán các nhãn quan sát được là lớn nhất. (Finding the set of parameters that maximizes the probability of predicting the observed labels.)",
+          "B. Tối đa hóa likelihood, tương đương với tối thiểu hóa negative log-likelihood (cross-entropy). (Maximizing likelihood, which is equivalent to minimizing negative log-likelihood (cross-entropy).)",
+          "C. Tìm tham số sao cho mô hình phân tách dữ liệu hoàn hảo 100%. (Finding parameters so the model separates data perfectly 100%.)",
+          "D. Tìm bộ tham số để giảm khoảng cách Euclidean giữa dự đoán và nhãn thực tế. (Finding parameters to minimize Euclidean distance between predictions and actual labels.)"
+        ]
+      },
+      {
+        "text": "**Câu 7:** Xét hàm entropy h(x) = -xln(x) - (1-x)ln(1-x) với 0 < x < 1. Trong những phát biểu sau đây, những phát biểu nào là chính xác?\n\n*Consider the entropy function h(x) = -xln(x) - (1-x)ln(1-x) với 0 < x < 1. Which of the following statements are correct?*",
+        "options": [
+          "A. h(x) -> 0 khi x -> 0+ hoặc x -> 1- (h(x) -> 0 when x -> 0+ or x -> 1-.)",
+          "B. h(x) đạt giá trị lớn nhất khi x = 0.5 (h(x) reaches its maximum value when x = 0.5.)",
+          "C. h(0) = 0.5",
+          "D. Đồ thị hàm số y = h(x) nhận x = 0.5 làm trục đối xứng (The graph of y = h(x) is symmetric about the axis x = 0.5.)"
+        ]
+      },
+      {
+        "text": "**Câu 8:** Trong những tình huống thực tế nào dưới đây Precision (độ chính xác) là thước đo phù hợp nhất để đánh giá mô hình?\n\n*Precision measures the accuracy of positive predictions... In which practical situations below is Precision the most suitable metric?*",
+        "options": [
+          "A. Phát hiện tấn công mạng (intrusion detection)",
+          "B. Phát hiện phần mềm độc hại (malware detection)",
+          "C. Chẩn đoán ung thư từ hình ảnh y tế (Cancer diagnosis from medical imaging)",
+          "D. Phát hiện gian lận trong giao dịch tài chính (fraud detection)"
+        ]
+      },
+      {
+        "text": "**Câu 9:** Trong những tình huống thực tế nào dưới đây Recall (độ nhạy) là thước đo phù hợp nhất để đánh giá mô hình?\n\n*Recall measures the proportion of actual Positives detected... In which practical situations below is Recall the most suitable metric?*",
+        "options": [
+          "A. Hệ thống cảnh báo thiên tai (flood/earthquake early warning). (Disaster warning systems.)",
+          "B. Gợi ý sản phẩm thương mại điện tử. (E-commerce product recommendation.)",
+          "C. Phát hiện trẻ bị lạc trong hệ thống camera an ninh. (Detecting lost children in security camera systems.)",
+          "D. Chẩn đoán ung thư từ kết quả xét nghiệm. (Diagnosing cancer from test results.)"
+        ]
+      },
+      {
+        "text": "**Câu 10:** F1-score được định nghĩa bởi công thức... phát biểu nào là chính xác?\n\n*F1-score is defined by... which statement is correct?*",
+        "options": [
+          "A. Đánh giá độ lệch (bias) của mô hình học máy (Evaluate the bias of a machine learning model)",
+          "B. Đánh giá mức độ cân bằng giữa Precision và Recall (Evaluates the balance between Precision and Recall.)",
+          "C. Đo sai số trung bình bình phương của mô hình phân loại (Measure the mean squared error (MSE) of a classification model)",
+          "D. Đánh giá tốc độ hội tụ của thuật toán huấn luyện (Evaluate the convergence speed of the training algorithm)"
+        ]
+      },
+      {
+        "text": "**Câu 11:** Trong Logistic Regression, việc thay đổi decision threshold (ngưỡng quyết định) từ 0.5 sang một giá trị khác có thể ảnh hưởng như thế nào đến mô hình?\n\n*In Logistic Regression, how does changing the decision threshold from 0.5 to another value affect the model?*",
+        "options": [
+          "A. Có thể làm giảm False Negative hoặc giảm False Positive tùy cách điều chỉnh. (Can reduce False Negatives or False Positives depending on the adjustment.)",
+          "B. Khiến cho mô hình có thể được huấn luyện nhanh hơn (Make the model train faster)",
+          "C. Thay đổi sự đánh đổi giữa Precision và Recall. (Changes the trade-off between Precision and Recall.)",
+          "D. Có thể làm thay đổi độ chính xác của mô hình khi dự đoán nhãn cho dữ liệu mới (Can change the model's accuracy when predicting labels for new data.)"
+        ]
+      },
+      {
+        "text": "**Câu 12:** Trong những tình huống nào thì accuracy không phải là thước đo phù hợp để đánh giá mô hình phân loại?\n\n*In which situations is accuracy NOT a suitable metric for evaluating classification models?*",
+        "options": [
+          "A. Khi mô hình dự đoán xác suất thay vì dự đoán nhãn (When the model predicts probabilities instead of class labels.)",
+          "B. Khi chi phí của lỗi False Positive và False Negative không tương đương nhau (When the costs of False Positive and False Negative errors are not equivalent.)",
+          "C. (Khi dữ liệu không linearly separable (khả phân tuyến tính) - When the data is not linearly separable)",
+          "D. Khi dữ liệu bị mất cân bằng nghiêm trọng giữa các lớp (class imbalance). (When there is severe class imbalance.)"
+        ]
+      }
+    ],
+    "correctAnswers": {
+      "0": [
+        "A",
+        "C"
+      ],
+      "1": [
+        "A",
+        "D"
+      ],
+      "2": "B",
+      "3": [
+        "A",
+        "B"
+      ],
+      "4": [
+        "A",
+        "C",
+        "D"
+      ],
+      "5": [
+        "A",
+        "B"
+      ],
+      "6": [
+        "A",
+        "B",
+        "D"
+      ],
+      "7": "D",
+      "8": [
+        "A",
+        "C",
+        "D"
+      ],
+      "9": "B",
+      "10": [
+        "A",
+        "C",
+        "D"
+      ],
+      "11": [
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
+    "id": "last_term_quiz_12",
+    "category": "Last-term Quiz",
+    "subcategory": "Quiz 12",
+    "title": "Quiz 12: Final Quiz",
+    "description": "Bài kiểm tra trắc nghiệm tổng hợp <b>Quiz 12: Final Quiz</b> (32 câu hỏi) bao quát toàn bộ nội dung học phần Python, Cấu trúc dữ liệu, Pandas/EDA, Trực quan hoá dữ liệu, và các mô hình Học máy.",
+    "type": "multiple_choice",
+    "initialCode": "{}",
+    "questions": [
+      {
+        "text": "**Câu 1:** Đâu là những kiểu dữ liệu cơ bản trong Python?\n\n*What are the basic data types in Python?*",
+        "options": [
+          "A. str",
+          "B. float",
+          "C. int",
+          "D. bool"
+        ]
+      },
+      {
+        "text": "**Câu 2:** Kiểu trả về của hàm input() là gì?\n\n*What is the return type of the input() function?*",
+        "options": [
+          "A. str",
+          "B. int",
+          "C. double",
+          "D. float"
+        ]
+      },
+      {
+        "text": "**Câu 3:** Khi thực hiện gọi hàm f, kết quả in ra màn hình là gì?\n\n*When calling function f, what result is printed to the screen?*",
+        "options": [
+          "A. 8",
+          "B. 7",
+          "C. Chương trình báo lỗi thực thi (The program reports a runtime error)",
+          "D. 9"
+        ]
+      },
+      {
+        "text": "**Câu 4:** Câu lệnh for trong Python được dùng để làm gì?",
+        "options": [
+          "A. Dùng để lặp qua từng phần tử của một chuỗi, danh sách hoặc bất kỳ iterable nào.",
+          "B. Dùng để kết thúc chương trình ngay lập tức",
+          "C. Dùng để lặp cho đến khi một điều kiện trở thành False.",
+          "D. Dùng để định nghĩa ra một hàm (function)."
+        ]
+      },
+      {
+        "text": "**Câu 5:** Đâu là mục đích của việc sử dụng try, except trong lập trình Python?",
+        "options": [
+          "A. Để giúp máy ảo Python (PVM) có thể biên dịch chương trình nhanh hơn.",
+          "B. Để giúp chương trình có thể được thực hiện kể cả khi có xuất hiện lỗi cú pháp.",
+          "C. Để giúp chương trình có thể được thực hiện kể cả khi có xuất hiện lỗi thực thi.",
+          "D. Để giúp chương trình có thể được thực hiện nhanh hơn."
+        ]
+      },
+      {
+        "text": "**Câu 6:** Trong các kiểu cấu trúc dữ liệu dưới đây, kiểu nào cho phép ta kiểm tra xem một phần tử có tồn tại trong cấu trúc dữ liệu hay không một cách nhanh chóng?\n\n*Among the data structures below, which one allows us to check if an element exists in the data structure quickly?*",
+        "options": [
+          "A. list",
+          "B. tuple",
+          "C. dict",
+          "D. set"
+        ]
+      },
+      {
+        "text": "**Câu 7:** Trong Python, các tham số truyền vào cho một hàm (function) có thể là những gì?\n\n*In Python, what can be passed as arguments to a function?*",
+        "options": [
+          "A. Có thể truyền vào một hàm lambda (hàm ẩn danh). (A lambda function (anonymous function) can be passed)",
+          "B. Có thể truyền vào các cấu trúc dữ liệu như list, tuple, set, dict. (Data structures like list, tuple, set, dict can be passed.)",
+          "C. Có thể truyền vào các kiểu dữ liệu cơ bản như số nguyên (int), số thực (float), chuỗi (str) hoặc giá trị logic (bool). (Basic data types such as integers (int), real numbers (float), strings (str), or boolean values (bool) can be passed.)",
+          "D. Có thể truyền vào một hàm đầy đủ (function) khác để hàm đó xử lý. (Another full function can be passed for processing.)"
+        ]
+      },
+      {
+        "text": "**Câu 8:** Khi thực hiện gọi hàm division(6,3), kết quả in ra màn hình là gì?\n\n*When calling the function division(6,3), what result is printed to the screen?*",
+        "options": [
+          "A. 2",
+          "B. Error: Invalid input type. Please provide numbers",
+          "C. Error: Division by zero is not allowed",
+          "D. 2.0"
+        ]
+      },
+      {
+        "text": "**Câu 9:** Đâu là quy trình hợp lý để một doanh nghiệp F&B áp dụng học máy và khoa học dữ liệu nhằm phân tích xu hướng tiêu thụ đồ ăn trong những năm gần đây?\n\n*What is a logical process for an F&B business to apply machine learning and data science to analyze food consumption trends in recent years?*\n\nCác bước gồm:\n1. **(1)** Xác định vấn đề và loại dữ liệu cần thu thập *(Define the problem and determine data)*\n2. **(2)** Thu thập dữ liệu từ các nguồn liên quan *(Collect data from relevant sources)*\n3. **(3)** Làm sạch và tiền xử lý dữ liệu *(Clean and preprocess the data)*\n4. **(4)** Sử dụng các mô hình thống kê và thuật toán học máy để phân tích dữ liệu *(Apply models & ML algorithms)*",
+        "options": [
+          "A. (1) → (2) → (3) → (4)",
+          "B. (2) → (1) → (3) → (4)",
+          "C. (1) → (3) → (2) → (4)",
+          "D. (4) → (3) → (2) → (1)"
+        ]
+      },
+      {
+        "text": "**Câu 10:** Giả sử bạn huấn luyện một mô hình phân loại hình ảnh chó/mèo và độ chính xác của mô hình trên tập kiểm thử đang là 52%. Đâu là những phương pháp có thể sử dụng để tăng độ chính xác của mô hình này trên tập kiểm thử?\n\n*Suppose you train a dog/cat image classification model and the model's accuracy on the test set is 52%. What methods can be used to increase the accuracy of this model on the test set?*",
+        "options": [
+          "A. Giảm hệ số học (learning rate) của thuật toán Gradient Descent huấn luyện mô hình. (Decrease the learning rate of the Gradient Descent algorithm training the model.)",
+          "B. Huấn luyện lại mô hình này trên cùng một tập huấn luyện nhiều lần. (Retrain this model on the same training set multiple times.)",
+          "C. Huấn luyện mô hình này trên nhiều dữ liệu hơn. (Train this model on more data.)",
+          "D. Sử dụng regularization. (Use regularization)"
+        ]
+      },
+      {
+        "text": "**Câu 11:** Đâu là những ví dụ về dữ liệu phi cấu trúc?\n\n*What are examples of unstructured data?*",
+        "options": [
+          "A. Ảnh chụp lễ kỷ niệm 70 năm thành lập Đại học Bách khoa Hà Nội. (Photos of the 70th anniversary celebration of Hanoi University of Science and Technology.)",
+          "B. Video chào mừng 60 năm thành lập trường THPT Chuyên Khoa học Tự nhiên. (Video celebrating the 60th anniversary of High School for Gifted Students.)",
+          "C. Bảng điểm trung bình học phần \"Nhập môn kỹ thuật truyền thông\". (Grade transcript for the module \"Introduction to Communication Engineering\".)",
+          "D. Các bài đăng truyền thông trên trang cá nhân Facebook. (Media posts on a personal Facebook page.)",
+          "E. Bảng báo cáo tài chính cuối năm của doanh nghiệp. (The company's year-end financial statement table.)"
+        ]
+      },
+      {
+        "text": "**Câu 12:** Giả sử bạn có dự án Python có cấu trúc thư mục như sau. Giả sử bạn đang viết file main.py, làm thế nào bạn có thể sử dụng hàm f() đã viết trước đó trong file A.py?\n\n*Suppose you have a Python project with the following directory structure. Suppose you are writing the main.py file, how can you use the function f() previously written in file A.py?*",
+        "options": [
+          "A. from X import A",
+          "B. import A",
+          "C. import X.A",
+          "D. from A import f"
+        ]
+      },
+      {
+        "text": "**Câu 13:** Xét hàm f được định nghĩa như sau. Kết quả trả về của hàm f là gì khi ta gọi hàm với đối số x = True?\n\n*Consider function f defined as follows. What is the return result of function f when we call the function with the argument x = True?*",
+        "options": [
+          "A. 3",
+          "B. True",
+          "C. Chương trình không in ra gì cả. (The program prints nothing.)",
+          "D. 1"
+        ]
+      },
+      {
+        "text": "**Câu 14:** Cho biến x có giá trị x = 0.80. Kết quả thực hiện chạy lệnh print(x ** 2) là gì?\n\n*Given variable x with value x = 0.80. What is the result of running the command print(x ** 2)?*",
+        "options": [
+          "A. 1.60",
+          "B. 0.64",
+          "C. 0.6400000000000001",
+          "D. 0.65"
+        ]
+      },
+      {
+        "text": "**Câu 15:** Giả sử ta có chuỗi: s = \"HelloWorld\". Những cách nào sau đây có thể được dùng để đảo ngược chuỗi s trong Python?",
+        "options": [
+          "A. rev = s[::-1]",
+          "B. rev = ''.join([s[i] for i in range(len(s)-1, -1, -1)])",
+          "C. rev = ''.join(reversed(s))",
+          "D. rev = reverse(s)"
+        ]
+      },
+      {
+        "text": "**Câu 16:** Cho một hàm f được định nghĩa như sau. Từ một list a gồm có N số nguyên dương đôi một phân biệt, hãy chọn những cách giúp ta tạo ra list b thoả mãn b[i] = (a[i] + 1)^2 bằng cách sử dụng hàm f.\n\n*Given a function f defined as follows. From a list a consisting of N distinct positive integers, choose the ways to create list b satisfying b[i] = (a[i] + 1)^2 using function f.*",
+        "options": [
+          "A. b = [f(lambda x: x + 1, i) for i in lst]",
+          "B. b = list(map(lambda x: f(lambda t: t + 1, x), a))",
+          "C. b = list(map(lambda x: f(lambda t: t + 1, x + 1), a))",
+          "D. b = a.apply(lambda x: f(lambda t: t + 1, x))"
+        ]
+      },
+      {
+        "text": "**Câu 17:** Xét một hàm filter_list được định nghĩa như hình vẽ bên dưới. Giả sử ta đang có một list là a = [1, 2, 3, 4, 5, 6]. Khi thực hiện chạy câu lệnh filter_list(check_division, a), chương trình sẽ trả về một danh sách bao gồm những phần tử nào?\n\n*Consider a function filter_list defined as in the image below. Suppose we have a list a = [1, 2, 3, 4, 5, 6]. When running the command filter_list(check_division, a), what elements will the list returned by the program contain?*",
+        "options": [
+          "A. [1, 3, 5]",
+          "B. Chương trình không thực hiện được do đã xảy ra lỗi thực thi. (The program cannot execute due to a runtime error.)",
+          "C. [False, True, False, True, False, True]",
+          "D. [2, 4, 6]"
+        ]
+      },
+      {
+        "text": "**Câu 18:** Đâu là biểu đồ có thể được dùng để minh hoạt các thành phần trong một tổng thể?\n\n*Which chart can be used to illustrate components within a whole?*",
+        "options": [
+          "A. Scatter plot",
+          "B. Pie chart",
+          "C. Box plot",
+          "D. Line chart"
+        ]
+      },
+      {
+        "text": "**Câu 19:** Mục tiêu chính của phân tích thăm dò dữ liệu (Exploratory Data Analysis – EDA) là gì?\n\n*What is the main goal of Exploratory Data Analysis (EDA)?*",
+        "options": [
+          "A. Xác định các điểm dữ liệu bất thường (outliers). (Identify outliers.)",
+          "B. Hiểu cấu trúc dữ liệu và đặc điểm phân bố của các biến. (Understand data structure and distribution characteristics of variables.)",
+          "C. Hỗ trợ định hướng các bước phân tích hoặc mô hình hóa tiếp theo. (Support the direction of subsequent analysis or modeling steps.)",
+          "D. Phát hiện các mẫu, xu hướng và mối quan hệ tiềm ẩn trong dữ liệu. (Detect patterns, trends, and hidden relationships in the data.)"
+        ]
+      },
+      {
+        "text": "**Câu 20:** Cho a = [[1,2], [3,4,5], [6,7,8,9]]. DataFrame được tạo ra bằng cách thực hiện chạy câu lệnh df = DataFrame(a) sẽ bao gồm bao nhiêu hàng và bao nhiêu cột?\n\n*Given a = [[1,2], [3,4,5], [6,7,8,9]]. How many rows and columns will the DataFrame created by running the command df = DataFrame(a) contain?*",
+        "options": [
+          "A. 3 hàng và 4 cột (3 rows and 4 columns)",
+          "B. 4 hàng và 3 cột (4 rows and 3 columns)",
+          "C. 1 hàng và 7 cột (1 row and 7 columns)",
+          "D. Không thể tạo ra DataFrame (Cannot create DataFrame)"
+        ]
+      },
+      {
+        "text": "**Câu 21:** Trong những tình huống nào dưới đây, mô hình phân loại cần ưu tiên giảm thiểu (tránh) hiện tượng Dương tính giả so với việc giảm thiểu hiện tượng Âm tính giả?\n\n*In which of the following situations should a classification model prioritize minimizing (avoiding) False Positives over minimizing False Negatives?*",
+        "options": [
+          "A. Mô hình dự đoán email rác. (Spam email prediction model.)",
+          "B. Mô hình phát hiện gian lận giao dịch ngân hàng. (Bank transaction fraud detection model.)",
+          "C. Mô hình chẩn đoán bệnh ung thư. (Cancer diagnosis model.)",
+          "D. Mô hình phân loại hình ảnh mèo/chó. (Cat/dog image classification model.)"
+        ]
+      },
+      {
+        "text": "**Câu 22:** Thuật toán học máy nào trong các thuật toán dưới đây có thể được áp dụng đồng thời cho cả bài toán phân loại và bài toán hồi quy?\n\n*Which of the following machine learning algorithms can be applied to both classification and regression problems?*",
+        "options": [
+          "A. k-NN (k Nearest Neighbor)",
+          "B. k-means clustering",
+          "C. Hồi quy logistic (Logistic Regression)",
+          "D. Hồi quy tuyến tính (Linear Regression)"
+        ]
+      },
+      {
+        "text": "**Câu 23:** Đâu là những nhược điểm của việc xây dựng mô hình Hồi quy tuyến tính bằng cách giải Normal Equation?\n\n*What are the disadvantages of building a Linear Regression model by solving the Normal Equation?*",
+        "options": [
+          "A. Normal Equation có thể vô nghiệm, từ đó không thể tìm được mô hình hồi quy tuyến tính. (Normal Equation may have no solution, thus the linear regression model cannot be found.)",
+          "B. Việc lưu trữ các ma trận tính toán có thể không hiệu quả về mặt bộ nhớ, nhất là khi tập dữ liệu lớn. (Storing calculation matrices may be memory inefficient, especially with large datasets.)",
+          "C. Độ phức tạp tính toán của việc tính ma trận khả nghịch lớn. (High computational complexity of calculating the inverse matrix.)",
+          "D. Có thể tồn tại mối liên hệ tuyến tính giữa các đặc trưng phân biệt, từ đó khiến cho ma trận không khả nghịch. (Linear relationships may exist between distinct features, causing the matrix to be non-invertible.)"
+        ]
+      },
+      {
+        "text": "**Câu 24:** Đâu là ưu điểm của hồi quy đa thức (Polynomial Regression) so với hồi quy tuyến tính (Linear Regression)?\n\n*What are the advantages of Polynomial Regression compared to Linear Regression?*",
+        "options": [
+          "A. Mô hình luôn tránh được hiện tượng overfitting khi tăng số bậc đa thức. (The model always avoids overfitting when increasing the polynomial degree.)",
+          "B. Polynomial Regression giúp giảm chi phí tính toán so với Linear Regression. (Polynomial Regression helps reduce computational costs compared to Linear Regression.)",
+          "C. Mô hình có thể học được các quan hệ phi tuyến giữa biến đầu vào và biến đầu ra. (The model can learn non-linear relationships between input and output variables.)"
+        ]
+      },
+      {
+        "text": "**Câu 25:** Đâu là những vấn đề về tập dữ liệu mà ta cần xử lý trong bước \"Làm sạch và tiền xử lý dữ liệu\"?",
+        "options": [
+          "A. Dữ liệu thu thập được có nhiều giá trị bị thiếu.",
+          "B. Dữ liệu thu thập được có sự không nhất quán.",
+          "C. Đối với dữ liệu văn bản, tồn tại hiện tượng đồng âm khác nghĩa, tức là có nhiều từ có cách viết giống nhau nhưng lại có ý nghĩa khác nhau.",
+          "D. Tổng dung lượng dữ liệu thu thập được quá lớn.",
+          "E. Tồn tại nhiều cách viết/biểu diễn cho cùng một đối tượng trong tập dữ liệu."
+        ]
+      },
+      {
+        "text": "**Câu 26:** Những đặc trưng thống kê nào sau đây có thể được sử dụng để loại bỏ những giá trị bất thường (outliers) trong tập dữ liệu?\n\n*Which of the following statistical features can be used to remove outliers in a dataset?*",
+        "options": [
+          "A. Độ lệch chuẩn (Standard deviation)",
+          "B. Khoảng tứ phân vị (Interquartile range)",
+          "C. Khoảng biến thiên (range)",
+          "D. Giá trị trung bình (Mean)"
+        ]
+      },
+      {
+        "text": "**Câu 27:** Những thuật toán học máy nào trong các thuật toán học máy dưới đây thuộc loại Học máy có giám sát (Supervised learning)?\n\n*Which of the following machine learning algorithms belong to Supervised Learning?*",
+        "options": [
+          "A. Logistic Regression",
+          "B. k-Nearest neighbors",
+          "C. Linear Regression",
+          "D. k means clustering",
+          "E. Polynomial Regression"
+        ]
+      },
+      {
+        "text": "**Câu 28:** Giả sử bạn có một DataFrame df chứa cột Score. Những câu lệnh nào dưới đây có thể dùng để lấy ra tất cả các hàng có Score ≥ 80?\n\n*Suppose you have a DataFrame df containing the column Score. Which of the following commands can be used to retrieve all rows with Score ≥ 80?*",
+        "options": [
+          "A. df.loc[df[\"Score\"] >= 80]",
+          "B. df.filter(\"Score >= 80\")",
+          "C. df[df.apply(lambda r: r[\"Score\"] >= 80, axis=1)]",
+          "D. df[df[\"Score\"] >= 80]"
+        ]
+      },
+      {
+        "text": "**Câu 29:** Dữ liệu về bảng điểm học phần \"Đại số tuyến tính\" được lưu trong một DataFrame tên là df với các cột: Name, ID, Major, Midterm, Finalterm, Average. Những câu lệnh Python/pandas nào dưới đây có thể được dùng để tạo bảng thống kê điểm cuối kỳ (Finalterm) trung bình cho từng sinh viên gộp theo ngành học (Major)?\n\n*Data on the \"Linear Algebra\" module transcript is stored in a DataFrame named df with columns: Name, ID, Major, Midterm, Finalterm, Average. Which of the following Python/pandas commands can be used to create a table of average Finalterm scores for each student grouped by Major?*",
+        "options": [
+          "A. df.groupby(\"Major\")[\"Finalterm\"].mean()",
+          "B. df.pivot_table(values=\"Finalterm\", index=\"Major\", aggfunc=\"mean\")",
+          "C. df[\"Finalterm\"].mean()",
+          "D. df.groupby(\"Name\")[\"Finalterm\"].mean()"
+        ]
+      },
+      {
+        "text": "**Câu 30:** Đâu là những cách để kiểm tra xem liệu có tồn tại một mối liên hệ tuyến tính giữa hai đại lượng?\n\n*What are the ways to check if a linear relationship exists between two quantities?*",
+        "options": [
+          "A. Vẽ box plot cho hai đại lượng đó rồi so sánh khoảng tứ phân vị xem có trùng nhau không. (Draw box plots for those two quantities and compare if their interquartile ranges overlap.)",
+          "B. Sử dụng scatter plot. (Use scatter plot.)",
+          "C. Tính hệ số tương quan (Calculate correlation coefficient.)",
+          "D. Sử dụng đường hồi quy (linear regression) để xem hệ số góc và mức độ phù hợp (R²). (Use linear regression line to check the slope and fitness (R²).)"
+        ]
+      },
+      {
+        "text": "**Câu 31:** Đâu là những nền tảng Cloud computing phổ biến?\n\n*What are popular Cloud computing platforms?*",
+        "options": [
+          "A. Oracle VirtualBox",
+          "B. Azure",
+          "C. Google cloud",
+          "D. AWS"
+        ]
+      },
+      {
+        "text": "**Câu 32:** Đâu là những vấn đề có thể xảy ra khi ta chia ngẫu nhiên tập huấn luyện và tập kiểm thử theo tỷ lệ 7 : 3?\n\n*What issues can occur when randomly splitting the training and test sets with a 7:3 ratio?*",
+        "options": [
+          "A. Tập huấn luyện quá lớn dẫn đến thời gian huấn luyện mô hình lâu. (The training set is too large, leading to long model training time.)",
+          "B. Tập dữ liệu có dữ liệu phân bố theo các lớp không đồng đều, dẫn đến khi chia tập huấn luyện thì có thể tập huấn luyện chỉ chứa lớp đa số. (The dataset has an uneven class distribution, leading to the training set potentially containing only the majority class after splitting.)",
+          "C. Tập dữ liệu có kích thước trung bình và nhỏ, dẫn đến tập kiểm thử nhỏ. (The dataset has medium to small size, leading to a small test set.)"
+        ]
+      }
+    ],
+    "correctAnswers": {
+      "0": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "1": "A",
+      "2": "A",
+      "3": "A",
+      "4": "C",
+      "5": [
+        "C",
+        "D"
+      ],
+      "6": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "7": "D",
+      "8": "A",
+      "9": [
+        "A",
+        "C",
+        "D"
+      ],
+      "10": [
+        "A",
+        "B",
+        "D"
+      ],
+      "11": "A",
+      "12": "A",
+      "13": "C",
+      "14": [
+        "A",
+        "B",
+        "C"
+      ],
+      "15": "B",
+      "16": "C",
+      "17": "B",
+      "18": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "19": "A",
+      "20": "A",
+      "21": "A",
+      "22": [
+        "B",
+        "C",
+        "D"
+      ],
+      "23": "C",
+      "24": [
+        "A",
+        "B",
+        "C",
+        "E"
+      ],
+      "25": [
+        "A",
+        "B"
+      ],
+      "26": [
+        "A",
+        "B",
+        "C",
+        "E"
+      ],
+      "27": [
+        "A",
+        "C",
+        "D"
+      ],
+      "28": [
+        "A",
+        "B"
+      ],
+      "29": [
+        "B",
+        "C",
+        "D"
+      ],
+      "30": [
+        "B",
+        "C",
+        "D"
+      ],
+      "31": [
+        "B",
+        "C"
+      ]
+    }
   }
 ]

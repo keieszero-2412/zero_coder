@@ -126,19 +126,25 @@ export function Dashboard() {
       if (activeTerm === 'last' && !isLastTerm) continue;
 
       let catName = p.category || '';
-      let subCategory = null;
+      let subCategory = p.subcategory || p.subCategory || null;
       if (catName === "Mid-term practice" || catName === "Last-term practice" || catName === "FTDS coding practice") {
         catName = "Coding practice";
       } else if (catName.startsWith("Last-term ")) {
         const remaining = catName.replace("Last-term ", "");
         if (remaining.toLowerCase().includes("mock")) {
           catName = "Mock test"; // Changed from Mock Test
+        } else if (remaining.toLowerCase().includes("quiz")) {
+          catName = "Quiz";
+          subCategory = p.subcategory || p.subCategory || remaining;
         } else if (remaining.toLowerCase().includes("test")) {
           catName = remaining; // e.g. "Summer Course Test", "Test 1"
         } else {
           catName = "Coding practice";
           subCategory = remaining; // e.g. "EASY", "MEDIUM", "HARD", "OMG"
         }
+      } else if (catName.toLowerCase() === "quiz" || catName.toLowerCase() === "last-term quiz") {
+        catName = "Quiz";
+        subCategory = p.subcategory || p.subCategory;
       }
       
       let enrichedP = { ...p, subCategory };
@@ -186,14 +192,18 @@ export function Dashboard() {
         sortedCats[key] = summerItems;
       }
     }
-    // 4. Others (excluding Coding practice)
+    // 4. Quiz
+    if (cats["Quiz"]) {
+      sortedCats["Quiz"] = cats["Quiz"];
+    }
+    // 5. Others (excluding Coding practice and Quiz)
     for (const key of keys) {
       const lower = key.toLowerCase();
-      if (!lower.includes("test") && !lower.includes("mock") && !lower.includes("summer") && key !== "Coding practice") {
+      if (!lower.includes("test") && !lower.includes("mock") && !lower.includes("summer") && key !== "Coding practice" && key !== "Quiz") {
         sortedCats[key] = cats[key];
       }
     }
-    // 5. Coding practice last
+    // 6. Coding practice last
     if (cats["Coding practice"]) {
       sortedCats["Coding practice"] = cats["Coding practice"];
     }

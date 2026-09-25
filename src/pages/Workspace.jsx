@@ -69,11 +69,15 @@ export function Workspace() {
         const remaining = catName.replace("Last-term ", "");
         if (remaining.toLowerCase().includes("mock")) {
           catName = "Mock test";
+        } else if (remaining.toLowerCase().includes("quiz")) {
+          catName = "Quiz";
         } else if (remaining.toLowerCase().includes("test")) {
           catName = remaining;
         } else {
           catName = "Coding practice";
         }
+      } else if (catName.toLowerCase() === "quiz" || catName.toLowerCase() === "last-term quiz") {
+        catName = "Quiz";
       }
 
       let enrichedP = { ...p };
@@ -157,7 +161,24 @@ export function Workspace() {
           const draftRef = doc(db, 'code_drafts', `${currentUser.uid}_${id}`);
           const draftSnap = await getDoc(draftRef);
           if (draftSnap.exists()) {
-            setCode(draftSnap.data().code);
+            const draftCode = draftSnap.data().code;
+            const isOldUnmodifiedTemplate = (codeStr) => {
+              if (!codeStr || typeof codeStr !== 'string') return false;
+              const stripped = codeStr.replace(/\r/g, '').split('\n')
+                .filter(l => {
+                  const t = l.trim();
+                  return t !== '# Write your code here' && !t.startsWith('# Write your code') && t !== 'pass';
+                })
+                .join('\n').replace(/\n{3,}/g, '\n\n').trim();
+              const target = (currentProblem.initialCode || '').replace(/\r/g, '').trim();
+              return stripped === target;
+            };
+
+            if (draftCode && isOldUnmodifiedTemplate(draftCode)) {
+              setCode(currentProblem.initialCode);
+            } else {
+              setCode(draftCode);
+            }
           } else {
             setCode(currentProblem.initialCode);
           }
@@ -175,14 +196,23 @@ export function Workspace() {
         } catch (e) {
           console.error(e);
         }
-      } else if (!currentProblem && !isLoading && !isFetching) {
-        // If problem not found after loading, go to dashboard
-        navigate('/');
+      } else if (currentProblem && !currentUser) {
+        setCode(currentProblem.initialCode);
+        setTestResults([]);
+        setFailedAttempts(0);
+        clearOutput();
       }
     };
     loadCode();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentProblem, navigate, currentUser, id, isLoading, isFetching]);
+  }, [currentProblem?.id, currentUser?.uid, id]);
+
+  // If problem not found after loading finishes, go to dashboard
+  useEffect(() => {
+    if (!currentProblem && !isLoading && !isFetching) {
+      navigate('/');
+    }
+  }, [currentProblem, isLoading, isFetching, navigate]);
 
   // Preload any packages required by initial starter code or loaded draft in the background
   useEffect(() => {
@@ -244,8 +274,9 @@ export function Workspace() {
     };
   }, [isDragging, isSidebarDragging, sidebarWidth]);
 
-  // Auto-save code (debounced)
+  // Auto-save code (debounced) - for coding problems
   useEffect(() => {
+    if (currentProblem?.type === 'multiple_choice') return;
     if (currentUser && code && currentProblem && code !== currentProblem.initialCode) {
       const timeoutId = setTimeout(() => {
         const draftRef = doc(db, 'code_drafts', `${currentUser.uid}_${id}`);
@@ -255,6 +286,19 @@ export function Workspace() {
       return () => clearTimeout(timeoutId);
     }
   }, [code, currentUser, id, currentProblem]);
+
+  const handleMCQChange = (newCode) => {
+    setCode(newCode);
+    if (newCode === '{}') {
+      setTestResults([]);
+      clearOutput();
+    }
+    if (currentUser && currentProblem) {
+      const draftRef = doc(db, 'code_drafts', `${currentUser.uid}_${id}`);
+      setDoc(draftRef, { code: newCode, problemId: id, uid: currentUser.uid }, { merge: true })
+        .catch(console.error);
+    }
+  };
 
   const handleToggleFlag = () => {
     try {
@@ -568,7 +612,7 @@ export function Workspace() {
               <MultipleChoiceViewer 
                 problem={currentProblem} 
                 value={code} 
-                onChange={setCode} 
+                onChange={handleMCQChange} 
               />
             ) : (
               <>

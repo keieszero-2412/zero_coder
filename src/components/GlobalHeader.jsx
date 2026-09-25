@@ -131,7 +131,7 @@ export function GlobalHeader() {
               <button 
                 onClick={() => setShowAdminPanel(true)}
                 className="button-secondary header-btn"
-                style={{ position: 'relative' }}
+                style={{ position: 'relative', overflow: 'visible' }}
                 title="Admin Dashboard"
               >
                 <Bell size={16} />
@@ -142,14 +142,19 @@ export function GlobalHeader() {
                     top: '-5px', right: '-5px',
                     backgroundColor: 'var(--error)',
                     color: 'white',
-                    fontSize: '0.7rem',
+                    fontSize: '0.65rem',
                     fontWeight: 'bold',
-                    width: '18px', height: '18px',
-                    borderRadius: '50%',
+                    minWidth: '18px', height: '18px',
+                    borderRadius: '9999px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    border: '2px solid var(--bg-surface)'
+                    padding: '0 4px',
+                    border: '2px solid var(--bg-surface)',
+                    zIndex: 10,
+                    pointerEvents: 'none',
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
+                    lineHeight: 1
                   }}>
                     {pendingAccessCount + pendingResetCount}
                   </span>

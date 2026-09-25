@@ -247,7 +247,7 @@ export default function FeedbackWidget({ iconOnly = false }) {
       <button
         onClick={handleOpen}
         className={`button-secondary ${iconOnly ? '' : 'header-btn'}`}
-        style={iconOnly ? { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: 0, position: 'relative', borderRadius: '9999px' } : { position: 'relative' }}
+        style={iconOnly ? { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: 0, position: 'relative', borderRadius: '9999px', overflow: 'visible' } : { position: 'relative', overflow: 'visible' }}
         title="Send Feedback / Report Bug"
       >
         <MessageSquare size={16} />
@@ -257,20 +257,24 @@ export default function FeedbackWidget({ iconOnly = false }) {
         {unreadCount > 0 && (
           <span style={{
             position: 'absolute',
-            top: '-4px',
-            right: '-4px',
+            top: '-5px',
+            right: '-5px',
             backgroundColor: 'var(--error)',
             color: 'white',
             fontSize: '0.65rem',
             fontWeight: 'bold',
-            minWidth: '16px',
-            height: '16px',
-            borderRadius: '8px',
+            minWidth: '18px',
+            height: '18px',
+            borderRadius: '9999px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             padding: '0 4px',
-            border: '2px solid var(--bg-surface)'
+            border: '2px solid var(--bg-surface)',
+            zIndex: 10,
+            pointerEvents: 'none',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
+            lineHeight: 1
           }}>
             {unreadCount}
           </span>

@@ -45,7 +45,8 @@ export function CheatsheetModal({
   mode = 'single', // 'master' | 'single'
   term = 'last' // 'mid' | 'last'
 }) {
-  const isMidterm = term === 'mid';
+  const [activeTerm, setActiveTerm] = useState(term || 'last');
+  const isMidterm = activeTerm === 'mid';
   const currentSource = isMidterm ? MIDTERM_CHEATSHEETS : CHEATSHEETS;
   const defaultInitialId = isMidterm ? 'Topic1' : 'Lecture5';
   const effectiveInitialId = initialLectureId && currentSource[initialLectureId] ? initialLectureId : defaultInitialId;
@@ -57,11 +58,18 @@ export function CheatsheetModal({
   const [copiedKey, setCopiedKey] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
+  // Sync activeTerm when modal opens or term prop changes
+  useEffect(() => {
+    if (isOpen) {
+      setActiveTerm(term || 'last');
+    }
+  }, [term, isOpen]);
+
   useEffect(() => {
     if (effectiveInitialId && currentSource[effectiveInitialId]) {
       setSingleLectureId(effectiveInitialId);
     }
-  }, [effectiveInitialId, term]);
+  }, [effectiveInitialId, activeTerm]);
 
   useEffect(() => {
     setSelectedCategory('all');
@@ -69,7 +77,17 @@ export function CheatsheetModal({
     if (mode === 'master') {
       setSelectedLectureFilter('all');
     }
-  }, [mode, singleLectureId, term]);
+  }, [mode, singleLectureId, activeTerm]);
+
+  const handleTermChange = (newTerm) => {
+    if (newTerm === activeTerm) return;
+    setActiveTerm(newTerm);
+    setSelectedCategory('all');
+    setSearchQuery('');
+    setSelectedLectureFilter('all');
+    const newDefaultId = newTerm === 'mid' ? 'Topic1' : 'Lecture5';
+    setSingleLectureId(newDefaultId);
+  };
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -115,7 +133,7 @@ export function CheatsheetModal({
     let items = [];
 
     if (isMaster) {
-      items = getAllCheatsheetItems(term);
+      items = getAllCheatsheetItems(activeTerm);
       if (selectedLectureFilter !== 'all') {
         items = items.filter(item => item.lectureId === selectedLectureFilter);
       }
@@ -149,7 +167,7 @@ export function CheatsheetModal({
     }
 
     return items;
-  }, [isMaster, term, selectedLectureFilter, currentSingleLecture, selectedCategory, searchQuery]);
+  }, [isMaster, activeTerm, selectedLectureFilter, currentSingleLecture, selectedCategory, searchQuery]);
 
   const groupedByCategory = useMemo(() => {
     const groups = [];
@@ -266,20 +284,56 @@ export function CheatsheetModal({
                     ? (isMidterm ? 'Mid-term Python Cheatsheet' : 'Data Science Cheatsheet') 
                     : `Cheatsheet: ${currentSingleLecture?.title || ''}`}
                 </h2>
-                <span style={{
-                  fontSize: '0.72rem',
-                  padding: '0.2rem 0.6rem',
-                  borderRadius: '12px',
-                  backgroundColor: isMaster 
-                    ? 'color-mix(in srgb, var(--accent-secondary, #6366f1) 18%, transparent)' 
-                    : 'color-mix(in srgb, var(--accent-primary) 15%, transparent)',
-                  color: isMaster ? 'var(--accent-secondary, #6366f1)' : 'var(--accent-primary)',
-                  fontWeight: 700,
-                  letterSpacing: '0.04em',
-                  textTransform: 'uppercase'
+                <div style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  backgroundColor: 'var(--bg-surface)',
+                  padding: '2px',
+                  borderRadius: '8px',
+                  border: '1px solid var(--border-color)',
+                  gap: '2px',
                 }}>
-                  {isMaster ? (isMidterm ? 'Mid-term' : 'Last-term') : 'Syntax'}
-                </span>
+                  <button
+                    type="button"
+                    onClick={() => handleTermChange('mid')}
+                    style={{
+                      padding: '0.22rem 0.65rem',
+                      fontSize: '0.72rem',
+                      fontWeight: 700,
+                      borderRadius: '6px',
+                      border: 'none',
+                      cursor: 'pointer',
+                      backgroundColor: isMidterm ? 'var(--accent-primary)' : 'transparent',
+                      color: isMidterm ? '#ffffff' : 'var(--text-secondary)',
+                      transition: 'all 0.18s ease',
+                      letterSpacing: '0.03em',
+                      textTransform: 'uppercase'
+                    }}
+                    title="Switch to Mid-term Cheatsheet (Python Basics)"
+                  >
+                    Mid-term
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleTermChange('last')}
+                    style={{
+                      padding: '0.22rem 0.65rem',
+                      fontSize: '0.72rem',
+                      fontWeight: 700,
+                      borderRadius: '6px',
+                      border: 'none',
+                      cursor: 'pointer',
+                      backgroundColor: !isMidterm ? 'var(--accent-primary)' : 'transparent',
+                      color: !isMidterm ? '#ffffff' : 'var(--text-secondary)',
+                      transition: 'all 0.18s ease',
+                      letterSpacing: '0.03em',
+                      textTransform: 'uppercase'
+                    }}
+                    title="Switch to Last-term Cheatsheet (Data Science & ML)"
+                  >
+                    Last-term
+                  </button>
+                </div>
               </div>
               <p style={{ margin: '0.25rem 0 0', fontSize: '0.84rem', color: 'var(--text-secondary)' }}>
                 {isMaster 

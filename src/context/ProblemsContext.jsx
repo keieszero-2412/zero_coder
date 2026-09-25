@@ -8,7 +8,7 @@ export function useProblems() {
   return useContext(ProblemsContext);
 }
 
-const CACHE_VERSION = 'v6_def_signatures';
+const CACHE_VERSION = 'v8_clean_initial_code';
 
 export function ProblemsProvider({ children }) {
   // Initialize from localStorage for instant load (SWR pattern)
@@ -64,6 +64,22 @@ export function ProblemsProvider({ children }) {
             }
           } catch (e) {
             console.error("Local fetch failed:", e);
+          }
+        } else {
+          try {
+            const res = await fetch('/problems.json');
+            if (res.ok) {
+              const localData = await res.json();
+              if (localData && localData.length > fetchedProblems.length) {
+                const fetchedIds = new Set(fetchedProblems.map(p => String(p.id)));
+                const missing = localData.filter(p => !fetchedIds.has(String(p.id)));
+                if (missing.length > 0) {
+                  fetchedProblems = [...fetchedProblems, ...missing];
+                }
+              }
+            }
+          } catch (e) {
+            // Ignore local fallback error
           }
         }
 

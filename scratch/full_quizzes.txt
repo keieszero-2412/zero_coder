@@ -1,0 +1,959 @@
+
+================== Quiz 8 - Model Development (18 questions) ==================
+
+--- Q1 [Selected: A. Khoa học máy tính (Computer Science)] ---
+Nền tảng lý thuyết của học máy (Machine Learning) được xây dựng dựa trên các cơ sở lý thuyết của các lĩnh vực nào?
+
+The theoretical foundation of Machine Learning is built upon the theoretical bases of which fields?
+   A. Khoa học máy tính (Computer Science)
+   B. Tri thức miền ứng dụng (Domain expertise)
+   C. Toán học và thống kê (Maths and Statistics)
+   D. Kinh tế và kinh doanh (Business and economic)
+
+--- Q2 [Selected: A. Các thuật toán học máy được thiết kế để chạy trên GPU, còn các thuật toán thông thường sử dụng CPU
+
+Machine learning algorithms are designed to run on GPUs, while traditional algorithms use CPUs] ---
+Đâu là điểm khác biệt chính của các thuật toán học máy so với những thuật toán thông thường?
+
+What is the main difference between machine learning algorithms and traditional algorithms?
+   A. Các thuật toán học máy được thiết kế để chạy trên GPU, còn các thuật toán thông thường sử dụng CPU
+
+Machine learning algorithms are designed to run on GPUs, while traditional algorithms use CPUs
+   B. Mục tiêu của các thuật toán học máy là để máy tính tự học dựa trên dữ liệu đầu vào, chứ không cần lập trình tường minh
+
+The goal of machine learning algorithms is for computers to learn from input data without explicit programming
+   C. Các thuật toán học máy có tính khả mở (scalability) tốt hơn
+
+Machine learning algorithms have better scalability
+   D. Các thuật toán học máy thường chạy lâu hơn so với các thuật toán khác
+
+Machine learning algorithms usually take longer to run than other algorithms
+
+--- Q3 [Selected: A. Mục tiêu của thuật toán, học không giám sát thường không thực hiện phán đoán nào cả
+
+The goal of the algorithm, unsupervised learning usually does not make any predictions] ---
+Sự khác nhau giữa học có giám sát và không giám sát nằm ở đâu?
+
+Where does the difference between supervised and unsupervised learning lie?
+   A. Mục tiêu của thuật toán, học không giám sát thường không thực hiện phán đoán nào cả
+
+The goal of the algorithm, unsupervised learning usually does not make any predictions
+   B. Kiểu đầu ra, trong đó học có giám sát thường có đầu ra là số thực
+
+The output type, where supervised learning usually has real number outputs
+   C. Tập huấn luyện, trong đó học có giám sát thường yêu cầu nhãn/đầu ra cho mỗi mẫu dữ liệu
+
+The training set, where supervised learning usually requires labels/outputs for each data sample
+   D. Cách chúng ta huấn luyện một mô hình, học có giám sát thường yêu cầu chỉ dẫn chi tiết từng bước học ra sao
+
+How we train a model, supervised learning usually requires detailed step-by-step instructions on how to learn
+
+--- Q4 [Selected: A. Do khi đó ta không còn dữ liệu để kiểm tra khả năng dự đoán của mô hình khi có dữ liệu mới
+
+Because then we have no data left to test the model's predictive ability on new data] ---
+Tại sao chúng ta không nên huấn luyện các mô hình học máy trên toàn bộ tập dữ liệu?
+
+Why shouldn't we train machine learning models on the entire dataset?
+   A. Do khi đó ta không còn dữ liệu để kiểm tra khả năng dự đoán của mô hình khi có dữ liệu mới
+
+Because then we have no data left to test the model's predictive ability on new data
+   B. Do huấn luyện trên toàn bộ dữ liệu sẽ làm giảm kích thước mô hình, từ đó làm mất thông tin của dữ liệu.
+
+Because training on the entire data will reduce the model size, thereby losing data information
+   C. Do tập dữ liệu có thể có nhiều nhiễu, do đó chỉ nên huấn luyện mô hình học máy trên một phần của tập dữ liệu
+
+Because the dataset may have a lot of noise, so the machine learning model should only be trained on a part of the dataset
+   D. Do quá trình huấn luyện dữ liệu sẽ lâu hơn vì toàn bộ tập dữ liệu thường có kích thước rất lớn
+
+Because the training process will take longer as the entire dataset is usually very large
+
+--- Q5 [Selected: B. Dự đoán giá nhà dựa trên diện tích, vị trí và số phòng ngủ
+
+Predicting house prices based on area, location, and number of bedrooms] ---
+Những tình huống nào sau đây phù hợp để áp dụng các thuật toán học máy giám sát?
+
+Which of the following situations are suitable for applying supervised machine learning algorithms?
+   A. Dự đoán xem một email có phải là thư rác hay không
+
+Predicting whether an email is spam or not
+   B. Dự đoán giá nhà dựa trên diện tích, vị trí và số phòng ngủ
+
+Predicting house prices based on area, location, and number of bedrooms
+   C. Tìm các nhóm sản phẩm hay được mua cùng nhau trong giỏ hàng (Market Basket Analysis)
+
+Finding groups of products frequently bought together in a shopping cart
+   D. Gom nhóm khách hàng dựa trên hành vi mua sắm khi không có nhãn
+
+Grouping customers based on shopping behavior without labels
+   E. Nhận dạng chữ viết tay từ hình ảnh đã gán nhãn ký tự tương ứng
+
+Recognizing handwriting from images with corresponding character labels
+
+--- Q6 [Selected: A. Một hàm mà có khả năng ánh xạ một điểm dữ liệu đầu vào đến một điểm đầu ra
+
+A function capable of mapping an input data point to an output point] ---
+Một phương pháp học máy có khả năng học được gì?
+
+What is a machine learning method capable of learning?
+   A. Một hàm mà có khả năng ánh xạ một điểm dữ liệu đầu vào đến một điểm đầu ra
+
+A function capable of mapping an input data point to an output point
+   B. Tri thức mới để phán đoán đầu ra
+
+New knowledge to judge the output
+   C. Bất kỳ thứ gì
+
+Anything
+   D. Học để mô phỏng khả năng của con người
+
+Learning to simulate human capabilities
+
+--- Q7 [Selected: A. Hồi quy tuyến tính chỉ có thể áp dụng cho bài toán dự đoán
+
+Linear regression can only be applied to prediction problems] ---
+Những phát biểu nào sau đây về mô hình hồi quy tuyến tính là chính xác?
+
+Which of the following statements about the linear regression model are correct?
+   A. Hồi quy tuyến tính chỉ có thể áp dụng cho bài toán dự đoán
+
+Linear regression can only be applied to prediction problems
+   B. Mục tiêu của hồi quy tuyến tính 1 biến là tìm đường thẳng phù hợp nhất (best fit line) sao cho sai số giữa đường thẳng và các điểm dữ liệu là nhỏ nhất.
+
+The goal of 1-variable linear regression is to find the best fit line such that the error between the line and data points is minimized
+   C. Hồi quy tuyến tính chỉ có thể áp dụng cho bài toán phân loại
+
+Linear regression can only be applied to classification problems
+   D. 
+
+Trong hồi quy tuyến tính, mô hình tìm đường thẳng sao cho khoảng cách từ các điểm dữ liệu đến đường thẳng (đo bằng khoảng cách vuông góc) là nhỏ nhất.
+
+In linear regression, the model finds a line such that the distance from data points to the line (measured by perpendicular distance) is minimized
+
+--- Q8 [Selected: A. Mô hình hồi quy tuyến tính nhạy cảm với nhiễu trong tập dữ liệu
+
+Linear regression models are sensitive to noise in the dataset] ---
+Hạn chế của mô hình hồi quy tuyến tính là gì?
+
+What are the limitations of the linear regression model?
+   A. Mô hình hồi quy tuyến tính nhạy cảm với nhiễu trong tập dữ liệu
+
+Linear regression models are sensitive to noise in the dataset
+   B. Mô hình hồi quy tuyến tính quá đơn giản và có thể không thể hiện được mối liên hệ giữa biến độc lập và biến phụ thuộc
+
+Linear regression models are too simple and may not capture the relationship between independent and dependent variables
+   C. Quá trình huấn luyện có khối lượng tính toán lớn và phức tạp
+
+The training process involves large and complex computational load
+   D. Thời gian huấn luyện lâu
+
+Long training time
+
+--- Q9 [Selected: B. Nếu tăng thêm 1 phòng ngủ thì giá nhà dự đoán tăng 30,000 USD
+
+If 1 bedroom is added, the predicted house price increases by 30,000 USD] ---
+Một mô hình dự đoán giá nhà sử dụng hồi quy tuyến tính có dạng: y=50.000+30.000x, trong đó y là giá dự đoán của ngôi nhà (USD) và x là số phòng ngủ. Trong những phát biểu sau đây, những phát biểu nào là chính xác?
+
+A house price prediction model using linear regression has the form: y=50,000+30,000x, where y is the predicted price (USD) and x is the number of bedrooms. Which of the following statements are correct?
+   A. 30,000 là chi phí cố định của ngôi nhà ngay cả khi không có phòng ngủ
+
+30,000 is the fixed cost of the house even when there are no bedrooms
+   B. Nếu tăng thêm 1 phòng ngủ thì giá nhà dự đoán tăng 30,000 USD
+
+If 1 bedroom is added, the predicted house price increases by 30,000 USD
+   C. Nếu ngôi nhà có 2 phòng ngủ thì giá dự đoán là 80,000 USD
+
+If the house has 2 bedrooms, the predicted price is 80,000 USD
+   D. Chi phí cơ bản của ngôi nhà là 50,000 USD
+
+The base cost of the house is 50,000 USD
+
+--- Q10 [Selected: B. Việc loại bỏ dữ liệu có thể đã làm mô hình ít phù hợp hơn với cấu trúc thực của dữ liệu, dẫn đến giảm độ chính xác dự đoán trên tập kiểm thử.
+
+Removing data may have made the model less fitted to the true structure of the data, leading to reduced predictive accuracy on the test set] ---
+Một mô hình hồi quy tuyến tính ban đầu có chỉ số R^2=0.95 (đo trên tập kiểm thử), được huấn luyện trên một tập dữ liệu gồm 100 điểm. Sau khi loại bỏ ngẫu nhiên 5 điểm dữ liệu trong tập huấn luyện, chỉ số R^2 trên tập kiểm thử giảm xuống còn 0.87. Những phát biểu nào sau đây có thể chính xác?
+
+An initial linear regression model has an R^2=0.95 (measured on the test set), trained on a dataset of 100 points. After randomly removing 5 data points in the training set, the R^2 on the test set drops to 0.87. Which of the following statements could be correct?
+   A. Mô hình hồi quy tuyến tính sau đó có khả năng dự đoán chính xác hơn so với mô hình tuyến tính ban đầu
+
+The subsequent linear regression model has better predictive accuracy than the initial one
+   B. Việc loại bỏ dữ liệu có thể đã làm mô hình ít phù hợp hơn với cấu trúc thực của dữ liệu, dẫn đến giảm độ chính xác dự đoán trên tập kiểm thử.
+
+Removing data may have made the model less fitted to the true structure of the data, leading to reduced predictive accuracy on the test set
+   C. Những điểm bị loại có chứa thông tin quan trọng về tập dữ liệu, việc loại bỏ đi các điểm đó có thể đã làm giảm độ chính xác của mô hình hồi quy tuyến tính
+
+The removed points contained important information about the dataset; removing them may have reduced the accuracy of the linear regression model
+   D. Việc loại bỏ dữ liệu luôn làm giảm khả năng dự đoán chính xác của hồi quy tuyến tính
+
+Removing data always reduces the predictive accuracy of linear regression
+
+--- Q11 [Selected: B. Mô hình hồi quy tuyến tính này có khả năng dự đoán trên tập huấn luyện tốt hơn so với trên tập kiểm thử
+
+This linear regression model has better predictive capability on the training set compared to the test set] ---
+Một mô hình hồi quy tuyến tính có chỉ số R^2 đo trên tập huấn luyện là 0.95, nhưng chỉ số R^2 khi đo trên tập kiểm thử là 0.75. Trong những phát biểu sau đây, những phát biểu nào là chính xác?
+
+A linear regression model has an R^2 of 0.95 on the training set, but an R^2 of 0.75 on the test set. Which of the following statements are correct?
+   A. Tập dữ liệu này đã có mối quan hệ phi tuyến, do đó mô hình hồi quy tuyến tính không phù hợp cho tập dữ liệu này.
+
+This dataset has a non-linear relationship, so the linear regression model is not suitable for it
+   B. Mô hình hồi quy tuyến tính này có khả năng dự đoán trên tập huấn luyện tốt hơn so với trên tập kiểm thử
+
+This linear regression model has better predictive capability on the training set compared to the test set
+   C. Mô hình hồi quy tuyến tính này có thể đã sa vào dự đoán các đặc trưng cục bộ của tập huấn luyện và đã không học được đặc trưng toàn cục của cả tập dữ liệu
+
+This linear regression model may have fallen into predicting local features of the training set and failed to learn the global features of the entire dataset
+
+--- Q12 [Selected: B. y=1.1x] ---
+Phương trình đường thẳng hồi quy tuyến tính cho tập dữ liệu {(1;1),(2;3),(3;2);(4;5)} là?
+
+The linear regression line equation for the dataset {(1;1),(2;3),(3;2);(4;5)} is?
+   A. y=0.5x+1
+   B. y=1.1x
+   C. y=2x−1.5
+   D. y=1.5x−1
+
+--- Q13 [Selected: B. Số lượng mẫu dữ liệu lớn hơn số lượng biến độc lập
+
+The number of data samples is greater than the number of independent variables] ---
+Trong bài toán hồi quy tuyến tính đa biến, mô hình hồi quy tuyến tính là duy nhất khi và chỉ khi?
+
+In multivariate linear regression, the linear regression model is unique if and only if?
+   A. Không tồn tại mối quan hệ tuyến tính giữa các biến độc lập
+
+No linear relationship exists between the independent variables
+   B. Số lượng mẫu dữ liệu lớn hơn số lượng biến độc lập
+
+The number of data samples is greater than the number of independent variables
+   C. Các biến độc lập có tương quan cao với biến phụ thuộc
+
+Independent variables are highly correlated with the dependent variable
+   D. Chỉ số R^2 lớn hơn 0.8
+
+The R^2 score is greater than 0.8
+
+--- Q14 [Selected: D. Khi dữ liệu có quan hệ phi tuyến
+
+When the data has non-linear relationships] ---
+Trong trường hợp nào chỉ số R^2 của mô hình hồi quy tuyến tính có thể nhận giá trị âm?
+
+In what case can the R^2 score of a linear regression model take a negative value?
+   A. Khi mô hình dự đoán kém hơn so với việc dự đoán bằng cách dùng giá trị trung bình của tập dữ liệu
+
+When the model predicts worse than simply predicting using the mean value of the dataset
+   B. Khi số biến độc lập quá nhiều
+
+When there are too many independent variables
+   C. Khi mô hình này không có tính tổng quát hoá tốt
+
+When this model does not have good generalization
+   D. Khi dữ liệu có quan hệ phi tuyến
+
+When the data has non-linear relationships
+
+--- Q15 [Selected: A. Chuẩn hoá dữ liệu giúp đưa các đặc trưng về cùng một thang đo (scale), nhờ đó các thuật toán học máy hoạt động ổn định hơn và tránh việc một đặc trưng có giá trị quá lớn chi phối các đặc trưng khác.
+
+Normalizing data helps bring features to the same scale, making machine learning algorithms work more stably and avoiding one feature with large values dominating others] ---
+Những phát biểu nào sau đây là chính xác về chuẩn hoá dữ liệu?
+
+Which of the following statements about data normalization are correct?
+   A. Chuẩn hoá dữ liệu giúp đưa các đặc trưng về cùng một thang đo (scale), nhờ đó các thuật toán học máy hoạt động ổn định hơn và tránh việc một đặc trưng có giá trị quá lớn chi phối các đặc trưng khác.
+
+Normalizing data helps bring features to the same scale, making machine learning algorithms work more stably and avoiding one feature with large values dominating others
+   B. Chuẩn hoá dữ liệu giúp làm giảm ảnh hưởng của nhiễu, từ đó giúp các thuật toán học máy có thể dự đoán chính xác hơn
+
+Normalizing data helps reduce the effect of noise, thereby helping machine learning algorithms predict more accurately
+   C. Chuẩn hoá dữ liệu giúp đưa các đặc trưng về cùng một thang đo (scale), từ đó giúp các thuật toán học máy hội tụ nhanh hơn.
+
+Normalizing data helps bring features to the same scale, thereby helping machine learning algorithms converge faster
+   D. Chuẩn hoá dữ liệu là bước ánh xạ dữ liệu sang một không gian có số chiều cao hơn, mà trong không gian này các dữ liệu nằm trên một siêu phẳng
+
+Normalizing data is a step of mapping data to a higher-dimensional space where the data lies on a hyperplane
+
+--- Q16 [Selected: A. Dữ liệu chưa được chuẩn hóa (feature scaling không đồng đều)
+
+Data is not normalized (uneven feature scaling] ---
+Những yếu tố nào sau đây có thể làm tăng thời gian huấn luyện mô hình hồi quy tuyến tính?
+
+Which of the following factors can increase the training time of a linear regression model?
+   A. Dữ liệu chưa được chuẩn hóa (feature scaling không đồng đều)
+
+Data is not normalized (uneven feature scaling
+   B. Số lượng đặc trưng (features) quá nhiều
+
+The number of features is too high
+   C. Tồn tại mối liên hệ tuyến tính giữa các biến độc lập
+
+Existence of linear relationships between independent variables
+   D. Số lượng mẫu dữ liệu (data points) quá lớn
+
+The number of data points is too large
+
+--- Q17 [Selected: A. Số chiều của dữ liệu lớn, từ đó dẫn đến kích thước của ma trận tính toán lớn
+
+High data dimensionality leads to large computational matrix size] ---
+Đâu là những nhược điểm của việc tìm phương trình hồi quy tuyến tính bằng phương pháp sử dụng normal equation?
+
+What are the disadvantages of finding the linear regression equation using the normal equation method?
+   A. Số chiều của dữ liệu lớn, từ đó dẫn đến kích thước của ma trận tính toán lớn
+
+High data dimensionality leads to large computational matrix size
+   B. Độ phức tạp thời gian của việc tìm ma trận khả nghịch lớn
+
+Time complexity of finding the inverse matrix is high
+   C. Tồn tại mối liên hệ tuyến tính giữa các biến độc lập, dễn đến ma trận không khả nghịch
+
+Existence of linear relationships between independent variables leads to a non-invertible matrix
+   D. Normal equation có thể vô nghiệm
+
+Normal equation can have no solution
+
+--- Q18 [Selected: B. Hệ số hồi quy ứng với từng đặc trưng bằng với giá trị trung bình của tập dữ liệu khi xét trên đặc trưng đó
+
+The regression coefficient corresponding to each feature equals the mean value of the dataset for that feature] ---
+Trong những phát biểu nào sau đây về mô hình hồi quy tuyến tính, những phát biểu nào là chính xác?
+
+Which of the following statements about the linear regression model are correct?
+   A. Hệ số tự do (intercept) của mô hình hồi quy tuyến tính thể hiện giá trị dự đoán của biến phụ thuộc khi tất cả các biến độc lập bằng 0.
+
+The intercept of the linear regression model represents the predicted value of the dependent variable when all independent variables are 0
+   B. Hệ số hồi quy ứng với từng đặc trưng bằng với giá trị trung bình của tập dữ liệu khi xét trên đặc trưng đó
+
+The regression coefficient corresponding to each feature equals the mean value of the dataset for that feature
+   C. Việc thêm một biến độc lập mới vào mô hình hồi quy tuyến tính không làm giảm chỉ số R^2
+
+Adding a new independent variable to the linear regression model does not decrease the R^2 score
+   D. Ta có thể sử dụng ma trận hiệp phương sai (covariance matrix) để tìm độ lệch chuẩn (standard error) của các hệ số hồi quy.
+
+We can use the covariance matrix to find the standard error of the regression coefficients
+
+================== Quiz 11 - Monitoring System (12 questions) ==================
+
+--- Q1 [Selected: A. s(x) xác định và có đạo hàm liên tục trên R
+
+s(x) is defined and has a continuous derivative on R.] ---
+Cho s(x) là hàm sigmoid, trong những phát biểu sau đây, những phát biểu nào là chính xác?
+
+Let s(x) be the sigmoid function. Which of the following statements are correct?
+   A. s(x) xác định và có đạo hàm liên tục trên R
+
+s(x) is defined and has a continuous derivative on R.
+   B. Tập giá trị của $s(x)$ là [0;1]
+
+The range of $s(x)$ is [0;1].
+   C. s(x) là hàm đồng biến trên R
+
+s(x) is a monotonically increasing function on R.
+   D. s'(x) = s(x) * (s(x) - 1)
+
+--- Q2 [Selected: A. Dự đoán khả năng khách hàng rời bỏ dịch vụ (churn prediction)
+
+Predicting customer churn probability.] ---
+Logistic regression có thể được áp dụng trong những tình huống nào sau đây?
+
+Logistic regression can be applied in which of the following situations?
+   A. Dự đoán khả năng khách hàng rời bỏ dịch vụ (churn prediction)
+
+Predicting customer churn probability.
+   B. Dự đoán giá nhà liên tục theo mét vuông
+
+Predicting continuous house prices based on square meters.
+   C. Phân cụm khách hàng thành nhiều nhóm không nhãn
+
+Clustering customers into unlabeled groups.
+   D. Phân loại email thành spam hoặc không spam
+
+Classifying emails as spam or not spam.
+
+--- Q3 [Selected: B. Hồi quy dự đoán giá trị liên tục, còn phân loại dự đoán nhãn rời rạc.
+
+Regression predicts continuous values, whereas classification predicts discrete labels.] ---
+Đâu là sự khác biệt cơ bản giữa bài toán hồi quy và bài toán phân loại?
+
+What is the fundamental difference between regression and classification problems?
+   A. Hồi quy luôn dùng Linear Regression, phân loại luôn dùng Logistic Regression.
+
+Regression always uses Linear Regression, classification always uses Logistic Regression.
+   B. Hồi quy dự đoán giá trị liên tục, còn phân loại dự đoán nhãn rời rạc.
+
+Regression predicts continuous values, whereas classification predicts discrete labels.
+   C. Phân loại dự đoán xem một mẫu thuộc lớp nào, trong khi hồi quy dự đoán một giá trị số.
+
+Classification predicts which class a sample belongs to, while regression predicts a numerical value.
+   D. Hồi quy không cần dữ liệu đầu vào, còn phân loại thì cần.
+
+Regression requires no input data, while classification does.
+
+--- Q4 [Selected: A. Cross-Entropy (Log Loss)] ---
+Hàm mất mát (loss function) trong Logistic Regression được xây dựng dựa trên nguyên lý nào dưới đây?
+
+The loss function in Logistic Regression is built based on which principle below?
+   A. Cross-Entropy (Log Loss)
+   B. Maximum Likelihood Estimation (MLE)
+   C. Hàm khoảng cách Euclid
+   D. Mean Squared Error (MSE)
+
+--- Q5 [Selected: A. Xác suất hậu nghiệm có thể được tính bằng công thức Bayes
+
+Posterior probability can be calculated using Bayes' theorem.] ---
+Trong thống kê Bayes, xác suất tiên nghiệm (prior) và xác suất hậu nghiệm (posterior) được hiểu như thế nào?
+
+In Bayesian statistics, how are prior probability and posterior probability understood?
+   A. Xác suất hậu nghiệm có thể được tính bằng công thức Bayes
+
+Posterior probability can be calculated using Bayes' theorem.
+   B. Xác suất tiên nghiệm luôn bằng 0 hoặc bằng 1
+
+Prior probability is always 0 or 1.
+   C. Xác suất hậu nghiệm (posterior) là xác suất được cập nhật sau khi quan sát dữ liệu.
+
+Posterior probability is the updated probability after observing data.
+   D. Xác suất tiên nghiệm (prior) là niềm tin ban đầu về sự kiện trước khi quan sát dữ liệu.
+
+Prior probability is the initial belief about an event before observing data.
+
+--- Q6 [Selected: A. Tìm bộ tham số làm cho xác suất dự đoán các nhãn quan sát được là lớn nhất.
+
+Finding the set of parameters that maximizes the probability of predicting the observed labels.] ---
+Trong Logistic Regression, ước lượng MLE (Maximum Likelihood Estimation) được hiểu là gì?
+
+In Logistic Regression, what is understood by MLE (Maximum Likelihood Estimation)?
+   A. Tìm bộ tham số làm cho xác suất dự đoán các nhãn quan sát được là lớn nhất.
+
+Finding the set of parameters that maximizes the probability of predicting the observed labels.
+   B. Tối đa hóa likelihood, tương đương với tối thiểu hóa negative log-likelihood (cross-entropy).
+
+Maximizing likelihood, which is equivalent to minimizing negative log-likelihood (cross-entropy).
+   C. Tìm tham số sao cho mô hình phân tách dữ liệu hoàn hảo 100%.
+
+Finding parameters so the model separates data perfectly 100%.
+   D. Tìm bộ tham số để giảm khoảng cách Euclidean giữa dự đoán và nhãn thực tế.
+
+Finding parameters to minimize Euclidean distance between predictions and actual labels.
+
+--- Q7 [Selected: A. h(x) -> 0 khi x -> 0+ hoặc x -> 1-
+
+h(x) -> 0 when x -> 0+ or x -> 1-.] ---
+Xét hàm entropy h(x) = -xln(x) - (1-x)ln(1-x) với 0 < x < 1. Trong những phát biểu sau đây, những phát biểu nào là chính xác?
+
+Consider the entropy function h(x) = -xln(x) - (1-x)ln(1-x) với 0 < x < 1. Which of the following statements are correct?
+   A. h(x) -> 0 khi x -> 0+ hoặc x -> 1-
+
+h(x) -> 0 when x -> 0+ or x -> 1-.
+   B. h(x) đạt giá trị lớn nhất khi x = 0.5
+
+h(x) reaches its maximum value when x = 0.5.
+   C. h(0) = 0.5
+   D. Đồ thị hàm số y = h(x) nhận x = 0.5 làm trục đối xứng
+
+The graph of y = h(x) is symmetric about the axis x = 0.5.
+
+--- Q8 [Selected: C. Chẩn đoán ung thư từ hình ảnh y tế (Cancer diagnosis from medical imaging)] ---
+Trong những tình huống thực tế nào dưới đây Precision (độ chính xác) là thước đo phù hợp nhất để đánh giá mô hình?
+
+Precision measures the accuracy of positive predictions... In which practical situations below is Precision the most suitable metric?
+   A. Phát hiện tấn công mạng (intrusion detection)
+   B. Phát hiện phần mềm độc hại (malware detection)
+   C. Chẩn đoán ung thư từ hình ảnh y tế (Cancer diagnosis from medical imaging)
+   D. Phát hiện gian lận trong giao dịch tài chính (fraud detection)
+
+--- Q9 [Selected: A. Hệ thống cảnh báo thiên tai (flood/earthquake early warning).
+
+Disaster warning systems.] ---
+Trong những tình huống thực tế nào dưới đây Recall (độ nhạy) là thước đo phù hợp nhất để đánh giá mô hình?
+
+Recall measures the proportion of actual Positives detected... In which practical situations below is Recall the most suitable metric?
+   A. Hệ thống cảnh báo thiên tai (flood/earthquake early warning).
+
+Disaster warning systems.
+   B. Gợi ý sản phẩm thương mại điện tử.
+
+E-commerce product recommendation.
+   C. Phát hiện trẻ bị lạc trong hệ thống camera an ninh.
+
+Detecting lost children in security camera systems.
+   D. Chẩn đoán ung thư từ kết quả xét nghiệm.
+
+Diagnosing cancer from test results.
+
+--- Q10 [Selected: B. Đánh giá mức độ cân bằng giữa Precision và Recall
+
+Evaluates the balance between Precision and Recall.] ---
+F1-score được định nghĩa bởi công thức... phát biểu nào là chính xác?
+
+F1-score is defined by... which statement is correct?
+   A. Đánh giá độ lệch (bias) của mô hình học máy
+
+Evaluate the bias of a machine learning model
+   B. Đánh giá mức độ cân bằng giữa Precision và Recall
+
+Evaluates the balance between Precision and Recall.
+   C. Đo sai số trung bình bình phương của mô hình phân loại
+
+Measure the mean squared error (MSE) of a classification model
+   D. Đánh giá tốc độ hội tụ của thuật toán huấn luyện
+
+Evaluate the convergence speed of the training algorithm
+
+--- Q11 [Selected: C. Thay đổi sự đánh đổi giữa Precision và Recall.
+
+Changes the trade-off between Precision and Recall.] ---
+Trong Logistic Regression, việc thay đổi decision threshold (ngưỡng quyết định) từ 0.5 sang một giá trị khác có thể ảnh hưởng như thế nào đến mô hình?
+
+In Logistic Regression, how does changing the decision threshold from 0.5 to another value affect the model?
+   A. Có thể làm giảm False Negative hoặc giảm False Positive tùy cách điều chỉnh.
+
+Can reduce False Negatives or False Positives depending on the adjustment.
+   B. Khiến cho mô hình có thể được huấn luyện nhanh hơn
+
+Make the model train faster
+   C. Thay đổi sự đánh đổi giữa Precision và Recall.
+
+Changes the trade-off between Precision and Recall.
+   D. Có thể làm thay đổi độ chính xác của mô hình khi dự đoán nhãn cho dữ liệu mới
+
+Can change the model's accuracy when predicting labels for new data.
+
+--- Q12 [Selected: A. Khi mô hình dự đoán xác suất thay vì dự đoán nhãn
+
+When the model predicts probabilities instead of class labels.] ---
+Trong những tình huống nào thì accuracy không phải là thước đo phù hợp để đánh giá mô hình phân loại?
+
+In which situations is accuracy NOT a suitable metric for evaluating classification models?
+   A. Khi mô hình dự đoán xác suất thay vì dự đoán nhãn
+
+When the model predicts probabilities instead of class labels.
+   B. Khi chi phí của lỗi False Positive và False Negative không tương đương nhau
+
+When the costs of False Positive and False Negative errors are not equivalent.
+   C. 
+
+
+
+
+
+Khi dữ liệu không linearly separable (khả phân tuyến tính)
+
+When the data is not linearly separable
+   D. Khi dữ liệu bị mất cân bằng nghiêm trọng giữa các lớp (class imbalance).
+
+When there is severe class imbalance.
+
+================== Quiz 12 - Final Quiz (32 questions) ==================
+
+--- Q1 [Selected: A. str] ---
+Đâu là những kiểu dữ liệu cơ bản trong Python?
+
+What are the basic data types in Python?
+   A. str
+   B. float
+   C. int
+   D. bool
+
+--- Q2 [Selected: A. str] ---
+Kiểu trả về của hàm input() là gì?
+
+What is the return type of the input() function?
+   A. str
+   B. int
+   C. double
+   D. float
+
+--- Q3 [Selected: A. 8] ---
+Khi thực hiện gọi hàm f, kết quả in ra màn hình là gì?
+
+When calling function f, what result is printed to the screen?
+   A. 8
+   B. 7
+   C. Chương trình báo lỗi thực thi
+
+The program reports a runtime error
+   D. 9
+
+--- Q4 [Selected: A. Dùng để lặp qua từng phần tử của một chuỗi, danh sách hoặc bất kỳ iterable nào.] ---
+Câu lệnh for trong Python được dùng để làm gì?
+   A. Dùng để lặp qua từng phần tử của một chuỗi, danh sách hoặc bất kỳ iterable nào.
+   B. Dùng để kết thúc chương trình ngay lập tức
+   C. Dùng để lặp cho đến khi một điều kiện trở thành False.
+   D. Dùng để định nghĩa ra một hàm (function).
+
+--- Q5 [Selected: B. Để giúp chương trình có thể được thực hiện kể cả khi có xuất hiện lỗi cú pháp.] ---
+Đâu là mục đích của việc sử dụng try, except trong lập trình Python?
+   A. Để giúp máy ảo Python (PVM) có thể biên dịch chương trình nhanh hơn.
+   B. Để giúp chương trình có thể được thực hiện kể cả khi có xuất hiện lỗi cú pháp.
+   C. Để giúp chương trình có thể được thực hiện kể cả khi có xuất hiện lỗi thực thi.
+   D. Để giúp chương trình có thể được thực hiện nhanh hơn.
+
+--- Q6 [Selected: A. list] ---
+Trong các kiểu cấu trúc dữ liệu dưới đây, kiểu nào cho phép ta kiểm tra xem một phần tử có tồn tại trong cấu trúc dữ liệu hay không một cách nhanh chóng?
+
+Among the data structures below, which one allows us to check if an element exists in the data structure quickly?
+   A. list
+   B. tuple
+   C. dict
+   D. set
+
+--- Q7 [Selected: A. Có thể truyền vào một hàm lambda (hàm ẩn danh).
+
+A lambda function (anonymous function) can be passed] ---
+Trong Python, các tham số truyền vào cho một hàm (function) có thể là những gì?
+
+In Python, what can be passed as arguments to a function?
+   A. Có thể truyền vào một hàm lambda (hàm ẩn danh).
+
+A lambda function (anonymous function) can be passed
+   B. Có thể truyền vào các cấu trúc dữ liệu như list, tuple, set, dict.
+
+Data structures like list, tuple, set, dict can be passed.
+   C. Có thể truyền vào các kiểu dữ liệu cơ bản như số nguyên (int), số thực (float), chuỗi (str) hoặc giá trị logic (bool).
+
+Basic data types such as integers (int), real numbers (float), strings (str), or boolean values (bool) can be passed.
+   D. Có thể truyền vào một hàm đầy đủ (function) khác để hàm đó xử lý.
+
+Another full function can be passed for processing.
+
+--- Q8 [Selected: A. 2] ---
+Khi thực hiện gọi hàm division(6,3), kết quả in ra màn hình là gì?
+
+When calling the function division(6,3), what result is printed to the screen?
+   A. 2
+   B. Error: Invalid input type. Please provide numbers
+   C. Error: Division by zero is not allowed
+   D. 2.0
+
+--- Q9 [Selected: None] ---
+Đâu là quy trình hợp lý để một doanh nghiệp F&B áp dụng học máy và khoa học dữ liệu nhằm phân tích xu hướng tiêu thụ đồ ăn trong những năm gần đây?
+
+What is a logical process for an F&B business to apply machine learning and data science to analyze food consumption trends in recent years?
+
+        
+            
+                
+                
+                        
+                            
+                                
+                                    Xác định vấn đề và loại dữ liệu cần thu thập 
+
+Define the problem and determine the types of data to be collected
+                                
+                            
+                        
+                        
+                            
+                                
+                                    Thu thập dữ liệu từ các nguồn liên quan 
+
+Collect data from relevant sources
+                                
+                            
+                        
+                        
+                            
+                                
+                                    Làm sạch và tiền xử lý dữ liệu 
+
+Clean and preprocess the data
+                                
+                            
+                        
+                        
+                            
+                                
+                                    Sử dụng các mô hình thống kê và các thuật toán học máy để phân tích dữ liệu 
+
+Apply statistical models and machine learning algorithms to analyze the data
+
+--- Q10 [Selected: A. Giảm hệ số học (learning rate) của thuật toán Gradient Descent huấn luyện mô hình.
+
+Decrease the learning rate of the Gradient Descent algorithm training the model.] ---
+Giả sử bạn huấn luyện một mô hình phân loại hình ảnh chó/mèo và độ chính xác của mô hình trên tập kiểm thử đang là 52%. Đâu là những phương pháp có thể sử dụng để tăng độ chính xác của mô hình này trên tập kiểm thử?
+
+Suppose you train a dog/cat image classification model and the model's accuracy on the test set is 52%. What methods can be used to increase the accuracy of this model on the test set?
+   A. Giảm hệ số học (learning rate) của thuật toán Gradient Descent huấn luyện mô hình.
+
+Decrease the learning rate of the Gradient Descent algorithm training the model.
+   B. Huấn luyện lại mô hình này trên cùng một tập huấn luyện nhiều lần.
+
+Retrain this model on the same training set multiple times.
+   C. Huấn luyện mô hình này trên nhiều dữ liệu hơn.
+
+Train this model on more data.
+   D. Sử dụng regularization.
+
+Use regularization
+
+--- Q11 [Selected: B. Video chào mừng 60 năm thành lập trường THPT Chuyên Khoa học Tự nhiên.
+
+Video celebrating the 60th anniversary of High School for Gifted Students.] ---
+Đâu là những ví dụ về dữ liệu phi cấu trúc?
+
+What are examples of unstructured data?
+   A. Ảnh chụp lễ kỷ niệm 70 năm thành lập Đại học Bách khoa Hà Nội.
+
+Photos of the 70th anniversary celebration of Hanoi University of Science and Technology.
+   B. Video chào mừng 60 năm thành lập trường THPT Chuyên Khoa học Tự nhiên.
+
+Video celebrating the 60th anniversary of High School for Gifted Students.
+   C. Bảng điểm trung bình học phần "Nhập môn kỹ thuật truyền thông".
+
+Grade transcript for the module "Introduction to Communication Engineering".
+   D. Các bài đăng truyền thông trên trang cá nhân Facebook.
+
+Media posts on a personal Facebook page.
+   E. Bảng báo cáo tài chính cuối năm của doanh nghiệp.
+
+The company's year-end financial statement table.
+
+--- Q12 [Selected: A. from X import A] ---
+Giả sử bạn có dự án Python có cấu trúc thư mục như sau. Giả sử bạn đang viết file main.py, làm thế nào bạn có thể sử dụng hàm f() đã viết trước đó trong file A.py?
+
+Suppose you have a Python project with the following directory structure. Suppose you are writing the main.py file, how can you use the function f() previously written in file A.py?
+   A. from X import A
+   B. import A
+   C. import X.A
+   D. from A import f
+
+--- Q13 [Selected: A. 3] ---
+Xét hàm f được định nghĩa như sau. Kết quả trả về của hàm f là gì khi ta gọi hàm với đối số x = True?
+
+Consider function f defined as follows. What is the return result of function f when we call the function with the argument x = True?
+   A. 3
+   B. True
+   C. Chương trình không in ra gì cả.
+
+The program prints nothing.
+   D. 1
+
+--- Q14 [Selected: B. 0.64] ---
+Cho biến x có giá trị x = 0.80. Kết quả thực hiện chạy lệnh print(x ** 2) là gì?
+
+Given variable x with value x = 0.80. What is the result of running the command print(x ** 2)?
+   A. 1.60
+   B. 0.64
+   C. 0.6400000000000001
+   D. 0.65
+
+--- Q15 [Selected: B. rev = ''.join([s[i] for i in range(len(s)-1, -1, -1)])] ---
+Giả sử ta có chuỗi: s = "HelloWorld". Những cách nào sau đây có thể được dùng để đảo ngược chuỗi s trong Python?
+   A. rev = s[::-1]
+   B. rev = ''.join([s[i] for i in range(len(s)-1, -1, -1)])
+   C. rev = ''.join(reversed(s))
+   D. rev = reverse(s)
+
+--- Q16 [Selected: A. b = [f(lambda x: x + 1, i) for i in lst]] ---
+Cho một hàm f được định nghĩa như sau. Từ một list a gồm có N số nguyên dương đôi một phân biệt, hãy chọn những cách giúp ta tạo ra list b thoả mãn b[i] = (a[i] + 1)^2 bằng cách sử dụng hàm f.
+
+Given a function f defined as follows. From a list a consisting of N distinct positive integers, choose the ways to create list b satisfying b[i] = (a[i] + 1)^2 using function f.
+   A. b = [f(lambda x: x + 1, i) for i in lst]
+   B. b = list(map(lambda x: f(lambda t: t + 1, x), a))
+   C. b = list(map(lambda x: f(lambda t: t + 1, x + 1), a))
+   D. b = a.apply(lambda x: f(lambda t: t + 1, x))
+
+--- Q17 [Selected: C. [False, True, False, True, False, True]] ---
+Xét một hàm filter_list được định nghĩa như hình vẽ bên dưới. Giả sử ta đang có một list là a = [1, 2, 3, 4, 5, 6]. Khi thực hiện chạy câu lệnh filter_list(check_division, a), chương trình sẽ trả về một danh sách bao gồm những phần tử nào?
+
+Consider a function filter_list defined as in the image below. Suppose we have a list a = [1, 2, 3, 4, 5, 6]. When running the command filter_list(check_division, a), what elements will the list returned by the program contain?
+   A. [1, 3, 5]
+   B. Chương trình không thực hiện được do đã xảy ra lỗi thực thi.
+
+The program cannot execute due to a runtime error.
+   C. [False, True, False, True, False, True]
+   D. [2, 4, 6]
+
+--- Q18 [Selected: B. Pie chart] ---
+Đâu là biểu đồ có thể được dùng để minh hoạt các thành phần trong một tổng thể?
+
+Which chart can be used to illustrate components within a whole?
+   A. Scatter plot
+   B. Pie chart
+   C. Box plot
+   D. Line chart
+
+--- Q19 [Selected: A. Xác định các điểm dữ liệu bất thường (outliers).
+
+Identify outliers.] ---
+Mục tiêu chính của phân tích thăm dò dữ liệu (Exploratory Data Analysis – EDA) là gì?
+
+What is the main goal of Exploratory Data Analysis (EDA)?
+   A. Xác định các điểm dữ liệu bất thường (outliers).
+
+Identify outliers.
+   B. Hiểu cấu trúc dữ liệu và đặc điểm phân bố của các biến.
+
+Understand data structure and distribution characteristics of variables.
+   C. Hỗ trợ định hướng các bước phân tích hoặc mô hình hóa tiếp theo.
+
+Support the direction of subsequent analysis or modeling steps.
+   D. Phát hiện các mẫu, xu hướng và mối quan hệ tiềm ẩn trong dữ liệu.
+
+Detect patterns, trends, and hidden relationships in the data.
+
+--- Q20 [Selected: A. 3 hàng và 4 cột
+
+3 rows and 4 columns] ---
+Cho a = [[1,2], [3,4,5], [6,7,8,9]]. DataFrame được tạo ra bằng cách thực hiện chạy câu lệnh df = DataFrame(a) sẽ bao gồm bao nhiêu hàng và bao nhiêu cột?
+
+Given a = [[1,2], [3,4,5], [6,7,8,9]]. How many rows and columns will the DataFrame created by running the command df = DataFrame(a) contain?
+   A. 3 hàng và 4 cột
+
+3 rows and 4 columns
+   B. 4 hàng và 3 cột
+
+4 rows and 3 columns
+   C. 1 hàng và 7 cột
+
+1 row and 7 columns
+   D. Không thể tạo ra DataFrame
+
+Cannot create DataFrame
+
+--- Q21 [Selected: C. Mô hình chẩn đoán bệnh ung thư.
+
+Cancer diagnosis model.] ---
+Trong những tình huống nào dưới đây, mô hình phân loại cần ưu tiên giảm thiểu (tránh) hiện tượng Dương tính giả so với việc giảm thiểu hiện tượng Âm tính giả?
+
+In which of the following situations should a classification model prioritize minimizing (avoiding) False Positives over minimizing False Negatives?
+   A. Mô hình dự đoán email rác.
+
+Spam email prediction model.
+   B. Mô hình phát hiện gian lận giao dịch ngân hàng.
+
+Bank transaction fraud detection model.
+   C. Mô hình chẩn đoán bệnh ung thư.
+
+Cancer diagnosis model.
+   D. Mô hình phân loại hình ảnh mèo/chó.
+
+Cat/dog image classification model.
+
+--- Q22 [Selected: A. k-NN (k Nearest Neighbor)] ---
+Thuật toán học máy nào trong các thuật toán dưới đây có thể được áp dụng đồng thời cho cả bài toán phân loại và bài toán hồi quy?
+
+Which of the following machine learning algorithms can be applied to both classification and regression problems?
+   A. k-NN (k Nearest Neighbor)
+   B. k-means clustering
+   C. Hồi quy logistic (Logistic Regression)
+   D. Hồi quy tuyến tính (Linear Regression)
+
+--- Q23 [Selected: A. Normal Equation có thể vô nghiệm, từ đó không thể tìm được mô hình hồi quy tuyến tính.
+
+Normal Equation may have no solution, thus the linear regression model cannot be found.] ---
+Đâu là những nhược điểm của việc xây dựng mô hình Hồi quy tuyến tính bằng cách giải Normal Equation?
+
+What are the disadvantages of building a Linear Regression model by solving the Normal Equation?
+   A. Normal Equation có thể vô nghiệm, từ đó không thể tìm được mô hình hồi quy tuyến tính.
+
+Normal Equation may have no solution, thus the linear regression model cannot be found.
+   B. Việc lưu trữ các ma trận tính toán có thể không hiệu quả về mặt bộ nhớ, nhất là khi tập dữ liệu lớn.
+
+Storing calculation matrices may be memory inefficient, especially with large datasets.
+   C. Độ phức tạp tính toán của việc tính ma trận khả nghịch lớn.
+
+High computational complexity of calculating the inverse matrix.
+   D. Có thể tồn tại mối liên hệ tuyến tính giữa các đặc trưng phân biệt, từ đó khiến cho ma trận không khả nghịch.
+
+Linear relationships may exist between distinct features, causing the matrix to be non-invertible.
+
+--- Q24 [Selected: C. Mô hình có thể học được các quan hệ phi tuyến giữa biến đầu vào và biến đầu ra.
+
+The model can learn non-linear relationships between input and output variables.] ---
+Đâu là ưu điểm của hồi quy đa thức (Polynomial Regression) so với hồi quy tuyến tính (Linear Regression)?
+
+What are the advantages of Polynomial Regression compared to Linear Regression?
+   A. Mô hình luôn tránh được hiện tượng overfitting khi tăng số bậc đa thức.
+
+The model always avoids overfitting when increasing the polynomial degree.
+   B. Polynomial Regression giúp giảm chi phí tính toán so với Linear Regression.
+
+Polynomial Regression helps reduce computational costs compared to Linear Regression.
+   C. Mô hình có thể học được các quan hệ phi tuyến giữa biến đầu vào và biến đầu ra.
+
+The model can learn non-linear relationships between input and output variables.
+
+--- Q25 [Selected: A. Dữ liệu thu thập được có nhiều giá trị bị thiếu.] ---
+Đâu là những vấn đề về tập dữ liệu mà ta cần xử lý trong bước "Làm sạch và tiền xử lý dữ liệu"?
+   A. Dữ liệu thu thập được có nhiều giá trị bị thiếu.
+   B. Dữ liệu thu thập được có sự không nhất quán.
+   C. Đối với dữ liệu văn bản, tồn tại hiện tượng đồng âm khác nghĩa, tức là có nhiều từ có cách viết giống nhau nhưng lại có ý nghĩa khác nhau.
+   D. Tổng dung lượng dữ liệu thu thập được quá lớn.
+   E. Tồn tại nhiều cách viết/biểu diễn cho cùng một đối tượng trong tập dữ liệu.
+
+--- Q26 [Selected: B. Khoảng tứ phân vị (Interquartile range)] ---
+Những đặc trưng thống kê nào sau đây có thể được sử dụng để loại bỏ những giá trị bất thường (outliers) trong tập dữ liệu?
+
+Which of the following statistical features can be used to remove outliers in a dataset?
+   A. Độ lệch chuẩn (Standard deviation)
+   B. Khoảng tứ phân vị (Interquartile range)
+   C. Khoảng biến thiên (range)
+   D. Giá trị trung bình (Mean)
+
+--- Q27 [Selected: A. Logistic Regression] ---
+Những thuật toán học máy nào trong các thuật toán học máy dưới đây thuộc loại Học máy có giám sát (Supervised learning)?
+
+Which of the following machine learning algorithms belong to Supervised Learning?
+   A. Logistic Regression
+   B. k-Nearest neighbors
+   C. Linear Regression
+   D. k means clustering
+   E. Polynomial Regression
+
+--- Q28 [Selected: A. df.loc[df["Score"] >= 80]] ---
+Giả sử bạn có một DataFrame df chứa cột Score. Những câu lệnh nào dưới đây có thể dùng để lấy ra tất cả các hàng có Score ≥ 80?
+
+Suppose you have a DataFrame df containing the column Score. Which of the following commands can be used to retrieve all rows with Score ≥ 80?
+   A. df.loc[df["Score"] >= 80]
+   B. df.filter("Score >= 80")
+   C. df[df.apply(lambda r: r["Score"] >= 80, axis=1)]
+   D. df[df["Score"] >= 80]
+
+--- Q29 [Selected: A. df.groupby("Major")["Finalterm"].mean()] ---
+Dữ liệu về bảng điểm học phần "Đại số tuyến tính" được lưu trong một DataFrame tên là df với các cột: Name, ID, Major, Midterm, Finalterm, Average. Những câu lệnh Python/pandas nào dưới đây có thể được dùng để tạo bảng thống kê điểm cuối kỳ (Finalterm) trung bình cho từng sinh viên gộp theo ngành học (Major)?
+
+Data on the "Linear Algebra" module transcript is stored in a DataFrame named df with columns: Name, ID, Major, Midterm, Finalterm, Average. Which of the following Python/pandas commands can be used to create a table of average Finalterm scores for each student grouped by Major?
+   A. df.groupby("Major")["Finalterm"].mean()
+   B. df.pivot_table(values="Finalterm", index="Major", aggfunc="mean")
+   C. df["Finalterm"].mean()
+   D. df.groupby("Name")["Finalterm"].mean()
+
+--- Q30 [Selected: B. Sử dụng scatter plot.
+
+Use scatter plot.] ---
+Đâu là những cách để kiểm tra xem liệu có tồn tại một mối liên hệ tuyến tính giữa hai đại lượng?
+
+What are the ways to check if a linear relationship exists between two quantities?
+   A. Vẽ box plot cho hai đại lượng đó rồi so sánh khoảng tứ phân vị xem có trùng nhau không.
+
+Draw box plots for those two quantities and compare if their interquartile ranges overlap.
+   B. Sử dụng scatter plot.
+
+Use scatter plot.
+   C. Tính hệ số tương quan
+
+Calculate correlation coefficient.
+   D. Sử dụng đường hồi quy (linear regression) để xem hệ số góc và mức độ phù hợp (R²).
+
+Use linear regression line to check the slope and fitness (R²).
+
+--- Q31 [Selected: B. Azure] ---
+Đâu là những nền tảng Cloud computing phổ biến?
+
+What are popular Cloud computing platforms?
+   A. Oracle VirtualBox
+   B. Azure
+   C. Google cloud
+   D. AWS
+
+--- Q32 [Selected: A. Tập huấn luyện quá lớn dẫn đến thời gian huấn luyện mô hình lâu.
+
+The training set is too large, leading to long model training time.] ---
+Đâu là những vấn đề có thể xảy ra khi ta chia ngẫu nhiên tập huấn luyện và tập kiểm thử theo tỷ lệ 7 : 3?
+
+What issues can occur when randomly splitting the training and test sets with a 7:3 ratio?
+   A. Tập huấn luyện quá lớn dẫn đến thời gian huấn luyện mô hình lâu.
+
+The training set is too large, leading to long model training time.
+   B. Tập dữ liệu có dữ liệu phân bố theo các lớp không đồng đều, dẫn đến khi chia tập huấn luyện thì có thể tập huấn luyện chỉ chứa lớp đa số.
+
+The dataset has an uneven class distribution, leading to the training set potentially containing only the majority class after splitting.
+   C. Tập dữ liệu có kích thước trung bình và nhỏ, dẫn đến tập kiểm thử nhỏ.
+
+The dataset has medium to small size, leading to a small test set.
