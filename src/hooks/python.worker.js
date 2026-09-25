@@ -17,37 +17,144 @@ function prepareInteractiveCode(code) {
     .replace(/\bpyplot\.show\(\s*[^)]*\)/g, '_zerocoder_show_plot(pyplot)');
 }
 
-// Detect hidden dependencies not caught by loadPackagesFromImports.
-// These are packages required at runtime by library internals (e.g., openpyxl
-// is needed by pandas.read_excel, lxml is needed by pandas.read_html)
+// Set of standard library modules and built-ins that never require package loading or network requests
+const STDLIB_MODULES = new Set([
+  'abc', 'aifc', 'antigravity', 'argparse', 'array', 'ast', 'asynchat', 'asyncio', 'asyncore',
+  'atexit', 'audioop', 'base64', 'bdb', 'binascii', 'binhex', 'bisect', 'builtins',
+  'bz2', 'calendar', 'cgi', 'cgitb', 'chunk', 'cmath', 'cmd', 'code', 'codecs',
+  'codeop', 'collections', 'colorsys', 'compileall', 'concurrent', 'configparser',
+  'contextlib', 'contextvars', 'copy', 'copyreg', 'cProfile', 'crypt', 'csv',
+  'ctypes', 'curses', 'dataclasses', 'datetime', 'dbm', 'decimal', 'difflib',
+  'dis', 'distutils', 'doctest', 'dummy_threading', 'email', 'encodings',
+  'ensurepip', 'enum', 'errno', 'faulthandler', 'fcntl', 'filecmp', 'fileinput',
+  'fnmatch', 'formatter', 'fractions', 'ftplib', 'functools', 'gc', 'getopt',
+  'getpass', 'gettext', 'glob', 'graphlib', 'grp', 'gzip', 'hashlib', 'heapq',
+  'hmac', 'html', 'http', 'idlelib', 'imaplib', 'imghdr', 'imp', 'importlib', 'inspect',
+  'io', 'ipaddress', 'itertools', 'json', 'keyword', 'lib2to3', 'linecache',
+  'locale', 'logging', 'lzma', 'mailbox', 'mailcap', 'marshal', 'math', 'mimetypes',
+  'mmap', 'modulefinder', 'msilib', 'msvcrt', 'multiprocessing', 'netrc', 'nis',
+  'nntplib', 'numbers', 'operator', 'optparse', 'os', 'ossaudiodev', 'parser',
+  'pathlib', 'pdb', 'pickle', 'pickletools', 'pipes', 'pkgutil', 'platform',
+  'plistlib', 'poplib', 'posix', 'posixpath', 'pprint', 'profile', 'pstats',
+  'pty', 'pwd', 'py_compile', 'pyclbr', 'pydoc', 'pydoc_data', 'pyexpat', 'queue', 'quopri', 'random',
+  're', 'readline', 'reprlib', 'resource', 'rlcompleter', 'runpy', 'sched',
+  'secrets', 'select', 'selectors', 'shelve', 'shlex', 'shutil', 'signal',
+  'site', 'smtpd', 'smtplib', 'sndhdr', 'socket', 'socketserver', 'spwd',
+  'sqlite3', 'sre', 'sre_compile', 'sre_constants', 'sre_parse', 'ssl',
+  'stat', 'statistics', 'string', 'stringprep', 'struct', 'subprocess', 'sunau',
+  'symbol', 'symtable', 'sys', 'sysconfig', 'syslog', 'tabnanny', 'tarfile',
+  'telnetlib', 'tempfile', 'termios', 'test', 'textwrap', 'threading', 'time',
+  'timeit', 'tkinter', 'token', 'tokenize', 'trace', 'traceback', 'tracemalloc',
+  'tty', 'turtle', 'turtledemo', 'types', 'typing', 'unicodedata', 'unittest',
+  'urllib', 'uu', 'uuid', 'venv', 'warnings', 'wave', 'weakref', 'webbrowser',
+  'wsgiref', 'xdrlib', 'xml', 'xmlrpc', 'zipapp', 'zipfile', 'zipimport',
+  'zlib', 'zoneinfo',
+  // In-memory shims mocked directly in Pyodide
+  'pymssql', 'ipywidgets', 'plotly'
+]);
+
+// Map common Python import names to pyodide package names
+const IMPORT_TO_PKG = {
+  'sklearn': 'scikit-learn',
+  'cv2': 'opencv-python',
+  'PIL': 'pillow',
+  'bs4': 'beautifulsoup4',
+  'dateutil': 'python-dateutil',
+  'yaml': 'pyyaml',
+  'serial': 'pyserial'
+};
+
+function normalizePkgName(name) {
+  return String(name || '').toLowerCase().replace(/[-_]/g, '');
+}
+
+// Track loaded packages in memory
+const _loadedPackages = new Set();
+
+function isPackageLoaded(pyodide, pkg) {
+  const norm = normalizePkgName(pkg);
+  if (_loadedPackages.has(norm)) return true;
+  if (!pyodide || !pyodide.loadedPackages) return false;
+  for (const loaded of Object.keys(pyodide.loadedPackages)) {
+    if (normalizePkgName(loaded) === norm) {
+      _loadedPackages.add(norm);
+      return true;
+    }
+  }
+  return false;
+}
+
+function syncLoadedPackages(pyodide) {
+  if (pyodide && pyodide.loadedPackages) {
+    for (const loaded of Object.keys(pyodide.loadedPackages)) {
+      _loadedPackages.add(normalizePkgName(loaded));
+    }
+  }
+}
+
+// Fast JS parser to extract non-standard-library imports without touching Python runtime
+function extractThirdPartyImports(code) {
+  if (!code || !/\b(import|from)\b/.test(code)) return [];
+  const thirdParty = new Set();
+  const lines = code.split('\n');
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith('#')) continue;
+
+    // from <module> import ...
+    const fromMatch = line.match(/^from\s+([a-zA-Z0-9_]+)/);
+    if (fromMatch) {
+      const mod = fromMatch[1];
+      if (!STDLIB_MODULES.has(mod)) {
+        thirdParty.add(IMPORT_TO_PKG[mod] || mod);
+      }
+      continue;
+    }
+
+    // import <mod1> [as ...], <mod2> ...
+    const importMatch = line.match(/^import\s+([^#;]+)/);
+    if (importMatch) {
+      const parts = importMatch[1].split(',');
+      for (const part of parts) {
+        const mod = part.trim().split(/\s+/)[0]?.split('.')[0];
+        if (mod && /^[a-zA-Z0-9_]+$/.test(mod) && !STDLIB_MODULES.has(mod)) {
+          thirdParty.add(IMPORT_TO_PKG[mod] || mod);
+        }
+      }
+    }
+  }
+  return Array.from(thirdParty);
+}
+
+// Detect hidden dependencies required at runtime by library internals
 function detectHiddenDependencies(code) {
   const deps = [];
   // openpyxl: needed by pandas for .xlsx read/write, plus its sub-dependency et_xmlfile
-  if (/read_excel|to_excel|\.xlsx|openpyxl/i.test(code)) {
+  if (/\b(read_excel|to_excel|openpyxl)\b|\.xlsx\b/i.test(code)) {
     deps.push('et_xmlfile', 'openpyxl');
   }
   // lxml, beautifulsoup4, html5lib: needed by pandas for read_html
-  if (/read_html/i.test(code)) {
+  if (/\bread_html\b/i.test(code)) {
     deps.push('soupsieve', 'beautifulsoup4', 'lxml', 'html5lib', 'pyodide-http');
   }
   // requests: needed for HTTP API calls
-  if (/requests\b/i.test(code)) {
+  if (/\b(requests\b|pyodide_http)/i.test(code)) {
     deps.push('certifi', 'idna', 'charset-normalizer', 'urllib3', 'requests', 'pyodide-http');
   }
   // seaborn: needed for data visualization in Lecture 7
-  if (/seaborn|sns\./i.test(code)) {
+  if (/\b(seaborn|sns)\b/i.test(code)) {
     deps.push('matplotlib', 'seaborn');
   }
-  // scikit-learn: needed for Lectures 9, 10, 11, 12
-  if (/sklearn|scikit-learn/i.test(code)) {
+  // scikit-learn: needed for ML lectures
+  if (/\b(sklearn|scikit-learn)\b/i.test(code)) {
     deps.push('threadpoolctl', 'joblib', 'scikit-learn');
   }
-  // scipy: needed for stats
-  if (/scipy|stats/i.test(code)) {
+  // scipy: needed only when scipy is explicitly imported or called (avoid false positives with generic words like 'stats')
+  if (/\bscipy\b/i.test(code)) {
     deps.push('scipy');
   }
   // mlxtend: needed for Lecture 12 Association Rules
-  if (/mlxtend/i.test(code)) {
+  if (/\bmlxtend\b/i.test(code)) {
     deps.push('threadpoolctl', 'joblib', 'scikit-learn', 'scipy', 'mlxtend');
   }
   return deps;
@@ -59,41 +166,68 @@ const localWheels = {
   'mlxtend': '/pyodide/mlxtend-0.25.0-py3-none-any.whl'
 };
 
-// Install/load hidden deps (e.g., openpyxl, lxml, etc.)
-const _installedDeps = new Set();
 let _pyodideHttpPatched = false;
 
+// Parallel install and loading for hidden dependencies
 async function installHiddenDeps(pyodide, code) {
   const deps = detectHiddenDependencies(code);
   if (deps.length === 0) return;
-  const toInstall = deps.filter(d => !_installedDeps.has(d));
+  const toInstall = deps.filter(d => !isPackageLoaded(pyodide, d));
+  if (toInstall.length === 0) return;
+
+  const customWheels = [];
+  const standardPackages = [];
 
   for (const dep of toInstall) {
+    if (localWheels[dep]) {
+      customWheels.push(localWheels[dep]);
+    } else {
+      standardPackages.push(dep);
+    }
+  }
+
+  // Batch load standard packages in parallel (pyodide.loadPackage accepts an array)
+  if (standardPackages.length > 0) {
     try {
-      // 1. Try loading from custom wheel URL if defined, otherwise load by name
-      if (localWheels[dep]) {
-        await pyodide.loadPackage(localWheels[dep]);
-      } else {
-        await pyodide.loadPackage(dep);
+      await pyodide.loadPackage(standardPackages);
+      for (const p of standardPackages) {
+        _loadedPackages.add(normalizePkgName(p));
       }
-      _installedDeps.add(dep);
     } catch (e) {
-      console.warn(`Could not install hidden dependency ${dep} natively:`, e);
-      // 2. Fallback to micropip if package is not in local lockfile
-      try {
-        if (!_installedDeps.has('micropip')) {
-          await pyodide.loadPackage('/pyodide/micropip-0.5.0-py3-none-any.whl');
-          _installedDeps.add('micropip');
+      console.warn("Batch loadPackage failed, falling back to sequential:", e);
+      for (const dep of standardPackages) {
+        try {
+          await pyodide.loadPackage(dep);
+          _loadedPackages.add(normalizePkgName(dep));
+        } catch (err) {
+          console.warn(`Could not install ${dep} natively:`, err);
+          try {
+            if (!_loadedPackages.has(normalizePkgName('micropip'))) {
+              await pyodide.loadPackage('/pyodide/micropip-0.5.0-py3-none-any.whl');
+              _loadedPackages.add(normalizePkgName('micropip'));
+            }
+            const micropip = pyodide.pyimport('micropip');
+            await micropip.install(dep);
+            micropip.destroy();
+            _loadedPackages.add(normalizePkgName(dep));
+          } catch (micropipErr) {
+            console.warn(`Could not install ${dep} via micropip:`, micropipErr);
+          }
         }
-        const micropip = pyodide.pyimport('micropip');
-        await micropip.install(dep);
-        micropip.destroy();
-        _installedDeps.add(dep);
-      } catch (err) {
-        console.warn(`Could not install hidden dependency ${dep} via micropip:`, err);
       }
     }
   }
+
+  // Load custom wheels (e.g. mlxtend)
+  for (const wheel of customWheels) {
+    try {
+      await pyodide.loadPackage(wheel);
+    } catch (e) {
+      console.warn("Could not load custom wheel:", wheel, e);
+    }
+  }
+
+  syncLoadedPackages(pyodide);
 
   // If read_html or pyodide-http is used, ensure urllib and pandas use patched urlopen (only patch once)
   if ((deps.includes('pyodide-http') || deps.includes('lxml')) && !_pyodideHttpPatched) {
@@ -126,6 +260,38 @@ except Exception:
     } catch (_e) {
       // ignore
     }
+  }
+}
+
+// Unified, high-speed package assurance function
+async function ensurePackagesLoaded(pyodide, code) {
+  if (!code) return;
+
+  const thirdPartyImports = extractThirdPartyImports(code);
+  const hiddenDeps = detectHiddenDependencies(code);
+
+  const missingImports = thirdPartyImports.filter(pkg => !isPackageLoaded(pyodide, pkg));
+  const missingHidden = hiddenDeps.filter(dep => !isPackageLoaded(pyodide, dep));
+
+  // Fast-path: If all imports and hidden deps are already loaded in memory (or only stdlib is used), return immediately!
+  if (missingImports.length === 0 && missingHidden.length === 0) {
+    return;
+  }
+
+  // Load missing third-party imports via Pyodide
+  if (missingImports.length > 0) {
+    try {
+      await pyodide.loadPackagesFromImports(code);
+    } catch (e) {
+      console.warn("loadPackagesFromImports warning:", e);
+    }
+    syncLoadedPackages(pyodide);
+  }
+
+  // Load missing hidden dependencies in parallel
+  if (missingHidden.length > 0) {
+    await installHiddenDeps(pyodide, code);
+    syncLoadedPackages(pyodide);
   }
 }
 
@@ -292,6 +458,7 @@ sys.modules['plotly.express'] = plotly_express
           }
         });
         
+        syncLoadedPackages(pyodide);
         return pyodide;
       };
       
@@ -351,10 +518,7 @@ self.onmessage = async (event) => {
     try {
       const pyodide = await initPyodide();
       const executableCode = prepareInteractiveCode(code || '');
-      if (/\b(import|from)\b/.test(executableCode)) {
-        await pyodide.loadPackagesFromImports(executableCode);
-      }
-      await installHiddenDeps(pyodide, executableCode);
+      await ensurePackagesLoaded(pyodide, executableCode);
       self.postMessage({ type: 'PRELOAD_PACKAGES_DONE', id });
     } catch (_err) {
       self.postMessage({ type: 'PRELOAD_PACKAGES_DONE', id });
@@ -366,12 +530,7 @@ self.onmessage = async (event) => {
     try {
       const pyodide = await initPyodide();
       const executableCode = prepareInteractiveCode(code);
-      if (/\b(import|from)\b/.test(executableCode)) {
-        await pyodide.loadPackagesFromImports(executableCode);
-        await installHiddenDeps(pyodide, executableCode);
-      } else if (/read_excel|to_excel|\.xlsx|read_html|requests\b|seaborn|sns\.|sklearn|mlxtend/i.test(executableCode)) {
-        await installHiddenDeps(pyodide, executableCode);
-      }
+      await ensurePackagesLoaded(pyodide, executableCode);
       const result = await pyodide.runPythonAsync(executableCode);
       
       // Auto-display any dangling plots if plt.show() was omitted
@@ -414,9 +573,7 @@ except Exception:
       // Execute the user code ONCE to load functions
       try {
         const executableCode = prepareInteractiveCode(code);
-        await pyodide.loadPackagesFromImports(executableCode);
-        // Install hidden deps via micropip (e.g., openpyxl for read_excel)
-        await installHiddenDeps(pyodide, executableCode);
+        await ensurePackagesLoaded(pyodide, executableCode);
         await pyodide.runPythonAsync(executableCode);
         // Clear any plots generated during test setup so they don't pollute output
         await pyodide.runPythonAsync(`
@@ -437,6 +594,7 @@ except Exception:
       // Run each test
       for (const test of testCases) {
         try {
+          const testSnippet = (test.code || (test.input ? `print(${test.input})` : '')).trim();
           const pyCode = `
 import sys
 import json
@@ -446,7 +604,7 @@ old_stdout = sys.stdout
 sys.stdout = mystdout = StringIO()
 err_msg = ""
 try:
-${test.code.split('\n').map(line => '    ' + line).join('\n')}
+${testSnippet.split('\n').map(line => '    ' + line).join('\n')}
 except Exception as e:
     err_msg = traceback.format_exc()
 finally:
@@ -459,7 +617,9 @@ json.dumps({"got": mystdout.getvalue().strip(), "error": err_msg})
           if (resultObj.error) {
             results.push({ ...test, passed: false, error: resultObj.error });
           } else {
-            const passed = (resultObj.got === test.expected);
+            const expNorm = String(test.expected ?? '').trim();
+            const gotNorm = String(resultObj.got ?? '').trim();
+            const passed = (gotNorm === expNorm) || (gotNorm.replace(/"/g, "'") === expNorm.replace(/"/g, "'"));
             results.push({ ...test, passed, got: resultObj.got });
           }
         } catch (err) {

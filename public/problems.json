@@ -2639,22 +2639,22 @@
       {
         "id": 1,
         "code": "print(process_scroll(\"abracadabra\"))",
-        "expected": "(11, 5, \"cbryccdcbrc\", \"crcdccyrbc\")"
+        "expected": "(11, 5, 'cbrccdcbrc', 'crbcdcccrbc')"
       },
       {
         "id": 2,
         "code": "print(process_scroll(\"python\"))",
-        "expected": "(6, 0, \"python\", \"nohtyp\")"
+        "expected": "(6, 0, 'python', 'nohtyp')"
       },
       {
         "id": 3,
         "code": "print(process_scroll(\"aaaaa\"))",
-        "expected": "(5, 5, \"ccccc\", \"ccccc\")"
+        "expected": "(5, 5, 'ccccc', 'ccccc')"
       },
       {
         "id": 4,
         "code": "print(process_scroll(\"\"))",
-        "expected": "(0, 0, \"\", \"\")"
+        "expected": "(0, 0, '', '')"
       }
     ],
     "answer_key": "def process_scroll(spell):\n    length = len(spell)\n    count_a = spell.count(\"a\")\n    replaced = spell.replace(\"a\", \"c\")\n    reversed_str = replaced[::-1]\n    return length, count_a, replaced, reversed_str"
@@ -2753,7 +2753,7 @@
     "title": "5. The Gatekeeper (Function)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Viết hàm identify_type(x).</li><li>Viết hàm identify_types(*args) trả về list các type.</li><li>Viết hàm process_list(lst): String -> 0, Number giữ nguyên.</li></ul>",
     "hint": "Để giải bài toán này, chúng ta cần định nghĩa ba hàm riêng biệt:\n\n1.  **Hàm `identify_type(x)`**: Hàm này nhận một đối số `x` và trả về kiểu dữ liệu của `x` bằng cách sử dụng hàm `type()` có sẵn trong Python.\n\n2.  **Hàm `identify_types(*args)`**: Hàm này nhận một số lượng đối số thay đổi (`*args`). Nó sẽ duyệt qua từng đối số và thu thập kiểu dữ liệu của chúng vào một danh sách. Cuối cùng, danh sách các kiểu dữ liệu này sẽ được trả về.\n\n3.  **Hàm `process_list(lst)`**: Hàm này nhận một danh sách `lst` làm đối số. Nó sẽ tạo một danh sách mới để lưu trữ kết quả. Duyệt qua từng phần tử trong `lst`:\n    *   Nếu phần tử là một chuỗi (string), thêm số `0` vào danh sách kết quả.\n    *   Nếu phần tử là một số (int hoặc float), thêm chính phần tử đó vào danh sách kết quả.\n    *   Các kiểu dữ liệu khác sẽ bị bỏ qua (không được thêm vào danh sách kết quả). Cuối cùng, trả về danh sách kết quả đã được xử lý.",
-    "initialCode": "def identify_type(x):\n    # Write your code here\n    pass\n",
+    "initialCode": "def identify_type(x):\n    # Write your code here\n    pass\n\ndef identify_types(*args):\n    # Write your code here\n    pass\n\ndef process_list(lst):\n    # Write your code here\n    pass\n",
     "testCases": [
       {
         "id": 1,
@@ -2908,7 +2908,7 @@
     "title": "10. The Cipher of the Ancients",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Encode: A=1, B=2... Z=26. Giữ nguyên khoảng trắng/ký tự đặc biệt.</li><li>Decode: Dịch ngược từ số về chữ cái.</li></ul>",
     "hint": "Để mã hóa (encode), duyệt qua từng ký tự trong chuỗi đầu vào. Nếu ký tự là chữ cái in hoa hoặc in thường, chuyển đổi nó thành số tương ứng (A/a=1, B/b=2,... Z/z=26). Giữ nguyên các ký tự không phải chữ cái (khoảng trắng, số, ký tự đặc biệt). Các số được mã hóa sẽ được phân tách bằng khoảng trắng.\n\nĐể giải mã (decode), tách chuỗi đầu vào thành các phần dựa trên khoảng trắng. Với mỗi phần, kiểm tra xem nó có phải là một số hay không. Nếu là số và nằm trong khoảng từ 1 đến 26, chuyển đổi nó ngược lại thành chữ cái in hoa tương ứng. Giữ nguyên các phần không phải số hoặc số nằm ngoài phạm vi 1-26. Cuối cùng, nối các phần đã chuyển đổi lại để tạo thành chuỗi giải mã.",
-    "initialCode": "def encode_a1z26(text):\n    # Write your code here\n    pass\n",
+    "initialCode": "def encode_a1z26(text):\n    # Write your code here\n    pass\n\ndef decode_a1z26(code):\n    # Write your code here\n    pass\n",
     "testCases": [
       {
         "id": 1,
@@ -2939,7 +2939,7 @@
     "title": "1. The Code Lock (Primes)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Viết hàm is_prime(n).</li><li>Viết hàm get_nearest_prime(n): Nếu n là prime trả về n, không thì tìm prime lớn hơn gần nhất.</li><li>Áp dụng hàm cho list input.</li></ul>",
     "hint": "Để giải bài toán này, chúng ta cần thực hiện ba bước chính:\n\n1.  **Kiểm tra số nguyên tố (is_prime):** Xây dựng một hàm nhận vào một số nguyên `n` và trả về `True` nếu `n` là số nguyên tố, ngược lại trả về `False`. Một số nguyên tố là số tự nhiên lớn hơn 1 không có ước số nào khác ngoài 1 và chính nó. Để tối ưu, chỉ cần kiểm tra các ước số từ 2 đến căn bậc hai của `n`.\n\n2.  **Tìm số nguyên tố gần nhất (get_nearest_prime):** Xây dựng một hàm nhận vào một số nguyên `n`. Đầu tiên, kiểm tra xem `n` có phải là số nguyên tố hay không bằng cách sử dụng hàm `is_prime` đã viết. Nếu `n` là số nguyên tố, trả về `n`. Nếu không, bắt đầu từ `n + 1` và tăng dần từng bước, kiểm tra từng số xem có phải là số nguyên tố hay không. Số nguyên tố đầu tiên tìm được sẽ là số nguyên tố lớn hơn gần nhất.\n\n3.  **Áp dụng cho danh sách (unlock_door):** Cuối cùng, viết một hàm nhận vào một danh sách các số nguyên. Duyệt qua từng phần tử trong danh sách và áp dụng hàm `get_nearest_prime` cho mỗi phần tử. Thu thập tất cả các kết quả này vào một danh sách mới và trả về danh sách đó.",
-    "initialCode": "def is_prime(n):\n    # Write your code here\n    pass\n",
+    "initialCode": "def is_prime(n):\n    # Write your code here\n    pass\n\ndef get_nearest_prime(n):\n    # Write your code here\n    pass\n\ndef unlock_door(input_list):\n    # Write your code here\n    pass\n",
     "testCases": [
       {
         "id": 1,
@@ -3001,26 +3001,26 @@
     "title": "3. The Tent (Heron's Formula)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Tính khoảng cách giữa 3 điểm (độ dài các cạnh).</li><li>Tính diện tích tam giác bằng công thức Heron.</li></ul>",
     "hint": "Để tính diện tích tam giác từ ba điểm, chúng ta cần thực hiện các bước sau:\n\n1.  **Tính độ dài các cạnh:** Sử dụng công thức khoảng cách Euclid giữa hai điểm `(x1, y1)` và `(x2, y2)` là `sqrt((x2-x1)^2 + (y2-y1)^2)` để tính độ dài của ba cạnh của tam giác.\n2.  **Tính nửa chu vi (s):** Cộng tổng độ dài ba cạnh lại và chia cho 2.\n3.  **Áp dụng công thức Heron:** Sử dụng công thức `sqrt(s * (s - a) * (s - b) * (s - c))` để tính diện tích tam giác, trong đó `a`, `b`, `c` là độ dài ba cạnh và `s` là nửa chu vi.\n4.  **Xử lý trường hợp đặc biệt:** Nếu ba điểm thẳng hàng, diện tích tam giác sẽ bằng 0. Công thức Heron sẽ tự động cho kết quả 0 trong trường hợp này (hoặc một số rất nhỏ gần 0 do lỗi dấu phẩy động, cần cân nhắc làm tròn hoặc kiểm tra điều kiện `s * (s - a) * (s - b) * (s - c)` không âm).",
-    "initialCode": "def calculate_distance(p1, p2):\n    # Write your code here\n    pass\n",
+    "initialCode": "import math\n\ndef calculate_distance(p1, p2):\n    # Write your code here\n    pass\n\ndef tent_area(p1, p2, p3):\n    # Write your code here\n    pass\n",
     "testCases": [
       {
         "id": 1,
-        "code": "import math\ndef calculate_distance(p1, p2):\n    return math.sqrt((p1[0]-p2[0])**2 + (p1[1]-p2[1])**2)\ndef tent_area(p1, p2, p3):\n    a = calculate_distance(p1, p2)\n    b = calculate_distance(p2, p3)\n    c = calculate_distance(p3, p1)\n    s = (a + b + c) / 2\n    return math.sqrt(s * (s - a) * (s - b) * (s - c))\nprint(tent_area((0,0), (3,0), (0,4)))",
+        "code": "import math\nprint(tent_area((0,0), (3,0), (0,4)))",
         "expected": "6.0"
       },
       {
         "id": 2,
-        "code": "import math\ndef calculate_distance(p1, p2):\n    return math.sqrt((p1[0]-p2[0])**2 + (p1[1]-p2[1])**2)\ndef tent_area(p1, p2, p3):\n    a = calculate_distance(p1, p2)\n    b = calculate_distance(p2, p3)\n    c = calculate_distance(p3, p1)\n    s = (a + b + c) / 2\n    return math.sqrt(s * (s - a) * (s - b) * (s - c))\nprint(tent_area((1,1), (1,4), (5,1)))",
+        "code": "import math\nprint(tent_area((1,1), (1,4), (5,1)))",
         "expected": "6.0"
       },
       {
         "id": 3,
-        "code": "import math\ndef calculate_distance(p1, p2):\n    return math.sqrt((p1[0]-p2[0])**2 + (p1[1]-p2[1])**2)\ndef tent_area(p1, p2, p3):\n    a = calculate_distance(p1, p2)\n    b = calculate_distance(p2, p3)\n    c = calculate_distance(p3, p1)\n    s = (a + b + c) / 2\n    return math.sqrt(s * (s - a) * (s - b) * (s - c))\nprint(tent_area((0,0), (1,0), (0.5, math.sqrt(0.75))))",
+        "code": "import math\nprint(tent_area((0,0), (1,0), (0.5, math.sqrt(0.75))))",
         "expected": "0.4330127018922193"
       },
       {
         "id": 4,
-        "code": "import math\ndef calculate_distance(p1, p2):\n    return math.sqrt((p1[0]-p2[0])**2 + (p1[1]-p2[1])**2)\ndef tent_area(p1, p2, p3):\n    a = calculate_distance(p1, p2)\n    b = calculate_distance(p2, p3)\n    c = calculate_distance(p3, p1)\n    s = (a + b + c) / 2\n    # Handle collinear points (degenerate triangle) where area should be 0\n    if s * (s - a) * (s - b) * (s - c) < 0:\n        return 0.0\n    return math.sqrt(s * (s - a) * (s - b) * (s - c))\nprint(tent_area((0,0), (1,0), (2,0)))",
+        "code": "import math\nprint(tent_area((0,0), (1,0), (2,0)))",
         "expected": "0.0"
       }
     ],
@@ -3129,22 +3129,22 @@
     "testCases": [
       {
         "id": 1,
-        "code": "from collections import Counter\ndef echo_repetition(lst):\n    unique_elements = list(set(lst))\n    frequency = dict(Counter(lst))\n    most_frequent = max(frequency, key=frequency.get)\n    return unique_elements, frequency, most_frequent\nprint(echo_repetition([1, 2, 2, 3, 3, 3, 4]))",
+        "code": "print(echo_repetition([1, 2, 2, 3, 3, 3, 4]))",
         "expected": "([1, 2, 3, 4], {1: 1, 2: 2, 3: 3, 4: 1}, 3)"
       },
       {
         "id": 2,
-        "code": "from collections import Counter\ndef echo_repetition(lst):\n    unique_elements = list(set(lst))\n    frequency = dict(Counter(lst))\n    most_frequent = max(frequency, key=frequency.get)\n    return unique_elements, frequency, most_frequent\nprint(echo_repetition(['a', 'b', 'a', 'c', 'b', 'a']))",
+        "code": "print(echo_repetition(['a', 'b', 'a', 'c', 'b', 'a']))",
         "expected": "(['a', 'b', 'c'], {'a': 3, 'b': 2, 'c': 1}, 'a')"
       },
       {
         "id": 3,
-        "code": "from collections import Counter\ndef echo_repetition(lst):\n    unique_elements = list(set(lst))\n    frequency = dict(Counter(lst))\n    most_frequent = max(frequency, key=frequency.get)\n    return unique_elements, frequency, most_frequent\nprint(echo_repetition([]))",
+        "code": "print(echo_repetition([]))",
         "expected": "( [], {}, null)"
       },
       {
         "id": 4,
-        "code": "from collections import Counter\ndef echo_repetition(lst):\n    unique_elements = list(set(lst))\n    frequency = dict(Counter(lst))\n    most_frequent = max(frequency, key=frequency.get)\n    return unique_elements, frequency, most_frequent\nprint(echo_repetition([1, 1, 1, 1]))",
+        "code": "print(echo_repetition([1, 1, 1, 1]))",
         "expected": "([1], {1: 4}, 1)"
       }
     ],
@@ -3218,7 +3218,7 @@
     "title": "10. The Digit Oracle (Perfect Digit)",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Định nghĩa số \"perfect digit\": chia hết cho tổng các chữ số của nó.</li><li>Tìm tất cả các số như vậy trong list.</li><li>Đếm số lượng và tìm số lớn nhất.</li></ul>",
     "hint": "Để giải bài toán này, chúng ta cần thực hiện các bước sau:\n\n1.  **Tính tổng các chữ số của một số:** Viết một hàm nhận vào một số nguyên và trả về tổng các chữ số của nó. Có thể chuyển số thành chuỗi để duyệt qua từng chữ số, sau đó chuyển lại thành số nguyên để cộng dồn.\n\n2.  **Kiểm tra số \"perfect digit\":** Viết một hàm nhận vào một số nguyên. Trong hàm này, trước tiên gọi hàm ở bước 1 để lấy tổng các chữ số. Sau đó, kiểm tra xem số ban đầu có chia hết cho tổng các chữ số của nó hay không. Cần lưu ý trường hợp tổng các chữ số bằng 0 (ví dụ với số 0 hoặc số âm) để tránh lỗi chia cho 0. Nếu tổng các chữ số bằng 0, số đó không phải là \"perfect digit\" theo định nghĩa chia hết.\n\n3.  **Phân tích danh sách các số:** Viết một hàm chính nhận vào một danh sách các số. Duyệt qua từng số trong danh sách. Với mỗi số, gọi hàm kiểm tra \"perfect digit\" ở bước 2. Nếu là \"perfect digit\", thêm số đó vào một danh sách mới.\n\n4.  **Đếm và tìm số lớn nhất:** Sau khi có danh sách tất cả các số \"perfect digit\" tìm được, đếm số lượng phần tử trong danh sách đó. Để tìm số lớn nhất, sử dụng hàm `max()` trên danh sách này. Cần xử lý trường hợp danh sách rỗng (không có số \"perfect digit\" nào) để tránh lỗi khi gọi `max()` trên một danh sách rỗng, trong trường hợp này có thể trả về `None` hoặc một giá trị mặc định khác.",
-    "initialCode": "def digit_sum(n):\n    # Write your code here\n    pass\n",
+    "initialCode": "def digit_sum(n):\n    # Write your code here\n    pass\n\ndef is_perfect(n):\n    # Write your code here\n    pass\n\ndef analyze_perfect(lst):\n    # Write your code here\n    pass\n",
     "testCases": [
       {
         "id": 1,
@@ -3253,22 +3253,22 @@
     "testCases": [
       {
         "id": 1,
-        "code": "import math\ndef count_segments(N, M):\n    common_length = math.gcd(N, M)\n    return (N // common_length) + (M // common_length)\nprint(count_segments(12, 8))",
+        "code": "print(count_segments(12, 8))",
         "expected": "5"
       },
       {
         "id": 2,
-        "code": "import math\ndef count_segments(N, M):\n    common_length = math.gcd(N, M)\n    return (N // common_length) + (M // common_length)\nprint(count_segments(7, 5))",
+        "code": "print(count_segments(7, 5))",
         "expected": "12"
       },
       {
         "id": 3,
-        "code": "import math\ndef count_segments(N, M):\n    common_length = math.gcd(N, M)\n    return (N // common_length) + (M // common_length)\nprint(count_segments(10, 10))",
+        "code": "print(count_segments(10, 10))",
         "expected": "2"
       },
       {
         "id": 4,
-        "code": "import math\ndef count_segments(N, M):\n    common_length = math.gcd(N, M)\n    return (N // common_length) + (M // common_length)\nprint(count_segments(1, 100))",
+        "code": "print(count_segments(1, 100))",
         "expected": "101"
       }
     ],
@@ -3642,7 +3642,7 @@
     "testCases": [
       {
         "id": 1,
-        "code": "from datetime import date\\nprint(count_working_days(2, 3, date(2024, 1, 10)))",
+        "code": "from datetime import date\nprint(count_working_days(2, 3, date(2024, 1, 10)))",
         "expected": "5"
       }
     ],
@@ -4266,21 +4266,22 @@
     "defaultCode": "def max_profit(prices, fee):\n    pass\n",
     "testCases": [
       {
-        "input": "max_profit([[1, 3, 2, 8, 4, 9], [5, 4, 3]], 2)",
-        "expected": "8",
-        "hidden": false
+        "id": 1,
+        "code": "print(max_profit([[1, 3, 2, 8, 4, 9], [5, 4, 3]], 2))",
+        "expected": "8"
       },
       {
-        "input": "max_profit([[], [1, 2, 3], [10, 5, 20]], 100)",
-        "expected": "0",
-        "hidden": true
+        "id": 2,
+        "code": "print(max_profit([[], [1, 2, 3], [10, 5, 20]], 100))",
+        "expected": "0"
       },
       {
-        "input": "max_profit([[1, 2, 1, 5]], 0)",
-        "expected": "(2-1) + (5-1) = 5",
-        "hidden": true
+        "id": 3,
+        "code": "print(max_profit([[1, 2, 1, 5]], 0))",
+        "expected": "5"
       }
-    ]
+    ],
+    "initialCode": "def max_profit(prices_list, fee):\n    # Write your code here\n    pass\n"
   },
   {
     "id": 2,
@@ -4291,21 +4292,22 @@
     "defaultCode": "def kelly_fractions(assets):\n    pass\n",
     "testCases": [
       {
-        "input": "kelly_fractions([[0.6, 0.2, 0.25], [0.65, 0.2, 0.4]])",
-        "expected": "[0.4, 0.0]",
-        "hidden": false
+        "id": 1,
+        "code": "print(kelly_fractions([[0.6, 0.2, 0.25], [0.65, 0.2, 0.4]]))",
+        "expected": "[0.4, 0.0]"
       },
       {
-        "input": "kelly_fractions([[1.0, 0.5, 0.1], [0.0, 0.5, 0.1]])",
-        "expected": "[1.0, 0.0]",
-        "hidden": true
+        "id": 2,
+        "code": "print(kelly_fractions([[1.0, 0.5, 0.1], [0.0, 0.5, 0.1]]))",
+        "expected": "[1.0, 0.0]"
       },
       {
-        "input": "kelly_fractions([[0.9, 0.8, 0.1]])",
-        "expected": "[1.0]",
-        "hidden": true
+        "id": 3,
+        "code": "print(kelly_fractions([[0.9, 0.8, 0.1]]))",
+        "expected": "[1.0]"
       }
-    ]
+    ],
+    "initialCode": "def kelly_fractions(assets):\n    # Write your code here\n    pass\n"
   },
   {
     "id": 3,
@@ -4316,16 +4318,12 @@
     "defaultCode": "def sharpe_ratio(weights, returns, rf):\n    pass\n",
     "testCases": [
       {
-        "input": "sharpe_ratio([0.5, 0.5], [[0.02, 0.01], [0.03, -0.01], [-0.01, 0.02], [0.04, 0.0]], 0.005)",
-        "expected": "1.3416",
-        "hidden": false
-      },
-      {
-        "input": "sharpe_ratio([0.5, 0.5], [[0.02, 0.02], [0.02, 0.02]], 0.01)",
-        "expected": "",
-        "hidden": true
+        "id": 1,
+        "code": "print(sharpe_ratio([0.5, 0.5], [[0.02, 0.01], [0.03, -0.01], [-0.01, 0.02], [0.04, 0.0]], 0.005))",
+        "expected": "1.3416"
       }
-    ]
+    ],
+    "initialCode": "def sharpe_ratio(weights, returns, rf):\n    # Write your code here\n    pass\n"
   },
   {
     "id": 4,
@@ -4336,15 +4334,11 @@
     "defaultCode": "def optimal_weights(exp_returns, cov, rf):\n    pass\n",
     "testCases": [
       {
-        "input": "optimal_weights([0.10, 0.05], [[0.04, 0.01], [0.01, 0.02]], 0.02)",
-        "expected": "([0.7647, 0.2353], 0.4071)",
-        "hidden": false
-      },
-      {
-        "input": "optimal_weights([0.03, 0.04], [[0.05, 0.0], [0.0, 0.05]], 0.05)",
-        "expected": "",
-        "hidden": true
+        "id": 1,
+        "code": "print(optimal_weights([0.10, 0.05], [[0.04, 0.01], [0.01, 0.02]], 0.02))",
+        "expected": "([0.7647, 0.2353], 0.4071)"
       }
-    ]
+    ],
+    "initialCode": "def optimal_weights(exp_returns, cov, rf):\n    # Write your code here\n    pass\n"
   }
 ]

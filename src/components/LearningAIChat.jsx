@@ -101,12 +101,12 @@ export function LearningAIChat({ isOpen, onClose, notebookTitle, activeCellCode,
     }
   };
 
-  const sessionKey = `ai_learning_chat_${notebookTitle}`;
+  const storageKey = `zerocoder_learning_chat_${notebookTitle || 'default'}`;
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState(() => {
     try {
       if (!notebookTitle) return [];
-      const saved = sessionStorage.getItem(sessionKey);
+      const saved = localStorage.getItem(`zerocoder_learning_chat_${notebookTitle}`) || sessionStorage.getItem(`ai_learning_chat_${notebookTitle}`);
       return saved ? JSON.parse(saved) : [];
     } catch (e) {
       return [];
@@ -118,16 +118,18 @@ export function LearningAIChat({ isOpen, onClose, notebookTitle, activeCellCode,
   
   const chatContainerRef = useRef(null);
 
-  // Persist chat to sessionStorage
+  // Persist chat to localStorage & sessionStorage
   useEffect(() => {
-    if (notebookTitle) {
+    if (notebookTitle && messages.length > 0) {
       try {
-        sessionStorage.setItem(sessionKey, JSON.stringify(messages));
+        const json = JSON.stringify(messages);
+        localStorage.setItem(`zerocoder_learning_chat_${notebookTitle}`, json);
+        sessionStorage.setItem(`ai_learning_chat_${notebookTitle}`, json);
       } catch (e) {
-        console.error('Failed to save learning chat to sessionStorage', e);
+        console.error('Failed to save learning chat to storage', e);
       }
     }
-  }, [messages, notebookTitle, sessionKey]);
+  }, [messages, notebookTitle]);
 
   // Auto-scroll to bottom
   useEffect(() => {
@@ -140,10 +142,14 @@ export function LearningAIChat({ isOpen, onClose, notebookTitle, activeCellCode,
     }
   }, [messages, isLoading]);
 
-  // Reset conversation when notebook changes
+  // Reset/sync conversation when notebook changes
   useEffect(() => {
+    if (!notebookTitle) {
+      setMessages([]);
+      return;
+    }
     try {
-      const saved = sessionStorage.getItem(`ai_learning_chat_${notebookTitle}`);
+      const saved = localStorage.getItem(`zerocoder_learning_chat_${notebookTitle}`) || sessionStorage.getItem(`ai_learning_chat_${notebookTitle}`);
       setMessages(saved ? JSON.parse(saved) : []);
     } catch (e) {
       setMessages([]);
@@ -152,12 +158,12 @@ export function LearningAIChat({ isOpen, onClose, notebookTitle, activeCellCode,
   }, [notebookTitle]);
 
   const handleIntent = async (intentPrompt) => {
+    if (isLoading) return;
     setIsLoading(true);
     setError('');
     
     const intentMessage = { role: 'user', content: intentPrompt };
     // Do not add the intent prompt to the UI
-
     
     try {
       const { askAIForLearning } = await import('../config/aiService');
@@ -169,6 +175,7 @@ export function LearningAIChat({ isOpen, onClose, notebookTitle, activeCellCode,
         [intentMessage]
       );
       setCurrentProvider(providerName || 'AI');
+      setIsLoading(false);
       setMessages(prev => [...prev, { role: 'assistant', content: text, isNew: true }]);
     } catch (err) {
       setError(err.message || 'Đã xảy ra lỗi khi kết nối AI.');
@@ -199,10 +206,10 @@ export function LearningAIChat({ isOpen, onClose, notebookTitle, activeCellCode,
         updatedMessages
       );
       setCurrentProvider(providerName || 'AI');
+      setIsLoading(false);
       setMessages(prev => [...prev, { role: 'assistant', content: text, isNew: true }]);
     } catch (err) {
       setError(err.message || 'Đã xảy ra lỗi khi kết nối AI.');
-      setMessages(messages);
     } finally {
       setIsLoading(false);
     }

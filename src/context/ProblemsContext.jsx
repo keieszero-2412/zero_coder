@@ -8,7 +8,7 @@ export function useProblems() {
   return useContext(ProblemsContext);
 }
 
-const CACHE_VERSION = 'v4_summer_order';
+const CACHE_VERSION = 'v6_def_signatures';
 
 export function ProblemsProvider({ children }) {
   // Initialize from localStorage for instant load (SWR pattern)

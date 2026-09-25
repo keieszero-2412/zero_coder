@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { CheckCircle2, XCircle, Activity, ChevronDown, ChevronRight } from 'lucide-react';
 
 function TestCaseResult({ res, index }) {
-  const [showAnswer, setShowAnswer] = useState(false);
   const [showDiff, setShowDiff] = useState(false);
 
   const isMCQ = res.isMCQ || (typeof res.code === 'string' && (res.code.startsWith('Câu') || res.code.startsWith('Question')));
@@ -11,42 +10,73 @@ function TestCaseResult({ res, index }) {
 
   return (
     <div style={{ marginBottom: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+      {/* Test Case Header */}
       <div className={`test-case ${res.passed ? 'pass' : 'fail'}`} style={{ marginBottom: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          {res.passed ? <CheckCircle2 color="var(--success)" size={20} /> : <XCircle color="var(--error)" size={20} />}
-          <span style={{ fontWeight: 500 }}>{res.code ? res.code : `Test Case ${index + 1}`}</span>
-        </div>
-        <div className={`badge ${res.passed ? 'pass' : 'fail'}`} style={{ display: 'flex', alignItems: 'center' }}>
-          <span>{res.passed ? 'Passed' : 'Failed'}</span>
-          <button
-            onClick={() => setShowAnswer(prev => !prev)}
-            style={{
-              marginLeft: '0.5rem',
-              padding: '0.2rem 0.5rem',
-              fontSize: '0.75rem',
-              backgroundColor: 'transparent',
-              border: '1px solid var(--border-color)',
-              color: 'var(--text-secondary)',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              transition: 'all 0.2s'
-            }}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', minWidth: 0, flex: 1, marginRight: '0.5rem' }}>
+          {res.passed ? (
+            <CheckCircle2 color="var(--success)" size={18} style={{ flexShrink: 0 }} />
+          ) : (
+            <XCircle color="var(--error)" size={18} style={{ flexShrink: 0 }} />
+          )}
+          <span 
+            style={{ 
+              fontWeight: 600, 
+              fontFamily: 'monospace', 
+              fontSize: '0.84rem', 
+              overflow: 'hidden', 
+              textOverflow: 'ellipsis', 
+              whiteSpace: 'nowrap',
+              color: 'var(--text-primary)'
+            }} 
+            title={res.code ? res.code : `Test Case ${index + 1}`}
           >
-            {showAnswer ? 'Hide Answer' : 'View Answer'}
-          </button>
+            {res.code ? res.code : `Test Case ${index + 1}`}
+          </span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
+          <span className={`badge ${res.passed ? 'pass' : 'fail'}`} style={{ whiteSpace: 'nowrap' }}>
+            {res.passed ? 'Passed' : 'Failed'}
+          </span>
         </div>
       </div>
       
       {/* Execution Error */}
       {!res.passed && res.error && (
-        <div style={{ padding: '0.75rem', backgroundColor: 'rgba(239, 68, 68, 0.1)', color: 'var(--error)', borderLeft: '3px solid var(--error)', borderRadius: '0 4px 4px 0', fontSize: '0.85rem', marginTop: '0.25rem' }}>
-          <div style={{ fontFamily: 'monospace', color: 'inherit', marginBottom: '0.5rem', paddingBottom: '0.5rem', borderBottom: '1px solid rgba(239, 68, 68, 0.2)', wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}>
-            {res.code}
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', fontFamily: 'monospace', wordBreak: 'break-word' }}>
-            {showAnswer && <div style={{ color: 'var(--success)' }}>Expected: {expStr}</div>}
-            <div style={{ color: 'var(--error)', whiteSpace: 'pre-wrap', wordBreak: 'break-word', marginTop: '0.5rem', borderTop: '1px solid rgba(239, 68, 68, 0.2)', paddingTop: '0.5rem' }}>
-              <strong>Execution Error:</strong><br/>
+        <div style={{ padding: '0.85rem 1rem', backgroundColor: 'rgba(239, 68, 68, 0.08)', borderLeft: '3px solid var(--error)', borderRadius: '0 var(--radius-sm) var(--radius-sm) 0', fontSize: '0.84rem', marginTop: '0.25rem', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+          {expStr && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+              <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--success)', textTransform: 'uppercase', letterSpacing: '0.03em' }}>
+                Expected
+              </span>
+              <div style={{ 
+                fontFamily: 'monospace', 
+                backgroundColor: 'color-mix(in srgb, var(--success) 8%, var(--bg-base))', 
+                color: 'var(--text-primary)', 
+                padding: '0.45rem 0.65rem', 
+                borderRadius: 'var(--radius-sm)', 
+                border: '1px solid color-mix(in srgb, var(--success) 25%, transparent)',
+                wordBreak: 'break-all',
+                whiteSpace: 'pre-wrap'
+              }}>
+                {expStr}
+              </div>
+            </div>
+          )}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--error)', textTransform: 'uppercase', letterSpacing: '0.03em' }}>
+              Execution Error
+            </span>
+            <div style={{ 
+              fontFamily: 'monospace', 
+              backgroundColor: 'color-mix(in srgb, var(--error) 8%, var(--bg-base))', 
+              color: 'var(--error)', 
+              padding: '0.45rem 0.65rem', 
+              borderRadius: 'var(--radius-sm)', 
+              border: '1px solid color-mix(in srgb, var(--error) 25%, transparent)',
+              wordBreak: 'break-word',
+              whiteSpace: 'pre-wrap',
+              lineHeight: 1.4
+            }}>
               {res.error}
             </div>
           </div>
@@ -55,27 +85,70 @@ function TestCaseResult({ res, index }) {
 
       {/* Output Mismatch */}
       {!res.passed && !res.error && res.got !== undefined && (
-        <div style={{ padding: '0.75rem', backgroundColor: 'var(--bg-surface-elevated)', borderLeft: '3px solid var(--error)', borderRadius: '0 4px 4px 0', fontSize: '0.85rem', marginTop: '0.25rem' }}>
-          <div style={{ fontFamily: 'monospace', color: 'var(--text-secondary)', marginBottom: '0.5rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--border-color)', wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}>
-            {res.code}
+        <div style={{ 
+          padding: '0.85rem 1rem', 
+          backgroundColor: 'var(--bg-surface-elevated)', 
+          borderLeft: '3px solid var(--error)', 
+          borderRadius: '0 var(--radius-sm) var(--radius-sm) 0', 
+          fontSize: '0.84rem', 
+          marginTop: '0.25rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.65rem'
+        }}>
+          {/* Expected */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--success)', textTransform: 'uppercase', letterSpacing: '0.03em' }}>
+              Expected
+            </span>
+            <div style={{ 
+              fontFamily: 'monospace', 
+              backgroundColor: 'color-mix(in srgb, var(--success) 8%, var(--bg-base))', 
+              color: 'var(--text-primary)', 
+              padding: '0.45rem 0.65rem', 
+              borderRadius: 'var(--radius-sm)', 
+              border: '1px solid color-mix(in srgb, var(--success) 25%, transparent)',
+              wordBreak: 'break-all',
+              whiteSpace: 'pre-wrap'
+            }}>
+              {expStr}
+            </div>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', fontFamily: 'monospace', wordBreak: 'break-word' }}>
-            {showAnswer && <div style={{ color: 'var(--success)' }}>Expected: {expStr}</div>}
-            <div style={{ color: 'var(--error)' }}>Got: {gotStr}</div>
+
+          {/* Got */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--error)', textTransform: 'uppercase', letterSpacing: '0.03em' }}>
+              Your Output (Got)
+            </span>
+            <div style={{ 
+              fontFamily: 'monospace', 
+              backgroundColor: 'color-mix(in srgb, var(--error) 8%, var(--bg-base))', 
+              color: 'var(--text-primary)', 
+              padding: '0.45rem 0.65rem', 
+              borderRadius: 'var(--radius-sm)', 
+              border: '1px solid color-mix(in srgb, var(--error) 25%, transparent)',
+              wordBreak: 'break-all',
+              whiteSpace: 'pre-wrap'
+            }}>
+              {gotStr}
+            </div>
           </div>
+
           {!isMCQ && (
-            <>
+            <div>
               <button 
                 style={{ 
-                  marginTop: '0.75rem', 
-                  padding: '0.25rem 0.75rem', 
+                  padding: '0.25rem 0.6rem', 
                   fontSize: '0.75rem', 
                   backgroundColor: 'transparent', 
                   border: '1px solid var(--border-color)', 
                   color: 'var(--text-secondary)',
-                  borderRadius: '4px',
+                  borderRadius: 'var(--radius-sm)',
                   cursor: 'pointer',
-                  transition: 'all 0.2s'
+                  transition: 'all 0.2s',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.35rem'
                 }}
                 onMouseOver={(e) => {
                   e.currentTarget.style.backgroundColor = 'var(--bg-surface-highlight)';
@@ -91,37 +164,39 @@ function TestCaseResult({ res, index }) {
               </button>
               
               {showDiff && (
-                <div style={{ marginTop: '0.5rem', padding: '0.5rem', backgroundColor: 'rgba(0,0,0,0.2)', fontFamily: 'monospace', borderRadius: 'var(--radius-sm)', wordBreak: 'break-all', whiteSpace: 'pre-wrap' }}>
-                  <div>
-                    {expStr.split('').map((char, i) => (
-                      <span key={`exp-${i}`} style={gotStr[i] === char ? { color: 'var(--text-tertiary)' } : { backgroundColor: 'rgba(34, 197, 94, 0.2)', color: 'var(--success)' }}>
-                        {char === ' ' ? '·' : char}
-                      </span>
-                    ))}
+                <div style={{ 
+                  marginTop: '0.5rem', 
+                  padding: '0.65rem 0.75rem', 
+                  backgroundColor: 'var(--bg-base)', 
+                  fontFamily: 'monospace', 
+                  fontSize: '0.8rem',
+                  borderRadius: 'var(--radius-sm)', 
+                  border: '1px solid var(--border-color)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.35rem'
+                }}>
+                  <div style={{ color: 'var(--success)', wordBreak: 'break-all', whiteSpace: 'pre-wrap' }}>
+                    <span style={{ userSelect: 'none', marginRight: '0.5rem', fontWeight: 700 }}>+</span>
+                    {expStr}
                   </div>
-                  <div>
-                    {gotStr.split('').map((char, i) => (
-                      <span key={`got-${i}`} style={expStr[i] === char ? { color: 'var(--text-tertiary)' } : { backgroundColor: 'rgba(239, 68, 68, 0.2)', color: 'var(--error)' }}>
-                        {char === ' ' ? '·' : char}
-                      </span>
-                    ))}
+                  <div style={{ color: 'var(--error)', wordBreak: 'break-all', whiteSpace: 'pre-wrap' }}>
+                    <span style={{ userSelect: 'none', marginRight: '0.5rem', fontWeight: 700 }}>-</span>
+                    {gotStr}
                   </div>
                 </div>
               )}
-            </>
+            </div>
           )}
         </div>
       )}
 
       {/* Success */}
       {res.passed && (
-        <div style={{ padding: '0.75rem', backgroundColor: 'rgba(34, 197, 94, 0.1)', color: 'var(--success)', borderLeft: '3px solid var(--success)', borderRadius: '0 4px 4px 0', fontSize: '0.85rem', marginTop: '0.25rem' }}>
-          <div style={{ fontFamily: 'monospace', color: 'var(--text-secondary)', marginBottom: '0.5rem', paddingBottom: '0.5rem', borderBottom: '1px solid rgba(34, 197, 94, 0.2)', wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}>
-            {res.code}
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', fontFamily: 'monospace', wordBreak: 'break-word' }}>
-            {showAnswer && <div style={{ color: 'var(--success)' }}>Expected: {expStr}</div>}
-            <div style={{ color: 'var(--success)' }}>Got: {gotStr}</div>
+        <div style={{ padding: '0.65rem 0.85rem', backgroundColor: 'rgba(34, 197, 94, 0.08)', color: 'var(--success)', borderLeft: '3px solid var(--success)', borderRadius: '0 var(--radius-sm) var(--radius-sm) 0', fontSize: '0.82rem', marginTop: '0.25rem' }}>
+          <div style={{ fontFamily: 'monospace', wordBreak: 'break-all', whiteSpace: 'pre-wrap' }}>
+            <span style={{ color: 'var(--text-tertiary)', marginRight: '0.5rem' }}>Output:</span>
+            {gotStr}
           </div>
         </div>
       )}

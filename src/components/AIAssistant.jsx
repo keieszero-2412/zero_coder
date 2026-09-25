@@ -117,12 +117,13 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
     }
   };
 
-  const sessionKey = `ai_chat_${problem?.id}`;
+  const problemId = problem?.id;
+  const storageKey = `zerocoder_ai_chat_${problemId || 'default'}`;
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState(() => {
     try {
-      if (!problem?.id) return [];
-      const saved = sessionStorage.getItem(sessionKey);
+      if (!problemId) return [];
+      const saved = localStorage.getItem(`zerocoder_ai_chat_${problemId}`) || sessionStorage.getItem(`ai_chat_${problemId}`);
       return saved ? JSON.parse(saved) : [];
     } catch (e) {
       return [];
@@ -134,15 +135,31 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
   
   const chatContainerRef = useRef(null);
 
+  // Sync messages whenever problemId becomes available or changes
   useEffect(() => {
-    if (problem?.id) {
+    if (!problemId) return;
+    try {
+      const saved = localStorage.getItem(`zerocoder_ai_chat_${problemId}`) || sessionStorage.getItem(`ai_chat_${problemId}`);
+      if (saved) {
+        setMessages(JSON.parse(saved));
+      }
+    } catch (e) {
+      console.error('Failed to sync chat history from storage', e);
+    }
+  }, [problemId]);
+
+  // Persist messages to both localStorage and sessionStorage
+  useEffect(() => {
+    if (problemId && messages.length > 0) {
       try {
-        sessionStorage.setItem(sessionKey, JSON.stringify(messages));
+        const json = JSON.stringify(messages);
+        localStorage.setItem(`zerocoder_ai_chat_${problemId}`, json);
+        sessionStorage.setItem(`ai_chat_${problemId}`, json);
       } catch (e) {
-        console.error('Failed to save chat to sessionStorage', e);
+        console.error('Failed to save chat to storage', e);
       }
     }
-  }, [messages, problem?.id, sessionKey]);
+  }, [messages, problemId]);
 
   // Auto-scroll to bottom of chat safely without locking scroll
   useEffect(() => {
@@ -156,17 +173,18 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
   }, [messages, isLoading]);
 
   const handleIntent = async (intentPrompt) => {
+    if (isLoading) return;
     setIsLoading(true);
     setError('');
     
     const intentMessage = { role: 'user', content: intentPrompt };
     // Do not add the intent prompt to the UI
-
     
     try {
       const { text, providerName, modelName } = await askAIForHelp(problem, userCode, testResults, [intentMessage]);
       setCurrentProvider(providerName || 'AI');
-      setMessages(prev => [...prev, { role: 'assistant', content: text }]);
+      setIsLoading(false);
+      setMessages(prev => [...prev, { role: 'assistant', content: text, isNew: true }]);
     } catch (err) {
       setError(err.message || 'An error occurred while communicating with the AI.');
     } finally {
@@ -175,6 +193,7 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
   };
 
   const handleFixIntent = async () => {
+    if (isLoading) return;
     setIsLoading(true);
     setError('');
     
@@ -194,12 +213,21 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
         response.toLowerCase().includes("no error to fix") ||
         extractedCode.trim() === userCode.trim()
       ) {
-        setMessages(prev => [...prev, { role: 'assistant', content: "Your code is correct. There are no errors to fix." }]);
+        setIsLoading(false);
+        setMessages(prev => [...prev, { role: 'assistant', content: "Mã nguồn của bạn đã chính xác hoặc không có lỗi cần sửa." }]);
         return;
       }
       
+      setIsLoading(false);
+      setMessages(prev => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: 'Mình đã đề xuất bản sửa code cho bạn ở khung soạn thảo bên trái. Bạn hãy xem phần so sánh (diff) và bấm **Accept** để áp dụng hoặc **Reject** để huỷ nhé.',
+          isNew: true
+        }
+      ]);
       onProposeFix(extractedCode);
-      // Đã xoá if (onClose) onClose(); để cửa sổ không bị tắt
     } catch (err) {
       setError(err.message || 'An error occurred while communicating with the AI.');
     } finally {
@@ -208,6 +236,7 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
   };
 
   const handleAskAI = async () => {
+    if (isLoading) return;
     setIsLoading(true);
     setError('');
     
@@ -215,6 +244,7 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
       // For initial request, we don't send any user text, the AI will use the system prompt
       const { text, providerName, modelName } = await askAIForHelp(problem, userCode, testResults, []);
       setCurrentProvider(providerName || 'AI');
+      setIsLoading(false);
       setMessages([{ role: 'assistant', content: text, isNew: true }]);
     } catch (err) {
       setError(err.message || 'An error occurred while communicating with the AI.');
@@ -239,11 +269,10 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
       // Send the entire chat history
       const { text, providerName, modelName } = await askAIForHelp(problem, userCode, testResults, updatedMessages);
       setCurrentProvider(providerName || 'AI');
+      setIsLoading(false);
       setMessages(prev => [...prev, { role: 'assistant', content: text, isNew: true }]);
     } catch (err) {
       setError(err.message || 'An error occurred while communicating with the AI.');
-      // Remove the user message if it failed so they can try again
-      setMessages(messages);
     } finally {
       setIsLoading(false);
     }

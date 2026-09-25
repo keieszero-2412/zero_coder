@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { MessageSquare, X, Upload, Loader2, CheckCircle2, Plus, ArrowLeft, ImageIcon } from 'lucide-react';
+import { MessageSquare, X, Upload, Loader2, CheckCircle2, Plus, ArrowLeft, ImageIcon, Send, Shield, Pencil } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { db } from '../config/firebase';
 import { collection, addDoc, updateDoc, serverTimestamp, query, where, onSnapshot, doc, writeBatch } from 'firebase/firestore';
-import { Pencil } from 'lucide-react';
 
 export default function FeedbackWidget({ iconOnly = false }) {
   const { currentUser } = useAuth();
@@ -22,6 +21,10 @@ export default function FeedbackWidget({ iconOnly = false }) {
   const [error, setError] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
 
+  // User replies state
+  const [userReplyDrafts, setUserReplyDrafts] = useState({});
+  const [submittingReplyId, setSubmittingReplyId] = useState(null);
+
   useEffect(() => {
     if (!currentUser) return;
     
@@ -38,9 +41,9 @@ export default function FeedbackWidget({ iconOnly = false }) {
         }
       });
       fbs.sort((a, b) => {
-        if (!a.createdAt) return -1;
-        if (!b.createdAt) return 1;
-        return b.createdAt.toMillis() - a.createdAt.toMillis();
+        const timeA = a.updatedAt?.toMillis ? a.updatedAt.toMillis() : (a.createdAt?.toMillis ? a.createdAt.toMillis() : 0);
+        const timeB = b.updatedAt?.toMillis ? b.updatedAt.toMillis() : (b.createdAt?.toMillis ? b.createdAt.toMillis() : 0);
+        return timeB - timeA;
       });
       setMyFeedbacks(fbs);
       setUnreadCount(unread);
@@ -52,6 +55,51 @@ export default function FeedbackWidget({ iconOnly = false }) {
     });
     return () => unsub();
   }, [currentUser, isOpen]);
+
+  const handleSendUserReply = async (feedbackId) => {
+    const text = userReplyDrafts[feedbackId]?.trim();
+    if (!text) return;
+    setSubmittingReplyId(feedbackId);
+    try {
+      const fb = myFeedbacks.find(f => f.id === feedbackId);
+      const existingReplies = Array.isArray(fb?.replies) ? fb.replies : [];
+      
+      let initialReplies = [...existingReplies];
+      if (initialReplies.length === 0 && fb?.adminReply) {
+        initialReplies.push({
+          sender: 'admin',
+          senderName: 'Admin',
+          text: fb.adminReply,
+          createdAt: fb.repliedAt || fb.resolvedAt || new Date()
+        });
+      }
+
+      const newReply = {
+        sender: 'user',
+        senderName: currentUser.displayName || currentUser.email?.split('@')[0] || 'You',
+        text,
+        createdAt: new Date()
+      };
+
+      const updatedReplies = [...initialReplies, newReply];
+
+      await updateDoc(doc(db, 'feedbacks', feedbackId), {
+        replies: updatedReplies,
+        status: 'user_replied',
+        updatedAt: serverTimestamp()
+      });
+
+      setUserReplyDrafts(prev => {
+        const next = { ...prev };
+        delete next[feedbackId];
+        return next;
+      });
+    } catch (err) {
+      console.error('Failed to send reply:', err);
+    } finally {
+      setSubmittingReplyId(null);
+    }
+  };
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -338,12 +386,14 @@ export default function FeedbackWidget({ iconOnly = false }) {
                           gap: '0.75rem'
                         }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>
-                            <span>{fb.createdAt ? new Date(fb.createdAt.toMillis()).toLocaleString() : 'Just now'}</span>
-                            {fb.status === 'new' && <span style={{ backgroundColor: 'color-mix(in srgb, #eab308 15%, transparent)', color: '#eab308', padding: '0.1rem 0.5rem', borderRadius: '1rem', fontWeight: 600 }}>Pending</span>}
-                            {fb.status === 'approved' && <span style={{ backgroundColor: 'color-mix(in srgb, var(--success) 15%, transparent)', color: 'var(--success)', padding: '0.1rem 0.5rem', borderRadius: '1rem', fontWeight: 600 }}>Approved</span>}
-                            {fb.status === 'rejected' && <span style={{ backgroundColor: 'color-mix(in srgb, var(--error) 15%, transparent)', color: 'var(--error)', padding: '0.1rem 0.5rem', borderRadius: '1rem', fontWeight: 600 }}>Rejected</span>}
-                            {fb.status === 'replied' && <span style={{ backgroundColor: 'color-mix(in srgb, var(--accent-primary) 15%, transparent)', color: 'var(--accent-primary)', padding: '0.1rem 0.5rem', borderRadius: '1rem', fontWeight: 600 }}>New Reply</span>}
-                            {fb.status === 'read' && <span style={{ backgroundColor: 'color-mix(in srgb, var(--text-tertiary) 15%, transparent)', color: 'var(--text-tertiary)', padding: '0.1rem 0.5rem', borderRadius: '1rem', fontWeight: 600 }}>Replied (Read)</span>}
+                            <span>{fb.createdAt ? new Date(fb.createdAt.toMillis ? fb.createdAt.toMillis() : fb.createdAt).toLocaleString() : 'Just now'}</span>
+                            <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+                              {fb.status === 'new' && <span style={{ backgroundColor: 'color-mix(in srgb, #eab308 15%, transparent)', color: '#eab308', padding: '0.1rem 0.5rem', borderRadius: '1rem', fontWeight: 600 }}>Pending</span>}
+                              {fb.status === 'user_replied' && <span style={{ backgroundColor: 'color-mix(in srgb, #3b82f6 15%, transparent)', color: '#3b82f6', padding: '0.1rem 0.5rem', borderRadius: '1rem', fontWeight: 600 }}>You Replied</span>}
+                              {fb.status === 'replied' && <span style={{ backgroundColor: 'color-mix(in srgb, var(--accent-primary) 15%, transparent)', color: 'var(--accent-primary)', padding: '0.1rem 0.5rem', borderRadius: '1rem', fontWeight: 600 }}>New Reply</span>}
+                              {fb.status === 'read' && <span style={{ backgroundColor: 'color-mix(in srgb, var(--text-tertiary) 15%, transparent)', color: 'var(--text-tertiary)', padding: '0.1rem 0.5rem', borderRadius: '1rem', fontWeight: 600 }}>Replied</span>}
+                              {(fb.status === 'resolved' || fb.status === 'resolved_read') && <span style={{ backgroundColor: 'color-mix(in srgb, #10b981 15%, transparent)', color: '#10b981', padding: '0.1rem 0.5rem', borderRadius: '1rem', fontWeight: 600 }}>Resolved</span>}
+                            </div>
                           </div>
                           
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -351,30 +401,24 @@ export default function FeedbackWidget({ iconOnly = false }) {
                               {fb.description}
                             </div>
                             
-                            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem', alignItems: 'center' }}>
-                              {(fb.status === 'new') && <span style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: '4px', backgroundColor: 'var(--bg-base)', border: '1px solid var(--border-color)' }}>Pending</span>}
-                              {(fb.status === 'replied' || fb.status === 'read') && <span style={{ color: 'var(--accent-primary)', fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: '4px', backgroundColor: 'rgba(59, 130, 246, 0.1)', border: '1px solid var(--accent-primary)' }}>Replied</span>}
-                              {(fb.status === 'resolved' || fb.status === 'resolved_read') && <span style={{ color: '#10b981', fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: '4px', backgroundColor: 'rgba(16, 185, 129, 0.1)', border: '1px solid #10b981' }}>Resolved</span>}
-                              
-                              {fb.status === 'new' && (
-                                <button
-                                  onClick={() => {
-                                    setEditingFeedbackId(fb.id);
-                                    setDescription(fb.description);
-                                    setImageFiles([]); // Reset images to avoid accidental overwrite unless intended
-                                    setViewMode('form');
-                                  }}
-                                  className="button-secondary"
-                                  style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
-                                >
-                                  <Pencil size={12} /> Edit
-                                </button>
-                              )}
-                            </div>
+                            {fb.status === 'new' && (
+                              <button
+                                onClick={() => {
+                                  setEditingFeedbackId(fb.id);
+                                  setDescription(fb.description);
+                                  setImageFiles([]);
+                                  setViewMode('form');
+                                }}
+                                className="button-secondary"
+                                style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.25rem', marginLeft: '0.5rem' }}
+                              >
+                                <Pencil size={12} /> Edit
+                              </button>
+                            )}
                           </div>
 
                           {(fb.imageUrls?.length > 0 || fb.imageUrl) && (
-                            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
+                            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.25rem' }}>
                               {(fb.imageUrls || [fb.imageUrl]).map((url, i) => (
                                 <button key={i} onClick={() => setSelectedImage(url)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.75rem', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', cursor: 'pointer', padding: '0.3rem 0.6rem', backgroundColor: 'transparent', borderRadius: 'var(--radius-sm)', transition: 'all 0.2s' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(59, 130, 246, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
                                   <ImageIcon size={14} /> Image {i + 1}
@@ -383,23 +427,141 @@ export default function FeedbackWidget({ iconOnly = false }) {
                             </div>
                           )}
 
-                          {fb.adminReply && (
-                            <div style={{ 
-                              marginTop: '0.5rem',
-                              padding: '0.75rem',
-                              backgroundColor: (fb.status === 'resolved' || fb.status === 'resolved_read') ? 'rgba(16, 185, 129, 0.1)' : 'rgba(20, 184, 166, 0.1)',
-                              borderLeft: `3px solid ${(fb.status === 'resolved' || fb.status === 'resolved_read') ? '#10b981' : 'var(--accent-primary)'}`,
-                              borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
-                              fontSize: '0.875rem'
-                            }}>
-                              <div style={{ fontWeight: 600, color: (fb.status === 'resolved' || fb.status === 'resolved_read') ? '#10b981' : 'var(--accent-primary)', marginBottom: '0.25rem' }}>
-                                {(fb.status === 'resolved' || fb.status === 'resolved_read') ? 'Resolved by Admin:' : 'Admin Reply:'}
-                              </div>
-                              <div style={{ color: 'var(--text-primary)', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
-                                {fb.adminReply}
-                              </div>
-                            </div>
-                          )}
+                          {/* Conversation Thread */}
+                          {(() => {
+                            const thread = (Array.isArray(fb.replies) && fb.replies.length > 0)
+                              ? fb.replies
+                              : (fb.adminReply ? [{
+                                  sender: 'admin',
+                                  senderName: 'Admin',
+                                  text: fb.adminReply,
+                                  createdAt: fb.repliedAt || fb.resolvedAt || null
+                                }] : []);
+
+                            return (
+                              <>
+                                {thread.length > 0 && (
+                                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginTop: '0.5rem' }}>
+                                    {thread.map((msg, idx) => {
+                                      const isAdmin = msg.sender === 'admin';
+                                      const msgTime = msg.createdAt?.toDate 
+                                        ? msg.createdAt.toDate().toLocaleString() 
+                                        : (msg.createdAt ? new Date(msg.createdAt).toLocaleString() : '');
+
+                                      return (
+                                        <div 
+                                          key={idx}
+                                          style={{
+                                            padding: '0.65rem 0.85rem',
+                                            borderRadius: 'var(--radius-sm)',
+                                            fontSize: '0.85rem',
+                                            backgroundColor: isAdmin 
+                                              ? ((fb.status === 'resolved' || fb.status === 'resolved_read') ? 'rgba(16, 185, 129, 0.08)' : 'rgba(99, 102, 241, 0.08)')
+                                              : 'var(--bg-surface-elevated)',
+                                            borderLeft: `3px solid ${isAdmin 
+                                              ? ((fb.status === 'resolved' || fb.status === 'resolved_read') ? '#10b981' : 'var(--accent-primary)') 
+                                              : 'var(--border-color)'}`,
+                                            borderTop: '1px solid var(--border-color)',
+                                            borderRight: '1px solid var(--border-color)',
+                                            borderBottom: '1px solid var(--border-color)',
+                                          }}
+                                        >
+                                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
+                                            <span style={{ 
+                                              fontWeight: 600, 
+                                              color: isAdmin 
+                                                ? ((fb.status === 'resolved' || fb.status === 'resolved_read') ? '#10b981' : 'var(--accent-primary)') 
+                                                : 'var(--text-primary)',
+                                              display: 'flex',
+                                              alignItems: 'center',
+                                              gap: '0.35rem'
+                                            }}>
+                                              {isAdmin ? (
+                                                <>
+                                                  <Shield size={12} />
+                                                  <span>{msg.senderName || 'Admin'}</span>
+                                                </>
+                                              ) : (
+                                                <span>{msg.senderName || 'You'}</span>
+                                              )}
+                                            </span>
+                                            {msgTime && (
+                                              <span style={{ fontSize: '0.72rem', color: 'var(--text-tertiary)' }}>
+                                                {msgTime}
+                                              </span>
+                                            )}
+                                          </div>
+                                          <div style={{ color: 'var(--text-primary)', whiteSpace: 'pre-wrap', wordBreak: 'break-word', lineHeight: 1.5 }}>
+                                            {msg.text}
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                )}
+
+                                {/* User reply input */}
+                                <div style={{ 
+                                  marginTop: '0.5rem', 
+                                  paddingTop: '0.65rem', 
+                                  borderTop: '1px dashed var(--border-color)',
+                                  display: 'flex',
+                                  flexDirection: 'column',
+                                  gap: '0.4rem'
+                                }}>
+                                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                    <textarea
+                                      placeholder={fb.status === 'resolved' || fb.status === 'resolved_read' 
+                                        ? "Reply to follow up or ask more..." 
+                                        : "Reply to Admin..."}
+                                      value={userReplyDrafts[fb.id] || ''}
+                                      onChange={(e) => setUserReplyDrafts(prev => ({ ...prev, [fb.id]: e.target.value }))}
+                                      rows={1}
+                                      style={{
+                                        flex: 1,
+                                        padding: '0.45rem 0.65rem',
+                                        borderRadius: 'var(--radius-sm)',
+                                        border: '1px solid var(--border-color)',
+                                        backgroundColor: 'var(--bg-surface)',
+                                        color: 'var(--text-primary)',
+                                        fontSize: '0.85rem',
+                                        fontFamily: 'inherit',
+                                        resize: 'vertical',
+                                        minHeight: '36px',
+                                        maxHeight: '120px',
+                                        outline: 'none'
+                                      }}
+                                      onKeyDown={(e) => {
+                                        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                                          e.preventDefault();
+                                          handleSendUserReply(fb.id);
+                                        }
+                                      }}
+                                    />
+                                    <button
+                                      onClick={() => handleSendUserReply(fb.id)}
+                                      disabled={!userReplyDrafts[fb.id]?.trim() || submittingReplyId === fb.id}
+                                      className="button-primary"
+                                      style={{
+                                        padding: '0.4rem 0.75rem',
+                                        fontSize: '0.8rem',
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: '0.35rem',
+                                        alignSelf: 'flex-end',
+                                        opacity: (!userReplyDrafts[fb.id]?.trim() || submittingReplyId === fb.id) ? 0.5 : 1,
+                                        cursor: (!userReplyDrafts[fb.id]?.trim() || submittingReplyId === fb.id) ? 'not-allowed' : 'pointer'
+                                      }}
+                                      title="Send Reply (Ctrl+Enter)"
+                                    >
+                                      {submittingReplyId === fb.id ? <Loader2 size={13} className="spin" /> : <Send size={13} />}
+                                      <span>Reply</span>
+                                    </button>
+                                  </div>
+                                </div>
+                              </>
+                            );
+                          })()}
                         </div>
                       ))}
                     </div>

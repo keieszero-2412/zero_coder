@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { NotebookViewer } from '../components/NotebookViewer';
 import { LearningAIChat } from '../components/LearningAIChat';
 import { FileBrowser } from '../components/FileBrowser';
-import { ArrowLeft, ChevronRight, Folder, Compass, X, Play, Loader2, ChevronLeft } from 'lucide-react';
+import { ArrowLeft, ChevronRight, Folder, X, Play, Loader2, ChevronLeft } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
@@ -385,8 +385,7 @@ export function LearningWorkspace() {
         {showGuide && (
           <div style={{ width: '330px', minWidth: '290px', maxWidth: '380px', borderRight: '1px solid var(--border-color)', backgroundColor: 'var(--bg-surface)', display: 'flex', flexDirection: 'column' }}>
             <div style={{ padding: '0.75rem 1.15rem', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'var(--bg-surface-elevated)' }}>
-              <h3 style={{ margin: 0, fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Compass size={17} color="var(--accent-primary)" />
+              <h3 style={{ margin: 0, fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                 Lesson Guide
               </h3>
               <button 

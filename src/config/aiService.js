@@ -9,47 +9,50 @@ import { GoogleGenAI } from '@google/genai';
 // --- Provider Configuration ---
 const providers = [];
 
-// 1. Groq (Llama 3.3 70B - very fast)
+// 1. Groq (Ultra-fast inference on LPUs, <1s response time)
 const groqKey = import.meta.env.VITE_GROQ_API_KEY || '';
 if (groqKey) {
   providers.push({
-    name: 'Groq',
+    name: 'Groq (Qwen 27B)',
     type: 'openai-compatible',
-    model: 'groq/compound',
+    model: 'qwen/qwen3.8-27b',
+    apiKey: groqKey,
+    baseUrl: 'https://api.groq.com/openai/v1/chat/completions',
+  });
+  providers.push({
+    name: 'Groq (GPT-OSS 120B)',
+    type: 'openai-compatible',
+    model: 'openai/gpt-oss-120b',
     apiKey: groqKey,
     baseUrl: 'https://api.groq.com/openai/v1/chat/completions',
   });
 }
 
-// 2. Gemini (Google)
+// 2. Gemini (Google GenAI 3.6 Flash)
 const geminiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
 if (geminiKey) {
+  const geminiClient = new GoogleGenAI({ apiKey: geminiKey });
   providers.push({
-    name: 'Gemini',
+    name: 'Gemini (3.6 Flash)',
     type: 'gemini',
     model: 'gemini-3.6-flash',
     apiKey: geminiKey,
-    client: new GoogleGenAI({ apiKey: geminiKey }),
+    client: geminiClient,
   });
 }
 
-// 3. OpenRouter (Free Llama/Gemma)
-const openRouterKey = import.meta.env.VITE_OPENROUTER_API_KEY || '';
-if (openRouterKey) {
-  providers.push({
-    name: 'OpenRouter',
-    type: 'openai-compatible',
-    model: 'openrouter/free',
-    apiKey: openRouterKey,
-    baseUrl: 'https://openrouter.ai/api/v1/chat/completions',
-  });
-}
-
-// 4. Mistral
+// 3. Mistral (open-mistral-7b & mistral-small-latest)
 const mistralKey = import.meta.env.VITE_MISTRAL_API_KEY || '';
 if (mistralKey) {
   providers.push({
-    name: 'Mistral',
+    name: 'Mistral (7B)',
+    type: 'openai-compatible',
+    model: 'open-mistral-7b',
+    apiKey: mistralKey,
+    baseUrl: 'https://api.mistral.ai/v1/chat/completions',
+  });
+  providers.push({
+    name: 'Mistral (Small)',
     type: 'openai-compatible',
     model: 'mistral-small-latest',
     apiKey: mistralKey,
@@ -57,7 +60,19 @@ if (mistralKey) {
   });
 }
 
-// --- OpenAI-Compatible API Call ---
+// 4. OpenRouter (Multi-model free tier fallback)
+const openRouterKey = import.meta.env.VITE_OPENROUTER_API_KEY || '';
+if (openRouterKey) {
+  providers.push({
+    name: 'OpenRouter (Qwen 27B)',
+    type: 'openai-compatible',
+    model: 'qwen/qwen3.8-27b:free',
+    apiKey: openRouterKey,
+    baseUrl: 'https://openrouter.ai/api/v1/chat/completions',
+  });
+}
+
+// --- OpenAI-Compatible API Call with 8s Timeout ---
 async function callOpenAICompatible(provider, systemPrompt, chatHistory, lastMessage) {
   const messages = [
     { role: 'system', content: systemPrompt },
@@ -74,58 +89,81 @@ async function callOpenAICompatible(provider, systemPrompt, chatHistory, lastMes
   // Add the current message
   messages.push({ role: 'user', content: lastMessage });
 
-  const response = await fetch(provider.baseUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${provider.apiKey}`,
-    },
-    body: JSON.stringify({
-      model: provider.model,
-      messages: messages,
-      temperature: 0.7,
-      max_tokens: 2048,
-    }),
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 25000);
 
-  if (!response.ok) {
-    const errorBody = await response.text();
-    const error = new Error(`${provider.name} API error: ${errorBody.substring(0, 200)}`);
-    error.status = response.status;
-    throw error;
+  try {
+    const response = await fetch(provider.baseUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${provider.apiKey}`,
+      },
+      signal: controller.signal,
+      body: JSON.stringify({
+        model: provider.model,
+        messages: messages,
+        temperature: 0.6,
+        max_tokens: 1500,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorBody = await response.text();
+      const error = new Error(`${provider.name} API error: ${errorBody.substring(0, 200)}`);
+      error.status = response.status;
+      throw error;
+    }
+
+    const data = await response.json();
+    return data.choices?.[0]?.message?.content || '';
+  } catch (err) {
+    if (err.name === 'AbortError') {
+      const timeoutErr = new Error(`${provider.name} timed out after 25s`);
+      timeoutErr.status = 408;
+      throw timeoutErr;
+    }
+    throw err;
+  } finally {
+    clearTimeout(timeoutId);
   }
-
-  const data = await response.json();
-  return data.choices?.[0]?.message?.content || '';
 }
 
-// --- Gemini API Call ---
+// --- Gemini API Call with 25s Timeout ---
 async function callGemini(provider, systemPrompt, chatHistory, lastMessage) {
+  let generatePromise;
   if (chatHistory.length === 0) {
-    // No history: simple generateContent
-    const response = await provider.client.models.generateContent({
+    generatePromise = provider.client.models.generateContent({
       model: provider.model,
       contents: `${systemPrompt}\n\nUser message: ${lastMessage}`,
+    }).then(res => res.text);
+  } else {
+    const formattedHistory = chatHistory.slice(0, -1).map(msg => ({
+      role: msg.role === 'user' ? 'user' : 'model',
+      parts: [{ text: msg.content }],
+    }));
+
+    const chat = provider.client.chats.create({
+      model: provider.model,
+      config: {
+        systemInstruction: systemPrompt,
+      },
+      history: formattedHistory,
     });
-    return response.text;
+
+    generatePromise = chat.sendMessage({ message: lastMessage }).then(res => res.text);
   }
 
-  // With history: use chat session
-  const formattedHistory = chatHistory.slice(0, -1).map(msg => ({
-    role: msg.role === 'user' ? 'user' : 'model',
-    parts: [{ text: msg.content }],
-  }));
-
-  const chat = provider.client.chats.create({
-    model: provider.model,
-    config: {
-      systemInstruction: systemPrompt,
-    },
-    history: formattedHistory,
+  const timeoutPromise = new Promise((_, reject) => {
+    const id = setTimeout(() => {
+      clearTimeout(id);
+      const timeoutErr = new Error(`${provider.name} timed out after 25s`);
+      timeoutErr.status = 408;
+      reject(timeoutErr);
+    }, 25000);
   });
 
-  const response = await chat.sendMessage({ message: lastMessage });
-  return response.text;
+  return await Promise.race([generatePromise, timeoutPromise]);
 }
 
 // --- Main Export ---
@@ -143,9 +181,12 @@ export async function askAIForHelp(problem, userCode, testResults, chatHistory =
     testContext = "The student's code is CORRECT and passes all tests! You must tell them their code is absolutely correct. Do NOT look for more errors or suggest optimizations. If the user specifically asks you to 'Fix my code', you MUST return exactly the string 'No error to fix' and nothing else.";
   } else if (failingTests.length > 0) {
     if (isFixMode) {
-      testContext = `### Failing Test Results:\n${failingTests.map((r, i) => `Test Case ${i + 1}: Expected ${r.expected}, Got ${r.got || r.error}`).join('\n')}
+      testContext = `### Failing Test Results:\n${failingTests.map((r, i) => `Test Case ${i + 1}:
+Code / Invocation: ${r.code || 'N/A'}
+Expected: ${r.expected}
+${r.error ? `Execution Error: ${r.error}` : `Got: ${r.got}`}`).join('\n\n')}
 
-The user wants you to FIX their code. You MUST return ONLY the fully fixed code wrapped in a \`\`\`python code block. DO NOT output any explanation, hints, or markdown text outside the code block. Your entire response must be just the code block.`;
+The user wants you to FIX their code so that it passes ALL test cases. You MUST return ONLY the fully fixed code wrapped in a \`\`\`python code block. DO NOT output any explanation, hints, or markdown text outside the code block. Your entire response must be just the code block.`;
     } else {
       testContext = `### Failing Test Results:\n${failingTests.map((r, i) => `
 Test Case ${i + 1}:
@@ -165,6 +206,38 @@ Please provide a clear and concise hint. Do NOT just give them the exact correct
     problemFullDescription += '\n\n### Questions:\n' + JSON.stringify(problem.questions, null, 2);
   }
 
+  // Extract required function signature(s) from initialCode, answer_key, or testCases
+  let requiredSignatures = [];
+  if (problem.initialCode) {
+    const sigMatches = problem.initialCode.match(/def\s+[a-zA-Z0-9_]+\s*\([^)]*\):/g);
+    if (sigMatches) {
+      requiredSignatures = [...new Set(sigMatches)];
+    }
+  }
+  if (requiredSignatures.length === 0 && problem.answer_key) {
+    const sigMatches = problem.answer_key.match(/def\s+[a-zA-Z0-9_]+\s*\([^)]*\):/g);
+    if (sigMatches) {
+      requiredSignatures = [...new Set(sigMatches)];
+    }
+  }
+  if (requiredSignatures.length === 0 && problem.testCases) {
+    for (const tc of problem.testCases) {
+      const codeStr = tc.code || tc.input || '';
+      const m = codeStr.match(/(?:print\s*\(\s*)?([a-zA-Z_][a-zA-Z0-9_]*)\s*\(/);
+      if (m && m[1] && !['print', 'len', 'str', 'int', 'float', 'type', 'list', 'dict', 'set', 'tuple', 'sorted', 'range'].includes(m[1])) {
+        requiredSignatures.push(`def ${m[1]}(...):`);
+        break;
+      }
+    }
+  }
+
+  const funcSignatureNote = requiredSignatures.length > 0 ? `
+### CRITICAL FUNCTION SIGNATURE RULE:
+The automated test runner will execute test cases calling the following exact function name(s):
+${requiredSignatures.join('\n')}
+You MUST implement or preserve the EXACT function name(s) above. DO NOT change the function name, rename it to solve/solution/run, or omit it, otherwise all test cases will fail with NameError.
+` : '';
+
   const systemPrompt = `
 You are an AI programming assistant. Your name is "Zero". You must communicate in Vietnamese.
 IMPORTANT PERSONA RULES:
@@ -180,6 +253,8 @@ ${problem.title}
 ### Problem Description:
 ${problemFullDescription}
 
+${problem.answer_key ? `### Problem Creator's Reference Solution (Use this reference to ensure the fixed code adheres to the expected signature, return structure, and formatting):\n\`\`\`python\n${problem.answer_key}\n\`\`\`\n` : ''}
+${funcSignatureNote}
 ### Student's Current Code:
 \`\`\`python
 ${userCode}

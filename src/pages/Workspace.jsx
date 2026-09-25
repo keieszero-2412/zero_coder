@@ -144,7 +144,7 @@ export function Workspace() {
   const [showSettings, setShowSettings] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
   const [showCheatsheet, setShowCheatsheet] = useState(false);
-  const { isLoaded, output, error, runCode, runTests, clearOutput } = usePython();
+  const { isLoaded, output, error, runCode, runTests, clearOutput, preloadPackages } = usePython();
 
   // Initialize code when problem changes
   useEffect(() => {
@@ -183,6 +183,25 @@ export function Workspace() {
     loadCode();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentProblem, navigate, currentUser, id, isLoading, isFetching]);
+
+  // Preload any packages required by initial starter code or loaded draft in the background
+  useEffect(() => {
+    if (isLoaded && code && preloadPackages && /\b(import|from)\b/.test(code)) {
+      preloadPackages(code).catch(() => {});
+    }
+  }, [isLoaded, currentProblem?.id, preloadPackages]);
+
+  // Debounced background package preloading as student writes or modifies imports
+  useEffect(() => {
+    if (!isLoaded || !code || !preloadPackages) return;
+    if (!/\b(import|from)\b/.test(code)) return;
+
+    const timer = setTimeout(() => {
+      preloadPackages(code).catch(() => {});
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, [isLoaded, code, preloadPackages]);
 
   // Handle panel resizing
   useEffect(() => {
@@ -553,7 +572,7 @@ export function Workspace() {
               />
             ) : (
               <>
-                <div className="editor-section" style={{ display: 'flex', flexDirection: 'column', minHeight: 0 }}>
+                <div className="editor-section" style={{ display: 'flex', flexDirection: 'column', minHeight: 0, height: '100%', overflow: 'hidden' }}>
                   <div className="section-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span>main.py</span>
                     <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
@@ -582,7 +601,7 @@ export function Workspace() {
                     </div>
                   </div>
                   
-                  <div style={{ flex: '1', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ flex: '1', minHeight: 0, height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                     <CodeEditor 
                       value={proposedCode !== null ? proposedCode : code} 
                       originalCode={proposedCode !== null ? code : undefined}
@@ -632,7 +651,7 @@ export function Workspace() {
             flexDirection: 'column' 
           }}>
             <AIAssistant 
-              key={currentProblem?.id || 'ai-assistant'}
+              key={currentProblem?.id || id || 'ai-assistant'}
               problem={currentProblem} 
               userCode={code} 
               testResults={testResults} 

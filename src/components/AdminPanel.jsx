@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { db } from '../config/firebase';
 import { collection, query, where, getDocs, doc, setDoc, deleteDoc, onSnapshot, orderBy } from 'firebase/firestore';
-import { X, Check, Trash2, Mail, Plus, MessageSquare, ImageIcon, Settings, Key, Shield, Database } from 'lucide-react';
+import { X, Check, Trash2, Mail, Plus, MessageSquare, ImageIcon, Settings, Key, Shield, Database, Send, User } from 'lucide-react';
 import { useNotification } from '../context/NotificationContext';
 import '../index.css';
 
@@ -107,11 +107,35 @@ export function AdminPanel({ onClose }) {
     const replyText = replyDrafts[feedbackId]?.trim();
     if (!replyText) return;
     try {
+      const fb = feedbacks.find(f => f.id === feedbackId);
+      const existingReplies = Array.isArray(fb?.replies) ? fb.replies : [];
+      let initialReplies = [...existingReplies];
+      if (initialReplies.length === 0 && fb?.adminReply) {
+        initialReplies.push({
+          sender: 'admin',
+          senderName: 'Admin',
+          text: fb.adminReply,
+          createdAt: fb.repliedAt || fb.resolvedAt || new Date()
+        });
+      }
+
+      const newReply = {
+        sender: 'admin',
+        senderName: 'Admin',
+        text: replyText,
+        createdAt: new Date()
+      };
+
+      const updatedReplies = [...initialReplies, newReply];
+
       await setDoc(doc(db, 'feedbacks', feedbackId), {
+        replies: updatedReplies,
         adminReply: replyText,
         repliedAt: new Date(),
+        updatedAt: new Date(),
         status: 'replied'
       }, { merge: true });
+
       setReplyDrafts(prev => {
         const next = { ...prev };
         delete next[feedbackId];
@@ -129,11 +153,35 @@ export function AdminPanel({ onClose }) {
     const adminReply = replyText || 'Vấn đề của bạn đã được Admin kiểm tra và xử lý thành công.';
     
     try {
+      const fb = feedbacks.find(f => f.id === feedbackId);
+      const existingReplies = Array.isArray(fb?.replies) ? fb.replies : [];
+      let initialReplies = [...existingReplies];
+      if (initialReplies.length === 0 && fb?.adminReply) {
+        initialReplies.push({
+          sender: 'admin',
+          senderName: 'Admin',
+          text: fb.adminReply,
+          createdAt: fb.repliedAt || fb.resolvedAt || new Date()
+        });
+      }
+
+      if (replyText) {
+        initialReplies.push({
+          sender: 'admin',
+          senderName: 'Admin',
+          text: replyText,
+          createdAt: new Date()
+        });
+      }
+
       await setDoc(doc(db, 'feedbacks', feedbackId), {
+        replies: initialReplies,
         adminReply: adminReply,
         resolvedAt: new Date(),
+        updatedAt: new Date(),
         status: 'resolved'
       }, { merge: true });
+
       setReplyDrafts(prev => {
         const next = { ...prev };
         delete next[feedbackId];
@@ -175,11 +223,16 @@ export function AdminPanel({ onClose }) {
       setResetRequests(rReqs);
     });
 
-    const qFeedback = query(collection(db, 'feedbacks'), orderBy('createdAt', 'desc'));
+    const qFeedback = collection(db, 'feedbacks');
     const unsubscribeFeedback = onSnapshot(qFeedback, (snapshot) => {
       const fbList = [];
       snapshot.forEach((doc) => {
         fbList.push({ id: doc.id, ...doc.data() });
+      });
+      fbList.sort((a, b) => {
+        const timeA = a.updatedAt?.toMillis ? a.updatedAt.toMillis() : (a.createdAt?.toMillis ? a.createdAt.toMillis() : 0);
+        const timeB = b.updatedAt?.toMillis ? b.updatedAt.toMillis() : (b.createdAt?.toMillis ? b.createdAt.toMillis() : 0);
+        return timeB - timeA;
       });
       setFeedbacks(fbList);
       setLoading(false);
@@ -348,7 +401,8 @@ export function AdminPanel({ onClose }) {
             />
             <TabButton 
               label="User Feedbacks" icon={MessageSquare} 
-              active={activeTab === 'feedbacks'} badge={feedbacks.length}
+              active={activeTab === 'feedbacks'} 
+              badge={feedbacks.filter(f => f.status === 'new' || f.status === 'user_replied').length}
               onClick={() => setActiveTab('feedbacks')}
             />
             <TabButton 
@@ -595,9 +649,34 @@ export function AdminPanel({ onClose }) {
                           }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                               <div>
-                                <div style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '1.05rem' }}>{fb.username || fb.email}</div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                                  <span style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '1.05rem' }}>
+                                    {fb.username || fb.email}
+                                  </span>
+                                  {fb.status === 'new' && (
+                                    <span style={{ backgroundColor: 'color-mix(in srgb, #eab308 15%, transparent)', color: '#eab308', padding: '0.15rem 0.6rem', borderRadius: '1rem', fontSize: '0.75rem', fontWeight: 600 }}>
+                                      Pending
+                                    </span>
+                                  )}
+                                  {fb.status === 'user_replied' && (
+                                    <span style={{ backgroundColor: 'color-mix(in srgb, #3b82f6 15%, transparent)', color: '#3b82f6', padding: '0.15rem 0.6rem', borderRadius: '1rem', fontSize: '0.75rem', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                                      <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#3b82f6' }} />
+                                      User Replied
+                                    </span>
+                                  )}
+                                  {fb.status === 'replied' && (
+                                    <span style={{ backgroundColor: 'color-mix(in srgb, var(--accent-primary) 15%, transparent)', color: 'var(--accent-primary)', padding: '0.15rem 0.6rem', borderRadius: '1rem', fontSize: '0.75rem', fontWeight: 600 }}>
+                                      Replied
+                                    </span>
+                                  )}
+                                  {fb.status === 'resolved' && (
+                                    <span style={{ backgroundColor: 'color-mix(in srgb, #10b981 15%, transparent)', color: '#10b981', padding: '0.15rem 0.6rem', borderRadius: '1rem', fontSize: '0.75rem', fontWeight: 600 }}>
+                                      Resolved
+                                    </span>
+                                  )}
+                                </div>
                                 <div style={{ fontSize: '0.8rem', color: 'var(--text-tertiary)', marginTop: '0.25rem' }}>
-                                  {fb.createdAt ? new Date(fb.createdAt.toMillis()).toLocaleString() : 'Just now'}
+                                  {fb.createdAt ? new Date(fb.createdAt.toMillis ? fb.createdAt.toMillis() : fb.createdAt).toLocaleString() : 'Just now'}
                                 </div>
                               </div>
                               <button 
@@ -635,53 +714,112 @@ export function AdminPanel({ onClose }) {
                               </div>
                             ) : null}
 
-                            {fb.adminReply ? (
-                              <div style={{ 
-                                padding: '1rem', backgroundColor: 'var(--bg-surface)', borderLeft: `4px solid ${fb.status === 'resolved' ? '#10b981' : 'var(--accent-primary)'}`,
-                                borderRadius: '0 var(--radius-sm) var(--radius-sm) 0', border: '1px solid var(--border-color)'
-                              }}>
-                                <div style={{ fontWeight: 600, color: fb.status === 'resolved' ? '#10b981' : 'var(--accent-primary)', marginBottom: '0.5rem', fontSize: '0.9rem' }}>
-                                  {fb.status === 'resolved' ? 'Resolved by Admin' : 'Admin Reply'}
-                                </div>
-                                <div style={{ color: 'var(--text-primary)', whiteSpace: 'pre-wrap', wordBreak: 'break-word', fontSize: '0.9rem', lineHeight: 1.5 }}>
-                                  {fb.adminReply}
-                                </div>
-                                <div style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '0.75rem' }}>
-                                  {fb.resolvedAt ? (fb.resolvedAt.toDate ? fb.resolvedAt.toDate().toLocaleString() : new Date(fb.resolvedAt).toLocaleString()) :
-                                  fb.repliedAt ? (fb.repliedAt.toDate ? fb.repliedAt.toDate().toLocaleString() : new Date(fb.repliedAt).toLocaleString()) : 'Unknown'}
-                                </div>
-                              </div>
-                            ) : (
-                              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.5rem' }}>
-                                <textarea
-                                  placeholder="Type a reply to the user..."
-                                  value={replyDrafts[fb.id] || ''}
-                                  onChange={(e) => setReplyDrafts(prev => ({ ...prev, [fb.id]: e.target.value }))}
-                                  style={{
-                                    width: '100%', minHeight: '80px', padding: '0.75rem', borderRadius: 'var(--radius-sm)',
-                                    border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-base)', color: 'var(--text-primary)',
-                                    resize: 'vertical', fontSize: '0.9rem', fontFamily: 'inherit', outline: 'none'
-                                  }}
-                                />
-                                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem' }}>
-                                  <button
-                                    onClick={() => handleSendReply(fb.id)}
-                                    disabled={!replyDrafts[fb.id]?.trim()}
-                                    className="button-secondary"
-                                    style={{ padding: '0.5rem 1rem' }}
-                                  >
-                                    Send Reply
-                                  </button>
-                                  <button
-                                    onClick={() => handleResolveFeedback(fb.id)}
-                                    className="button-primary"
-                                    style={{ padding: '0.5rem 1rem', backgroundColor: '#10b981', color: 'white' }}
-                                  >
-                                    Resolve
-                                  </button>
-                                </div>
-                              </div>
-                            )}
+                            {/* Thread Conversation */}
+                            {(() => {
+                              const thread = (Array.isArray(fb.replies) && fb.replies.length > 0)
+                                ? fb.replies 
+                                : (fb.adminReply ? [{
+                                    sender: 'admin',
+                                    senderName: 'Admin',
+                                    text: fb.adminReply,
+                                    createdAt: fb.repliedAt || fb.resolvedAt || null
+                                  }] : []);
+
+                              return (
+                                <>
+                                  {thread.length > 0 && (
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', marginTop: '0.25rem' }}>
+                                      {thread.map((msg, idx) => {
+                                        const isAdmin = msg.sender === 'admin';
+                                        const msgTime = msg.createdAt?.toDate 
+                                          ? msg.createdAt.toDate().toLocaleString() 
+                                          : (msg.createdAt ? new Date(msg.createdAt).toLocaleString() : '');
+
+                                        return (
+                                          <div 
+                                            key={idx}
+                                            style={{
+                                              padding: '0.75rem 1rem',
+                                              borderRadius: 'var(--radius-sm)',
+                                              backgroundColor: isAdmin ? 'var(--bg-surface)' : 'var(--bg-base)',
+                                              borderLeft: `4px solid ${isAdmin ? ((fb.status === 'resolved') ? '#10b981' : 'var(--accent-primary)') : '#3b82f6'}`,
+                                              borderTop: '1px solid var(--border-color)',
+                                              borderRight: '1px solid var(--border-color)',
+                                              borderBottom: '1px solid var(--border-color)'
+                                            }}
+                                          >
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.35rem' }}>
+                                              <span style={{ 
+                                                fontWeight: 600, 
+                                                fontSize: '0.85rem',
+                                                color: isAdmin ? ((fb.status === 'resolved') ? '#10b981' : 'var(--accent-primary)') : '#3b82f6',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: '0.35rem'
+                                              }}>
+                                                {isAdmin ? <Shield size={13} /> : <User size={13} />}
+                                                <span>{isAdmin ? 'Admin' : (msg.senderName || fb.username || fb.email || 'User')}</span>
+                                              </span>
+                                              {msgTime && (
+                                                <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)' }}>
+                                                  {msgTime}
+                                                </span>
+                                              )}
+                                            </div>
+                                            <div style={{ color: 'var(--text-primary)', whiteSpace: 'pre-wrap', wordBreak: 'break-word', fontSize: '0.9rem', lineHeight: 1.5 }}>
+                                              {msg.text}
+                                            </div>
+                                          </div>
+                                        );
+                                      })}
+                                    </div>
+                                  )}
+
+                                  {/* Admin Reply & Action Box */}
+                                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.5rem' }}>
+                                    <textarea
+                                      placeholder={fb.status === 'resolved' 
+                                        ? "Type a follow-up reply or message to user..." 
+                                        : "Type a reply to the user..."}
+                                      value={replyDrafts[fb.id] || ''}
+                                      onChange={(e) => setReplyDrafts(prev => ({ ...prev, [fb.id]: e.target.value }))}
+                                      style={{
+                                        width: '100%', minHeight: '75px', padding: '0.75rem', borderRadius: 'var(--radius-sm)',
+                                        border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-base)', color: 'var(--text-primary)',
+                                        resize: 'vertical', fontSize: '0.9rem', fontFamily: 'inherit', outline: 'none'
+                                      }}
+                                    />
+                                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem' }}>
+                                      <button
+                                        onClick={() => handleSendReply(fb.id)}
+                                        disabled={!replyDrafts[fb.id]?.trim()}
+                                        className="button-secondary"
+                                        style={{ 
+                                          padding: '0.5rem 1rem',
+                                          display: 'inline-flex',
+                                          alignItems: 'center',
+                                          gap: '0.4rem',
+                                          opacity: !replyDrafts[fb.id]?.trim() ? 0.5 : 1,
+                                          cursor: !replyDrafts[fb.id]?.trim() ? 'not-allowed' : 'pointer'
+                                        }}
+                                      >
+                                        <Send size={14} />
+                                        <span>Send Reply</span>
+                                      </button>
+                                      {fb.status !== 'resolved' && (
+                                        <button
+                                          onClick={() => handleResolveFeedback(fb.id)}
+                                          className="button-primary"
+                                          style={{ padding: '0.5rem 1rem', backgroundColor: '#10b981', color: 'white' }}
+                                        >
+                                          Resolve
+                                        </button>
+                                      )}
+                                    </div>
+                                  </div>
+                                </>
+                              );
+                            })()}
                           </div>
                         ))}
                       </div>

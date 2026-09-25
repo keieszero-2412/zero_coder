@@ -599,6 +599,44 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 1.5rem;
 }
 
+.problem-description-content {
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.problem-description-content p {
+  margin: 0 0 1rem;
+}
+
+.problem-description-content strong,
+.problem-description-content b {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.problem-description-content ul,
+.problem-description-content ol {
+  padding-left: 1.4rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.problem-description-content li {
+  margin-bottom: 0.4rem;
+  line-height: 1.6;
+}
+
+.problem-description-content code {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--accent-primary);
+  font-weight: 500;
+}
+
 .example-box {
   background-color: var(--bg-surface-elevated);
   padding: 1rem;

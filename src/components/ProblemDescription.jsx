@@ -1,11 +1,12 @@
 import { BookOpen, Lightbulb, ChevronDown, ChevronUp } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import 'katex/dist/katex.min.css';
+import { formatProblemDescription } from '../utils/latexHelper';
 
 export function ProblemDescription({ problem, failedAttempts = 0, userCode, testResults }) {
   const [showHint, setShowHint] = useState(false);
@@ -14,6 +15,17 @@ export function ProblemDescription({ problem, failedAttempts = 0, userCode, test
   useEffect(() => {
     setShowHint(false);
   }, [problem?.id]);
+
+  const formattedDescription = useMemo(() => {
+    return formatProblemDescription(problem?.description || '');
+  }, [problem?.description]);
+
+  const formattedHint = useMemo(() => {
+    return formatProblemDescription(
+      problem?.hint || 
+      "Hãy đọc kỹ lại yêu cầu đề bài, chú ý đến các trường hợp đặc biệt (edge cases), và kiểm tra xem hàm của bạn đã return đúng giá trị yêu cầu (thay vì chỉ dùng lệnh print) hay chưa."
+    );
+  }, [problem?.hint]);
 
   if (!problem) return null;
 
@@ -26,12 +38,12 @@ export function ProblemDescription({ problem, failedAttempts = 0, userCode, test
 
       <h2 className="problem-title">{problem.title}</h2>
 
-      <div className="problem-description-content">
+      <div className="problem-description-content markdown-content">
         <ReactMarkdown
           remarkPlugins={[remarkGfm, remarkMath]}
           rehypePlugins={[rehypeRaw, rehypeKatex]}
         >
-          {problem.description || ''}
+          {formattedDescription}
         </ReactMarkdown>
       </div>
 
@@ -59,12 +71,12 @@ export function ProblemDescription({ problem, failedAttempts = 0, userCode, test
         </button>
         
         {showHint && (
-          <div style={{ padding: '1rem', fontSize: '0.95rem', lineHeight: '1.6', color: 'var(--text-primary)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+          <div className="markdown-content" style={{ padding: '1rem', fontSize: '0.95rem', lineHeight: '1.65', color: 'var(--text-secondary)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
             <ReactMarkdown
               remarkPlugins={[remarkGfm, remarkMath]}
               rehypePlugins={[rehypeRaw, rehypeKatex]}
             >
-              {problem.hint || "Hãy đọc kỹ lại yêu cầu đề bài, chú ý đến các trường hợp đặc biệt (edge cases), và kiểm tra xem hàm của bạn đã return đúng giá trị yêu cầu (thay vì chỉ dùng lệnh print) hay chưa."}
+              {formattedHint}
             </ReactMarkdown>
           </div>
         )}
