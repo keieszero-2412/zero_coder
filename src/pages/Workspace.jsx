@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { CodeEditor } from '../components/CodeEditor';
-import { MultipleChoiceViewer } from '../components/MultipleChoiceViewer';
+import { MultipleChoiceViewer, isOrderingQuestion, getOrderingCorrectOrder } from '../components/MultipleChoiceViewer';
 import { TerminalOutput } from '../components/TerminalOutput';
 import { ProblemDescription } from '../components/ProblemDescription';
 import { TestResults } from '../components/TestResults';
@@ -360,10 +360,53 @@ export function Workspace() {
         
         const questions = currentProblem.questions || [];
         for (let i = 0; i < questions.length; i++) {
-          let expected = correct[i] || 'A';
-          let got = userAnswers[i] || 'Not answered';
+          const q = questions[i];
+          const isOrdering = isOrderingQuestion(q);
+          let expected = correct[i];
+          let got = userAnswers[i];
           let passed = false;
+
+          if (isOrdering) {
+            let expArray = getOrderingCorrectOrder(q, expected);
+            const gotArray = Array.isArray(got) ? got : [];
+
+            if (gotArray.length === expArray.length && expArray.length > 0) {
+              const normalize = (s) => {
+                if (typeof s === 'object' && s !== null) return JSON.stringify(s);
+                return String(s || '').trim().replace(/\s+/g, ' ');
+              };
+              passed = expArray.every((expItem, idx) => {
+                return normalize(expItem) === normalize(gotArray[idx]);
+              });
+            } else {
+              passed = false;
+            }
+
+            const formatItem = (item, idx) => {
+              const text = typeof item === 'object' && item !== null ? (item.text || JSON.stringify(item)) : String(item || '');
+              const short = text.length > 40 ? text.substring(0, 37) + '...' : text;
+              return `Bước ${idx + 1}: ${short}`;
+            };
+
+            const expDisplay = expArray.map(formatItem).join('\n↓\n');
+            const gotDisplay = gotArray.length > 0 
+              ? gotArray.map(formatItem).join('\n↓\n') 
+              : 'Chưa sắp xếp';
+
+            results.push({
+              passed,
+              expected: expDisplay,
+              got: gotDisplay,
+              code: `Câu ${i + 1} (Sắp xếp)`,
+              error: null,
+              isMCQ: true
+            });
+            continue;
+          }
           
+          if (expected === undefined) expected = 'A';
+          if (got === undefined) got = 'Not answered';
+
           if (Array.isArray(expected) || Array.isArray(got)) {
             const expArray = Array.isArray(expected) ? [...expected] : [expected];
             const gotArray = Array.isArray(got) ? [...got] : (got === 'Not answered' || got === 'Chưa chọn' ? [] : [got]);

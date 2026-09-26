@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { NotebookViewer } from '../components/NotebookViewer';
 import { LearningAIChat } from '../components/LearningAIChat';
 import { FileBrowser } from '../components/FileBrowser';
-import { ArrowLeft, ChevronRight, Folder, X, Play, Loader2, ChevronLeft } from 'lucide-react';
+import { ArrowLeft, ChevronRight, Folder, X, Play, Loader2, ChevronLeft, Compass } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';

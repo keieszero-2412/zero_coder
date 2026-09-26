@@ -117,7 +117,10 @@ export const NotebookViewer = React.forwardRef(function NotebookViewer(
 
   useEffect(() => {
     async function fetchNotebook() {
-      if (!notebookUrl) return;
+      if (!notebookUrl) {
+        setLoading(false);
+        return;
+      }
       if (notebookCache.has(notebookUrl)) {
         const data = notebookCache.get(notebookUrl);
         setNotebook(data);

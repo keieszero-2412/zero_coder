@@ -3964,12 +3964,25 @@
         ]
       },
       {
-        "text": "**Câu 2:** Đâu là quy trình hợp lý để một doanh nghiệp F&B áp dụng học máy và khoa học dữ liệu nhằm phân tích xu hướng tiêu thụ đồ ăn trong những năm gần đây? (Hãy sắp xếp các bước sau)",
-        "options": [
+        "type": "ordering",
+        "text": "**Câu 2:** Đâu là quy trình hợp lý để một doanh nghiệp F&B áp dụng học máy và khoa học dữ liệu nhằm phân tích xu hướng tiêu thụ đồ ăn trong những năm gần đây? Hãy sắp xếp các bước sau theo đúng quy trình từ bước đầu tiên đến bước cuối cùng:",
+        "items": [
+          "Thu thập dữ liệu từ các nguồn liên quan",
+          "Sử dụng các mô hình thống kê và các thuật toán học máy để phân tích dữ liệu",
+          "Xác định vấn đề và loại dữ liệu cần thu thập",
+          "Làm sạch và tiền xử lý dữ liệu"
+        ],
+        "correctOrder": [
           "Xác định vấn đề và loại dữ liệu cần thu thập",
           "Thu thập dữ liệu từ các nguồn liên quan",
           "Làm sạch và tiền xử lý dữ liệu",
           "Sử dụng các mô hình thống kê và các thuật toán học máy để phân tích dữ liệu"
+        ],
+        "options": [
+          "Thu thập dữ liệu từ các nguồn liên quan",
+          "Sử dụng các mô hình thống kê và các thuật toán học máy để phân tích dữ liệu",
+          "Xác định vấn đề và loại dữ liệu cần thu thập",
+          "Làm sạch và tiền xử lý dữ liệu"
         ]
       },
       {
@@ -4140,7 +4153,12 @@
     "initialCode": "{}",
     "correctAnswers": {
       "0": "B",
-      "1": "A",
+      "1": [
+        "Xác định vấn đề và loại dữ liệu cần thu thập",
+        "Thu thập dữ liệu từ các nguồn liên quan",
+        "Làm sạch và tiền xử lý dữ liệu",
+        "Sử dụng các mô hình thống kê và các thuật toán học máy để phân tích dữ liệu"
+      ],
       "2": "C",
       "3": "B",
       "4": "D",
@@ -4260,7 +4278,7 @@
   {
     "id": 1,
     "title": "Bài 1",
-    "description": "<p>An giờ quản lý <strong>nhiều</strong> cổ phiếu cùng lúc, và sàn bắt đầu thu phí: mỗi lần <strong>bán</strong> bị trừ <code>fee</code> đồng. Tham lam cộng mọi chênh lệch dương <strong>không còn đúng</strong> khi có phí.</p>\n<p><strong>Yêu cầu:</strong> Viết hàm <code>max_profit(prices, fee)</code>, trong đó <code>prices</code> là danh sách các chuỗi giá - <code>prices[k]</code> là chuỗi giá theo ngày của cổ phiếu thứ $k$ (các chuỗi có thể dài ngắn khác nhau). Trả về <strong>tổng</strong> lợi nhuận tối đa trên tất cả cổ phiếu:\n* Các cổ phiếu độc lập với nhau (giao dịch cổ phiếu này không ảnh hưởng cổ phiếu khác).\n* Với từng cổ phiếu: mua trước khi bán, giữ tối đa 1 đơn vị, không bán khống, mỗi lần <strong>bán</strong> trừ phí <code>fee</code>, được mua/bán nhiều lần, không bắt buộc giao dịch.</p>\n<p>Gợi ý: giải từng cổ phiếu một rồi cộng lại. Với mỗi chuỗi giá, dùng quy hoạch động 2 trạng thái: <code>cash</code> (không giữ cổ phiếu) và <code>hold</code> (đang giữ): <code>cash = max(cash, hold + p - fee)</code>; <code>hold = max(hold, cash - p)</code>, khởi tạo <code>cash = 0</code>, <code>hold = -vô cùng</code>.</p>\n<p>Trả về: <code>int</code>.</p>\n<p><strong>Ví dụ:</strong></p>\n<p><strong>Đầu vào:</strong>\n<code>python\nprint(max_profit([[1, 3, 2, 8, 4, 9], [5, 4, 3]], 2))</code></p>\n<p><strong>Kết quả mong đợi:</strong>\n<code>text\n8</code></p>\n<p><em>Cổ phiếu 1: mua 1 $\\rightarrow$ bán 8 ($8-1-2=5$), mua 4 $\\rightarrow$ bán 9 ($9-4-2=3$) $\\rightarrow$ 8. Cổ phiếu 2: giá chỉ giảm $\\rightarrow$ 0. Tổng: 8.</em></p>\n<p>| :--- | :--- |\n| <code>print(max_profit([[1, 3, 2, 8, 4, 9], [5, 4, 3]], 2))</code> | <code>8</code> |</p>",
+    "description": "<p>An giờ quản lý <strong>nhiều</strong> cổ phiếu cùng lúc, và sàn bắt đầu thu phí: mỗi lần <strong>bán</strong> bị trừ <code>fee</code> đồng. Tham lam cộng mọi chênh lệch dương <strong>không còn đúng</strong> khi có phí.</p>\n<p><strong>Yêu cầu:</strong> Viết hàm <code>max_profit(prices, fee)</code>, trong đó <code>prices</code> là danh sách các chuỗi giá - <code>prices[k]</code> là chuỗi giá theo ngày của cổ phiếu thứ $k$ (các chuỗi có thể dài ngắn khác nhau). Trả về <strong>tổng</strong> lợi nhuận tối đa trên tất cả cổ phiếu:\n* Các cổ phiếu độc lập với nhau (giao dịch cổ phiếu này không ảnh hưởng cổ phiếu khác).\n* Với từng cổ phiếu: mua trước khi bán, giữ tối đa 1 đơn vị, không bán khống, mỗi lần <strong>bán</strong> trừ phí <code>fee</code>, được mua/bán nhiều lần, không bắt buộc giao dịch.</p>\n<p>Gợi ý: giải từng cổ phiếu một rồi cộng lại. Với mỗi chuỗi giá, dùng quy hoạch động 2 trạng thái: <code>cash</code> (không giữ cổ phiếu) và <code>hold</code> (đang giữ): <code>cash = max(cash, hold + p - fee)</code>; <code>hold = max(hold, cash - p)</code>, khởi tạo <code>cash = 0</code>, <code>hold = -vô cùng</code>.</p>\n<p>Trả về: <code>int</code>.</p>\n<p><strong>Ví dụ:</strong></p>\n<p><strong>Đầu vào:</strong>\n<pre><code class=\"language-python\">print(max_profit([[1, 3, 2, 8, 4, 9], [5, 4, 3]], 2))</code></pre></p>\n<p><strong>Kết quả mong đợi:</strong>\n<pre><code class=\"language-text\">8</code></pre></p>\n<p><em>Cổ phiếu 1: mua 1 $\\rightarrow$ bán 8 ($8-1-2=5$), mua 4 $\\rightarrow$ bán 9 ($9-4-2=3$) $\\rightarrow$ 8. Cổ phiếu 2: giá chỉ giảm $\\rightarrow$ 0. Tổng: 8.</em></p>\n<p>| Lời gọi hàm | Kết quả mong đợi |\n| :--- | :--- |\n| <code>print(max_profit([[1, 3, 2, 8, 4, 9], [5, 4, 3]], 2))</code> | <code>8</code> |</p>",
     "category": "Last-term Summer Course Test",
     "difficulty": "Hard",
     "defaultCode": "def max_profit(prices, fee):",
@@ -4286,7 +4304,7 @@
   {
     "id": 2,
     "title": "Bài 2",
-    "description": "<p>An theo dõi <strong>nhiều tài sản</strong>, mỗi tài sản có xác suất thắng và mức lời/lỗ riêng (không phải \"được ăn cả, ngã về không\": thắng thì tăng <code>win_return</code>, ví dụ 0.2 = +20%; thua thì giảm <code>loss_return</code>, ví dụ 0.25 = −25%). An dùng <strong>công thức Kelly tổng quát</strong> để tính tỷ lệ đặt cược tối ưu cho <strong>từng</strong> tài sản.</p>\n<p><strong>Yêu cầu:</strong> Viết hàm <code>kelly_fractions(assets)</code>, trong đó <code>assets</code> là danh sách, mỗi phần tử là <code>[win_prob, win_return, loss_return]</code> của một tài sản. Trả về <strong>danh sách</strong> tỷ lệ Kelly tương ứng:\n* Với từng tài sản: $p = win_prob$, $q = 1 - p$\n* Kelly tổng quát: $f^<em> = p / loss_return - q / win_return$\n* Nếu $f^</em>$ âm $\\rightarrow$ 0.0 (không có lợi thế); nếu $f^* &gt; 1 \\rightarrow$ 1.0 (không đòn bẩy)\n* Làm tròn từng giá trị 4dp</p>\n<p>Gợi ý: lặp qua danh sách (vòng <code>for</code> hoặc list comprehension), có thể tách bộ ba bằng <code>for p, w, l in assets:</code>; nhớ xử lý chặn 0/1 trước khi làm tròn.</p>\n<p>Trả về: <code>list</code> các <code>float</code></p>\n<p><strong>Ví dụ:</strong></p>\n<p><strong>Đầu vào:</strong>\n<code>python\nprint(kelly_fractions([[0.6, 0.2, 0.25], [0.65, 0.2, 0.4]]))</code></p>\n<p><strong>Kết quả mong đợi:</strong>\n<code>text\n[0.4, 0.0]</code></p>\n<p><em>Tài sản 1: $f^</em> = 0.6/0.25 - 0.4/0.2 = 2.4 - 2.0 = 0.4$. Tài sản 2: $f^<em> = 0.65/0.4 - 0.35/0.2 = 1.625 - 1.75 &lt; 0 \\rightarrow 0.0$.</em></p>\n<p>| :--- | :--- |\n| <code>print(kelly_fractions([[0.6, 0.2, 0.25], [0.65, 0.2, 0.4]]))</code> | <code>[0.4, 0.0]</code> |</p>",
+    "description": "<p>An theo dõi <strong>nhiều tài sản</strong>, mỗi tài sản có xác suất thắng và mức lời/lỗ riêng (không phải \"được ăn cả, ngã về không\": thắng thì tăng <code>win_return</code>, ví dụ 0.2 = +20%; thua thì giảm <code>loss_return</code>, ví dụ 0.25 = −25%). An dùng <strong>công thức Kelly tổng quát</strong> để tính tỷ lệ đặt cược tối ưu cho <strong>từng</strong> tài sản.</p>\n<p><strong>Yêu cầu:</strong> Viết hàm <code>kelly_fractions(assets)</code>, trong đó <code>assets</code> là danh sách, mỗi phần tử là <code>[win_prob, win_return, loss_return]</code> của một tài sản. Trả về <strong>danh sách</strong> tỷ lệ Kelly tương ứng:\n* Với từng tài sản: $p = win_prob$, $q = 1 - p$\n* Kelly tổng quát: $f^<em> = p / loss_return - q / win_return$\n* Nếu $f^</em>$ âm $\\rightarrow$ 0.0 (không có lợi thế); nếu $f^* &gt; 1 \\rightarrow$ 1.0 (không đòn bẩy)\n* Làm tròn từng giá trị 4dp</p>\n<p>Gợi ý: lặp qua danh sách (vòng <code>for</code> hoặc list comprehension), có thể tách bộ ba bằng <code>for p, w, l in assets:</code>; nhớ xử lý chặn 0/1 trước khi làm tròn.</p>\n<p>Trả về: <code>list</code> các <code>float</code></p>\n<p><strong>Ví dụ:</strong></p>\n<p><strong>Đầu vào:</strong>\n<pre><code class=\"language-python\">print(kelly_fractions([[0.6, 0.2, 0.25], [0.65, 0.2, 0.4]]))</code></pre></p>\n<p><strong>Kết quả mong đợi:</strong>\n<pre><code class=\"language-text\">[0.4, 0.0]</code></pre></p>\n<p><em>Tài sản 1: $f^</em> = 0.6/0.25 - 0.4/0.2 = 2.4 - 2.0 = 0.4$. Tài sản 2: $f^<em> = 0.65/0.4 - 0.35/0.2 = 1.625 - 1.75 &lt; 0 \\rightarrow 0.0$.</em></p>\n<p>| Lời gọi hàm | Kết quả mong đợi |\n| :--- | :--- |\n| <code>print(kelly_fractions([[0.6, 0.2, 0.25], [0.65, 0.2, 0.4]]))</code> | <code>[0.4, 0.0]</code> |</p>",
     "category": "Last-term Summer Course Test",
     "difficulty": "Hard",
     "defaultCode": "def kelly_fractions(assets):",
@@ -4312,7 +4330,7 @@
   {
     "id": 3,
     "title": "Bài 3",
-    "description": "<p>Lần này quỹ <strong>không</strong> cho sẵn ma trận hiệp phương sai - chỉ có <strong>dữ liệu lợi suất lịch sử</strong>. An phải tự tính lợi suất danh mục từng kỳ rồi đánh giá bằng tỷ số Sharpe.</p>\n<p><strong>Tỷ số Sharpe là gì?</strong> Là thước đo hiệu quả đầu tư: phần lợi nhuận vượt trội so với lãi suất phi rủi ro ($rf$) trên <strong>mỗi đơn vị rủi ro</strong> phải chịu (rủi ro đo bằng độ lệch chuẩn $\\sigma$ của lợi suất). Sharpe càng cao, danh mục sinh lời càng \"đáng\" so với rủi ro bỏ ra.</p>\n<p><strong>Cách tính:</strong> Sharpe $= (R - rf) / \\sigma$, trong đó $R$ là lợi suất (kỳ vọng hoặc trung bình) của danh mục và $\\sigma$ là độ lệch chuẩn lợi suất danh mục.</p>\n<p><strong>Yêu cầu:</strong> Viết hàm <code>sharpe_ratio(weights, returns, rf)</code>, trong đó <code>returns</code> là ma trận: <code>returns[t][i]</code> = lợi suất của tài sản $i$ ở kỳ $t$:\n* Lợi suất danh mục kỳ $t$: $r_t = \\sum w[i] \\cdot returns[t][i]$\n* Trung bình: $mean = \\sum r_t / N$ ($N =$ số kỳ)\n* Độ lệch chuẩn <strong>tổng thể</strong> (chia $N$, không phải $N-1$): $\\sigma = \\sqrt{ ( \\sum (r_t - mean)^2 / N ) }$\n* Tỷ số Sharpe: $(mean - rf) / \\sigma$, làm tròn 4dp $\\rightarrow$ <code>float</code></p>\n<p>Gợi ý numpy: <code>np.array(returns) @ np.array(weights)</code>, <code>.mean()</code>, <code>.std()</code> (mặc định chia N).</p>\n<p><strong>Ví dụ:</strong></p>\n<p><strong>Đầu vào:</strong>\n<code>python\nprint(sharpe_ratio([0.5, 0.5], [[0.02, 0.01], [0.03, -0.01], [-0.01, 0.02], [0.04, 0.0]], 0.005))</code></p>\n<p><strong>Kết quả mong đợi:</strong>\n<code>text\n1.3416</code></p>\n<p><em>$r = [0.015, 0.01, 0.005, 0.02]$; $mean = 0.0125$; $\\sigma = \\sqrt{(\\sum(r_t-mean)^2/4)} \\approx 0.00559$; $(0.0125-0.005)/0.00559 \\approx 1.3416$.</em></p>\n<p>| :--- | :--- |\n| <code>print(sharpe_ratio([0.5, 0.5], [[0.02, 0.01], [0.03, -0.01], [-0.01, 0.02], [0.04, 0.0]], 0.005))</code> | <code>1.3416</code> |</p>",
+    "description": "<p>Lần này quỹ <strong>không</strong> cho sẵn ma trận hiệp phương sai - chỉ có <strong>dữ liệu lợi suất lịch sử</strong>. An phải tự tính lợi suất danh mục từng kỳ rồi đánh giá bằng tỷ số Sharpe.</p>\n<p><strong>Tỷ số Sharpe là gì?</strong> Là thước đo hiệu quả đầu tư: phần lợi nhuận vượt trội so với lãi suất phi rủi ro ($rf$) trên <strong>mỗi đơn vị rủi ro</strong> phải chịu (rủi ro đo bằng độ lệch chuẩn $\\sigma$ của lợi suất). Sharpe càng cao, danh mục sinh lời càng \"đáng\" so với rủi ro bỏ ra.</p>\n<p><strong>Cách tính:</strong> Sharpe $= (R - rf) / \\sigma$, trong đó $R$ là lợi suất (kỳ vọng hoặc trung bình) của danh mục và $\\sigma$ là độ lệch chuẩn lợi suất danh mục.</p>\n<p><strong>Yêu cầu:</strong> Viết hàm <code>sharpe_ratio(weights, returns, rf)</code>, trong đó <code>returns</code> là ma trận: <code>returns[t][i]</code> = lợi suất của tài sản $i$ ở kỳ $t$:\n* Lợi suất danh mục kỳ $t$: $r_t = \\sum w[i] \\cdot returns[t][i]$\n* Trung bình: $mean = \\sum r_t / N$ ($N =$ số kỳ)\n* Độ lệch chuẩn <strong>tổng thể</strong> (chia $N$, không phải $N-1$): $\\sigma = \\sqrt{ ( \\sum (r_t - mean)^2 / N ) }$\n* Tỷ số Sharpe: $(mean - rf) / \\sigma$, làm tròn 4dp $\\rightarrow$ <code>float</code></p>\n<p>Gợi ý numpy: <code>np.array(returns) @ np.array(weights)</code>, <code>.mean()</code>, <code>.std()</code> (mặc định chia N).</p>\n<p><strong>Ví dụ:</strong></p>\n<p><strong>Đầu vào:</strong>\n<pre><code class=\"language-python\">print(sharpe_ratio([0.5, 0.5], [[0.02, 0.01], [0.03, -0.01], [-0.01, 0.02], [0.04, 0.0]], 0.005))</code></pre></p>\n<p><strong>Kết quả mong đợi:</strong>\n<pre><code class=\"language-text\">1.3416</code></pre></p>\n<p><em>$r = [0.015, 0.01, 0.005, 0.02]$; $mean = 0.0125$; $\\sigma = \\sqrt{(\\sum(r_t-mean)^2/4)} \\approx 0.00559$; $(0.0125-0.005)/0.00559 \\approx 1.3416$.</em></p>\n<p>| Lời gọi hàm | Kết quả mong đợi |\n| :--- | :--- |\n| <code>print(sharpe_ratio([0.5, 0.5], [[0.02, 0.01], [0.03, -0.01], [-0.01, 0.02], [0.04, 0.0]], 0.005))</code> | <code>1.3416</code> |</p>",
     "category": "Last-term Summer Course Test",
     "difficulty": "Hard",
     "defaultCode": "def sharpe_ratio(weights, returns, rf):",
@@ -4328,7 +4346,7 @@
   {
     "id": 4,
     "title": "Bài 4",
-    "description": "<p>Bước cuối: tìm danh mục tiếp tuyến <strong>và</strong> báo cáo luôn chất lượng của nó. Sếp muốn <strong>một hàm duy nhất</strong> trả về cả trọng số tối ưu lẫn tỷ số Sharpe của danh mục đó.</p>\n<p><strong>Trọng số tối ưu là gì?</strong> Là cách chia vốn $w$ cho từng tài sản sao cho danh mục đạt tỷ số Sharpe cao nhất (nhắc lại: Sharpe = $(R - rf) / \\sigma$ - lợi nhuận vượt trội trên mỗi đơn vị rủi ro). Trong lý thuyết Markowitz, danh mục này gọi là <strong>danh mục tiếp tuyến</strong> (tangency portfolio).</p>\n<p><strong>Cách tính (nghiệm đóng):</strong> lấy lợi suất vượt trội $excess = \\mu - rf$; giải hệ $z = cov^{-1} \\cdot excess$; chuẩn hoá $w = z / sum(z)$ để tổng trọng số bằng 1.</p>\n<p><strong>Yêu cầu:</strong> Viết hàm <code>optimal_weights(exp_returns, cov, rf)</code> trả về <strong>tuple</strong> <code>(weights, sharpe)</code>:\n* $excess = \\mu - rf$; giải $z = cov^{-1} \\cdot excess$; $w = z / sum(z)$\n* <code>weights</code>: <code>list</code> các <code>float</code>, từng phần tử làm tròn 4dp\n* <code>sharpe</code> của danh mục $w$ (dùng $w$ <strong>chưa</strong> làm tròn): $( \\mathbf{w}^T\\mu - rf ) / \\sqrt{(\\mathbf{w}^T \\cdot cov \\cdot \\mathbf{w})}$, làm tròn 4dp</p>\n<p>Gợi ý numpy: <code>np.linalg.inv(S) @ (mu - rf)</code>, <code>w @ mu</code>, <code>np.sqrt(w @ S @ w)</code>. Python thuần (khử Gauss) cũng được chấp nhận.</p>\n<p><strong>Ví dụ:</strong></p>\n<p><strong>Đầu vào:</strong>\n<code>python\nprint(optimal_weights([0.10, 0.05], [[0.04, 0.01], [0.01, 0.02]], 0.02))</code></p>\n<p><strong>Kết quả mong đợi:</strong>\n<code>text\n([0.7647, 0.2353], 0.4071)</code></p>\n<p><em>$w$ như câu trước; Sharpe $= (0.7647 \\cdot 0.10 + 0.2353 \\cdot 0.05 - 0.02) / \\sqrt{(\\mathbf{w}^T \\Sigma \\mathbf{w})} \\approx 0.4071$.</em></p>\n<p>| :--- | :--- |\n| <code>print(optimal_weights([0.10, 0.05], [[0.04, 0.01], [0.01, 0.02]], 0.02))</code> | <code>([0.7647, 0.2353], 0.4071)</code> |</p>",
+    "description": "<p>Bước cuối: tìm danh mục tiếp tuyến <strong>và</strong> báo cáo luôn chất lượng của nó. Sếp muốn <strong>một hàm duy nhất</strong> trả về cả trọng số tối ưu lẫn tỷ số Sharpe của danh mục đó.</p>\n<p><strong>Trọng số tối ưu là gì?</strong> Là cách chia vốn $w$ cho từng tài sản sao cho danh mục đạt tỷ số Sharpe cao nhất (nhắc lại: Sharpe = $(R - rf) / \\sigma$ - lợi nhuận vượt trội trên mỗi đơn vị rủi ro). Trong lý thuyết Markowitz, danh mục này gọi là <strong>danh mục tiếp tuyến</strong> (tangency portfolio).</p>\n<p><strong>Cách tính (nghiệm đóng):</strong> lấy lợi suất vượt trội $excess = \\mu - rf$; giải hệ $z = cov^{-1} \\cdot excess$; chuẩn hoá $w = z / sum(z)$ để tổng trọng số bằng 1.</p>\n<p><strong>Yêu cầu:</strong> Viết hàm <code>optimal_weights(exp_returns, cov, rf)</code> trả về <strong>tuple</strong> <code>(weights, sharpe)</code>:\n* $excess = \\mu - rf$; giải $z = cov^{-1} \\cdot excess$; $w = z / sum(z)$\n* <code>weights</code>: <code>list</code> các <code>float</code>, từng phần tử làm tròn 4dp\n* <code>sharpe</code> của danh mục $w$ (dùng $w$ <strong>chưa</strong> làm tròn): $( \\mathbf{w}^T\\mu - rf ) / \\sqrt{(\\mathbf{w}^T \\cdot cov \\cdot \\mathbf{w})}$, làm tròn 4dp</p>\n<p>Gợi ý numpy: <code>np.linalg.inv(S) @ (mu - rf)</code>, <code>w @ mu</code>, <code>np.sqrt(w @ S @ w)</code>. Python thuần (khử Gauss) cũng được chấp nhận.</p>\n<p><strong>Ví dụ:</strong></p>\n<p><strong>Đầu vào:</strong>\n<pre><code class=\"language-python\">print(optimal_weights([0.10, 0.05], [[0.04, 0.01], [0.01, 0.02]], 0.02))</code></pre></p>\n<p><strong>Kết quả mong đợi:</strong>\n<pre><code class=\"language-text\">([0.7647, 0.2353], 0.4071)</code></pre></p>\n<p><em>$w$ như câu trước; Sharpe $= (0.7647 \\cdot 0.10 + 0.2353 \\cdot 0.05 - 0.02) / \\sqrt{(\\mathbf{w}^T \\Sigma \\mathbf{w})} \\approx 0.4071$.</em></p>\n<p>| Lời gọi hàm | Kết quả mong đợi |\n| :--- | :--- |\n| <code>print(optimal_weights([0.10, 0.05], [[0.04, 0.01], [0.01, 0.02]], 0.02))</code> | <code>([0.7647, 0.2353], 0.4071)</code> |</p>",
     "category": "Last-term Summer Course Test",
     "difficulty": "Hard",
     "defaultCode": "def optimal_weights(exp_returns, cov, rf):",
@@ -5039,12 +5057,25 @@
         ]
       },
       {
-        "text": "**Câu 9:** Đâu là quy trình hợp lý để một doanh nghiệp F&B áp dụng học máy và khoa học dữ liệu nhằm phân tích xu hướng tiêu thụ đồ ăn trong những năm gần đây?\n\n*What is a logical process for an F&B business to apply machine learning and data science to analyze food consumption trends in recent years?*\n\nCác bước gồm:\n1. **(1)** Xác định vấn đề và loại dữ liệu cần thu thập *(Define the problem and determine data)*\n2. **(2)** Thu thập dữ liệu từ các nguồn liên quan *(Collect data from relevant sources)*\n3. **(3)** Làm sạch và tiền xử lý dữ liệu *(Clean and preprocess the data)*\n4. **(4)** Sử dụng các mô hình thống kê và thuật toán học máy để phân tích dữ liệu *(Apply models & ML algorithms)*",
+        "type": "ordering",
+        "text": "**Câu 9:** Đâu là quy trình hợp lý để một doanh nghiệp F&B áp dụng học máy và khoa học dữ liệu nhằm phân tích xu hướng tiêu thụ đồ ăn trong những năm gần đây?\n\n*What is a logical process for an F&B business to apply machine learning and data science to analyze food consumption trends in recent years?*\n\nHãy sắp xếp các bước sau theo đúng quy trình từ bước đầu tiên đến bước cuối cùng:",
+        "items": [
+          "Thu thập dữ liệu từ các nguồn liên quan *(Collect data from relevant sources)*",
+          "Sử dụng các mô hình thống kê và thuật toán học máy để phân tích dữ liệu *(Apply statistical models and machine learning algorithms to analyze the data)*",
+          "Xác định vấn đề và loại dữ liệu cần thu thập *(Define the problem and determine data)*",
+          "Làm sạch và tiền xử lý dữ liệu *(Clean and preprocess the data)*"
+        ],
+        "correctOrder": [
+          "Xác định vấn đề và loại dữ liệu cần thu thập *(Define the problem and determine data)*",
+          "Thu thập dữ liệu từ các nguồn liên quan *(Collect data from relevant sources)*",
+          "Làm sạch và tiền xử lý dữ liệu *(Clean and preprocess the data)*",
+          "Sử dụng các mô hình thống kê và thuật toán học máy để phân tích dữ liệu *(Apply statistical models and machine learning algorithms to analyze the data)*"
+        ],
         "options": [
-          "A. (1) → (2) → (3) → (4)",
-          "B. (2) → (1) → (3) → (4)",
-          "C. (1) → (3) → (2) → (4)",
-          "D. (4) → (3) → (2) → (1)"
+          "Thu thập dữ liệu từ các nguồn liên quan *(Collect data from relevant sources)*",
+          "Sử dụng các mô hình thống kê và thuật toán học máy để phân tích dữ liệu *(Apply statistical models and machine learning algorithms to analyze the data)*",
+          "Xác định vấn đề và loại dữ liệu cần thu thập *(Define the problem and determine data)*",
+          "Làm sạch và tiền xử lý dữ liệu *(Clean and preprocess the data)*"
         ]
       },
       {
@@ -5278,7 +5309,12 @@
         "D"
       ],
       "7": "D",
-      "8": "A",
+      "8": [
+        "Xác định vấn đề và loại dữ liệu cần thu thập *(Define the problem and determine data)*",
+        "Thu thập dữ liệu từ các nguồn liên quan *(Collect data from relevant sources)*",
+        "Làm sạch và tiền xử lý dữ liệu *(Clean and preprocess the data)*",
+        "Sử dụng các mô hình thống kê và thuật toán học máy để phân tích dữ liệu *(Apply statistical models and machine learning algorithms to analyze the data)*"
+      ],
       "9": [
         "A",
         "C",

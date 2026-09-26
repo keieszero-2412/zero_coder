@@ -637,6 +637,33 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
 }
 
+.problem-description-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 1.5rem;
+  font-size: 0.88rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.problem-description-content th,
+.problem-description-content td {
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.problem-description-content th {
+  background-color: var(--bg-surface-elevated);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.problem-description-content tr:nth-child(even) td {
+  background-color: color-mix(in srgb, var(--bg-surface-elevated) 40%, transparent);
+}
+
 .example-box {
   background-color: var(--bg-surface-elevated);
   padding: 1rem;

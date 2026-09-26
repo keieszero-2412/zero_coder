@@ -55,28 +55,88 @@ export function formatProblemDescription(text) {
   // 1. Replace <br> tags with newline
   md = md.replace(/<br\s*\/?>/gi, '\n');
 
-  // 2. Convert <code>...</code> to `...`
-  md = md.replace(/<code\b[^>]*>([\s\S]*?)<\/code>/gi, (_, code) => `\`${code}\``);
+  // 2. Handle <pre><code>...</code></pre> and <pre>...</pre>
+  md = md.replace(/<pre\b[^>]*>([\s\S]*?)<\/pre>/gi, (_, preContent) => {
+    let code = preContent;
+    let lang = 'python';
+    const codeMatch = preContent.match(/^<code(?:\s+class="language-([a-zA-Z0-9_-]+)")?>([\s\S]*?)<\/code>$/i);
+    if (codeMatch) {
+      if (codeMatch[1]) lang = codeMatch[1];
+      code = codeMatch[2];
+    }
+    const langPrefix = code.trim().match(/^(python|py|text|json|bash|sh)\r?\n/i);
+    if (langPrefix) {
+      lang = langPrefix[1].toLowerCase();
+      code = code.trim().slice(langPrefix[0].length);
+    }
+    code = code
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&amp;/g, '&')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'");
 
-  // 3. Convert <b>, <strong> to **...**
+    return `\n\n\`\`\`${lang}\n${code.trim()}\n\`\`\`\n\n`;
+  });
+
+  // 3. Handle multiline <code>...</code> (convert to fenced code blocks)
+  md = md.replace(/<code(?:\s+class="language-([a-zA-Z0-9_-]+)")?>([\s\S]*?)<\/code>/gi, (_, attrLang, code) => {
+    if (code.includes('\n')) {
+      let lang = attrLang || 'python';
+      const langPrefix = code.trim().match(/^(python|py|text|json|bash|sh)\r?\n/i);
+      let cleanCode = code;
+      if (langPrefix) {
+        lang = langPrefix[1].toLowerCase();
+        cleanCode = cleanCode.trim().slice(langPrefix[0].length);
+      }
+      cleanCode = cleanCode
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, '&')
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'");
+      return `\n\n\`\`\`${lang}\n${cleanCode.trim()}\n\`\`\`\n\n`;
+    }
+    // Single line inline code: decode entities
+    const cleanInline = code
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&amp;/g, '&')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'");
+    return `\`${cleanInline}\``;
+  });
+
+  // 4. Handle multiline single backtick blocks like `python\n...` or `...`
+  md = md.replace(/(^|[^\\])`([a-zA-Z0-9_-]*)\r?\n([\s\S]*?)`/g, (_, prefix, lang, content) => {
+    const finalLang = lang ? lang.toLowerCase() : 'python';
+    return `${prefix}\n\n\`\`\`${finalLang}\n${content.trim()}\n\`\`\`\n\n`;
+  });
+
+  // 5. Convert <b>, <strong> to **...**
   md = md.replace(/<(b|strong)\b[^>]*>([\s\S]*?)<\/\1>/gi, (_, __, bold) => `**${bold}**`);
 
-  // 4. Convert <i>, <em> to *...*
+  // 6. Convert <i>, <em> to *...*
   md = md.replace(/<(i|em)\b[^>]*>([\s\S]*?)<\/\1>/gi, (_, __, italic) => `*${italic}*`);
 
-  // 5. Convert <li>...</li> to markdown list items
+  // 7. Convert <li>...</li> to markdown list items
   md = md.replace(/<li\b[^>]*>([\s\S]*?)<\/li>/gi, (_, item) => `\n- ${item.trim()}`);
 
-  // 6. Unwrap <ul>, <ol>
+  // 8. Unwrap <ul>, <ol>
   md = md.replace(/<\/?(ul|ol)\b[^>]*>/gi, '\n');
 
-  // 7. Convert <p> blocks to double newlines
+  // 9. Convert <p> blocks to double newlines
   md = md.replace(/<p\b[^>]*>/gi, '\n\n').replace(/<\/p>/gi, '\n\n');
 
-  // 8. Unwrap <div> blocks
+  // 10. Unwrap <div> blocks
   md = md.replace(/<\/?div\b[^>]*>/gi, '\n\n');
 
-  // 9. Decode HTML entities for math and code readability
+  // 11. Ensure markdown tables missing headers have a header row
+  md = md.replace(/(^|\n)([ \t]*\|[ \t]*:?-+:?[ \t]*\|[ \t]*:?-+:?[ \t]*\|[^\n]*\n)/g, (_, p1, p2) => {
+    return `${p1}| Ví dụ đầu vào | Kết quả mong đợi |\n${p2}`;
+  });
+
+  // 12. Decode HTML entities for math and code readability
   md = md
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
@@ -84,10 +144,10 @@ export function formatProblemDescription(text) {
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'");
 
-  // 10. Clean up excessive newlines
+  // 13. Clean up excessive newlines
   md = md.replace(/\n{3,}/g, '\n\n').trim();
 
-  // 11. Process LaTeX math formulas if any
+  // 14. Process LaTeX math formulas if any
   return preprocessMarkdown(md);
 }
 

@@ -8,7 +8,7 @@ export function useProblems() {
   return useContext(ProblemsContext);
 }
 
-const CACHE_VERSION = 'v10_fix_quiz_katex';
+const CACHE_VERSION = 'v14_ordering_questions_sync';
 
 export function ProblemsProvider({ children }) {
   // Initialize from localStorage for instant load (SWR pattern)
@@ -21,6 +21,7 @@ export function ProblemsProvider({ children }) {
           return JSON.parse(cached);
         }
       } else {
+        // Version mismatch — clear stale cache but don't block load
         localStorage.removeItem('cached_problems');
         localStorage.setItem('problems_cache_version', CACHE_VERSION);
       }
@@ -39,7 +40,6 @@ export function ProblemsProvider({ children }) {
     const fetchProblems = async () => {
       setIsFetching(true);
       try {
-        const isFreshVersion = localStorage.getItem('problems_cache_version') === CACHE_VERSION;
         let fetchedProblems = [];
 
         try {
@@ -52,25 +52,25 @@ export function ProblemsProvider({ children }) {
           console.warn("Could not query DB directly, falling back to local problems.json:", dbErr);
         }
         
-        if (fetchedProblems.length === 0 || !isFreshVersion) {
-          try {
-            const res = await fetch('/problems.json');
-            if (res.ok) {
-              const seedData = await res.json();
-              if (seedData && seedData.length > 0) {
-                fetchedProblems = seedData;
-                localStorage.setItem('problems_cache_version', CACHE_VERSION);
-              }
-            }
-          } catch (e) {
-            console.error("Local fetch failed:", e);
-          }
-        } else {
-          try {
-            const res = await fetch('/problems.json');
-            if (res.ok) {
-              const localData = await res.json();
-              if (localData && localData.length > fetchedProblems.length) {
+        // Always fetch local problems.json and merge quiz data from it
+        try {
+          const res = await fetch('/problems.json');
+          if (res.ok) {
+            const localData = await res.json();
+            if (localData && localData.length > 0) {
+              if (fetchedProblems.length === 0) {
+                fetchedProblems = localData;
+              } else {
+                // For quiz/MCQ problems, prefer the local version (has latest question format)
+                const localMap = new Map(localData.map(p => [String(p.id), p]));
+                fetchedProblems = fetchedProblems.map(p => {
+                  const localP = localMap.get(String(p.id));
+                  if (localP && (localP.type === 'multiple_choice' || localP.questions)) {
+                    return localP;
+                  }
+                  return p;
+                });
+                // Add any problems from local that don't exist in Firestore
                 const fetchedIds = new Set(fetchedProblems.map(p => String(p.id)));
                 const missing = localData.filter(p => !fetchedIds.has(String(p.id)));
                 if (missing.length > 0) {
@@ -78,19 +78,22 @@ export function ProblemsProvider({ children }) {
                 }
               }
             }
-          } catch (e) {
-            // Ignore local fallback error
           }
+        } catch (e) {
+          console.error("Local fetch failed:", e);
         }
 
         if (isMounted) {
           setProblems(fetchedProblems);
-          localStorage.setItem('cached_problems', JSON.stringify(fetchedProblems));
+          if (fetchedProblems.length > 0) {
+            localStorage.setItem('cached_problems', JSON.stringify(fetchedProblems));
+            localStorage.setItem('problems_cache_version', CACHE_VERSION);
+          }
           setIsLoading(false);
           setIsFetching(false);
         }
       } catch (err) {
-        console.error("Failed to fetch problems from DB:", err);
+        console.error("Failed to fetch problems:", err);
         if (isMounted) {
           setIsLoading(false);
           setIsFetching(false);
