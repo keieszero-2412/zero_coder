@@ -34,7 +34,7 @@ function ProblemCodeBlock({ inline, className, children, ...props }) {
           </button>
         </div>
         <pre style={{ margin: 0, padding: '1rem', backgroundColor: 'transparent', overflowX: 'auto' }} {...props}>
-          <code className={className} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.88rem', lineHeight: '1.6', color: 'var(--text-primary)', whiteSpace: 'pre', display: 'block' }}>
+          <code className={className} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.88rem', lineHeight: '1.6', color: 'var(--text-primary)', whiteSpace: 'pre-wrap', wordBreak: 'break-word', display: 'block' }}>
             {children}
           </code>
         </pre>

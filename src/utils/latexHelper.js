@@ -108,7 +108,7 @@ export function formatProblemDescription(text) {
   });
 
   // 4. Handle multiline single backtick blocks like `python\n...` or `...`
-  md = md.replace(/(^|[^\\])`([a-zA-Z0-9_-]*)\r?\n([\s\S]*?)`/g, (_, prefix, lang, content) => {
+  md = md.replace(/(^|[^\\\`])`([a-zA-Z0-9_-]*)\r?\n([\s\S]*?)`/g, (_, prefix, lang, content) => {
     const finalLang = lang ? lang.toLowerCase() : 'python';
     return `${prefix}\n\n\`\`\`${finalLang}\n${content.trim()}\n\`\`\`\n\n`;
   });

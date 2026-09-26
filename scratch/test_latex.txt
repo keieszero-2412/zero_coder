@@ -1,0 +1,30 @@
+An giờ quản lý **nhiều** cổ phiếu cùng lúc, và sàn bắt đầu thu phí: mỗi lần **bán** bị trừ `fee` đồng. Tham lam cộng mọi chênh lệch dương **không còn đúng** khi có phí.
+
+**Yêu cầu:** Viết hàm `max_profit(prices, fee)`, trong đó `prices` là danh sách các chuỗi giá - `prices[k]` là chuỗi giá theo ngày của cổ phiếu thứ $k$ (các chuỗi có thể dài ngắn khác nhau). Trả về **tổng** lợi nhuận tối đa trên tất cả cổ phiếu:
+* Các cổ phiếu độc lập với nhau (giao dịch cổ phiếu này không ảnh hưởng cổ phiếu khác).
+* Với từng cổ phiếu: mua trước khi bán, giữ tối đa 1 đơn vị, không bán khống, mỗi lần **bán** trừ phí `fee`, được mua/bán nhiều lần, không bắt buộc giao dịch.
+
+Gợi ý: giải từng cổ phiếu một rồi cộng lại. Với mỗi chuỗi giá, dùng quy hoạch động 2 trạng thái: `cash` (không giữ cổ phiếu) và `hold` (đang giữ): `cash = max(cash, hold + p - fee)`; `hold = max(hold, cash - p)`, khởi tạo `cash = 0`, `hold = -vô cùng`.
+
+Trả về: `int`.
+
+**Ví dụ:**
+
+**Đầu vào:**
+
+```python
+print(max_profit([[1, 3, 2, 8, 4, 9], [5, 4, 3]], 2))
+```
+
+**Kết quả mong đợi:**
+
+```text
+8
+```
+
+*Cổ phiếu 1: mua 1 $\rightarrow$ bán 8 ($8-1-2=5$), mua 4 $\rightarrow$ bán 9 ($9-4-2=3$) $\rightarrow$ 8. Cổ phiếu 2: giá chỉ giảm $\rightarrow$ 0. Tổng: 8.*
+
+| Lời gọi hàm | Kết quả mong đợi |
+| Ví dụ đầu vào | Kết quả mong đợi |
+| :--- | :--- |
+| `print(max_profit([[1, 3, 2, 8, 4, 9], [5, 4, 3]], 2))` | `8` |
