@@ -4152,23 +4152,43 @@
     ],
     "initialCode": "{}",
     "correctAnswers": {
-      "0": "B",
+      "0": [
+        "B",
+        "C"
+      ],
       "1": [
         "Xác định vấn đề và loại dữ liệu cần thu thập",
         "Thu thập dữ liệu từ các nguồn liên quan",
         "Làm sạch và tiền xử lý dữ liệu",
         "Sử dụng các mô hình thống kê và các thuật toán học máy để phân tích dữ liệu"
       ],
-      "2": "C",
-      "3": "B",
-      "4": "D",
+      "2": "B",
+      "3": [
+        "A",
+        "C",
+        "E"
+      ],
+      "4": [
+        "A",
+        "D",
+        "E"
+      ],
       "5": "C",
-      "6": "B",
-      "7": "B",
-      "8": "A",
-      "9": "D",
+      "6": "D",
+      "7": [
+        "B",
+        "C"
+      ],
+      "8": "C",
+      "9": [
+        "B",
+        "D"
+      ],
       "10": "C",
-      "11": "B",
+      "11": [
+        "A",
+        "B"
+      ],
       "12": "A",
       "13": "B",
       "14": "B",
