@@ -181,7 +181,7 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
     // Do not add the intent prompt to the UI
     
     try {
-      const { text, providerName, modelName } = await askAIForHelp(problem, userCode, testResults, [intentMessage]);
+      const { text, providerName, modelName } = await askAIForHelp(problem, userCode, testResults, [...messages, intentMessage]);
       setCurrentProvider(providerName || 'AI');
       setIsLoading(false);
       setMessages(prev => [...prev, { role: 'assistant', content: text, isNew: true }]);

@@ -10,14 +10,14 @@ import { GoogleGenAI } from '@google/genai';
 const providers = [];
 
 // 1. Groq (Ultra-fast inference on LPUs, <1s response time)
-const groqKey = import.meta.env.VITE_GROQ_API_KEY || '';
+const groqKey = process.env.VITE_GROQ_API_KEY || '';
 if (groqKey) {
   providers.push({
     name: 'Groq (Qwen 27B)',
     type: 'openai-compatible',
     model: 'qwen/qwen3.8-27b',
     apiKey: groqKey,
-    baseUrl: 'https://api.groq.com/openai/v1/chat/completions',
+    baseUrl: 'http://localhost:9999',
     timeout: 8000,
   });
   providers.push({
@@ -25,13 +25,13 @@ if (groqKey) {
     type: 'openai-compatible',
     model: 'openai/gpt-oss-120b',
     apiKey: groqKey,
-    baseUrl: 'https://api.groq.com/openai/v1/chat/completions',
+    baseUrl: 'http://localhost:9999',
     timeout: 8000,
   });
 }
 
 // 2. Gemini (Google GenAI 3.6 Flash)
-const geminiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
+const geminiKey = process.env.VITE_GEMINI_API_KEY || '';
 if (geminiKey) {
   const geminiClient = new GoogleGenAI({ apiKey: geminiKey });
   providers.push({
@@ -44,7 +44,7 @@ if (geminiKey) {
 }
 
 // 3. Mistral (open-mistral-7b & mistral-small-latest)
-const mistralKey = import.meta.env.VITE_MISTRAL_API_KEY || '';
+const mistralKey = process.env.VITE_MISTRAL_API_KEY || '';
 if (mistralKey) {
   providers.push({
     name: 'Mistral (7B)',
@@ -63,7 +63,7 @@ if (mistralKey) {
 }
 
 // 4. OpenRouter (Multi-model free tier fallback)
-const openRouterKey = import.meta.env.VITE_OPENROUTER_API_KEY || '';
+const openRouterKey = process.env.VITE_OPENROUTER_API_KEY || '';
 if (openRouterKey) {
   providers.push({
     name: 'OpenRouter (Qwen 27B)',
@@ -92,7 +92,7 @@ async function callOpenAICompatible(provider, systemPrompt, chatHistory, lastMes
   messages.push({ role: 'user', content: lastMessage });
 
   const controller = new AbortController();
-  const timeoutMs = provider.timeout || 12000;
+  const timeoutMs = provider.timeout || 25000;
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
@@ -164,7 +164,7 @@ async function callGemini(provider, systemPrompt, chatHistory, lastMessage) {
   }
 
   const timeoutPromise = new Promise((_, reject) => {
-    const timeoutMs = provider.timeout || 12000;
+    const timeoutMs = provider.timeout || 25000;
     const id = setTimeout(() => {
       clearTimeout(id);
       const timeoutErr = new Error(`${provider.name} timed out after ${timeoutMs/1000}s`);
