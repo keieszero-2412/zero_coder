@@ -8,7 +8,7 @@ export function useProblems() {
   return useContext(ProblemsContext);
 }
 
-const CACHE_VERSION = 'v8_clean_initial_code';
+const CACHE_VERSION = 'v10_fix_quiz_katex';
 
 export function ProblemsProvider({ children }) {
   // Initialize from localStorage for instant load (SWR pattern)

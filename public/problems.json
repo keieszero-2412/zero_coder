@@ -4570,6 +4570,230 @@
     }
   },
   {
+    "id": "last_term_quiz_9",
+    "category": "Last-term Quiz",
+    "subcategory": "Quiz 9",
+    "title": "Quiz 9: ML Fundamentals & Clustering",
+    "description": "Bài kiểm tra trắc nghiệm lý thuyết <b>Quiz 9: Machine Learning Fundamentals & Clustering</b> (10 câu hỏi) bao gồm các kiến thức về học có giám sát/không giám sát, phân cụm K-means, hàm lỗi thực nghiệm, Overfitting/Underfitting, và thuật toán k-NN.",
+    "type": "multiple_choice",
+    "initialCode": "{}",
+    "questions": [
+      {
+        "text": "**Câu 1:** K-means là gì?",
+        "options": [
+          "A. Một phương pháp học máy có giám sát",
+          "B. Một phương pháp phân cụm",
+          "C. Một phương pháp để tính trung bình số học từ dữ liệu",
+          "D. Một phương pháp phân loại"
+        ]
+      },
+      {
+        "text": "**Câu 2:** Giả sử bạn muốn sử dụng một phương pháp học máy để phân tích tri thức ẩn bên trong một tập dữ liệu, nhưng không có ý niệm gì về những tri thức đó. Bạn có thể đưa về bài toán nào sau đây là phù hợp nhất?",
+        "options": [
+          "A. Học có giám sát",
+          "B. Học không giám sát",
+          "C. Hồi quy",
+          "D. Phân loại nhiều lớp"
+        ]
+      },
+      {
+        "text": "**Câu 3:** Vai trò của hàm lỗi thực nghiệm là gì?",
+        "options": [
+          "A. Để đo đạc lỗi phán đoán theo một nghĩa nào đó và hay được dùng làm hàm mục tiêu khi huấn luyện một mô hình",
+          "B. Không có vai trò gì",
+          "C. Để đo đạc lỗi phán đoán trong tương lai"
+        ]
+      },
+      {
+        "text": "**Câu 4:** Overfitting nói đến tình huống nào?",
+        "options": [
+          "A. Quá ít dữ liệu huấn luyện",
+          "B. Một phương pháp tạo ra tỉ lệ lỗi bé trên tập huấn luyện, nhưng có tỉ lệ lỗi lớn trên dữ liệu trong tương lai",
+          "C. Có quá nhiều dữ liệu huấn luyện đến nỗi một máy tính có thể học dễ dàng",
+          "D. Một phương pháp có thể phán đoán không chính xác về hành vi của một phương pháp khác"
+        ]
+      },
+      {
+        "text": "**Câu 5:** Đánh giá mô hình là:",
+        "options": [
+          "A. Việc đánh giá hiệu quả của một mô hình hoặc phương pháp phân tích dữ liệu, chỉ bằng cách sử dụng các kịch bản thực tế",
+          "B. Việc đánh giá hiệu quả của một mô hình hoặc phương pháp phân tích dữ liệu, bằng cách sử dụng một hoặc nhiều tập dữ liệu",
+          "C. Việc chúng ta khám phá một mô hình đã được học để tìm ra tri thức mới"
+        ]
+      },
+      {
+        "text": "**Câu 6:** Khi sử dụng một phương pháp để phân tích dữ liệu, hai lần chạy khác nhau có thể thu được hai kết quả khác nhau mặc dù sử dụng cùng thiết đặt cho bộ tham số. Lý do có thể đến từ đâu?",
+        "options": [
+          "A. Do việc sử dụng các thiết đặt khác nhau cho các tham số",
+          "B. Do dùng phương pháp đó sai cách",
+          "C. Do việc sử dụng các tập dữ liệu khác nhau",
+          "D. Do sự ngẫu nhiên khi chia tập dữ liệu đang có thành hai tập con dùng để huấn luyện và kiểm chứng",
+          "E. Do tính ngẫu nhiên của thuật toán học/phân tích"
+        ]
+      },
+      {
+        "text": "**Câu 7:** Giả sử bạn huấn luyện một mô hình phân loại trên một tập huấn luyện gồm 10000 điểm và thu được độ chính xác trên tập đó là 99%. Tuy nhiên, khi bạn thử áp dụng mô hình này trên tập kiểm thử thì độ chính xác là 67%. Cách làm nào sau đây có khả năng giúp bạn tăng độ chính xác của mô hình trên tập kiểm thử?",
+        "options": [
+          "A. Bỏ bớt dữ liệu một cách ngẫu nhiên khi huấn luyện",
+          "B. Đặt hệ số hiệu chỉnh nếu có bằng 0",
+          "C. Ngắt giữa chừng quá trình huấn luyện mô hình",
+          "D. Huấn luyện trên nhiều dữ liệu hơn"
+        ]
+      },
+      {
+        "text": "**Câu 8:** Trong thuật toán k-NN, điều gì có thể xảy ra khi chọn giá trị k quá lớn?",
+        "options": [
+          "A. Xảy ra hiện tượng underfitting",
+          "B. Tăng chi phí tính toán do phải xét nhiều hàng xóm hơn",
+          "C. Giảm độ chính xác do xem xét cả các điểm không liên quan",
+          "D. Mô hình sẽ trở nên nhạy cảm hơn với nhiễu"
+        ]
+      },
+      {
+        "text": "**Câu 9:** Những phát biểu nào sau đây là chính xác về thuật toán k-NN?",
+        "options": [
+          "A. k-NN có thể được dùng cho cả bài toán phân loại và bài toán hồi quy",
+          "B. k-NN chỉ có thể được dùng cho bài toán phân loại",
+          "C. Khi k nhỏ thì thuật toán k-NN sẽ nhạy cảm với nhiễu",
+          "D. Khi k lớn thì thuật toán k-NN có thể xét cả những điểm không liên quan, từ đó có thể dự đoán sai"
+        ]
+      },
+      {
+        "text": "**Câu 10:** Những phát biểu nào sau đây là không chính xác về thuật toán K-means clustering?",
+        "options": [
+          "A. Thuật toán K-means có thể hội tụ rất nhanh trong thực tế",
+          "B. Thuật toán K-means có thể hoạt động tốt với những tập dữ liệu không lồi",
+          "C. Mặc dù có khởi tạo các centroid khác nhau nhưng thuật toán K-means vẫn sẽ luôn hội tụ về một kết quả"
+        ]
+      }
+    ],
+    "correctAnswers": {
+      "0": "B",
+      "1": "B",
+      "2": "A",
+      "3": "B",
+      "4": "B",
+      "5": [
+        "D",
+        "E"
+      ],
+      "6": [
+        "C",
+        "D"
+      ],
+      "7": [
+        "A",
+        "B",
+        "C"
+      ],
+      "8": [
+        "A",
+        "C",
+        "D"
+      ],
+      "9": [
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "id": "last_term_quiz_10",
+    "category": "Last-term Quiz",
+    "subcategory": "Quiz 10",
+    "title": "Quiz 10: Regression & Distance Models",
+    "description": "Bài kiểm tra trắc nghiệm lý thuyết <b>Quiz 10: Regression & Distance Models</b> (7 câu hỏi) bao gồm các kiến thức về hồi quy tuyến tính, Gradient Descent vs Normal Equation, thuật toán học máy có giám sát/không giám sát, các hàm khoảng cách và chuẩn hoá dữ liệu cho k-NN.",
+    "type": "multiple_choice",
+    "initialCode": "{}",
+    "questions": [
+      {
+        "text": "**Câu 1:** Xét tập dữ liệu gồm có bốn điểm sau (1, 0.5), (2, 1), (4, 2) và (0, 0). Gọi $y = mx + n$ là phương trình hồi quy tuyến tính cho tập dữ liệu này. Giá trị của $m + n$ là?",
+        "options": [
+          "A. 0.5",
+          "B. 1",
+          "C. 2",
+          "D. 0"
+        ]
+      },
+      {
+        "text": "**Câu 2:** Xét tập dữ liệu gồm có $m = 1.000.000$ điểm dữ liệu và mỗi điểm dữ liệu có $n = 200.000$ đặc trưng. Để huấn luyện mô hình hồi quy tuyến tính trên tập dữ liệu này, ta nên sử dụng thuật toán Gradient Descent hay giải Normal Equation?",
+        "options": [
+          "A. Cả hai đều phù hợp",
+          "B. Normal Equation",
+          "C. Gradient Descent"
+        ]
+      },
+      {
+        "text": "**Câu 3:** Những thuật toán nào sau đây là các thuật toán học máy không giám sát?",
+        "options": [
+          "A. K-means clustering",
+          "B. K-nearest neighbors",
+          "C. Linear Regression",
+          "D. Logistic Regression"
+        ]
+      },
+      {
+        "text": "**Câu 4:** Những hàm khoảng cách nào sau đây có thể được sử dụng trong thuật toán K-nearest neighbors?",
+        "options": [
+          "A. Khoảng cách Manhattan",
+          "B. Khoảng cách Hamming",
+          "C. Khoảng cách Euclid",
+          "D. Khoảng cách Minkowski"
+        ]
+      },
+      {
+        "text": "**Câu 5:** Những yếu tố nào sau đây có thể ảnh hưởng đến chất lượng của mô hình K-nearest neighbors?",
+        "options": [
+          "A. Số hàng xóm k được xét",
+          "B. Hệ số học của thuật toán Gradient Descent",
+          "C. Hàm khoảng cách",
+          "D. Chất lượng dữ liệu và cách chuẩn hóa"
+        ]
+      },
+      {
+        "text": "**Câu 6:** Tại sao ta cần chuẩn hóa dữ liệu trước khi sử dụng thuật toán KNN?",
+        "options": [
+          "A. Giúp các feature đóng góp công bằng vào việc tính khoảng cách",
+          "B. Giúp loại bỏ nhiễu khỏi tập dữ liệu",
+          "C. Các feature có thang đo lớn sẽ chi phối hoàn toàn khoảng cách"
+        ]
+      },
+      {
+        "text": "**Câu 7:** Thuật toán K-nearest neighbor có thể được áp dụng trong những trường hợp nào dưới đây?",
+        "options": [
+          "A. Điều khiển robot tự hành trong thời gian thực",
+          "B. Hệ thống gợi ý sản phẩm dựa trên người dùng tương tự",
+          "C. Tối ưu lịch sản xuất trong nhà máy",
+          "D. Phân loại thư rác"
+        ]
+      }
+    ],
+    "correctAnswers": {
+      "0": "A",
+      "1": "C",
+      "2": "A",
+      "3": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "4": [
+        "A",
+        "C",
+        "D"
+      ],
+      "5": [
+        "A",
+        "C"
+      ],
+      "6": [
+        "B",
+        "D"
+      ]
+    }
+  },
+  {
     "id": "last_term_quiz_11",
     "category": "Last-term Quiz",
     "subcategory": "Quiz 11",
