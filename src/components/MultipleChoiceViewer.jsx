@@ -348,7 +348,7 @@ function OrderingQuestion({ q, userAnswer, onReorder, onReset }) {
   );
 }
 
-export function MultipleChoiceViewer({ problem, value, onChange }) {
+export function MultipleChoiceViewer({ problem, value, onChange, testResults = [] }) {
   const answers = useMemo(() => {
     try {
       return value ? JSON.parse(value) : {};
@@ -439,8 +439,29 @@ export function MultipleChoiceViewer({ problem, value, onChange }) {
           }
         }
         
+        const result = testResults[qIndex];
+        const isCorrect = result?.passed === true;
+        const isWrong = result?.passed === false;
+
+        let containerStyle = { 
+          marginBottom: '1.75rem', 
+          padding: '1.5rem', 
+          backgroundColor: 'var(--bg-surface-elevated)', 
+          borderRadius: 'var(--radius-md)', 
+          border: '1px solid var(--border-color)',
+          transition: 'all 0.3s ease'
+        };
+
+        if (isCorrect) {
+          containerStyle.border = '1px solid var(--success)';
+          containerStyle.backgroundColor = 'color-mix(in srgb, var(--success) 8%, var(--bg-surface-elevated))';
+        } else if (isWrong) {
+          containerStyle.border = '1px solid var(--error)';
+          containerStyle.backgroundColor = 'color-mix(in srgb, var(--error) 8%, var(--bg-surface-elevated))';
+        }
+
         return (
-          <div key={qIndex} style={{ marginBottom: '1.75rem', padding: '1.5rem', backgroundColor: 'var(--bg-surface-elevated)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+          <div key={qIndex} style={containerStyle}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', flexWrap: 'wrap', gap: '0.5rem' }}>
               <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--accent-primary)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                 Câu {qIndex + 1} / {problem.questions.length}

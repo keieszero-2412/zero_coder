@@ -253,6 +253,9 @@ Please provide a clear and concise hint. Do NOT just give them the exact correct
   let problemFullDescription = problem.description;
   if (problem.type === 'multiple_choice' && problem.questions) {
     problemFullDescription += '\n\n### Questions:\n' + JSON.stringify(problem.questions, null, 2);
+    if (problem.correctAnswers) {
+      problemFullDescription += '\n\n### Correct Answers Key (Use this to grade the user):\n' + JSON.stringify(problem.correctAnswers, null, 2);
+    }
   }
 
   // Extract required function signature(s) from initialCode, answer_key, or testCases

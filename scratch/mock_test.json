@@ -1,0 +1,259 @@
+{
+  "id": "last_term_mock_mcq",
+  "category": "Last-term Mock Test",
+  "title": "Phần I: Trắc nghiệm (Mock Test)",
+  "description": "<p>Đây là phần trắc nghiệm của bài test. Hãy chọn đáp án đúng cho từng câu hỏi.</p>",
+  "type": "multiple_choice",
+  "questions": [
+    {
+      "text": "**Câu 1:** Trong những tình huống dưới đây, trường hợp nào nên ưu tiên tối đa hóa chỉ số Precision hơn là Recall?",
+      "options": [
+        "A. Hệ thống phát hiện gian lận trong giao dịch ngân hàng.",
+        "B. Hệ thống tự động đánh dấu email là thư rác để chuyển vào thư mục Spam.",
+        "C. Hệ thống nhận diện khuôn mặt để tự động mở khóa điện thoại.",
+        "D. Hệ thống cảnh báo cháy trong các tòa nhà.",
+        "E. Hệ thống sàng lọc bệnh nhân để phát hiện sớm ung thư."
+      ]
+    },
+    {
+      "type": "ordering",
+      "text": "**Câu 2:** Đâu là quy trình hợp lý để một doanh nghiệp F&B áp dụng học máy và khoa học dữ liệu nhằm phân tích xu hướng tiêu thụ đồ ăn trong những năm gần đây? Hãy sắp xếp các bước sau theo đúng quy trình từ bước đầu tiên đến bước cuối cùng:",
+      "items": [
+        "Thu thập dữ liệu từ các nguồn liên quan",
+        "Sử dụng các mô hình thống kê và các thuật toán học máy để phân tích dữ liệu",
+        "Xác định vấn đề và loại dữ liệu cần thu thập",
+        "Làm sạch và tiền xử lý dữ liệu"
+      ],
+      "correctOrder": [
+        "Xác định vấn đề và loại dữ liệu cần thu thập",
+        "Thu thập dữ liệu từ các nguồn liên quan",
+        "Làm sạch và tiền xử lý dữ liệu",
+        "Sử dụng các mô hình thống kê và các thuật toán học máy để phân tích dữ liệu"
+      ],
+      "options": [
+        "Thu thập dữ liệu từ các nguồn liên quan",
+        "Sử dụng các mô hình thống kê và các thuật toán học máy để phân tích dữ liệu",
+        "Xác định vấn đề và loại dữ liệu cần thu thập",
+        "Làm sạch và tiền xử lý dữ liệu"
+      ]
+    },
+    {
+      "text": "**Câu 3:** Trong Python 3, hàm `map()` trả về một đối tượng kiểu `list`.",
+      "options": [
+        "True",
+        "False"
+      ]
+    },
+    {
+      "text": "**Câu 4:** Trong những phát biểu sau về list và tuple, những phát biểu nào là chính xác?",
+      "options": [
+        "a. Để thực hiện thêm một phần tử vào cuối list, ta có thể sử dụng phương thức `append()`",
+        "b. Một list sau khi được khởi tạo thì sẽ không thể thay đổi",
+        "c. Một tuple sau khi được khởi tạo thì sẽ không thể thay đổi",
+        "d. Để xoá một phần tử ở cuối tuple, ta có thể sử dụng phương thức `delete`",
+        "e. Cả `list` và `tuple` đều **không** hỗ trợ tìm kiếm nhanh một phần tử theo giá trị; việc tìm kiếm thường phải duyệt tuần tự qua từng phần tử",
+        "f. `list` và `tuple` không cho phép chứa các phần tử trùng lặp."
+      ]
+    },
+    {
+      "text": "**Câu 5:** Đâu là các cấu trúc dữ liệu cơ bản trong Python? (Chọn nhiều đáp án)",
+      "options": [
+        "A. set",
+        "B. float",
+        "C. str",
+        "D. list",
+        "E. dictionary",
+        "F. int"
+      ]
+    },
+    {
+      "text": "**Câu 6:** Cho đoạn chương trình Python sau:\n```python\nnumbers = [1, 2, 3, 4, 5, 6]\nresult = [x * x for x in numbers if x % 2 == 0]\nprint(result)\n```\nKết quả in ra màn hình là gì?",
+      "options": [
+        "A. [2, 4, 6]",
+        "B. [1, 4, 9, 16, 25, 36]",
+        "C. [4, 16, 36]",
+        "D. [1, 9, 25]"
+      ]
+    },
+    {
+      "text": "**Câu 7:** Cho đoạn chương trình Python sau:\n```python\nx = 1\ndef outer():\n    x = 2\n    def inner():\n        print(x)\n    inner()\nouter()\nprint(x)\n```\nKết quả in ra màn hình là gì?",
+      "options": [
+        "A. 2 2",
+        "B. 1 1",
+        "C. Error",
+        "D. 2 1"
+      ]
+    },
+    {
+      "text": "**Câu 8:** Những phát biểu nào sau đây là đúng về Correlation Matrix và Heatmap?",
+      "options": [
+        "A. Heatmap luôn tính toán hệ số tương quan trước khi hiển thị dữ liệu.",
+        "B. Correlation Matrix là ma trận chứa hệ số tương quan giữa các cặp biến số.",
+        "C. Heatmap là một phương pháp trực quan hóa dữ liệu bằng màu sắc và thường được sử dụng để hiển thị Correlation Matrix.",
+        "D. Correlation Matrix chỉ có thể được hiển thị dưới dạng Heatmap."
+      ]
+    },
+    {
+      "text": "**Câu 9:** Trong giai đoạn Exploratory Data Analysis (EDA), biểu đồ nào sau đây thường được sử dụng để quan sát phân phối của một biến số?",
+      "options": [
+        "A. Scatter Plot",
+        "B. Line Chart",
+        "C. Histogram",
+        "D. Box Plot"
+      ]
+    },
+    {
+      "text": "**Câu 10:** Những lý do nào sau đây giải thích vì sao không nên luôn luôn xóa các bản ghi có chứa giá trị bị thiếu (missing values)?",
+      "options": [
+        "A. Việc xóa dữ liệu luôn giúp mô hình học lâu hơn và giảm độ chính xác của mô hình.",
+        "B. Việc xóa dữ liệu có thể làm giảm kích thước tập dữ liệu và làm mất các thông tin hữu ích.",
+        "C. Vì việc xóa dữ liệu sẽ luôn làm tăng hiện tượng overfitting của mô hình.",
+        "D. Nếu số lượng bản ghi bị thiếu lớn, việc xóa chúng có thể làm thay đổi phân phối của dữ liệu và gây thiên lệch (bias)."
+      ]
+    },
+    {
+      "text": "**Câu 11:** Trong các thuật toán sau, thuật toán nào có thể được sử dụng cho bài toán phân loại email spam?",
+      "options": [
+        "A. k-Nearest Neighbors (k-NN)",
+        "B. Polynomial Regression",
+        "C. Logistic Regression",
+        "D. Linear Regression"
+      ]
+    },
+    {
+      "text": "**Câu 12:** Những phát biểu nào sau đây giải thích vì sao mô hình hồi quy tuyến tính thường sử dụng tổng bình phương sai số (Mean Squared Error - MSE) thay vì tổng giá trị tuyệt đối của sai số (Mean Absolute Error - MAE)?",
+      "options": [
+        "A. Hàm bình phương có đạo hàm tại mọi điểm nên thuận lợi cho các thuật toán tối ưu dựa trên đạo hàm/đạo hàm riêng.",
+        "B. Hàm bình phương phạt mạnh hơn đối với các sai số lớn, khiến mô hình ưu tiên giảm các dự đoán có sai số lớn.",
+        "C. Sử dụng MSE luôn giúp mô hình có độ chính xác cao hơn MAE trên mọi tập dữ liệu.",
+        "D. Hàm bình phương luôn cho giá trị không âm, trong khi hàm giá trị tuyệt đối có thể cho giá trị âm."
+      ]
+    },
+    {
+      "text": "**Câu 13:** Tại sao khi các hệ số $w_i$ trong mô hình hồi quy tuyến tính có giá trị quá lớn, mô hình thường trở nên nhạy cảm hơn với nhiễu trong dữ liệu đầu vào?",
+      "options": [
+        "A. Vì các hệ số lớn sẽ khuếch đại ảnh hưởng của những sai số hoặc nhiễu nhỏ ở đầu vào, khiến dự đoán của mô hình thay đổi nhiều hơn.",
+        "B. Vì các hệ số lớn khiến hàm mất mát trở thành hàm không khả vi nên mô hình không thể tiếp tục học.",
+        "C. Vì khi các hệ số lớn, mô hình sẽ luôn dự đoán chính xác hơn trên dữ liệu kiểm tra.",
+        "D. Vì các hệ số lớn làm giảm số lượng đặc trưng được sử dụng trong mô hình."
+      ]
+    },
+    {
+      "text": "**Câu 14:** Generalization Error là gì?",
+      "options": [
+        "A. Là sai số phát sinh do thuật toán huấn luyện chưa tìm được nghiệm tối ưu của mô hình, mặc dù mô hình về lý thuyết có thể đạt kết quả tốt hơn.",
+        "B. Là sai số của mô hình khi dự đoán trên dữ liệu mới chưa từng xuất hiện trong quá trình huấn luyện, phản ánh khả năng tổng quát hóa của mô hình.",
+        "C. Là sai số phát sinh do mô hình được huấn luyện trên một tập dữ liệu hữu hạn thay vì toàn bộ phân phối dữ liệu, khiến các tham số ước lượng chưa đạt nghiệm tối ưu thực sự.",
+        "D. Là sai số do bản thân mô hình không đủ khả năng biểu diễn hàm mục tiêu thực sự, ngay cả khi được huấn luyện hoàn hảo trên vô hạn dữ liệu."
+      ]
+    },
+    {
+      "text": "**Câu 15:** Trong mô hình hồi quy tuyến tính, khi nào ta có thể kết luận rằng mô hình đã học được các đặc trưng (patterns) chính của tập dữ liệu?",
+      "options": [
+        "A. Hệ số xác định $R^2$ gần bằng 0.",
+        "B. Biểu đồ phần dư (residuals) phân bố gần như ngẫu nhiên quanh đường $y = 0$ và không xuất hiện quy luật rõ ràng.",
+        "C. Các giá trị phần dư đều bằng 0 trên tập huấn luyện.",
+        "D. Sai số RMSE trên tập kiểm tra (hoặc tập xác thực) đủ nhỏ so với yêu cầu của bài toán."
+      ]
+    },
+    {
+      "text": "**Câu 16:** Cho một DataFrame `df` gồm 5 cột có tên lần lượt là **A, B, C, D, E**. Hãy chọn **tất cả** các đoạn mã có thể thay thế **các số lẻ bằng số chẵn liền sau của chúng** (ví dụ: $1 \\rightarrow 2, 3 \\rightarrow 4, 5 \\rightarrow 6, \\dots$) **chỉ trên hai cột C và E**.",
+      "options": [
+        "A. `df = df.replace({\"C\": {1: 2, 3: 4, 5: 6, 7: 8, 9: 10}, \"E\": {1: 2, 3: 4, 5: 6, 7: 8, 9: 10}})`",
+        "B. `df = df.replace({2: {1: 2, 3: 4, 5: 6, 7: 8, 9: 10}, 4: {1: 2, 3: 4, 5: 6, 7: 8, 9: 10}})`",
+        "C. `df.iloc[:, [2, 4]] = df.iloc[:, [2, 4]].replace({1: 2, 3: 4, 5: 6, 7: 8, 9: 10})`",
+        "D. `df = df.replace({\"B\": {1: 2, 3: 4, 5: 6, 7: 8, 9: 10}, \"D\": {1: 2, 3: 4, 5: 6, 7: 8, 9: 10}})`"
+      ]
+    },
+    {
+      "text": "**Câu 17:** Tại sao Lasso Regularization (L1 Regularization) có thể được sử dụng để chọn lọc các đặc trưng (feature selection) trong mô hình học máy?",
+      "options": [
+        "A. Vì Lasso làm tăng giá trị của tất cả các hệ số $w_i$, giúp mọi đặc trưng đều có ảnh hưởng lớn hơn đến kết quả dự đoán.",
+        "B. Vì Lasso luôn làm giảm sai số trên tập huấn luyện xuống bằng 0, nhờ đó có thể xác định chính xác các đặc trưng quan trọng.",
+        "C. Vì Lasso tự động tạo thêm các đặc trưng mới từ dữ liệu gốc, giúp mô hình học được nhiều thông tin hơn.",
+        "D. Vì Lasso có xu hướng ép một số hệ số $w_i$ về đúng bằng 0, từ đó loại bỏ các đặc trưng tương ứng và chỉ giữ lại những đặc trưng quan trọng nhất."
+      ]
+    },
+    {
+      "text": "**Câu 18:** Cho hàm `apply` được định nghĩa như sau:\n```python\ndef apply(f, x=5):\n    return f(x)\n```\nKhi thực hiện chạy câu lệnh `apply(lambda x: x + 1)`, thì kết quả trả về sẽ là gì?",
+      "options": [
+        "A. 7",
+        "B. 6",
+        "C. 5",
+        "D. Đoạn code bị lỗi thực thi"
+      ]
+    },
+    {
+      "text": "**Câu 19:** Cho hàm `g` được định nghĩa như sau:\n```python\ndef g(f, x):\n    return f(x) + 3\n```\nTừ một danh sách `a` gồm các số nguyên, hãy chọn **tất cả** các đoạn chương trình tạo ra danh sách `b` sao cho $b[i] = a[i]^2 + 3$.",
+      "options": [
+        "A. `b = list(map(lambda x: g(lambda t: t * t + 3, x), a))`",
+        "B. `b = [g(lambda t: t * t, x) for x in a]`",
+        "C. `b = list(map(lambda x: g(lambda t: t * t, x), a))`",
+        "D. `b = list(map(g(lambda t: t * t), a))`"
+      ]
+    },
+    {
+      "text": "**Câu 20:** Cho hàm `calculate(a, b)` được định nghĩa như sau:\n```python\ndef calculate(a, b):\n    try:\n        print(a / b)\n    except ZeroDivisionError:\n        print(\"Divide by zero\")\n    except TypeError:\n        print(\"Invalid type\")\n    finally:\n        print(\"Program ended\")\n```\nKhi thực hiện lời gọi hàm `calculate('8', 0)`, kết quả in ra màn hình là gì?",
+      "options": [
+        "A. Divide by zero",
+        "B. Invalid type\\nProgram ended",
+        "C. Invalid type",
+        "D. Divide by zero\\nProgram ended"
+      ]
+    }
+  ],
+  "initialCode": "{}",
+  "correctAnswers": {
+    "0": [
+      "B",
+      "C"
+    ],
+    "1": [
+      "Xác định vấn đề và loại dữ liệu cần thu thập",
+      "Thu thập dữ liệu từ các nguồn liên quan",
+      "Làm sạch và tiền xử lý dữ liệu",
+      "Sử dụng các mô hình thống kê và các thuật toán học máy để phân tích dữ liệu"
+    ],
+    "2": "B",
+    "3": [
+      "A",
+      "C",
+      "E"
+    ],
+    "4": [
+      "A",
+      "D",
+      "E"
+    ],
+    "5": "C",
+    "6": "D",
+    "7": [
+      "B",
+      "C"
+    ],
+    "8": "C",
+    "9": [
+      "B",
+      "D"
+    ],
+    "10": "C",
+    "11": [
+      "A",
+      "B"
+    ],
+    "12": "A",
+    "13": "B",
+    "14": "B",
+    "15": [
+      "A",
+      "C"
+    ],
+    "16": "D",
+    "17": "B",
+    "18": [
+      "B",
+      "C"
+    ],
+    "19": "B"
+  }
+}

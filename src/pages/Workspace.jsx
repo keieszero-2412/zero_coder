@@ -289,8 +289,8 @@ export function Workspace() {
 
   const handleMCQChange = (newCode) => {
     setCode(newCode);
+    setTestResults([]); // Clear results on any change so stale red/green styling is removed
     if (newCode === '{}') {
-      setTestResults([]);
       clearOutput();
     }
     if (currentUser && currentProblem) {
@@ -656,6 +656,7 @@ export function Workspace() {
                 problem={currentProblem} 
                 value={code} 
                 onChange={handleMCQChange} 
+                testResults={testResults}
               />
             ) : (
               <>

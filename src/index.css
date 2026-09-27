@@ -1962,3 +1962,13 @@ body.theme-amber {
     font-size: 0.84rem;
   }
 }
+
+/* Fix KaTeX display issues (overlapping fractions) */
+.katex,
+.katex-display {
+  line-height: normal !important;
+}
+
+.katex * {
+  box-sizing: content-box !important;
+}
