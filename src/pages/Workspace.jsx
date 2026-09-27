@@ -741,7 +741,7 @@ export function Workspace() {
             <AIAssistant 
               key={currentProblem?.id || id || 'ai-assistant'}
               problem={currentProblem} 
-              userCode={code} 
+              userCode={proposedCode !== null ? proposedCode : code} 
               testResults={testResults} 
               onClose={() => setShowAIInEditor(false)}
               onProposeFix={setProposedCode}

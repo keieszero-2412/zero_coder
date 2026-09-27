@@ -80,8 +80,12 @@ async function callOpenAICompatible(provider, systemPrompt, chatHistory, lastMes
     { role: 'system', content: systemPrompt },
   ];
 
-  // Add chat history
-  for (const msg of chatHistory) {
+  // Add chat history (excluding the last item if it is already lastMessage)
+  const historyBeforeLast = chatHistory.length > 0 && chatHistory[chatHistory.length - 1]?.content === lastMessage
+    ? chatHistory.slice(0, -1)
+    : chatHistory;
+
+  for (const msg of historyBeforeLast) {
     messages.push({
       role: msg.role === 'user' ? 'user' : 'assistant',
       content: msg.content,
@@ -147,7 +151,11 @@ async function callGemini(provider, systemPrompt, chatHistory, lastMessage) {
       contents: `${systemPrompt}\n\nUser message: ${lastMessage}`,
     }).then(res => res.text);
   } else {
-    const formattedHistory = chatHistory.slice(0, -1).map(msg => ({
+    const historyBeforeLast = chatHistory.length > 0 && chatHistory[chatHistory.length - 1]?.content === lastMessage
+      ? chatHistory.slice(0, -1)
+      : chatHistory;
+
+    const formattedHistory = historyBeforeLast.map(msg => ({
       role: msg.role === 'user' ? 'user' : 'model',
       parts: [{ text: msg.content }],
     }));
@@ -309,12 +317,18 @@ ${problemFullDescription}
 
 ${problem.answer_key ? `### Problem Creator's Reference Solution (Use this reference to ensure the fixed code adheres to the expected signature, return structure, and formatting):\n\`\`\`python\n${problem.answer_key}\n\`\`\`\n` : ''}
 ${funcSignatureNote}
-### Student's Current Code:
+### Student's Current Code (MÃ NGUỒN HIỆN TẠI MỚI NHẤT TRONG EDITOR):
 \`\`\`python
-${userCode}
+${userCode || '# (Editor hiện đang trống)'}
 \`\`\`
+LƯU Ý ĐẶC BIỆT BẮT BUỘC:
+- Khung mã trên là mã nguồn HIỆN TẠI MỚI NHẤT học viên đang viết trong editor. Bạn PHẢI phân tích dựa trên chính xác mã này.
+- Tuyệt đối KHÔNG phân tích theo mã khung khởi tạo ban đầu (initial code) nếu học viên đã viết mã khác.
+- Nếu học viên đã cập nhật mã so với các câu hỏi trước, hãy tập trung phân tích mã mới nhất này.
 
-${testContext}
+${testResults.length > 0 ? `### Note on Test Results:
+The following test results are from the student's last test run. The student may have edited their code in the editor since running the tests. Always evaluate their CURRENT code above to see if these errors still apply:
+${testContext}` : testContext}
   `;
 
   // --- Determine the user message ---

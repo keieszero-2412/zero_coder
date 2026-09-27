@@ -182,13 +182,16 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
     }
   }, [messages, isLoading]);
 
-  const handleIntent = async (intentPrompt) => {
+  const handleIntent = async (intentPrompt, uiLabel = null) => {
     if (isLoading) return;
     setIsLoading(true);
     setError('');
     
+    const displayLabel = uiLabel || (intentPrompt.length > 50 ? 'Analyze my code' : intentPrompt);
     const intentMessage = { role: 'user', content: intentPrompt };
-    // Do not add the intent prompt to the UI
+    
+    // Add user bubble to UI
+    setMessages(prev => [...prev, { role: 'user', content: displayLabel }]);
     
     try {
       const { text, providerName, modelName } = await askAIForHelp(problem, userCode, testResults, [...messages, intentMessage]);
@@ -207,8 +210,13 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
     setIsLoading(true);
     setError('');
     
+    setMessages(prev => [...prev, { role: 'user', content: 'Fix my code' }]);
+    
     // Explicitly tell the AI not to return code if it's already correct.
-    const intentMessage = { role: 'user', content: 'Fix my code. If there are no errors, return exactly "No error to fix". Otherwise, return ONLY the fully fixed code wrapped in a python code block, no other text.' };
+    const intentMessage = { 
+      role: 'user', 
+      content: `Dưới đây là mã nguồn HIỆN TẠI của tôi trong editor:\n\`\`\`python\n${userCode || ''}\n\`\`\`\nHãy sửa mã này để vượt qua tất cả test cases. Nếu mã đã chính xác và không có lỗi, hãy trả về chính xác "No error to fix". Ngược lại, CHỈ trả về code đã sửa hoàn chỉnh trong block python, không kèm bất kỳ giải thích nào.` 
+    };
     
     try {
       const { text: response, providerName, modelName } = await askAIForHelp(problem, userCode, testResults, [intentMessage], true);
@@ -420,7 +428,7 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
             <div style={{ display: 'flex', gap: '0.5rem', padding: '0.75rem 1rem', overflowX: 'auto', borderTop: '1px solid var(--border-color)', whiteSpace: 'nowrap' }}>
               {problem?.type === 'multiple_choice' ? (
                 <button 
-                  onClick={() => handleIntent('Hãy kiểm tra và chấm điểm các đáp án trắc nghiệm mà tôi đã chọn, đồng thời giải thích ngắn gọn lý do cho các câu sai.')}
+                  onClick={() => handleIntent('Hãy kiểm tra và chấm điểm các đáp án trắc nghiệm mà tôi đã chọn, đồng thời giải thích ngắn gọn lý do cho các câu sai.', 'Chấm điểm & Giải thích')}
                   style={{ background: 'var(--bg-base)', border: '1px solid var(--border-color)', borderRadius: '1.25rem', padding: '0.35rem 0.75rem', color: 'var(--text-secondary)', fontSize: '0.75rem', cursor: 'pointer', transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
                   onMouseOver={(e) => { e.target.style.background = 'var(--bg-surface-highlight)'; e.target.style.color = 'var(--text-primary)'; }}
                   onMouseOut={(e) => { e.target.style.background = 'var(--bg-base)'; e.target.style.color = 'var(--text-secondary)'; }}
@@ -430,7 +438,21 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
               ) : (
                 <>
                   <button 
-                    onClick={() => handleIntent('Analyze my code and explain where I might be wrong. Do NOT give me the direct answer or the full code, just guide me.')}
+                    onClick={() => {
+                      const codeSnippet = userCode && userCode.trim() 
+                        ? userCode 
+                        : '# (Editor hiện đang trống, chưa có mã)';
+                      const prompt = `Dưới đây là mã nguồn HIỆN TẠI MỚI NHẤT của tôi trong editor:
+\`\`\`python
+${codeSnippet}
+\`\`\`
+
+Hãy phân tích kỹ mã nguồn hiện tại này của tôi và chỉ ra những chỗ tôi có thể đang làm sai, thiếu sót hoặc chưa tối ưu logic.
+LƯU Ý QUAN TRỌNG CHO BẠN (AI):
+- Bạn PHẢI phân tích dựa trên chính xác mã nguồn HIỆN TẠI ở trên, tuyệt đối không phân tích theo mã khởi tạo ban đầu (initial code/template) và không lặp lại nhận xét cũ nếu tôi đã sửa mã.
+- KHÔNG cung cấp lời giải trực tiếp hay toàn bộ code giải. Hãy giải thích nguyên nhân và hướng dẫn từng bước để tôi tự sửa.`;
+                      handleIntent(prompt, 'Analyze my code');
+                    }}
                     style={{ background: 'var(--bg-base)', border: '1px solid var(--border-color)', borderRadius: '1.25rem', padding: '0.35rem 0.75rem', color: 'var(--text-secondary)', fontSize: '0.75rem', cursor: 'pointer', transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
                     onMouseOver={(e) => { e.target.style.background = 'var(--bg-surface-highlight)'; e.target.style.color = 'var(--text-primary)'; }}
                     onMouseOut={(e) => { e.target.style.background = 'var(--bg-base)'; e.target.style.color = 'var(--text-secondary)'; }}
