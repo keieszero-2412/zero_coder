@@ -35,35 +35,35 @@ export const AuthProvider = ({ children }) => {
         // Fetch extended user info from Firestore
         try {
           const userDoc = await getDoc(doc(db, 'users', user.uid));
-          const { role, colorCode } = await determineRole(user.email);
+          const userData = userDoc.exists() ? userDoc.data() : null;
+          const determined = await determineRole(user.email, userData?.username);
           
           if (userDoc.exists()) {
-            const userData = userDoc.data();
             setCurrentUser({
               uid: user.uid,
               email: user.email,
               username: userData.username,
-              role: role,
-              colorCode: colorCode
+              role: (user.email === 'keieszero2412@gmail.com') ? 'Admin' : (userData.role || determined.role),
+              colorCode: (user.email === 'keieszero2412@gmail.com') ? 'Green' : (userData.colorCode || determined.colorCode)
             });
           } else {
             setCurrentUser({
               uid: user.uid,
               email: user.email,
               username: user.email.split('@')[0],
-              role: role,
-              colorCode: colorCode
+              role: determined.role,
+              colorCode: determined.colorCode
             });
           }
         } catch (error) {
           console.error("Error fetching user data:", error);
-          const { role, colorCode } = await determineRole(user.email);
+          const determined = await determineRole(user.email);
           setCurrentUser({
             uid: user.uid,
             email: user.email,
             username: user.email.split('@')[0],
-            role: role,
-            colorCode: colorCode
+            role: determined.role,
+            colorCode: determined.colorCode
           });
         }
       } else {
@@ -75,39 +75,39 @@ export const AuthProvider = ({ children }) => {
     return unsubscribe;
   }, []);
 
-  // Determine user role and code color based on email
-  const determineRole = async (email) => {
+  // Determine user role and code color based on email and username
+  const determineRole = async (email, username = '') => {
     // 1. Hardcoded admin always gets Admin / Green
     if (email === 'keieszero2412@gmail.com') {
       return { role: 'Admin', colorCode: 'Green' };
     }
 
-    // 2. Hardcoded specific emails to get Blue code
-    const hardcodedBlueEmails = [
-      'huyenhoang070106@gmail.com',
-      'gnahcquynh2811@gmail.com',
-      'k63.2415410082@ftu.edu.vn',
-      'ttna06nd@gmail.com',
-      'k63.2411410134@ftu.edu.vn'
-    ];
-    if (hardcodedBlueEmails.includes(email.toLowerCase())) {
+    const emailLower = (email || '').toLowerCase();
+    const userLower = (username || '').toLowerCase();
+
+    // 2. Specific identifiers to get Blue code: huyenhoang070106, gnahcquynh2811, anhtrn, nlq
+    const blueIdentifiers = ['huyenhoang070106', 'gnahcquynh2811', 'anhtrn', 'nlq'];
+    const isBlueTarget = blueIdentifiers.some(target => 
+      emailLower.includes(target) || userLower.includes(target)
+    );
+    if (isBlueTarget) {
       return { role: 'User', colorCode: 'Blue' };
     }
 
-    // 3. Check if global bypass is active (DISABLED to enforce Gray Code test)
-    // try {
-    //   const settingsRef = doc(db, 'authorized_emails', 'bypass@zerocoder.admin');
-    //   const settingsSnap = await getDoc(settingsRef);
-    //   if (settingsSnap.exists() && settingsSnap.data().bypassBlueCode) {
-    //     return { role: 'User', colorCode: 'Blue' };
-    //   }
-    // } catch (e) {
-    //   console.error("Failed to fetch settings:", e);
-    // }
+    // Explicit list of blue emails
+    const hardcodedBlueEmails = [
+      'huyenhoang070106@gmail.com',
+      'gnahcquynh2811@gmail.com',
+      'ttna06nd@gmail.com',
+      'k63.2411410134@ftu.edu.vn'
+    ];
+    if (hardcodedBlueEmails.includes(emailLower)) {
+      return { role: 'User', colorCode: 'Blue' };
+    }
 
-    // 4. Fallback to normal authorized_emails check
+    // 3. Fallback to normal authorized_emails check
     try {
-      const authRef = doc(db, 'authorized_emails', email);
+      const authRef = doc(db, 'authorized_emails', emailLower);
       const snap = await getDoc(authRef);
       if (snap.exists()) {
         return { role: 'User', colorCode: 'Blue' };
@@ -116,7 +116,7 @@ export const AuthProvider = ({ children }) => {
       console.error(e);
     }
     
-    // 5. Everyone else gets Gray Code
+    // 4. Everyone else gets Gray Code
     return { role: 'User', colorCode: 'Gray' };
   };
 
@@ -155,7 +155,7 @@ export const AuthProvider = ({ children }) => {
       throw new Error('Username already taken');
     }
 
-    const { role, colorCode } = await determineRole(email);
+    const { role, colorCode } = await determineRole(email, username);
     
     // Set persistence
     await setPersistence(auth, remember ? browserLocalPersistence : browserSessionPersistence);

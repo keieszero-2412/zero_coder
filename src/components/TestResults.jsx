@@ -11,21 +11,22 @@ function TestCaseResult({ res, index }) {
   return (
     <div style={{ marginBottom: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
       {/* Test Case Header */}
-      <div className={`test-case ${res.passed ? 'pass' : 'fail'}`} style={{ marginBottom: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', minWidth: 0, flex: 1, marginRight: '0.5rem' }}>
+      <div className={`test-case ${res.passed ? 'pass' : 'fail'}`} style={{ marginBottom: 0, alignItems: 'flex-start' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', minWidth: 0, flex: 1, marginRight: '0.5rem' }}>
           {res.passed ? (
-            <CheckCircle2 color="var(--success)" size={18} style={{ flexShrink: 0 }} />
+            <CheckCircle2 color="var(--success)" size={18} style={{ flexShrink: 0, marginTop: '2px' }} />
           ) : (
-            <XCircle color="var(--error)" size={18} style={{ flexShrink: 0 }} />
+            <XCircle color="var(--error)" size={18} style={{ flexShrink: 0, marginTop: '2px' }} />
           )}
           <span 
             style={{ 
               fontWeight: 600, 
               fontFamily: 'monospace', 
               fontSize: '0.84rem', 
-              overflow: 'hidden', 
-              textOverflow: 'ellipsis', 
-              whiteSpace: 'nowrap',
+              whiteSpace: 'pre-wrap',
+              wordBreak: 'break-word',
+              overflowWrap: 'anywhere',
+              lineHeight: 1.45,
               color: 'var(--text-primary)'
             }} 
             title={res.code ? res.code : `Test Case ${index + 1}`}
@@ -33,7 +34,7 @@ function TestCaseResult({ res, index }) {
             {res.code ? res.code : `Test Case ${index + 1}`}
           </span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0, alignSelf: 'flex-start', marginTop: '1px' }}>
           <span className={`badge ${res.passed ? 'pass' : 'fail'}`} style={{ whiteSpace: 'nowrap' }}>
             {res.passed ? 'Passed' : 'Failed'}
           </span>
