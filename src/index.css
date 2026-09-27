@@ -1971,4 +1971,10 @@ body.theme-amber {
 
 .katex * {
   box-sizing: content-box !important;
+}
+
+/* Prevent bright red flashing text when KaTeX formula is incomplete during AI streaming */
+.katex-error {
+  color: inherit !important;
+  text-decoration: underline dotted var(--error);
 }

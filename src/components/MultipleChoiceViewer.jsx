@@ -537,8 +537,16 @@ export function MultipleChoiceViewer({ problem, value, onChange, testResults = [
                         gap: '0.75rem', 
                         padding: '0.75rem 1rem', 
                         borderRadius: 'var(--radius-sm)', 
-                        border: `1px solid ${isSelected ? 'var(--accent-primary)' : 'var(--border-color)'}`,
-                        backgroundColor: isSelected ? 'color-mix(in srgb, var(--accent-primary) 10%, transparent)' : 'transparent',
+                        border: testResults.length > 0 && problem.correctAnswers && problem.correctAnswers[qIndex]?.includes(letter)
+                          ? '1px solid var(--success)'
+                          : testResults.length > 0 && isSelected && problem.correctAnswers && !problem.correctAnswers[qIndex]?.includes(letter)
+                            ? '1px solid var(--error)'
+                            : `1px solid ${isSelected ? 'var(--accent-primary)' : 'var(--border-color)'}`,
+                        backgroundColor: testResults.length > 0 && problem.correctAnswers && problem.correctAnswers[qIndex]?.includes(letter)
+                          ? 'color-mix(in srgb, var(--success) 10%, transparent)'
+                          : testResults.length > 0 && isSelected && problem.correctAnswers && !problem.correctAnswers[qIndex]?.includes(letter)
+                            ? 'color-mix(in srgb, var(--error) 10%, transparent)'
+                            : isSelected ? 'color-mix(in srgb, var(--accent-primary) 10%, transparent)' : 'transparent',
                         cursor: 'pointer',
                         transition: 'all 0.2s'
                       }}

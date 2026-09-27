@@ -75,7 +75,17 @@ const MessageBubble = React.memo(({ msg }) => {
       <ReactMarkdown 
         remarkPlugins={[remarkGfm, remarkMath]} 
         rehypePlugins={[rehypeKatex]}
-        components={{ code: CodeBlock }}
+        components={{ 
+          code: CodeBlock,
+          span: ({node, className, children, ...props}) => {
+            if (className === 'katex-error') {
+              const rawText = String(children);
+              if (rawText === 'undefined' || rawText === 'null') return null;
+              return <span className="katex-error-override" title={props.title} style={{ color: 'inherit', fontStyle: 'italic' }}>{children}</span>;
+            }
+            return <span className={className} {...props}>{children}</span>;
+          }
+        }}
       >
         {preprocessMarkdown(displayedContent)}
       </ReactMarkdown>
