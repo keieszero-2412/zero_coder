@@ -115,9 +115,19 @@ export const AuthProvider = ({ children }) => {
     } catch (e) {
       console.error(e);
     }
-    
-    // 4. Everyone else gets Gray Code
-    return { role: 'User', colorCode: 'Gray' };
+    // 4. Check bypass setting — if ON, unknown users get Gray (limited access); if OFF, they get Red (blocked)
+    try {
+      const bypassRef = doc(db, 'authorized_emails', 'bypass@zerocoder.admin');
+      const bypassSnap = await getDoc(bypassRef);
+      if (bypassSnap.exists() && bypassSnap.data().bypassBlueCode === true) {
+        return { role: 'User', colorCode: 'Gray' };
+      }
+    } catch (e) {
+      console.error('Failed to check bypass setting:', e);
+    }
+
+    // 5. Bypass is OFF — block unknown users entirely
+    return { role: 'Unauthorized', colorCode: 'Red' };
   };
 
   const checkEmailStatus = async (email) => {
