@@ -230,12 +230,13 @@ export async function askAIForHelp(problem, userCode, testResults, chatHistory =
   }
 
   // --- Build prompt ---
+  const isMCQ = problem.type === 'multiple_choice';
   const failingTests = testResults.filter(r => !r.passed);
   const isCorrect = testResults.length > 0 && failingTests.length === 0;
 
   let testContext = "";
   if (isCorrect) {
-    testContext = "The student's code is CORRECT and passes all tests! You must tell them their code is absolutely correct. Do NOT look for more errors or suggest optimizations. If the user specifically asks you to 'Fix my code', you MUST return exactly the string 'No error to fix' and nothing else.";
+    testContext = "The student's submission is CORRECT and passes all questions/tests! You must congratulate them and confirm their answers are completely accurate.";
   } else if (failingTests.length > 0) {
     if (isFixMode) {
       testContext = `### Failing Test Results:\n${failingTests.map((r, i) => `Test Case ${i + 1}:
@@ -245,48 +246,117 @@ ${r.error ? `Execution Error: ${r.error}` : `Got: ${r.got}`}`).join('\n\n')}
 
 The user wants you to FIX their code so that it passes ALL test cases. You MUST return ONLY the fully fixed code wrapped in a \`\`\`python code block. DO NOT output any explanation, hints, or markdown text outside the code block. Your entire response must be just the code block.`;
     } else {
-      testContext = `### Failing Test Results:\n${failingTests.map((r, i) => `
-Test Case ${i + 1}:
-Code: ${r.code}
-Expected: ${r.expected}
-${r.error ? `Execution Error: ${r.error}` : `Got: ${r.got}`}
+      testContext = `### Kết quả kiểm tra các câu bị sai (Failing Test Results):\n${failingTests.map((r, i) => `
+- ${r.code || `Câu ${i + 1}`}:
+  + Đáp án đúng theo key: ${r.expected}
+  + Đáp án học viên đã chọn: ${r.got}
+  ${r.error ? `+ Lỗi: ${r.error}` : ''}
 `).join('\n')}
 
-Please provide a clear and concise hint. Do NOT just give them the exact correct code. Instead, point out what part of their code is causing the error or logical mistake, and guide them on how to fix it themselves.`;
+Hãy cung cấp gợi ý ngắn gọn, rõ ràng giúp học viên hiểu tại sao các câu trên lại sai và hướng dẫn họ tư duy để chọn đáp án đúng. Tuyệt đối đối chiếu đúng số thứ tự câu hỏi.`;
     }
   } else {
-    testContext = "The student hasn't run the tests yet or test results are unavailable. Review the code for obvious logical errors or ask them to run the code to see the results.";
+    testContext = isMCQ 
+      ? "Học viên chưa nộp bài hoặc chưa bấm kiểm tra kết quả."
+      : "The student hasn't run the tests yet or test results are unavailable. Review the code for obvious logical errors or ask them to run the code to see the results.";
   }
 
-  let problemFullDescription = problem.description;
-  if (problem.type === 'multiple_choice' && problem.questions) {
-    problemFullDescription += '\n\n### Questions:\n' + JSON.stringify(problem.questions, null, 2);
-    if (problem.correctAnswers) {
-      problemFullDescription += '\n\n### Correct Answers Key (Use this to grade the user):\n' + JSON.stringify(problem.correctAnswers, null, 2);
+  let problemFullDescription = problem.description || '';
+  let mcqQuestionsAndAnswersBlock = "";
+  let mcqSummaryBlock = "";
+
+  if (isMCQ && problem.questions) {
+    let parsedAnswers = {};
+    try {
+      parsedAnswers = typeof userCode === 'string' ? JSON.parse(userCode || '{}') : (userCode || {});
+    } catch {
+      parsedAnswers = {};
     }
+
+    const questions = problem.questions;
+    const correctAnswers = problem.correctAnswers || {};
+
+    const questionBlocks = questions.map((q, idx) => {
+      const qNum = idx + 1; // Số thứ tự hiển thị cho học viên: Câu 1, Câu 2, ..., Câu 7, Câu 8...
+      const rawUserAns = parsedAnswers[idx] ?? parsedAnswers[String(idx)];
+      const rawCorrectAns = correctAnswers[idx] ?? correctAnswers[String(idx)];
+
+      let userAnsStr = "Chưa chọn";
+      if (rawUserAns !== undefined && rawUserAns !== null) {
+        if (Array.isArray(rawUserAns)) {
+          userAnsStr = rawUserAns.length > 0 ? JSON.stringify(rawUserAns) : "Chưa chọn";
+        } else {
+          userAnsStr = String(rawUserAns);
+        }
+      }
+
+      let correctAnsStr = "Chưa có đáp án key";
+      if (rawCorrectAns !== undefined && rawCorrectAns !== null) {
+        if (Array.isArray(rawCorrectAns)) {
+          correctAnsStr = rawCorrectAns.length > 0 ? JSON.stringify(rawCorrectAns) : "Chưa có";
+        } else {
+          correctAnsStr = String(rawCorrectAns);
+        }
+      }
+
+      const optionsFormatted = (q.options || []).map((opt) => `  - ${opt}`).join('\n');
+
+      return `==============================
+[CÂU HỎI SỐ ${qNum}] (Học viên gọi là "Câu ${qNum}"):
+- Đề bài: ${q.text || ''}
+${optionsFormatted ? `- Các phương án lựa chọn:\n${optionsFormatted}` : ''}
+- ĐÁP ÁN HỌC VIÊN ĐANG CHỌN Ở CÂU ${qNum}: ${userAnsStr}
+- ĐÁP ÁN ĐÚNG THEO KEY Ở CÂU ${qNum}: ${correctAnsStr}`;
+    });
+
+    mcqQuestionsAndAnswersBlock = `
+### BẢNG ĐỐI CHIẾU CHI TIẾT TỪNG CÂU HỎI (ĐÃ ĐỒNG BỘ CHUẨN XÁC THEO SỐ THỨ TỰ CÂU 1 ĐẾN CÂU ${questions.length}):
+${questionBlocks.join('\n\n')}
+
+⚠️ QUY TẮC CỰC KỲ QUAN TRỌNG DÀNH CHO BẠN (AI ZERO) KHI TRẢ LỜI VỀ CÁC CÂU TRẮC NGHIỆM:
+1. Học viên nhìn thấy và gọi tên các câu hỏi theo số thứ tự từ "Câu 1" đến "Câu ${questions.length}" (1-indexed).
+2. Khi học viên nhắc đến "Câu X" (ví dụ: Câu 7), bạn BẮT BUỘC phải tra cứu đúng khối "[CÂU HỎI SỐ X]" (ví dụ: [CÂU HỎI SỐ 7]) ở trên.
+3. TUYỆT ĐỐI KHÔNG ĐƯỢC nhầm lẫn giữa chỉ số index trong code/JSON với số thứ tự câu hỏi!
+   - Ví dụ: Ở Câu 7 (tương ứng index 6), nếu học viên chọn ["B"] thì bạn phải xác nhận học viên đang chọn B. Tuyệt đối KHÔNG ĐƯỢC lấy lựa chọn của Câu 8 (index 7) đem gán cho Câu 7!
+4. Hãy luôn phản hồi chính xác dựa theo bảng đối chiếu [CÂU HỎI SỐ X] ở trên.
+`;
+
+    mcqSummaryBlock = `
+### TỔNG QUAN ĐÁP ÁN HỌC VIÊN ĐANG CHỌN HIỆN TẠI (THEO SỐ THỨ TỰ TỪ CÂU 1 ĐẾN CÂU ${questions.length}):
+${questions.map((_, idx) => {
+  const qNum = idx + 1;
+  const ans = parsedAnswers[idx] ?? parsedAnswers[String(idx)];
+  const display = ans !== undefined && ans !== null 
+    ? (Array.isArray(ans) ? (ans.length > 0 ? JSON.stringify(ans) : 'Chưa chọn') : String(ans))
+    : 'Chưa chọn';
+  return `- Câu ${qNum}: ${display}`;
+}).join('\n')}
+`;
   }
 
   // Extract required function signature(s) from initialCode, answer_key, or testCases
   let requiredSignatures = [];
-  if (problem.initialCode) {
-    const sigMatches = problem.initialCode.match(/def\s+[a-zA-Z0-9_]+\s*\([^)]*\):/g);
-    if (sigMatches) {
-      requiredSignatures = [...new Set(sigMatches)];
+  if (!isMCQ) {
+    if (problem.initialCode) {
+      const sigMatches = problem.initialCode.match(/def\s+[a-zA-Z0-9_]+\s*\([^)]*\):/g);
+      if (sigMatches) {
+        requiredSignatures = [...new Set(sigMatches)];
+      }
     }
-  }
-  if (requiredSignatures.length === 0 && problem.answer_key) {
-    const sigMatches = problem.answer_key.match(/def\s+[a-zA-Z0-9_]+\s*\([^)]*\):/g);
-    if (sigMatches) {
-      requiredSignatures = [...new Set(sigMatches)];
+    if (requiredSignatures.length === 0 && problem.answer_key) {
+      const sigMatches = problem.answer_key.match(/def\s+[a-zA-Z0-9_]+\s*\([^)]*\):/g);
+      if (sigMatches) {
+        requiredSignatures = [...new Set(sigMatches)];
+      }
     }
-  }
-  if (requiredSignatures.length === 0 && problem.testCases) {
-    for (const tc of problem.testCases) {
-      const codeStr = tc.code || tc.input || '';
-      const m = codeStr.match(/(?:print\s*\(\s*)?([a-zA-Z_][a-zA-Z0-9_]*)\s*\(/);
-      if (m && m[1] && !['print', 'len', 'str', 'int', 'float', 'type', 'list', 'dict', 'set', 'tuple', 'sorted', 'range'].includes(m[1])) {
-        requiredSignatures.push(`def ${m[1]}(...):`);
-        break;
+    if (requiredSignatures.length === 0 && problem.testCases) {
+      for (const tc of problem.testCases) {
+        const codeStr = tc.code || tc.input || '';
+        const m = codeStr.match(/(?:print\s*\(\s*)?([a-zA-Z_][a-zA-Z0-9_]*)\s*\(/);
+        if (m && m[1] && !['print', 'len', 'str', 'int', 'float', 'type', 'list', 'dict', 'set', 'tuple', 'sorted', 'range'].includes(m[1])) {
+          requiredSignatures.push(`def ${m[1]}(...):`);
+          break;
+        }
       }
     }
   }
@@ -298,6 +368,21 @@ ${requiredSignatures.join('\n')}
 You MUST implement or preserve the EXACT function name(s) above. DO NOT change the function name, rename it to solve/solution/run, or omit it, otherwise all test cases will fail with NameError.
 ` : '';
 
+  const studentContentSection = isMCQ ? `
+${mcqSummaryBlock}
+
+${mcqQuestionsAndAnswersBlock}
+` : `
+### Student's Current Code (MÃ NGUỒN HIỆN TẠI MỚI NHẤT TRONG EDITOR):
+\`\`\`python
+${userCode || '# (Editor hiện đang trống)'}
+\`\`\`
+LƯU Ý ĐẶC BIỆT BẮT BUỘC:
+- Khung mã trên là mã nguồn HIỆN TẠI MỚI NHẤT học viên đang viết trong editor. Bạn PHẢI phân tích dựa trên chính xác mã này.
+- Tuyệt đối KHÔNG phân tích theo mã khung khởi tạo ban đầu (initial code) nếu học viên đã viết mã khác.
+- Nếu học viên đã cập nhật mã so với các câu hỏi trước, hãy tập trung phân tích mã mới nhất này.
+`;
+
   const systemPrompt = `
 You are an AI programming assistant. Your name is "Zero". You must communicate in Vietnamese.
 IMPORTANT PERSONA RULES:
@@ -305,7 +390,7 @@ IMPORTANT PERSONA RULES:
 - Do NOT be overly friendly or chatty. Do not use emojis unless necessary.
 - ONLY answer the specific question the user asks. Do NOT digress into other questions or topics.
 - Keep your explanations extremely concise. Do NOT repeat points that have already been made.
-${isFixMode ? '- DO NOT explain anything. ONLY return the code block.' : '- Provide direct, concise instructions and point out logical errors. Do not write long paragraphs.'}
+${isFixMode ? '- DO NOT explain anything. ONLY return the code block.' : '- Provide direct, concise instructions and point out logical errors. Do not write long paragraphs. NEVER propose code to the editor or tell the user to check diff/accept/reject.'}
 
 A student is working on the following problem.
 
@@ -315,19 +400,12 @@ ${problem.title}
 ### Problem Description:
 ${problemFullDescription}
 
-${problem.answer_key ? `### Problem Creator's Reference Solution (Use this reference to ensure the fixed code adheres to the expected signature, return structure, and formatting):\n\`\`\`python\n${problem.answer_key}\n\`\`\`\n` : ''}
+${problem.answer_key ? `### Problem Creator's Reference Solution:\n\`\`\`python\n${problem.answer_key}\n\`\`\`\n` : ''}
 ${funcSignatureNote}
-### Student's Current Code (MÃ NGUỒN HIỆN TẠI MỚI NHẤT TRONG EDITOR):
-\`\`\`python
-${userCode || '# (Editor hiện đang trống)'}
-\`\`\`
-LƯU Ý ĐẶC BIỆT BẮT BUỘC:
-- Khung mã trên là mã nguồn HIỆN TẠI MỚI NHẤT học viên đang viết trong editor. Bạn PHẢI phân tích dựa trên chính xác mã này.
-- Tuyệt đối KHÔNG phân tích theo mã khung khởi tạo ban đầu (initial code) nếu học viên đã viết mã khác.
-- Nếu học viên đã cập nhật mã so với các câu hỏi trước, hãy tập trung phân tích mã mới nhất này.
+${studentContentSection}
 
 ${testResults.length > 0 ? `### Note on Test Results:
-The following test results are from the student's last test run. The student may have edited their code in the editor since running the tests. Always evaluate their CURRENT code above to see if these errors still apply:
+The following test results are from the student's last submission. Always evaluate their CURRENT answers/code above to see if these errors still apply:
 ${testContext}` : testContext}
   `;
 
@@ -339,6 +417,20 @@ ${testContext}` : testContext}
     userMessage = chatHistory[chatHistory.length - 1]?.content || "Help me";
   }
 
+  // Đối với bài trắc nghiệm: luôn đính kèm snapshot đáp án real-time mới nhất vào message gửi tới model
+  let userMessageForModel = userMessage;
+  if (isMCQ && problem.questions) {
+    let parsed = {};
+    try { parsed = JSON.parse(userCode || '{}'); } catch {}
+    const currentSummary = (problem.questions || []).map((_, idx) => {
+      const a = parsed[idx] ?? parsed[String(idx)];
+      const disp = a !== undefined && a !== null ? (Array.isArray(a) ? (a.length > 0 ? a.join(', ') : 'Chưa chọn') : String(a)) : 'Chưa chọn';
+      return `Câu ${idx + 1}: [ ${disp} ]`;
+    }).join(' | ');
+
+    userMessageForModel = `[ĐỒNG BỘ REAL-TIME ĐÁP ÁN MỚI NHẤT HỌC VIÊN ĐANG CHỌN TRÊN GIAO DIỆN:\n${currentSummary}\n(LƯU Ý: Học viên có thể vừa thay đổi/chọn lại đáp án trên giao diện trước khi nhắn tin. Bạn PHẢI luôn ưu tiên cập nhật theo trạng thái mới nhất này, tuyệt đối không dùng đáp án cũ từ các lượt chat trước!)]\n\nCâu hỏi/Yêu cầu của học viên: ${userMessage}`;
+  }
+
   // --- Try each provider with fallback ---
   const errors = [];
 
@@ -348,9 +440,9 @@ ${testContext}` : testContext}
 
       let resultText;
       if (provider.type === 'gemini') {
-        resultText = await callGemini(provider, systemPrompt, chatHistory, userMessage);
+        resultText = await callGemini(provider, systemPrompt, chatHistory, userMessageForModel);
       } else {
-        resultText = await callOpenAICompatible(provider, systemPrompt, chatHistory, userMessage);
+        resultText = await callOpenAICompatible(provider, systemPrompt, chatHistory, userMessageForModel);
       }
 
       if (!resultText || !resultText.trim()) {

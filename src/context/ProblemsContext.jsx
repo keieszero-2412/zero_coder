@@ -8,7 +8,7 @@ export function useProblems() {
   return useContext(ProblemsContext);
 }
 
-const CACHE_VERSION = 'v14_ordering_questions_sync';
+const CACHE_VERSION = 'v15_final_mock_4_testcase';
 
 export function ProblemsProvider({ children }) {
   // Initialize from localStorage for instant load (SWR pattern)
@@ -65,7 +65,7 @@ export function ProblemsProvider({ children }) {
                 const localMap = new Map(localData.map(p => [String(p.id), p]));
                 fetchedProblems = fetchedProblems.map(p => {
                   const localP = localMap.get(String(p.id));
-                  if (localP && (localP.type === 'multiple_choice' || localP.questions)) {
+                  if (localP && (localP.type === 'multiple_choice' || localP.questions || String(localP.id) === 'final_mock_4')) {
                     return localP;
                   }
                   return p;

@@ -56,7 +56,7 @@ export default function ImagePreview({ src, alt, style }) {
                 borderRadius: '6px', padding: '6px', cursor: 'pointer', display: 'flex',
                 boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
               }}
-              title="Phóng to (Full Screen)"
+              title="Full screen"
             >
               <Maximize size={16} />
             </button>
@@ -67,7 +67,7 @@ export default function ImagePreview({ src, alt, style }) {
                 borderRadius: '6px', padding: '6px', cursor: 'pointer', display: 'flex',
                 boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
               }}
-              title="Tải xuống (Download)"
+              title="Download"
             >
               <Download size={16} />
             </button>
@@ -125,7 +125,7 @@ export default function ImagePreview({ src, alt, style }) {
               onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.15)'}
               onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
               onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
-              title="Tải xuống"
+              title="Download"
             >
               <Download size={22} />
             </button>
@@ -144,7 +144,7 @@ export default function ImagePreview({ src, alt, style }) {
               onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.15)'}
               onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
               onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
-              title="Đóng"
+              title="Close"
             >
               <X size={22} />
             </button>

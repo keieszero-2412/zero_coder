@@ -520,7 +520,7 @@ export const NotebookViewer = React.forwardRef(function NotebookViewer(
             onClick={() => setShowTOC(!showTOC)}
             className="button-secondary"
             style={{ padding: '0.3rem 0.5rem', display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.75rem' }}
-            title="Mục lục"
+            title="Table of Contents"
           >
             <List size={14} />
           </button>
@@ -572,7 +572,7 @@ export const NotebookViewer = React.forwardRef(function NotebookViewer(
               <span style={{ color: 'var(--accent-primary)' }}>💡 Mẹo:</span> Các file dữ liệu đính kèm (csv, ảnh, v.v) nằm ở biểu tượng 📁 bên trái.
             </div>
             <button onClick={() => setShowHints(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-tertiary)', fontSize: '0.7rem', whiteSpace: 'nowrap' }}>
-              Ẩn
+              Dismiss
             </button>
           </div>
         )}
@@ -651,7 +651,7 @@ export const NotebookViewer = React.forwardRef(function NotebookViewer(
                           disabled={!isLoaded || isRunning}
                           className="button-secondary"
                           style={{ padding: '0.2rem 0.5rem', fontSize: '0.65rem', display: 'flex', alignItems: 'center', gap: '0.2rem' }}
-                          title="Chạy tất cả cells từ đầu đến cell này"
+                          title="Run all cells above"
                         >
                           <PlayCircle size={11} />
                           Run All Above

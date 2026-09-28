@@ -4281,16 +4281,6 @@
         "id": 1,
         "code": "print(count_triples([0]))",
         "expected": "1"
-      },
-      {
-        "id": 2,
-        "code": "print(count_triples([-2, 1, 0]))",
-        "expected": "2"
-      },
-      {
-        "id": 3,
-        "code": "print(count_triples([1, -1, 2, -2]))",
-        "expected": "3"
       }
     ],
     "hint": "Dùng 3 vòng lặp for i, for j, for k để kiểm tra, hoặc dùng dictionary (hash map) để giảm độ phức tạp thời gian."

@@ -149,10 +149,10 @@ function OrderingQuestion({ q, userAnswer, onReorder, onReset }) {
               e.currentTarget.style.backgroundColor = 'transparent';
               e.currentTarget.style.color = 'var(--text-secondary)';
             }}
-            title="Khôi phục về vị trí ban đầu"
+            title="Reset to original order"
           >
             <RotateCcw size={12} />
-            <span>Đặt lại</span>
+            <span>Reset</span>
           </button>
         )}
       </div>
@@ -297,7 +297,7 @@ function OrderingQuestion({ q, userAnswer, onReorder, onReset }) {
                       e.currentTarget.style.backgroundColor = 'var(--bg-base)';
                     }
                   }}
-                  title="Di chuyển lên trên"
+                  title="Move up"
                 >
                   <ArrowUp size={15} />
                 </button>
@@ -335,7 +335,7 @@ function OrderingQuestion({ q, userAnswer, onReorder, onReset }) {
                       e.currentTarget.style.backgroundColor = 'var(--bg-base)';
                     }
                   }}
-                  title="Di chuyển xuống dưới"
+                  title="Move down"
                 >
                   <ArrowDown size={15} />
                 </button>
@@ -482,9 +482,9 @@ export function MultipleChoiceViewer({ problem, value, onChange, testResults = [
                 e.currentTarget.style.color = 'var(--text-secondary)';
                 e.currentTarget.style.borderColor = 'var(--border-color)';
               }}
-              title="Xoá tất cả câu trả lời hiện tại"
+              title="Clear all current answers"
             >
-              Làm lại từ đầu
+              Clear All
             </button>
           )}
         </div>
@@ -536,7 +536,7 @@ export function MultipleChoiceViewer({ problem, value, onChange, testResults = [
                   type="button"
                   className={btnClass}
                   onClick={() => scrollToQuestion(qIdx)}
-                  title={`Chuyển nhanh đến câu ${qIdx + 1}`}
+                  title={`Jump to question ${qIdx + 1}`}
                 >
                   {qIdx + 1}
                 </button>

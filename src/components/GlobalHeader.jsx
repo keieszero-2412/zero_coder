@@ -185,7 +185,7 @@ export function GlobalHeader() {
                 src="/zerocoder-logo-transparent.png" 
                 alt="logo" 
                 className="about-btn-logo" 
-                style={{ width: '18px', height: '18px', objectFit: 'contain', flexShrink: 0 }} 
+                style={{ width: '16px', height: '16px', objectFit: 'contain', flexShrink: 0 }} 
               />
               <span className="header-btn-label">About Project</span>
             </button>

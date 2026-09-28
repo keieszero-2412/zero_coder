@@ -247,7 +247,7 @@ export default function FeedbackWidget({ iconOnly = false }) {
       <button
         onClick={handleOpen}
         className={`button-secondary ${iconOnly ? '' : 'header-btn'}`}
-        style={iconOnly ? { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: 0, position: 'relative', borderRadius: '9999px', overflow: 'visible' } : { position: 'relative', overflow: 'visible' }}
+        style={iconOnly ? { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', padding: 0, position: 'relative', borderRadius: '6px', overflow: 'visible' } : { position: 'relative', overflow: 'visible' }}
         title="Send Feedback / Report Bug"
       >
         <MessageSquare size={16} />

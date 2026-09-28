@@ -154,6 +154,7 @@ export function Workspace() {
   useEffect(() => {
     // Scroll to top so mobile users see the problem description first
     window.scrollTo(0, 0);
+    setProposedCode(null);
     
     const loadCode = async () => {
       if (currentProblem && currentUser) {

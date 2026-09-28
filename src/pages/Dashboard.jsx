@@ -455,18 +455,12 @@ export function Dashboard() {
           {Object.keys(categories).map(cat => (
             <button 
               key={cat} 
-              className="button-secondary"
+              className="category-nav-btn"
               onClick={() => {
                 const el = document.getElementById(`category-${cat.replace(/\s+/g, '-')}`);
                 if (el) {
                   el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
-              }}
-              style={{ 
-                whiteSpace: 'nowrap',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                color: 'var(--text-primary)',
-                borderColor: 'rgba(255, 255, 255, 0.2)'
               }}
             >
               {cat}

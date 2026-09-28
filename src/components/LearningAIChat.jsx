@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Loader2, X, Send, Check, Copy, BookOpen, Wand2, Lock, Sparkles } from 'lucide-react';
+import { Loader2, X, Send, Check, Copy, BookOpen, Wand2, Lock, Sparkles, Trash2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
@@ -7,6 +7,7 @@ import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 import { preprocessMarkdown } from '../utils/latexHelper';
 import { useAuth } from '../context/AuthContext';
+import { useNotification } from '../context/NotificationContext';
 import { db } from '../config/firebase';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 
@@ -95,6 +96,7 @@ const MessageBubble = React.memo(({ msg }) => {
 
 export function LearningAIChat({ isOpen, onClose, notebookTitle, activeCellCode, activeCellOutput, activeCellIndex }) {
   const { currentUser } = useAuth();
+  const { showConfirm, showToast } = useNotification();
   const [requestSent, setRequestSent] = useState(false);
   
   const handleRequestBlueCode = async () => {
@@ -225,6 +227,21 @@ export function LearningAIChat({ isOpen, onClose, notebookTitle, activeCellCode,
     }
   };
 
+  const handleDeleteHistory = () => {
+    if (!messages || messages.length === 0) return;
+    showConfirm(
+      'Are you sure you want to clear this chat history? All previous messages will be deleted permanently.',
+      () => {
+        setMessages([]);
+        if (notebookTitle) {
+          localStorage.removeItem(`zerocoder_learning_chat_${notebookTitle}`);
+          sessionStorage.removeItem(`ai_learning_chat_${notebookTitle}`);
+        }
+        showToast('Chat history cleared successfully.', 'success');
+      }
+    );
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -280,7 +297,40 @@ export function LearningAIChat({ isOpen, onClose, notebookTitle, activeCellCode,
             </div>
           </div>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+          {messages.length > 0 && (
+            <button 
+              onClick={handleDeleteHistory}
+              style={{
+                background: 'transparent',
+                border: '1px solid color-mix(in srgb, var(--error) 25%, var(--border-color))',
+                color: 'var(--text-secondary)',
+                cursor: 'pointer',
+                padding: '0.24rem 0.55rem',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                borderRadius: 'var(--radius-sm)',
+                fontSize: '0.75rem',
+                fontWeight: 500,
+                transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.color = 'var(--error)';
+                e.currentTarget.style.borderColor = 'var(--error)';
+                e.currentTarget.style.backgroundColor = 'color-mix(in srgb, var(--error) 12%, transparent)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.color = 'var(--text-secondary)';
+                e.currentTarget.style.borderColor = 'color-mix(in srgb, var(--error) 25%, var(--border-color))';
+                e.currentTarget.style.backgroundColor = 'transparent';
+              }}
+              title="Clear chat history"
+            >
+              <Trash2 size={13} />
+              <span>Clear History</span>
+            </button>
+          )}
           <button 
             onClick={onClose}
             style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: '0.25rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}

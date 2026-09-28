@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Bot, Sparkles, Loader2, X, Send, Cpu, Check, Copy, Wand2, Zap, Lock } from 'lucide-react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { Bot, Sparkles, Loader2, X, Send, Cpu, Check, Copy, Wand2, Zap, Lock, RotateCcw, Trash2 } from 'lucide-react';
 import { askAIForHelp } from '../config/aiService';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -8,6 +8,7 @@ import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 import { preprocessMarkdown } from '../utils/latexHelper';
 import { useAuth } from '../context/AuthContext';
+import { useNotification } from '../context/NotificationContext';
 import { db } from '../config/firebase';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 
@@ -109,8 +110,28 @@ const MessageBubble = React.memo(({ msg, onProposeFix }) => {
   );
 });
 
+// Helper to sanitize loaded messages and remove any orphaned or mismatched fix proposal messages
+const sanitizeHistory = (msgs) => {
+  if (!Array.isArray(msgs)) return [];
+  const sanitized = [];
+  for (let i = 0; i < msgs.length; i++) {
+    const msg = msgs[i];
+    // If it is the hardcoded fix proposal message
+    if (msg.role === 'assistant' && typeof msg.content === 'string' && msg.content.includes('Mình đã đề xuất bản sửa code')) {
+      const prevMsg = i > 0 ? msgs[i - 1] : null;
+      // Must be immediately preceded by a 'Fix my code' request
+      if (!prevMsg || prevMsg.role !== 'user' || prevMsg.content?.includes('Analyze my code') || !prevMsg.content?.toLowerCase().includes('fix')) {
+        continue; // Discard orphaned/mismatched fix proposal
+      }
+    }
+    sanitized.push(msg);
+  }
+  return sanitized;
+};
+
 export function AIAssistant({ problem, userCode, testResults, onClose, onProposeFix }) {
   const { currentUser } = useAuth();
+  const { showConfirm, showToast } = useNotification();
   const [requestSent, setRequestSent] = useState(false);
   
   const handleRequestBlueCode = async () => {
@@ -134,7 +155,9 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
     try {
       if (!problemId) return [];
       const saved = localStorage.getItem(`zerocoder_ai_chat_${problemId}`) || sessionStorage.getItem(`ai_chat_${problemId}`);
-      return saved ? JSON.parse(saved) : [];
+      if (!saved) return [];
+      const parsed = JSON.parse(saved);
+      return sanitizeHistory(parsed);
     } catch (e) {
       return [];
     }
@@ -147,14 +170,21 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
 
   // Sync messages whenever problemId becomes available or changes
   useEffect(() => {
-    if (!problemId) return;
+    if (!problemId) {
+      setMessages([]);
+      return;
+    }
     try {
       const saved = localStorage.getItem(`zerocoder_ai_chat_${problemId}`) || sessionStorage.getItem(`ai_chat_${problemId}`);
       if (saved) {
-        setMessages(JSON.parse(saved));
+        const parsed = JSON.parse(saved);
+        setMessages(sanitizeHistory(parsed));
+      } else {
+        setMessages([]);
       }
     } catch (e) {
       console.error('Failed to sync chat history from storage', e);
+      setMessages([]);
     }
   }, [problemId]);
 
@@ -194,7 +224,7 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
     setMessages(prev => [...prev, { role: 'user', content: displayLabel }]);
     
     try {
-      const { text, providerName, modelName } = await askAIForHelp(problem, userCode, testResults, [...messages, intentMessage]);
+      const { text, providerName, modelName } = await askAIForHelp(problem, userCode, testResults, [...messages, intentMessage], false);
       setCurrentProvider(providerName || 'AI');
       setIsLoading(false);
       setMessages(prev => [...prev, { role: 'assistant', content: text, isNew: true }]);
@@ -296,6 +326,21 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
     }
   };
 
+  const handleDeleteHistory = () => {
+    if (!messages || messages.length === 0) return;
+    showConfirm(
+      'Are you sure you want to clear this chat history? All previous messages will be deleted permanently.',
+      () => {
+        setMessages([]);
+        if (problemId) {
+          localStorage.removeItem(`zerocoder_ai_chat_${problemId}`);
+          sessionStorage.removeItem(`ai_chat_${problemId}`);
+        }
+        showToast('Chat history cleared successfully.', 'success');
+      }
+    );
+  };
+
   // Standard Markdown rendering with CSS taking care of styling
   return (
     <div style={{ backgroundColor: 'var(--bg-surface-elevated)', display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
@@ -337,7 +382,40 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
             </div>
           </div>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+          {messages.length > 0 && (
+            <button 
+              onClick={handleDeleteHistory}
+              style={{
+                background: 'transparent',
+                border: '1px solid color-mix(in srgb, var(--error) 25%, var(--border-color))',
+                color: 'var(--text-secondary)',
+                cursor: 'pointer',
+                padding: '0.24rem 0.55rem',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                borderRadius: 'var(--radius-sm)',
+                fontSize: '0.75rem',
+                fontWeight: 500,
+                transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.color = 'var(--error)';
+                e.currentTarget.style.borderColor = 'var(--error)';
+                e.currentTarget.style.backgroundColor = 'color-mix(in srgb, var(--error) 12%, transparent)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.color = 'var(--text-secondary)';
+                e.currentTarget.style.borderColor = 'color-mix(in srgb, var(--error) 25%, var(--border-color))';
+                e.currentTarget.style.backgroundColor = 'transparent';
+              }}
+              title="Clear chat history"
+            >
+              <Trash2 size={13} />
+              <span>Clear History</span>
+            </button>
+          )}
           {onClose && (
             <button 
               onClick={onClose}
@@ -349,6 +427,7 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
           )}
         </div>
       </div>
+
 
       {currentUser?.colorCode === 'Gray' ? (
         <div style={{ flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem', textAlign: 'center' }}>
@@ -428,17 +507,19 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
             <div style={{ display: 'flex', gap: '0.5rem', padding: '0.75rem 1rem', overflowX: 'auto', borderTop: '1px solid var(--border-color)', whiteSpace: 'nowrap' }}>
               {problem?.type === 'multiple_choice' ? (
                 <button 
-                  onClick={() => handleIntent('Hãy kiểm tra và chấm điểm các đáp án trắc nghiệm mà tôi đã chọn, đồng thời giải thích ngắn gọn lý do cho các câu sai.', 'Chấm điểm & Giải thích')}
+                  onClick={() => handleIntent('Hãy kiểm tra và chấm điểm các đáp án trắc nghiệm mà tôi đã chọn, đồng thời giải thích ngắn gọn lý do cho các câu sai.', 'Grade & Explain')}
                   style={{ background: 'var(--bg-base)', border: '1px solid var(--border-color)', borderRadius: '1.25rem', padding: '0.35rem 0.75rem', color: 'var(--text-secondary)', fontSize: '0.75rem', cursor: 'pointer', transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
                   onMouseOver={(e) => { e.target.style.background = 'var(--bg-surface-highlight)'; e.target.style.color = 'var(--text-primary)'; }}
                   onMouseOut={(e) => { e.target.style.background = 'var(--bg-base)'; e.target.style.color = 'var(--text-secondary)'; }}
                 >
-                  Chấm điểm & Giải thích
+                  Grade & Explain
                 </button>
               ) : (
                 <>
                   <button 
-                    onClick={() => {
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
                       const codeSnippet = userCode && userCode.trim() 
                         ? userCode 
                         : '# (Editor hiện đang trống, chưa có mã)';
@@ -450,7 +531,8 @@ ${codeSnippet}
 Hãy phân tích kỹ mã nguồn hiện tại này của tôi và chỉ ra những chỗ tôi có thể đang làm sai, thiếu sót hoặc chưa tối ưu logic.
 LƯU Ý QUAN TRỌNG CHO BẠN (AI):
 - Bạn PHẢI phân tích dựa trên chính xác mã nguồn HIỆN TẠI ở trên, tuyệt đối không phân tích theo mã khởi tạo ban đầu (initial code/template) và không lặp lại nhận xét cũ nếu tôi đã sửa mã.
-- KHÔNG cung cấp lời giải trực tiếp hay toàn bộ code giải. Hãy giải thích nguyên nhân và hướng dẫn từng bước để tôi tự sửa.`;
+- KHÔNG cung cấp lời giải trực tiếp hay toàn bộ code giải. Hãy giải thích nguyên nhân và hướng dẫn từng bước để tôi tự sửa.
+- Tuyệt đối KHÔNG đề xuất code sang editor hay bảo người dùng xem diff/bấm Accept hay Reject vì bạn đang ở chế độ phân tích (Analyze), không phải chế độ sửa code (Fix).`;
                       handleIntent(prompt, 'Analyze my code');
                     }}
                     style={{ background: 'var(--bg-base)', border: '1px solid var(--border-color)', borderRadius: '1.25rem', padding: '0.35rem 0.75rem', color: 'var(--text-secondary)', fontSize: '0.75rem', cursor: 'pointer', transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
@@ -461,7 +543,11 @@ LƯU Ý QUAN TRỌNG CHO BẠN (AI):
                   </button>
                   {(!testResults.length || !testResults.every(tr => tr.passed)) && (
                     <button 
-                      onClick={handleFixIntent}
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleFixIntent();
+                      }}
                       style={{ background: 'var(--bg-base)', border: '1px solid var(--border-color)', borderRadius: '1.25rem', padding: '0.35rem 0.75rem', color: 'var(--text-secondary)', fontSize: '0.75rem', cursor: 'pointer', transition: 'all 0.2s ease', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
                       onMouseOver={(e) => { e.target.style.background = 'var(--bg-surface-highlight)'; e.target.style.color = 'var(--text-primary)'; }}
                       onMouseOut={(e) => { e.target.style.background = 'var(--bg-base)'; e.target.style.color = 'var(--text-secondary)'; }}
