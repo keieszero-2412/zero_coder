@@ -113,12 +113,13 @@ export function LearningAIChat({ isOpen, onClose, notebookTitle, activeCellCode,
     }
   };
 
-  const storageKey = `zerocoder_learning_chat_${notebookTitle || 'default'}`;
+  const uid = currentUser?.uid || 'anonymous';
+  const storageKey = `zerocoder_learning_chat_${uid}_${notebookTitle || 'default'}`;
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState(() => {
     try {
       if (!notebookTitle) return [];
-      const saved = localStorage.getItem(`zerocoder_learning_chat_${notebookTitle}`) || sessionStorage.getItem(`ai_learning_chat_${notebookTitle}`);
+      const saved = localStorage.getItem(`zerocoder_learning_chat_${uid}_${notebookTitle}`) || sessionStorage.getItem(`ai_learning_chat_${uid}_${notebookTitle}`);
       return saved ? JSON.parse(saved) : [];
     } catch (e) {
       return [];
@@ -135,13 +136,13 @@ export function LearningAIChat({ isOpen, onClose, notebookTitle, activeCellCode,
     if (notebookTitle && messages.length > 0) {
       try {
         const json = JSON.stringify(messages);
-        localStorage.setItem(`zerocoder_learning_chat_${notebookTitle}`, json);
-        sessionStorage.setItem(`ai_learning_chat_${notebookTitle}`, json);
+        localStorage.setItem(`zerocoder_learning_chat_${uid}_${notebookTitle}`, json);
+        sessionStorage.setItem(`ai_learning_chat_${uid}_${notebookTitle}`, json);
       } catch (e) {
         console.error('Failed to save learning chat to storage', e);
       }
     }
-  }, [messages, notebookTitle]);
+  }, [messages, notebookTitle, uid]);
 
   // Auto-scroll to bottom
   useEffect(() => {
@@ -161,13 +162,13 @@ export function LearningAIChat({ isOpen, onClose, notebookTitle, activeCellCode,
       return;
     }
     try {
-      const saved = localStorage.getItem(`zerocoder_learning_chat_${notebookTitle}`) || sessionStorage.getItem(`ai_learning_chat_${notebookTitle}`);
+      const saved = localStorage.getItem(`zerocoder_learning_chat_${uid}_${notebookTitle}`) || sessionStorage.getItem(`ai_learning_chat_${uid}_${notebookTitle}`);
       setMessages(saved ? JSON.parse(saved) : []);
     } catch (e) {
       setMessages([]);
     }
     setError('');
-  }, [notebookTitle]);
+  }, [notebookTitle, uid]);
 
   const handleIntent = async (intentPrompt) => {
     if (isLoading) return;

@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Bell, Settings, LogOut, Code2, Info } from 'lucide-react';
+import { Bell, Settings, LogOut } from 'lucide-react';
 import { AdminPanel } from './AdminPanel';
 import { SettingsModal } from './SettingsModal';
 import { AboutModal } from './AboutModal';
+import { UserNotificationModal } from './UserNotificationModal';
 import { useTerm } from '../context/TermContext';
 import { useProblems } from '../context/ProblemsContext';
 import FeedbackWidget from './FeedbackWidget';
+import { db } from '../config/firebase';
+import { collection, query, where, onSnapshot, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 
 export function GlobalHeader() {
   const { currentUser, logout } = useAuth();
@@ -15,12 +18,152 @@ export function GlobalHeader() {
   const [showAdminPanel, setShowAdminPanel] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
+  const [showUserNotif, setShowUserNotif] = useState(false);
+  const [userNotifications, setUserNotifications] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
   const { problems } = useProblems();
   
-  const pendingAccessCount = 0; // Simplified for now, or fetch from context
-  const pendingResetCount = 0;
+  const [lastViewedNoti, setLastViewedNoti] = useState(() => {
+    try {
+      const stored = localStorage.getItem('admin_last_viewed_noti');
+      return stored ? Number(stored) : 0;
+    } catch {
+      return 0;
+    }
+  });
+  const [adminNotificationCount, setAdminNotificationCount] = useState(0);
+
+  // Sync last viewed time from Firestore if available
+  useEffect(() => {
+    if (currentUser?.adminLastViewedAt) {
+      const fsTime = currentUser.adminLastViewedAt.toMillis ? currentUser.adminLastViewedAt.toMillis() : new Date(currentUser.adminLastViewedAt).getTime();
+      if (fsTime > lastViewedNoti) {
+        setLastViewedNoti(fsTime);
+        try {
+          localStorage.setItem('admin_last_viewed_noti', String(fsTime));
+        } catch {}
+      }
+    }
+  }, [currentUser, lastViewedNoti]);
+
+  const markAdminNotificationsAsSeen = () => {
+    const now = Date.now();
+    setLastViewedNoti(now);
+    setAdminNotificationCount(0);
+    try {
+      localStorage.setItem('admin_last_viewed_noti', String(now));
+    } catch {}
+    if (currentUser?.uid) {
+      updateDoc(doc(db, 'users', currentUser.uid), {
+        adminLastViewedAt: serverTimestamp()
+      }).catch(() => {});
+    }
+  };
+
+  const handleOpenAdminPanel = () => {
+    setShowAdminPanel(true);
+    markAdminNotificationsAsSeen();
+  };
+
+  const handleCloseAdminPanel = () => {
+    setShowAdminPanel(false);
+    markAdminNotificationsAsSeen();
+  };
+
+  useEffect(() => {
+    if (!currentUser || currentUser.role !== 'Admin') {
+      setAdminNotificationCount(0);
+      return;
+    }
+
+    const getDocTime = (data) => {
+      const ts = data.updatedAt || data.requestedAt || data.createdAt;
+      if (!ts) return 0;
+      if (typeof ts.toMillis === 'function') return ts.toMillis();
+      if (ts instanceof Date) return ts.getTime();
+      if (typeof ts === 'number') return ts;
+      const parsed = new Date(ts).getTime();
+      return isNaN(parsed) ? 0 : parsed;
+    };
+
+    let rawAccessDocs = [];
+    let rawFeedbackDocs = [];
+
+    const recalculateCount = () => {
+      let count = 0;
+
+      // 1. Pending access requests created after lastViewedNoti
+      for (const data of rawAccessDocs) {
+        const time = getDocTime(data);
+        if (time > lastViewedNoti) {
+          count++;
+        }
+      }
+
+      // 2. Feedbacks needing admin attention created/updated after lastViewedNoti
+      for (const data of rawFeedbackDocs) {
+        if (data.status === 'new' || data.status === 'user_replied' || !data.status || data.status === 'pending') {
+          const time = getDocTime(data);
+          if (time > lastViewedNoti) {
+            count++;
+          }
+        }
+      }
+
+      setAdminNotificationCount(count);
+    };
+
+    // 1. Listen to pending access requests
+    const qAccess = query(collection(db, 'access_requests'), where('status', '==', 'pending'));
+    const unsubscribeAccess = onSnapshot(qAccess, (snapshot) => {
+      rawAccessDocs = snapshot.docs.map(d => d.data());
+      recalculateCount();
+    }, (err) => {
+      console.error("Error listening to access requests:", err);
+    });
+
+    // 2. Listen to feedbacks needing admin attention
+    const qFeedback = collection(db, 'feedbacks');
+    const unsubscribeFeedback = onSnapshot(qFeedback, (snapshot) => {
+      rawFeedbackDocs = snapshot.docs.map(d => d.data());
+      recalculateCount();
+    }, (err) => {
+      console.error("Error listening to feedbacks:", err);
+    });
+
+    return () => {
+      unsubscribeAccess();
+      unsubscribeFeedback();
+    };
+  }, [currentUser, lastViewedNoti]);
+
+  useEffect(() => {
+    if (!currentUser || currentUser.role === 'Admin') return;
+    
+    // For non-admin users, check if they have a rejected access request
+    const unsubscribe = onSnapshot(doc(db, 'access_requests', currentUser.email), (docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        if (data.status === 'rejected') {
+          setUserNotifications([{
+            type: 'access_request_rejected',
+            title: 'Access Request Rejected',
+            message: `Your request for ${data.requestedCode || 'Blue'} Code access was declined by the admin.`,
+            timestamp: data.requestedAt
+          }]);
+        } else {
+          setUserNotifications([]);
+        }
+      } else {
+        setUserNotifications([]);
+      }
+    }, (err) => {
+      console.error("Error listening to user notifications:", err);
+    });
+
+    return () => unsubscribe();
+  }, [currentUser]);
 
   // Determine visually active tab based on route, fallback to context state
   let visualTerm = activeTerm;
@@ -129,43 +272,89 @@ export function GlobalHeader() {
             {/* 1. Admin button (nếu có quyền Admin) */}
             {currentUser.role === 'Admin' && (
               <button 
-                onClick={() => setShowAdminPanel(true)}
+                onClick={handleOpenAdminPanel}
                 className="button-secondary header-btn"
                 style={{ position: 'relative', overflow: 'visible' }}
                 title="Admin Dashboard"
               >
                 <Bell size={16} />
                 <span className="header-btn-label">Admin</span>
-                {(pendingAccessCount > 0 || pendingResetCount > 0) && (
-                  <span style={{
-                    position: 'absolute',
-                    top: '-5px', right: '-5px',
-                    backgroundColor: 'var(--error)',
-                    color: 'white',
-                    fontSize: '0.65rem',
-                    fontWeight: 'bold',
-                    minWidth: '18px', height: '18px',
-                    borderRadius: '9999px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '0 4px',
-                    border: '2px solid var(--bg-surface)',
-                    zIndex: 10,
-                    pointerEvents: 'none',
-                    boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
-                    lineHeight: 1
-                  }}>
-                    {pendingAccessCount + pendingResetCount}
+                {adminNotificationCount > 0 && (
+                  <span 
+                    style={{
+                      position: 'absolute',
+                      top: '-5px', 
+                      right: '-5px',
+                      backgroundColor: 'var(--error)',
+                      color: 'white',
+                      fontSize: '0.65rem',
+                      fontWeight: 'bold',
+                      minWidth: '18px', 
+                      height: '18px',
+                      borderRadius: '9999px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '0 4px',
+                      border: '2px solid var(--bg-surface)',
+                      zIndex: 10,
+                      pointerEvents: 'none',
+                      boxShadow: '0 0 10px rgba(239, 68, 68, 0.6)',
+                      lineHeight: 1
+                    }}
+                    title={`${adminNotificationCount} unread notification${adminNotificationCount > 1 ? 's' : ''}`}
+                  >
+                    {adminNotificationCount > 99 ? '99+' : adminNotificationCount}
                   </span>
                 )}
               </button>
             )}
 
-            {/* 2. Feedback */}
+            {/* 2. User Notification button (nếu có quyền User) */}
+            {currentUser.role !== 'Admin' && (
+              <button 
+                onClick={() => setShowUserNotif(true)}
+                className="button-secondary header-btn"
+                style={{ position: 'relative', overflow: 'visible' }}
+                title="Notifications"
+              >
+                <Bell size={16} />
+                <span className="header-btn-label">Notifications</span>
+                {userNotifications.length > 0 && (
+                  <span 
+                    style={{
+                      position: 'absolute',
+                      top: '-5px', 
+                      right: '-5px',
+                      backgroundColor: 'var(--error)',
+                      color: 'white',
+                      fontSize: '0.65rem',
+                      fontWeight: 'bold',
+                      minWidth: '18px', 
+                      height: '18px',
+                      borderRadius: '9999px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '0 4px',
+                      border: '2px solid var(--bg-surface)',
+                      zIndex: 10,
+                      pointerEvents: 'none',
+                      boxShadow: '0 0 10px rgba(239, 68, 68, 0.6)',
+                      lineHeight: 1
+                    }}
+                    title={`${userNotifications.length} unread notification${userNotifications.length > 1 ? 's' : ''}`}
+                  >
+                    {userNotifications.length}
+                  </span>
+                )}
+              </button>
+            )}
+
+            {/* 3. Feedback */}
             <FeedbackWidget />
 
-            {/* 3. Settings */}
+            {/* 4. Settings */}
             <button 
               onClick={() => setShowSettings(true)} 
               className="button-secondary header-btn" 
@@ -175,7 +364,7 @@ export function GlobalHeader() {
               <span className="header-btn-label">Settings</span>
             </button>
 
-            {/* 4. About Project - Đặt ở đây (ngay trước Username) */}
+            {/* 5. About Project - Đặt ở đây (ngay trước Username) */}
             <button
               onClick={() => setShowAbout(true)}
               className="button-secondary header-btn"
@@ -231,9 +420,10 @@ export function GlobalHeader() {
         )}
       </div>
 
-      {showAdminPanel && <AdminPanel onClose={() => setShowAdminPanel(false)} />}
+      {showAdminPanel && <AdminPanel onClose={handleCloseAdminPanel} />}
       {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
       <AboutModal isOpen={showAbout} onClose={() => setShowAbout(false)} />
+      {showUserNotif && <UserNotificationModal onClose={() => setShowUserNotif(false)} notifications={userNotifications} />}
     </header>
   );
 }

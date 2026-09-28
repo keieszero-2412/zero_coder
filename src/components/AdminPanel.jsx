@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { db } from '../config/firebase';
-import { collection, query, where, getDocs, doc, setDoc, deleteDoc, onSnapshot, orderBy } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, setDoc, deleteDoc, updateDoc, onSnapshot, orderBy } from 'firebase/firestore';
 import { X, Check, Trash2, Mail, Plus, MessageSquare, ImageIcon, Settings, Key, Shield, Database, Send, User } from 'lucide-react';
 import { useNotification } from '../context/NotificationContext';
 import '../index.css';
@@ -54,12 +54,14 @@ export function AdminPanel({ onClose }) {
   const { showToast, showConfirm } = useNotification();
   const [activeTab, setActiveTab] = useState('requests');
   const [accessRequests, setAccessRequests] = useState([]);
-  const [resetRequests, setResetRequests] = useState([]);
   const [feedbacks, setFeedbacks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [manualEmail, setManualEmail] = useState('');
+
   const [bypassAuth, setBypassAuth] = useState(false);
   const [isMigrating, setIsMigrating] = useState(false);
+  const [changeCodeEmail, setChangeCodeEmail] = useState('');
+  const [changeCodeValue, setChangeCodeValue] = useState('Gray');
+  const [isChangingCode, setIsChangingCode] = useState(false);
 
   const handleMigrateData = async (event) => {
     const file = event.target.files?.[0];
@@ -209,19 +211,6 @@ export function AdminPanel({ onClose }) {
       setAccessRequests(reqs);
     });
 
-    const qReset = query(collection(db, 'password_reset_requests'), where('status', '==', 'pending'));
-    const unsubscribeReset = onSnapshot(qReset, (snapshot) => {
-      const rReqs = [];
-      snapshot.forEach((doc) => {
-        rReqs.push({ id: doc.id, ...doc.data() });
-      });
-      rReqs.sort((a, b) => {
-        if (!a.requestedAt) return 1;
-        if (!b.requestedAt) return -1;
-        return b.requestedAt.toMillis() - a.requestedAt.toMillis();
-      });
-      setResetRequests(rReqs);
-    });
 
     const qFeedback = collection(db, 'feedbacks');
     const unsubscribeFeedback = onSnapshot(qFeedback, (snapshot) => {
@@ -251,30 +240,51 @@ export function AdminPanel({ onClose }) {
 
     return () => {
       unsubscribeAccess();
-      unsubscribeReset();
       unsubscribeFeedback();
       unsubscribeSettings();
     };
   }, []);
 
-  const handleApprove = async (email, requestId) => {
+  const handleApprove = async (email, requestId, requestedCode = 'Gray') => {
     try {
-      await setDoc(doc(db, 'authorized_emails', email), {
+      // Authorize email globally with the requested code
+      await setDoc(doc(db, 'authorized_emails', email.toLowerCase()), {
         addedAt: new Date(),
-        addedBy: 'Admin'
+        addedBy: 'Admin (Request Approval)',
+        code: requestedCode
       });
+
+      // 1. Find user by email
+      const usersRef = collection(db, 'users');
+      const q = query(usersRef, where('email', '==', email));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        // Update colorCode to requestedCode for all matching users (usually just 1)
+        for (const userDoc of querySnapshot.docs) {
+          await updateDoc(doc(db, 'users', userDoc.id), {
+            colorCode: requestedCode
+          });
+        }
+      } else {
+        // If user not found in 'users' collection yet, we could potentially just show a warning
+        // but for safety, we could also log it.
+        console.warn("Approved request but user not found in users collection.");
+      }
+
+      // 2. Delete the request
       await deleteDoc(doc(db, 'access_requests', requestId));
-      showToast("Request approved.", "success");
+      showToast(`Request approved. User granted ${requestedCode} code.`, "success");
     } catch (err) {
       console.error("Failed to approve:", err);
       showToast("Error approving request.", "error");
     }
   };
 
-  const handleReject = (requestId) => {
-    showConfirm("Are you sure you want to reject and delete this request?", async () => {
+  const handleRejectRequest = (requestId) => {
+    showConfirm("Are you sure you want to reject this request? The user will be notified.", async () => {
       try {
-        await deleteDoc(doc(db, 'access_requests', requestId));
+        await updateDoc(doc(db, 'access_requests', requestId), { status: 'rejected' });
         showToast("Request rejected.", "info");
       } catch (err) {
         console.error("Failed to reject:", err);
@@ -283,29 +293,18 @@ export function AdminPanel({ onClose }) {
     });
   };
 
-  const handleResolveReset = (requestId) => {
-    showConfirm("Did you manually change their password in Firebase Authentication? Click Confirm to clear this request.", async () => {
+  const handleDeleteRequest = (requestId) => {
+    showConfirm("Are you sure you want to delete this request without notifying the user?", async () => {
       try {
-        await deleteDoc(doc(db, 'password_reset_requests', requestId));
-        showToast("Request resolved.", "success");
+        await deleteDoc(doc(db, 'access_requests', requestId));
+        showToast("Request deleted.", "info");
       } catch (err) {
-        console.error("Failed to resolve:", err);
-        showToast("Error resolving request.", "error");
+        console.error("Failed to delete:", err);
+        showToast("Error deleting request.", "error");
       }
     });
   };
 
-  const handleRejectReset = (requestId) => {
-    showConfirm("Are you sure you want to deny and delete this password reset request?", async () => {
-      try {
-        await deleteDoc(doc(db, 'password_reset_requests', requestId));
-        showToast("Reset request denied.", "info");
-      } catch (err) {
-        console.error("Failed to reject reset:", err);
-        showToast("Error rejecting reset.", "error");
-      }
-    });
-  };
 
   const handleDeleteFeedback = (feedbackId) => {
     showConfirm("Delete this feedback?", async () => {
@@ -319,22 +318,6 @@ export function AdminPanel({ onClose }) {
     });
   };
 
-  const handleManualAdd = async (e) => {
-    e.preventDefault();
-    if (!manualEmail.trim()) return;
-    try {
-      await setDoc(doc(db, 'authorized_emails', manualEmail.trim().toLowerCase()), {
-        addedAt: new Date(),
-        addedBy: 'Admin (Manual)'
-      });
-      setManualEmail('');
-      showToast("Email authorized successfully!", "success");
-    } catch (err) {
-      console.error("Failed to authorize email:", err);
-      showToast("Error authorizing email.", "error");
-    }
-  };
-
   const toggleBypass = async () => {
     try {
       await setDoc(doc(db, 'authorized_emails', 'bypass@zerocoder.admin'), { bypassBlueCode: !bypassAuth }, { merge: true });
@@ -342,6 +325,43 @@ export function AdminPanel({ onClose }) {
     } catch (err) {
       console.error("Failed to toggle bypass:", err);
       showToast("Error toggling bypass: " + err.message, "error");
+    }
+  };
+
+  const handleChangeUserCode = async (e) => {
+    e.preventDefault();
+    if (!changeCodeEmail.trim()) return;
+    setIsChangingCode(true);
+    try {
+      const emailLower = changeCodeEmail.trim().toLowerCase();
+      
+      // 1. Authorize email globally so they can log in if they are new
+      await setDoc(doc(db, 'authorized_emails', emailLower), {
+        addedAt: new Date(),
+        addedBy: 'Admin (Code Change/Grant)',
+        code: changeCodeValue
+      });
+
+      // 2. Update existing user in 'users' collection if they already registered
+      const usersRef = collection(db, 'users');
+      const q = query(usersRef, where('email', '==', emailLower));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        for (const userDoc of querySnapshot.docs) {
+          await updateDoc(doc(db, 'users', userDoc.id), {
+            colorCode: changeCodeValue
+          });
+        }
+      }
+
+      showToast(`Granted access and set code to ${changeCodeValue} for ${emailLower}.`, "success");
+      setChangeCodeEmail('');
+    } catch (err) {
+      console.error("Failed to change user code:", err);
+      showToast("Error changing user code: " + err.message, "error");
+    } finally {
+      setIsChangingCode(false);
     }
   };
 
@@ -395,11 +415,6 @@ export function AdminPanel({ onClose }) {
               onClick={() => setActiveTab('requests')}
             />
             <TabButton 
-              label="Password Resets" icon={Key} 
-              active={activeTab === 'resets'} badge={resetRequests.length}
-              onClick={() => setActiveTab('resets')}
-            />
-            <TabButton 
               label="User Feedbacks" icon={MessageSquare} 
               active={activeTab === 'feedbacks'} 
               badge={feedbacks.filter(f => f.status === 'new' || f.status === 'user_replied').length}
@@ -431,7 +446,6 @@ export function AdminPanel({ onClose }) {
           }}>
             <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: 'var(--text-primary)' }}>
               {activeTab === 'requests' && 'Access Requests'}
-              {activeTab === 'resets' && 'Password Resets'}
               {activeTab === 'feedbacks' && 'User Feedbacks'}
               {activeTab === 'settings' && 'Global Settings'}
               {activeTab === 'database' && 'Database Migration'}
@@ -512,22 +526,38 @@ export function AdminPanel({ onClose }) {
                       </div>
                     </div>
 
+
+
                     <div style={{ padding: '1.5rem', backgroundColor: 'var(--bg-surface-elevated)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
-                      <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>Manual Authorization</h3>
-                      <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>Directly grant access to a specific email address.</p>
+                      <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>Grant Access / Change Code</h3>
+                      <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>Grant access to new users or change the access code for existing users by email.</p>
                       
-                      <form onSubmit={handleManualAdd} style={{ display: 'flex', gap: '0.5rem' }}>
+                      <form onSubmit={handleChangeUserCode} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
                         <input 
                           type="email" 
-                          value={manualEmail}
-                          onChange={(e) => setManualEmail(e.target.value)}
-                          placeholder="Enter email address..."
-                          style={{ flex: 1, padding: '0.75rem 1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-base)', color: 'var(--text-primary)', outline: 'none' }}
+                          value={changeCodeEmail}
+                          onChange={(e) => setChangeCodeEmail(e.target.value)}
+                          placeholder="Enter user email..."
+                          style={{ flex: 1, minWidth: '180px', padding: '0.75rem 1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-base)', color: 'var(--text-primary)', outline: 'none' }}
                           required
                         />
-                        <button type="submit" className="button-primary" style={{ padding: '0.75rem 1.5rem' }}>
-                          <Plus size={18} />
-                          Authorize
+                        <select
+                          value={changeCodeValue}
+                          onChange={(e) => setChangeCodeValue(e.target.value)}
+                          style={{ padding: '0.75rem 1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', backgroundColor: 'var(--bg-base)', color: 'var(--text-primary)', outline: 'none', cursor: 'pointer', fontWeight: 500 }}
+                        >
+                          <option value="Blue">Blue</option>
+                          <option value="Gray">Gray</option>
+                          <option value="Red">Red</option>
+                        </select>
+                        <button 
+                          type="submit" 
+                          className="button-primary" 
+                          style={{ padding: '0.75rem 1.5rem', opacity: isChangingCode ? 0.7 : 1 }}
+                          disabled={isChangingCode}
+                        >
+                          <Check size={18} />
+                          Apply
                         </button>
                       </form>
                     </div>
@@ -552,23 +582,37 @@ export function AdminPanel({ onClose }) {
                           }}>
                             <div>
                               <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{req.email}</div>
+                              <div style={{ fontSize: '0.85rem', color: (req.requestedCode || 'Gray') === 'Blue' ? '#3b82f6' : 'var(--text-secondary)', marginTop: '0.25rem', fontWeight: 500 }}>
+                                Requested: {req.requestedCode || 'Gray'} Code
+                              </div>
                               <div style={{ fontSize: '0.85rem', color: 'var(--text-tertiary)', marginTop: '0.25rem' }}>
                                 {req.requestedAt ? new Date(req.requestedAt.toMillis()).toLocaleString() : 'Just now'}
                               </div>
                             </div>
                             <div style={{ display: 'flex', gap: '0.5rem' }}>
                               <button 
-                                onClick={() => handleReject(req.id)}
+                                onClick={() => handleDeleteRequest(req.id)}
                                 style={{
-                                  padding: '0.6rem', backgroundColor: 'rgba(239, 68, 68, 0.1)', color: 'var(--error)',
+                                  padding: '0.6rem', backgroundColor: 'transparent', color: 'var(--text-tertiary)',
                                   border: 'none', borderRadius: 'var(--radius-sm)', cursor: 'pointer', display: 'flex', alignItems: 'center'
                                 }}
-                                title="Reject"
+                                onMouseOver={(e) => { e.currentTarget.style.color = 'var(--error)'; e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.1)'; }}
+                                onMouseOut={(e) => { e.currentTarget.style.color = 'var(--text-tertiary)'; e.currentTarget.style.backgroundColor = 'transparent'; }}
+                                title="Delete Silently"
                               >
                                 <Trash2 size={18} />
                               </button>
                               <button 
-                                onClick={() => handleApprove(req.email, req.id)}
+                                onClick={() => handleRejectRequest(req.id)}
+                                style={{
+                                  padding: '0.6rem 1rem', backgroundColor: 'rgba(239, 68, 68, 0.1)', color: 'var(--error)',
+                                  border: 'none', borderRadius: 'var(--radius-sm)', cursor: 'pointer', fontWeight: 600
+                                }}
+                              >
+                                Reject
+                              </button>
+                              <button 
+                                onClick={() => handleApprove(req.email, req.id, req.requestedCode || 'Gray')}
                                 className="button-primary"
                                 style={{ padding: '0.6rem 1.25rem' }}
                               >
@@ -582,55 +626,6 @@ export function AdminPanel({ onClose }) {
                   </div>
                 )}
 
-                {/* PASSWORD RESETS TAB */}
-                {activeTab === 'resets' && (
-                  <div>
-                    {resetRequests.length === 0 ? (
-                      <div style={{ textAlign: 'center', color: 'var(--text-secondary)', padding: '4rem 0' }}>
-                        <Check size={48} style={{ opacity: 0.2, margin: '0 auto 1rem auto' }} />
-                        <p style={{ fontSize: '1rem' }}>No pending password resets.</p>
-                      </div>
-                    ) : (
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                        {resetRequests.map(req => (
-                          <div key={req.id} style={{
-                            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                            padding: '1.25rem', backgroundColor: 'rgba(239, 68, 68, 0.05)',
-                            borderRadius: 'var(--radius-md)', border: '1px solid rgba(239, 68, 68, 0.2)'
-                          }}>
-                            <div>
-                              <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{req.email}</div>
-                              <div style={{ fontSize: '0.85rem', color: 'var(--text-tertiary)', marginTop: '0.25rem' }}>
-                                {req.requestedAt ? new Date(req.requestedAt.toMillis()).toLocaleString() : 'Just now'}
-                              </div>
-                            </div>
-                            <div style={{ display: 'flex', gap: '0.5rem' }}>
-                              <button 
-                                onClick={() => handleRejectReset(req.id)}
-                                style={{
-                                  padding: '0.6rem', backgroundColor: 'rgba(239, 68, 68, 0.1)', color: 'var(--error)',
-                                  border: 'none', borderRadius: 'var(--radius-sm)', cursor: 'pointer', display: 'flex', alignItems: 'center'
-                                }}
-                                title="Deny / Reject"
-                              >
-                                <Trash2 size={18} />
-                              </button>
-                              <button 
-                                onClick={() => handleResolveReset(req.id)}
-                                className="button-primary"
-                                style={{ padding: '0.6rem 1.25rem' }}
-                                title="Mark as resolved"
-                              >
-                                <Check size={16} style={{ marginRight: '0.4rem' }} />
-                                Resolved
-                              </button>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                )}
 
                 {/* FEEDBACKS TAB */}
                 {activeTab === 'feedbacks' && (

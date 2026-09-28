@@ -24,7 +24,7 @@ export function Workspace() {
   const { id } = useParams();
   const { problems, isLoading, isFetching } = useProblems();
   const navigate = useNavigate();
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout, loading: authLoading } = useAuth();
   const { showConfirm, showToast } = useNotification();
   
   // Find problem based on URL param
@@ -53,8 +53,13 @@ export function Workspace() {
     if (!problems || problems.length === 0) return [];
     
     const cats = {};
+    const has2809Access = currentUser?.role === 'Admin' || currentUser?.colorCode === 'Blue';
+
     for (const p of problems) {
       const catLower = (p.category || '').toLowerCase();
+      if (catLower.includes('2809') && !has2809Access) {
+        continue;
+      }
       const isLastTerm = catLower.includes('final') || catLower.includes('last');
       const isMid = p.category === 'FTDS coding practice' || !isLastTerm;
       const isFinal = p.category === 'FTDS coding practice' || isLastTerm;
@@ -102,30 +107,53 @@ export function Workspace() {
     }
     
     const result = [];
-    // 1. Mock tests first
-    for (const key of Object.keys(cats)) {
+    const keys = Object.keys(cats).sort((a,b) => a.localeCompare(b));
+
+    // 0. 2809 test first
+    for (const key of keys) {
+      if (key.toLowerCase().includes("2809")) {
+        result.push(...cats[key]);
+      }
+    }
+    // 1. Normal tests
+    for (const key of keys) {
+      const lower = key.toLowerCase();
+      if (!lower.includes("2809") && lower.includes("test") && !lower.includes("mock") && !lower.includes("summer")) {
+        result.push(...cats[key]);
+      }
+    }
+    // 2. Mock tests
+    for (const key of keys) {
       if (key.toLowerCase().includes("mock")) {
         result.push(...cats[key]);
       }
     }
-    // 2. Others (excluding Coding practice)
-    for (const key of Object.keys(cats)) {
-      if (!key.toLowerCase().includes("mock") && key !== "Coding practice") {
-        if (key === "Summer Course Test") {
-          const items = [...cats[key]].sort((a, b) => (a._sortOrder || 0) - (b._sortOrder || 0));
-          result.push(...items);
-        } else {
-          result.push(...cats[key]);
-        }
+    // 3. Summer tests
+    for (const key of keys) {
+      if (key.toLowerCase().includes("summer")) {
+        const summerItems = [...(cats[key] || [])];
+        summerItems.sort((a, b) => (a._sortOrder || 0) - (b._sortOrder || 0));
+        result.push(...summerItems);
       }
     }
-    // 3. Coding practice last
+    // 4. Quiz
+    if (cats["Quiz"]) {
+      result.push(...cats["Quiz"]);
+    }
+    // 5. Others (excluding Coding practice and Quiz)
+    for (const key of keys) {
+      const lower = key.toLowerCase();
+      if (!lower.includes("2809") && !lower.includes("test") && !lower.includes("mock") && !lower.includes("summer") && key !== "Coding practice" && key !== "Quiz") {
+        result.push(...cats[key]);
+      }
+    }
+    // 6. Coding practice last
     if (cats["Coding practice"]) {
       result.push(...cats["Coding practice"]);
     }
     
     return result;
-  }, [problems, currentTerm]);
+  }, [problems, currentTerm, currentUser]);
 
   const currentIndex = useMemo(() => {
     return orderedProblems.findIndex(p => p.id === currentProblem?.id);
@@ -214,6 +242,17 @@ export function Workspace() {
       navigate('/');
     }
   }, [currentProblem, isLoading, isFetching, navigate]);
+
+  // Access control for 2809 test: only Admin and Blue code users can access
+  useEffect(() => {
+    if (currentProblem && !isLoading && !isFetching && !authLoading) {
+      const is2809 = (currentProblem.category || '').toLowerCase().includes('2809');
+      const has2809Access = currentUser?.role === 'Admin' || currentUser?.colorCode === 'Blue';
+      if (is2809 && !has2809Access) {
+        navigate('/');
+      }
+    }
+  }, [currentProblem, currentUser, isLoading, isFetching, authLoading, navigate, showToast]);
 
   // Preload any packages required by initial starter code or loaded draft in the background
   useEffect(() => {
@@ -490,6 +529,16 @@ export function Workspace() {
       );
     }
     return null;
+  }
+
+  const is2809 = (currentProblem.category || '').toLowerCase().includes('2809');
+  const has2809Access = currentUser?.role === 'Admin' || currentUser?.colorCode === 'Blue';
+  if (is2809 && !has2809Access) {
+    return (
+      <div className="app-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+        <Loader2 className="spin" size={32} color="var(--accent-primary)" />
+      </div>
+    );
   }
 
 

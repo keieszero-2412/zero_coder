@@ -110,6 +110,10 @@ export const AuthProvider = ({ children }) => {
       const authRef = doc(db, 'authorized_emails', emailLower);
       const snap = await getDoc(authRef);
       if (snap.exists()) {
+        const data = snap.data();
+        if (data.code) {
+          return { role: 'User', colorCode: data.code };
+        }
         return { role: 'User', colorCode: 'Blue' };
       }
     } catch (e) {
@@ -138,17 +142,35 @@ export const AuthProvider = ({ children }) => {
       const usersRef = collection(db, 'users');
       const q = query(usersRef, where('email', '==', email));
       
-      const [roleData, userSnap] = await Promise.all([
+      const [roleData, userSnap, requestSnap] = await Promise.all([
         determineRole(email),
         getDocs(q).catch(err => {
           console.error("Users fetch error:", err);
-          return { empty: true };
-        })
+          return { empty: true, docs: [] };
+        }),
+        getDoc(doc(db, 'access_requests', email)).catch(() => null)
       ]);
+      
+      let requestStatus = null;
+      if (requestSnap && requestSnap.exists()) {
+        requestStatus = requestSnap.data().status;
+      }
       
       accountExists = !userSnap.empty;
       
-      return { role: roleData.role, colorCode: roleData.colorCode, accountExists };
+      if (accountExists) {
+        // If the user already exists, use their saved role and colorCode
+        // This ensures Gray code users aren't shown as Red when bypass is off
+        const userData = userSnap.docs[0].data();
+        return { 
+          role: userData.role || roleData.role, 
+          colorCode: userData.colorCode || roleData.colorCode, 
+          accountExists,
+          requestStatus
+        };
+      }
+      
+      return { role: roleData.role, colorCode: roleData.colorCode, accountExists, requestStatus };
     } catch (e) {
       console.error(e);
       return { role: 'Unauthorized', colorCode: 'Red', accountExists: false };

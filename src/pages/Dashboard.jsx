@@ -119,8 +119,14 @@ export function Dashboard() {
 
   const categories = useMemo(() => {
     const cats = {};
+    const has2809Access = currentUser?.role === 'Admin' || currentUser?.colorCode === 'Blue';
+
     for (const p of problems) {
       const catLower = (p.category || '').toLowerCase();
+      if (catLower.includes('2809') && !has2809Access) {
+        continue;
+      }
+
       const isLastTerm = catLower.includes("last-term") || catLower.includes("final");
       if (activeTerm === 'mid' && isLastTerm) continue;
       if (activeTerm === 'last' && !isLastTerm) continue;
@@ -171,10 +177,17 @@ export function Dashboard() {
     const sortedCats = {};
     const keys = Object.keys(cats).sort((a,b) => a.localeCompare(b));
     
+    // 0. 2809 test first
+    for (const key of keys) {
+      if (key.toLowerCase().includes("2809")) {
+        sortedCats[key] = cats[key];
+      }
+    }
+
     // 1. Normal tests
     for (const key of keys) {
       const lower = key.toLowerCase();
-      if (lower.includes("test") && !lower.includes("mock") && !lower.includes("summer")) {
+      if (!lower.includes("2809") && lower.includes("test") && !lower.includes("mock") && !lower.includes("summer")) {
         sortedCats[key] = cats[key];
       }
     }
@@ -209,7 +222,7 @@ export function Dashboard() {
     }
     
     return sortedCats;
-  }, [activeTerm, problems]);
+  }, [activeTerm, problems, currentUser]);
 
   return (
     <div className="app-container" style={{ height: 'auto', overflow: 'visible' }}>

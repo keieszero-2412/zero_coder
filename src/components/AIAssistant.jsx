@@ -10,7 +10,7 @@ import { preprocessMarkdown } from '../utils/latexHelper';
 import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
 import { db } from '../config/firebase';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp, setDoc, doc } from 'firebase/firestore';
 
 
 
@@ -136,9 +136,10 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
   
   const handleRequestBlueCode = async () => {
     try {
-      await addDoc(collection(db, 'access_requests'), {
+      await setDoc(doc(db, 'access_requests', currentUser.email), {
         email: currentUser.email,
         username: currentUser.username,
+        requestedCode: 'Blue',
         requestedAt: serverTimestamp(),
         status: 'pending'
       });
@@ -147,14 +148,14 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
       console.error("Failed to request Blue Code:", error);
     }
   };
-
   const problemId = problem?.id;
-  const storageKey = `zerocoder_ai_chat_${problemId || 'default'}`;
+  const uid = currentUser?.uid || 'anonymous';
+  const storageKey = `zerocoder_ai_chat_${uid}_${problemId || 'default'}`;
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState(() => {
     try {
       if (!problemId) return [];
-      const saved = localStorage.getItem(`zerocoder_ai_chat_${problemId}`) || sessionStorage.getItem(`ai_chat_${problemId}`);
+      const saved = localStorage.getItem(`zerocoder_ai_chat_${uid}_${problemId}`) || sessionStorage.getItem(`ai_chat_${uid}_${problemId}`);
       if (!saved) return [];
       const parsed = JSON.parse(saved);
       return sanitizeHistory(parsed);
@@ -175,7 +176,7 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
       return;
     }
     try {
-      const saved = localStorage.getItem(`zerocoder_ai_chat_${problemId}`) || sessionStorage.getItem(`ai_chat_${problemId}`);
+      const saved = localStorage.getItem(`zerocoder_ai_chat_${uid}_${problemId}`) || sessionStorage.getItem(`ai_chat_${uid}_${problemId}`);
       if (saved) {
         const parsed = JSON.parse(saved);
         setMessages(sanitizeHistory(parsed));
@@ -186,15 +187,15 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
       console.error('Failed to sync chat history from storage', e);
       setMessages([]);
     }
-  }, [problemId]);
+  }, [problemId, uid]);
 
   // Persist messages to both localStorage and sessionStorage
   useEffect(() => {
     if (problemId && messages.length > 0) {
       try {
         const json = JSON.stringify(messages);
-        localStorage.setItem(`zerocoder_ai_chat_${problemId}`, json);
-        sessionStorage.setItem(`ai_chat_${problemId}`, json);
+        localStorage.setItem(`zerocoder_ai_chat_${uid}_${problemId}`, json);
+        sessionStorage.setItem(`ai_chat_${uid}_${problemId}`, json);
       } catch (e) {
         console.error('Failed to save chat to storage', e);
       }

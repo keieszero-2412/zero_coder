@@ -19,6 +19,7 @@ export function Auth() {
   const [resetStatus, setResetStatus] = useState(null); // 'email', 'admin', or null
   
   const [isLoading, setIsLoading] = useState(false);
+  const [requestedCode, setRequestedCode] = useState('Gray');
   
   const { checkEmailStatus, login, register, resetPassword, currentUser, loading } = useAuth();
   const { showToast } = useNotification();
@@ -147,6 +148,7 @@ export function Auth() {
       const requestRef = doc(db, 'access_requests', email);
       await setDoc(requestRef, {
         email: email,
+        requestedCode: requestedCode,
         requestedAt: serverTimestamp(),
         status: 'pending'
       });
@@ -167,30 +169,6 @@ export function Auth() {
       setError('');
     } catch (err) {
       setError("Could not send reset email. If your email is not real, please contact admin.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleAdminResetRequest = async () => {
-    setIsLoading(true);
-    try {
-      const { db } = await import('../config/firebase');
-      const { doc, setDoc, serverTimestamp } = await import('firebase/firestore');
-      
-      const requestRef = doc(db, 'password_reset_requests', email);
-      await setDoc(requestRef, {
-        email: email,
-        requestedAt: serverTimestamp(),
-        status: 'pending'
-      });
-      
-      setResetStatus('admin');
-      setError('');
-      showToast("Your request for password reset has been sent to the admin. You will be notified once approved.", "success");
-    } catch (err) {
-      console.error("Failed to send reset request:", err);
-      setError("Failed to send reset request. Please try again later.");
     } finally {
       setIsLoading(false);
     }
@@ -307,19 +285,56 @@ export function Auth() {
                   This email is not authorized to access the workspace.
                 </p>
                 
+                {emailStatus.requestStatus === 'rejected' && (
+                  <div style={{ padding: '0.75rem', backgroundColor: 'rgba(239, 68, 68, 0.1)', color: 'var(--error)', borderRadius: 'var(--radius-md)', fontSize: '0.875rem', marginBottom: '1rem' }}>
+                    Your previous access request was rejected by the admin. You can submit a new one below.
+                  </div>
+                )}
+
+                {emailStatus.requestStatus === 'pending' && !requestSent && (
+                  <div style={{ padding: '0.75rem', backgroundColor: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', borderRadius: 'var(--radius-md)', fontSize: '0.875rem', marginBottom: '1rem' }}>
+                    You already have a pending request. You can update it below if needed.
+                  </div>
+                )}
+                
                 {requestSent ? (
                   <div style={{ padding: '0.75rem', backgroundColor: 'rgba(34, 197, 94, 0.1)', color: '#22c55e', borderRadius: 'var(--radius-md)', fontSize: '0.875rem' }}>
                     Access request sent successfully! An admin will review your request.
                   </div>
                 ) : (
-                  <button 
-                    onClick={handleRequestAccess}
-                    className="button-primary" 
-                    style={{ width: '100%', justifyContent: 'center', padding: '0.75rem' }}
-                  >
-                    <Send size={18} />
-                    Request Access
-                  </button>
+                  <>
+                    <div style={{ marginBottom: '1rem', textAlign: 'left' }}>
+                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>
+                        Select requested access level:
+                      </label>
+                      <select 
+                        value={requestedCode}
+                        onChange={(e) => setRequestedCode(e.target.value)}
+                        style={{
+                          width: '100%',
+                          padding: '0.75rem',
+                          borderRadius: 'var(--radius-md)',
+                          border: '1px solid var(--border-color)',
+                          backgroundColor: 'var(--bg-base)',
+                          color: 'var(--text-primary)',
+                          outline: 'none',
+                          cursor: 'pointer',
+                          fontWeight: 500
+                        }}
+                      >
+                        <option value="Gray">Gray Code (Basic Access)</option>
+                        <option value="Blue">Blue Code (Full Access)</option>
+                      </select>
+                    </div>
+                    <button 
+                      onClick={handleRequestAccess}
+                      className="button-primary" 
+                      style={{ width: '100%', justifyContent: 'center', padding: '0.75rem' }}
+                    >
+                      <Send size={18} />
+                      {emailStatus.requestStatus === 'pending' ? 'Update Request' : emailStatus.requestStatus === 'rejected' ? 'Request Again' : 'Request Access'}
+                    </button>
+                  </>
                 )}
                 
                 <button 
@@ -335,14 +350,15 @@ export function Auth() {
               <div style={{ textAlign: 'center', marginTop: '0.5rem' }}>
                 <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '0.5rem' }}>Forgot Password?</h3>
                 <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', fontSize: '0.875rem' }}>
-                  If your email is real, we can send you a password reset link. Otherwise, you can request the admin to manually reset it.
+                  If your email is real, we can send you a password reset link. Otherwise, you can request the admin to delete your account so you can register again: <br />
+                  <a href="https://github.com/keieszero-2412" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-primary)', textDecoration: 'none', fontWeight: 500 }}>
+                    @keieszero-2412
+                  </a>
                 </p>
                 
                 {resetStatus ? (
                   <div style={{ padding: '0.75rem', backgroundColor: 'rgba(34, 197, 94, 0.1)', color: '#22c55e', borderRadius: 'var(--radius-md)', fontSize: '0.875rem', marginBottom: '1rem' }}>
-                    {resetStatus === 'email' 
-                      ? "Password reset email sent successfully! Please check your inbox (and spam folder)."
-                      : "Request sent successfully! An admin will review your request shortly."}
+                    Password reset email sent successfully! Please check your inbox (and spam folder).
                   </div>
                 ) : (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1rem' }}>
@@ -354,14 +370,6 @@ export function Auth() {
                     >
                       <Send size={18} />
                       Send Reset Email
-                    </button>
-                    <button 
-                      onClick={handleAdminResetRequest}
-                      className="button-secondary" 
-                      style={{ width: '100%', justifyContent: 'center', padding: '0.75rem' }}
-                      disabled={isLoading}
-                    >
-                      Contact Admin to Reset
                     </button>
                   </div>
                 )}
