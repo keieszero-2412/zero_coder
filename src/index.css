@@ -1977,4 +1977,283 @@ body.theme-amber {
 .katex-error {
   color: inherit !important;
   text-decoration: underline dotted var(--error);
+}
+
+/* ==========================================================================
+   QUIZ & MULTIPLE CHOICE MODERN STYLES
+   ========================================================================== */
+
+.quiz-container {
+  padding: 1.75rem 2rem;
+  overflow-y: auto;
+  height: 100%;
+  background-color: var(--bg-surface);
+  scroll-behavior: smooth;
+}
+
+.quiz-header-banner {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-primary) 10%, var(--bg-surface-elevated)), var(--bg-surface-elevated));
+  border: 1px solid color-mix(in srgb, var(--accent-primary) 25%, var(--border-color));
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.75rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.quiz-jump-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid color-mix(in srgb, var(--border-color) 60%, transparent);
+}
+
+.quiz-jump-btn {
+  min-width: 32px;
+  height: 32px;
+  padding: 0 0.45rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-base);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.quiz-jump-btn:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  transform: translateY(-1px);
+}
+
+.quiz-jump-btn.answered {
+  background-color: color-mix(in srgb, var(--accent-primary) 18%, transparent);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.quiz-jump-btn.correct {
+  background-color: color-mix(in srgb, var(--success) 20%, transparent);
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.quiz-jump-btn.wrong {
+  background-color: color-mix(in srgb, var(--error) 20%, transparent);
+  border-color: var(--error);
+  color: var(--error);
+}
+
+.quiz-question-card {
+  margin-bottom: 1.75rem;
+  padding: 1.5rem;
+  background-color: var(--bg-surface-elevated);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.25s, box-shadow 0.25s, background-color 0.25s;
+  position: relative;
+}
+
+.quiz-question-card.correct-card {
+  border-color: var(--success);
+  background-color: color-mix(in srgb, var(--success) 6%, var(--bg-surface-elevated));
+}
+
+.quiz-question-card.wrong-card {
+  border-color: var(--error);
+  background-color: color-mix(in srgb, var(--error) 6%, var(--bg-surface-elevated));
+}
+
+.quiz-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.quiz-option-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding: 0.85rem 1.15rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-surface);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.quiz-option-card:hover {
+  border-color: color-mix(in srgb, var(--accent-primary) 60%, var(--border-color));
+  background-color: color-mix(in srgb, var(--accent-primary) 5%, var(--bg-surface));
+  transform: translateX(3px);
+}
+
+.quiz-option-card.selected {
+  border-color: var(--accent-primary);
+  background-color: color-mix(in srgb, var(--accent-primary) 12%, var(--bg-surface));
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--accent-primary) 18%, transparent);
+}
+
+/* Graded States */
+.quiz-option-card.correct-selected {
+  border-color: var(--success) !important;
+  background-color: color-mix(in srgb, var(--success) 14%, var(--bg-surface)) !important;
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--success) 20%, transparent);
+}
+
+.quiz-option-card.wrong-selected {
+  border-color: var(--error) !important;
+  background-color: color-mix(in srgb, var(--error) 14%, var(--bg-surface)) !important;
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--error) 20%, transparent);
+}
+
+.quiz-option-card.correct-missed {
+  border: 1.5px dashed var(--success) !important;
+  background-color: color-mix(in srgb, var(--success) 7%, var(--bg-surface)) !important;
+}
+
+.quiz-option-card.dimmed {
+  opacity: 0.55;
+}
+
+.quiz-letter-badge {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.88rem;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-base);
+  color: var(--text-secondary);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.quiz-option-card:hover .quiz-letter-badge {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.quiz-option-card.selected .quiz-letter-badge {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #ffffff;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--accent-primary) 40%, transparent);
+}
+
+.quiz-option-card.correct-selected .quiz-letter-badge {
+  background-color: var(--success);
+  border-color: var(--success);
+  color: #ffffff;
+}
+
+.quiz-option-card.wrong-selected .quiz-letter-badge {
+  background-color: var(--error);
+  border-color: var(--error);
+  color: #ffffff;
+}
+
+.quiz-option-card.correct-missed .quiz-letter-badge {
+  background-color: transparent;
+  border: 1.5px dashed var(--success);
+  color: var(--success);
+}
+
+.quiz-indicator {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border-radius: 6px;
+  border: 1.5px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 6px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.quiz-indicator.radio {
+  border-radius: 50%;
+}
+
+.quiz-option-card:hover .quiz-indicator {
+  border-color: var(--accent-primary);
+}
+
+.quiz-option-card.selected .quiz-indicator {
+  background-color: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+
+.quiz-option-card.correct-selected .quiz-indicator {
+  background-color: var(--success);
+  border-color: var(--success);
+}
+
+.quiz-option-card.wrong-selected .quiz-indicator {
+  background-color: var(--error);
+  border-color: var(--error);
+}
+
+.quiz-option-card.correct-missed .quiz-indicator {
+  border-color: var(--success);
+}
+
+.quiz-option-content {
+  flex: 1;
+  min-width: 0;
+  color: var(--text-primary);
+  font-size: 0.94rem;
+  line-height: 1.6;
+  user-select: text;
+  word-break: break-word;
+}
+
+.quiz-option-content p {
+  margin: 0;
+}
+
+.quiz-status-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 1rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.quiz-status-tag.correct {
+  background-color: color-mix(in srgb, var(--success) 18%, transparent);
+  color: var(--success);
+  border: 1px solid color-mix(in srgb, var(--success) 35%, transparent);
+}
+
+.quiz-status-tag.wrong {
+  background-color: color-mix(in srgb, var(--error) 18%, transparent);
+  color: var(--error);
+  border: 1px solid color-mix(in srgb, var(--error) 35%, transparent);
+}
+
+.quiz-status-tag.missed {
+  background-color: color-mix(in srgb, var(--success) 10%, transparent);
+  color: var(--success);
+  border: 1px dashed var(--success);
 }
