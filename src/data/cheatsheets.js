@@ -811,7 +811,7 @@ export const MIDTERM_CHEATSHEETS = {
   },
   "Topic2": {
     "lectureId": "Topic2",
-    "title": "Topic 2: Lists & Comprehensions",
+    "title": "Topic 2: Lists",
     "subtitle": "List creation, mutation, sorting, built-in aggregations, and list comprehensions",
     "categories": [
       {
@@ -860,6 +860,20 @@ export const MIDTERM_CHEATSHEETS = {
             "code": "nums = [3, 1, 4]\nnums.sort()     # nums is now [1, 3, 4]\nnums.reverse()  # nums is now [4, 3, 1]",
             "description": "Sorts or reverses the original list directly (modifies in-place).",
             "note": "Both methods return None; do not assign result to a variable (e.g. x = lst.sort())."
+          },
+          {
+            "title": "Clear & Copy List",
+            "syntax": "lst.clear(), lst.copy()",
+            "code": "nums = [1, 2, 3]\nnums_copy = nums.copy()\nnums.clear()  # nums is now []",
+            "description": "clear() removes all elements; copy() returns a shallow copy.",
+            "note": "lst.copy() is equivalent to lst[:]."
+          },
+          {
+            "title": "Index & Count Elements",
+            "syntax": "lst.index(x), lst.count(x)",
+            "code": "lst = [1, 2, 2, 3]\nlst.index(2)  # 1 (first occurrence)\nlst.count(2)  # 2",
+            "description": "index() finds first occurrence; count() counts how many times value appears.",
+            "note": "index() raises ValueError if the element is not found."
           }
         ]
       },
@@ -902,6 +916,20 @@ export const MIDTERM_CHEATSHEETS = {
             "code": "any([False, True, False])        # True\nall([x > 0 for x in [1, 2, 3]])  # True",
             "description": "any() is True if at least one item is True; all() is True if all are True.",
             "note": "Short-circuits immediately once result is determined."
+          },
+          {
+            "title": "Convert Iterable to List",
+            "syntax": "list(iterable)",
+            "code": "list((1, 2, 3))       # [1, 2, 3]\nlist(\"abc\")           # ['a', 'b', 'c']\nlist({1, 2, 3})       # [1, 2, 3]",
+            "description": "Converts tuple, set, string, or dict keys into a list.",
+            "note": "When converting a dictionary, it creates a list of its keys."
+          },
+          {
+            "title": "Basic List Iteration",
+            "syntax": "for x in lst:, for i in range(len(lst)):",
+            "code": "for x in [1, 2]:\n    print(x)  # Iterates values directly\nfor i in range(len([1, 2])):\n    print(i)  # Iterates by index",
+            "description": "Iterates over list values directly, or by index.",
+            "note": "Use direct iteration when possible. Use range(len(lst)) if you need to mutate the list via indices."
           }
         ]
       },
@@ -937,20 +965,27 @@ export const MIDTERM_CHEATSHEETS = {
   },
   "Topic3": {
     "lectureId": "Topic3",
-    "title": "Topic 3: Tuples, Sets & Dictionaries",
-    "subtitle": "Tuples, set operations, dictionary mapping, sorting by key/value, and collections utilities",
+    "title": "Topic 3: Tuples",
+    "subtitle": "Tuple creation, immutability, variable unpacking, and built-in operations",
     "categories": [
       {
-        "id": "tuples",
+        "id": "tuple_basics",
         "name": "Tuples & Variable Unpacking",
         "icon": "Layers",
         "items": [
           {
             "title": "Tuple Definition & Immutability",
             "syntax": "t = (x, y, ...)",
-            "code": "pt = (10, 20)\nx, y = pt  # x = 10, y = 20",
+            "code": "pt = (10, 20)\nx, y = pt  # x = 10, y = 20\n# pt[0] = 99 -> TypeError (Tuples are immutable!)",
             "description": "Creates fixed immutable sequences and unpacks into variables.",
-            "note": "Tuples can be used as dictionary keys and set elements because they are hashable."
+            "note": "Tuples can be used as dictionary keys and set elements because they are immutable (hashable)."
+          },
+          {
+            "title": "Single-Element Tuple Syntax",
+            "syntax": "t = (x,)",
+            "code": "t1 = (42,)   # Tuple: (42,)\nt2 = (42)    # Integer: 42 (NOT a tuple!)\ntype(t1) is tuple  # True",
+            "description": "Defines a 1-element tuple using mandatory trailing comma.",
+            "note": "Without the comma, parentheses are treated as an arithmetic grouping operator."
           },
           {
             "title": "Variable Swapping via Unpacking",
@@ -958,39 +993,200 @@ export const MIDTERM_CHEATSHEETS = {
             "code": "a, b = 1, 2\na, b = b, a  # a = 2, b = 1",
             "description": "Swaps values of two variables in one line without temporary variable.",
             "note": "Evaluates the right side into a tuple first, then unpacks to left side."
+          },
+          {
+            "title": "Extended Unpacking (*rest)",
+            "syntax": "first, *rest = t, *init, last = t",
+            "code": "t = (1, 2, 3, 4, 5)\nfirst, *rest = t      # first = 1, rest = [2, 3, 4, 5]\n*init, last = t       # init = [1, 2, 3, 4], last = 5\na, *mid, b = t        # a = 1, mid = [2, 3, 4], b = 5",
+            "description": "Unpacks first, last, or middle elements into separate variables, gathering remaining items into a list.",
+            "note": "The starred variable (*rest) always captures elements as a list."
           }
         ]
       },
       {
-        "id": "sets",
-        "name": "Sets & Set Operations",
+        "id": "tuple_methods",
+        "name": "Tuple Methods & Built-ins",
         "icon": "FileCode",
+        "items": [
+          {
+            "title": "Tuple Index & Count",
+            "syntax": "t.index(x), t.count(x)",
+            "code": "t = (1, 2, 2, 3)\nt.index(2)  # 1\nt.count(2)  # 2",
+            "description": "index() finds first occurrence; count() counts occurrences.",
+            "note": "Because tuples are immutable, these are the only two methods they have."
+          },
+          {
+            "title": "Aggregations (len, sum, min, max)",
+            "syntax": "len(t), sum(t), min(t), max(t)",
+            "code": "t = (4, 1, 7)\nlen(t)  # 3\nsum(t), min(t), max(t)  # (12, 1, 7)",
+            "description": "Computes total count, sum, minimum, and maximum of a tuple.",
+            "note": "All standard sequence aggregation functions work on tuples."
+          },
+          {
+            "title": "Convert Iterable to Tuple",
+            "syntax": "tuple(iterable)",
+            "code": "tuple([1, 2, 3])  # (1, 2, 3)\ntuple(\"abc\")      # ('a', 'b', 'c')",
+            "description": "Converts a list, string, or other iterable into a tuple.",
+            "note": "Useful to make a collection hashable so it can be used as a dict key."
+          }
+        ]
+      },
+      {
+        "id": "tuple_iteration",
+        "name": "Tuple Iteration",
+        "icon": "Bookmark",
+        "items": [
+          {
+            "title": "Iterate Tuple Values",
+            "syntax": "for x in t:",
+            "code": "for x in (10, 20, 30):\n    print(x)  # 10, 20, 30",
+            "description": "Loops through each element of the tuple directly.",
+            "note": "Tuples iterate exactly like lists."
+          },
+          {
+            "title": "Enumerate Tuple with Index",
+            "syntax": "for i, x in enumerate(t):",
+            "code": "for i, x in enumerate((\"a\", \"b\", \"c\")):\n    print(i, x)  # 0 a, 1 b, 2 c",
+            "description": "Loops through tuple getting both index and value at once.",
+            "note": "Identical syntax to enumerating a list."
+          },
+          {
+            "title": "Iterate Tuple by Index",
+            "syntax": "for i in range(len(t)):",
+            "code": "t = (10, 20, 30)\nfor i in range(len(t)):\n    print(i, t[i])  # 0 10, 1 20, 2 30",
+            "description": "Loops through tuple indices using range(len(t)).",
+            "note": "Prefer direct iteration or enumerate() unless you need the index for logic."
+          }
+        ]
+      }
+    ]
+  },
+  "Topic4": {
+    "lectureId": "Topic4",
+    "title": "Topic 4: Sets",
+    "subtitle": "Set creation, deduplication, mutation methods, set algebra operations, subsets, and comprehensions",
+    "categories": [
+      {
+        "id": "set_basics",
+        "name": "Set Creation & Deduplication",
+        "icon": "Layers",
         "items": [
           {
             "title": "Deduplicate Elements with Set",
             "syntax": "set(iterable)",
             "code": "list(set([1, 2, 2, 3, 1]))  # [1, 2, 3]",
             "description": "Converts collection to set to automatically strip all duplicate items.",
-            "note": "Sets are unordered. To preserve order while deduplicating, use dict.fromkeys(lst)."
+            "note": "Sets are unordered. To preserve original order while deduplicating, use dict.fromkeys(lst)."
           },
           {
-            "title": "Add & Discard Set Elements",
-            "syntax": "s.add(x), s.discard(x)",
-            "code": "s = {1, 2}\ns.add(3)      # {1, 2, 3}\ns.discard(2)  # {1, 3}",
-            "description": "add() inserts an element; discard() removes without error if missing.",
-            "note": "discard(x) is safer than remove(x) because discard never raises KeyError."
+            "title": "Fast Membership Testing (in / not in)",
+            "syntax": "x in s, x not in s",
+            "code": "s = {10, 20, 30}\n20 in s     # True (O(1) average lookup!)\n99 not in s # True",
+            "description": "Checks if an element exists in the set in O(1) constant time using hashing.",
+            "note": "Checking 'x in set' is drastically faster than 'x in list' (O(1) vs O(n))."
           },
           {
-            "title": "Set Operations (Union, Intersect, Diff)",
-            "syntax": "s1 | s2, s1 & s2, s1 - s2, s1 ^ s2",
-            "code": "{1, 2} | {2, 3}  # Union: {1, 2, 3}\n{1, 2} & {2, 3}  # Intersection: {2}\n{1, 2} - {2, 3}  # Difference: {1}",
-            "description": "Performs set algebra: | (union), & (intersection), - (difference).",
-            "note": "Equivalent methods: a.union(b), a.intersection(b), a.difference(b)."
+            "title": "Set Length (Unique Element Count)",
+            "syntax": "len(s)",
+            "code": "s = {1, 2, 3}\nlen(s)  # 3",
+            "description": "Returns the total number of unique elements in the set.",
+            "note": "len(set(lst)) == len(lst) is a fast idiom to check if a list has all unique elements."
+          },
+          {
+            "title": "Set Comprehension",
+            "syntax": "{expr for item in iterable if condition}",
+            "code": "{x % 3 for x in range(10)}  # {0, 1, 2}",
+            "description": "Constructs a unique set dynamically from an iterable in one expression.",
+            "note": "Empty set must be created with set(), NOT {} (which creates an empty dictionary)."
           }
         ]
       },
       {
-        "id": "dictionaries",
+        "id": "set_methods",
+        "name": "Set Mutation Methods",
+        "icon": "FileCode",
+        "items": [
+          {
+            "title": "Add Element",
+            "syntax": "s.add(x)",
+            "code": "s = {1, 2}\ns.add(3)  # {1, 2, 3}\ns.add(2)  # {1, 2, 3} (duplicate ignored)",
+            "description": "Adds element x to the set. If x already exists, has no effect.",
+            "note": "Elements added to a set must be immutable/hashable (numbers, strings, tuples)."
+          },
+          {
+            "title": "Discard vs Remove Element",
+            "syntax": "s.discard(x), s.remove(x)",
+            "code": "s = {1, 2, 3}\ns.discard(2)  # {1, 3}\ns.discard(99) # Safe! No error if 99 is missing\ns.remove(1)   # {3}\n# s.remove(99) -> raises KeyError!",
+            "description": "discard(x) removes element without error if missing; remove(x) raises KeyError if not found.",
+            "note": "Always prefer discard() unless you specifically want an exception when the element is absent."
+          },
+          {
+            "title": "Pop Arbitrary Element",
+            "syntax": "s.pop()",
+            "code": "s = {\"a\", \"b\", \"c\"}\nitem = s.pop()  # Removes and returns an arbitrary element",
+            "description": "Removes and returns an arbitrary element from the set.",
+            "note": "Raises KeyError if the set is empty."
+          },
+          {
+            "title": "Clear Set",
+            "syntax": "s.clear()",
+            "code": "s = {1, 2, 3}\ns.clear()  # set() (empty set)",
+            "description": "Removes all elements from the set, leaving it empty.",
+            "note": "An empty set displays as set() to distinguish it from an empty dict {}."
+          }
+        ]
+      },
+      {
+        "id": "set_operations",
+        "name": "Set Algebra & Comparisons",
+        "icon": "Sparkles",
+        "items": [
+          {
+            "title": "Union (All Elements)",
+            "syntax": "s1 | s2, s1.union(s2)",
+            "code": "{1, 2} | {2, 3}          # {1, 2, 3}\n{1}.union([2, 3], (4,))   # {1, 2, 3, 4}",
+            "description": "Returns a new set containing all unique elements from both sets.",
+            "note": "The union() method can accept any iterable; the | operator requires both operands to be sets."
+          },
+          {
+            "title": "Intersection (Common Elements)",
+            "syntax": "s1 & s2, s1.intersection(s2)",
+            "code": "{1, 2, 3} & {2, 3, 4}  # {2, 3}",
+            "description": "Returns a new set with elements that exist in BOTH sets.",
+            "note": "Useful for finding common elements between two datasets in O(min(len(s1), len(s2)))."
+          },
+          {
+            "title": "Difference (Elements in s1 but not s2)",
+            "syntax": "s1 - s2, s1.difference(s2)",
+            "code": "{1, 2, 3} - {2, 3, 4}  # {1}",
+            "description": "Returns a new set containing elements that are only in s1 and NOT in s2.",
+            "note": "Order matters: s1 - s2 is different from s2 - s1."
+          },
+          {
+            "title": "Symmetric Difference (In Either, Not Both)",
+            "syntax": "s1 ^ s2, s1.symmetric_difference(s2)",
+            "code": "{1, 2, 3} ^ {2, 3, 4}  # {1, 4}",
+            "description": "Returns a new set containing elements that are in either set, but not in both.",
+            "note": "Equivalent to (s1 | s2) - (s1 & s2)."
+          },
+          {
+            "title": "Subset & Superset Checks",
+            "syntax": "s1 <= s2, s1.issubset(s2), s1 >= s2, s1.issuperset(s2)",
+            "code": "{1, 2} <= {1, 2, 3}         # True (subset)\n{1, 2, 3}.issuperset({1, 2}) # True (superset)",
+            "description": "Tests if every element of s1 is in s2 (subset) or if s1 contains all of s2 (superset).",
+            "note": "Use < and > for proper subset/superset (strictly smaller or strictly larger)."
+          }
+        ]
+      }
+    ]
+  },
+  "Topic5": {
+    "lectureId": "Topic5",
+    "title": "Topic 5: Dictionaries",
+    "subtitle": "Dictionary mapping, iteration, sorting by key/value, comprehensions, and collections utilities",
+    "categories": [
+      {
+        "id": "dict_basics",
         "name": "Dictionaries & Key-Value Operations",
         "icon": "FileText",
         "items": [
@@ -1002,11 +1198,53 @@ export const MIDTERM_CHEATSHEETS = {
             "note": "Prevents KeyError crashes when reading dynamic or optional dictionary fields."
           },
           {
+            "title": "Key Existence Check (in / not in)",
+            "syntax": "k in d, k not in d",
+            "code": "d = {\"name\": \"Alice\", \"age\": 25}\n\"name\" in d   # True (O(1) key check)\n\"score\" in d  # False",
+            "description": "Checks whether a key exists in the dictionary in O(1) average time.",
+            "note": "'in d' checks keys, NOT values. To check values, use 'v in d.values()'."
+          },
+          {
+            "title": "Update & Set Default",
+            "syntax": "d.update(other), d.setdefault(k, default)",
+            "code": "d = {\"a\": 1}\nd.update({\"b\": 2})      # {'a': 1, 'b': 2}\nd.setdefault(\"c\", 3)    # {'a': 1, 'b': 2, 'c': 3}",
+            "description": "update() merges another dict; setdefault() adds key with default value only if it is missing.",
+            "note": "setdefault() is useful for initializing nested structures."
+          },
+          {
+            "title": "Remove Elements (pop, popitem, clear)",
+            "syntax": "d.pop(k, default), d.popitem(), d.clear()",
+            "code": "d = {\"x\": 1, \"y\": 2}\nd.pop(\"x\")      # Returns 1, d is {'y': 2}\nd.popitem()     # Returns ('y', 2), d is {}\nd.clear()       # Clears all elements",
+            "description": "pop() removes by key and returns value; popitem() removes last inserted pair; clear() empties dict.",
+            "note": "pop(k, default) won't raise KeyError if key is missing and default is provided."
+          },
+          {
+            "title": "Create Dict & Copy",
+            "syntax": "dict(iterable), d.copy()",
+            "code": "d = dict([(\"a\", 1), (\"b\", 2)])  # {'a': 1, 'b': 2}\nd2 = d.copy()                 # Shallow copy",
+            "description": "dict() creates dictionary from list of pairs; copy() makes a shallow duplicate.",
+            "note": "len(d) returns the number of key-value pairs."
+          }
+        ]
+      },
+      {
+        "id": "dict_iteration",
+        "name": "Dictionary Iteration",
+        "icon": "Layers",
+        "items": [
+          {
             "title": "Iterate Keys, Values & Items",
+            "syntax": "for k in d:, for v in d.values():, for k, v in d.items():",
+            "code": "d = {\"a\": 1, \"b\": 2}\nfor k in d: print(k)          # 'a', 'b' (keys)\nfor v in d.values(): print(v) # 1, 2 (values)\nfor k, v in d.items():        # 'a' 1, 'b' 2 (recommended!)",
+            "description": "Loops through dictionary keys, values, or key-value tuples.",
+            "note": "Using 'for k, v in d.items()' is the recommended standard pattern in Python."
+          },
+          {
+            "title": "Views (keys, values, items)",
             "syntax": "d.keys(), d.values(), d.items()",
-            "code": "d = {\"x\": 10, \"y\": 20}\nfor k, v in d.items():\n    print(k, v)  # x 10, y 20",
-            "description": "Loops over keys, values, or key-value pairs of a dictionary.",
-            "note": "In Python 3.7+, dictionaries preserve insertion order."
+            "code": "d = {\"x\": 10, \"y\": 20}\nlist(d.keys())    # ['x', 'y']\nlist(d.values())  # [10, 20]\nlist(d.items())   # [('x', 10), ('y', 20)]",
+            "description": "Returns dynamic view objects of dictionary keys, values, and key-value pairs.",
+            "note": "In Python 3.7+, dictionary views strictly maintain insertion order."
           },
           {
             "title": "Sort Dictionary by Value or Key",
@@ -1047,9 +1285,9 @@ export const MIDTERM_CHEATSHEETS = {
       }
     ]
   },
-  "Topic4": {
-    "lectureId": "Topic4",
-    "title": "Topic 4: Control Flow, Loops & Functions",
+  "Topic6": {
+    "lectureId": "Topic6",
+    "title": "Topic 6: Control Flow, Loops & Functions",
     "subtitle": "Conditional branches, loops, functions, variable arguments, lambda, and recursion",
     "categories": [
       {
@@ -1138,9 +1376,9 @@ export const MIDTERM_CHEATSHEETS = {
       }
     ]
   },
-  "Topic5": {
-    "lectureId": "Topic5",
-    "title": "Topic 5: Math, Primes & Exam Algorithms",
+  "Topic7": {
+    "lectureId": "Topic7",
+    "title": "Topic 7: Math, Primes & Exam Algorithms",
     "subtitle": "Math utilities, prime checking & sieves, divisors, matrix operations, and interview patterns",
     "categories": [
       {

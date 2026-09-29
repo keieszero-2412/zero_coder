@@ -6,9 +6,11 @@ const LECTURE_COLORS = {
   // Mid-term Topics
   Topic1: '#3b82f6', // Blue
   Topic2: '#10b981', // Emerald
-  Topic3: '#8b5cf6', // Purple
+  Topic3: '#6366f1', // Indigo
   Topic4: '#f59e0b', // Amber
-  Topic5: '#06b6d4', // Cyan
+  Topic5: '#8b5cf6', // Purple
+  Topic6: '#ec4899', // Pink
+  Topic7: '#06b6d4', // Cyan
   // Last-term Lectures
   Lecture5: '#3b82f6', // Blue
   Lecture6: '#10b981', // Emerald
@@ -24,9 +26,11 @@ export const TOPIC_SHORT_NAMES = {
   // Mid-term Topics
   Topic1: 'Topic 1: Types & Strings',
   Topic2: 'Topic 2: Lists',
-  Topic3: 'Topic 3: Dicts & Sets',
-  Topic4: 'Topic 4: Loops & Functions',
-  Topic5: 'Topic 5: Math & Algorithms',
+  Topic3: 'Topic 3: Tuples',
+  Topic4: 'Topic 4: Sets',
+  Topic5: 'Topic 5: Dicts',
+  Topic6: 'Topic 6: Loops & Functions',
+  Topic7: 'Topic 7: Math & Algorithms',
   // Last-term Lectures
   Lecture5: 'Lec 5: Data I/O & SQL',
   Lecture6: 'Lec 6: Data Wrangling',
@@ -252,7 +256,9 @@ export function CheatsheetModal({
           width: '100%',
           maxWidth: isFullscreen ? '100vw' : '1320px',
           maxHeight: isFullscreen ? '100vh' : '92vh',
-          height: isFullscreen ? '100vh' : 'auto',
+          // Keep the dialog at a predictable viewport height so the command
+          // list receives the remaining space and scrolls independently.
+          height: isFullscreen ? '100vh' : '92vh',
           display: 'flex',
           flexDirection: 'column',
           backgroundColor: 'var(--bg-surface)',
@@ -267,157 +273,108 @@ export function CheatsheetModal({
       >
         {/* Header */}
         <div style={{
-          padding: '1.1rem 1.5rem',
+          padding: '0.42rem 1.25rem',
           borderBottom: '1px solid var(--border-color)',
           backgroundColor: 'var(--bg-surface-elevated)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          gap: '1rem',
+          gap: '0.75rem',
           flexWrap: 'wrap',
         }}>
-          <div>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
-                <h2 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)' }}>
-                  {isMaster 
-                    ? (isMidterm ? 'Mid-term Python Cheatsheet' : 'Data Science Cheatsheet') 
-                    : `Cheatsheet: ${currentSingleLecture?.title || ''}`}
-                </h2>
-                <div style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  backgroundColor: 'var(--bg-surface)',
-                  padding: '2px',
-                  borderRadius: '8px',
-                  border: '1px solid var(--border-color)',
-                  gap: '2px',
-                }}>
-                  <button
-                    type="button"
-                    onClick={() => handleTermChange('mid')}
-                    style={{
-                      padding: '0.22rem 0.65rem',
-                      fontSize: '0.72rem',
-                      fontWeight: 700,
-                      borderRadius: '6px',
-                      border: 'none',
-                      cursor: 'pointer',
-                      backgroundColor: isMidterm ? 'var(--accent-primary)' : 'transparent',
-                      color: isMidterm ? '#ffffff' : 'var(--text-secondary)',
-                      transition: 'all 0.18s ease',
-                      letterSpacing: '0.03em',
-                      textTransform: 'uppercase'
-                    }}
-                    title="Switch to Mid-term Cheatsheet (Python Basics)"
-                  >
-                    Mid-term
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleTermChange('last')}
-                    style={{
-                      padding: '0.22rem 0.65rem',
-                      fontSize: '0.72rem',
-                      fontWeight: 700,
-                      borderRadius: '6px',
-                      border: 'none',
-                      cursor: 'pointer',
-                      backgroundColor: !isMidterm ? 'var(--accent-primary)' : 'transparent',
-                      color: !isMidterm ? '#ffffff' : 'var(--text-secondary)',
-                      transition: 'all 0.18s ease',
-                      letterSpacing: '0.03em',
-                      textTransform: 'uppercase'
-                    }}
-                    title="Switch to Last-term Cheatsheet (Data Science & ML)"
-                  >
-                    Last-term
-                  </button>
-                </div>
-              </div>
-              <p style={{ margin: '0.25rem 0 0', fontSize: '0.84rem', color: 'var(--text-secondary)' }}>
+          <div style={{ minWidth: 0, flex: '1 1 0' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
+              <h2 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)' }}>
                 {isMaster 
-                  ? (selectedLectureFilter !== 'all' && currentSource[selectedLectureFilter]
-                      ? `${currentSource[selectedLectureFilter].title}: ${currentSource[selectedLectureFilter].subtitle}`
-                      : (isMidterm 
-                          ? 'Python Mid-term Reference: 1. Types & Strings, 2. Lists, 3. Dicts & Sets, 4. Functions & Loops, 5. Math & Algorithms' 
-                          : 'Data Science Reference: Data I/O, SQL, Wrangling, EDA, Visualization, Machine Learning')) 
-                  : currentSingleLecture?.subtitle}
-              </p>
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-            {/* Lecture switcher tab only when in Master mode */}
-            {isMaster && (
+                  ? (isMidterm ? 'Mid-term Python Cheatsheet' : 'Data Science Cheatsheet') 
+                  : `Cheatsheet: ${currentSingleLecture?.title || ''}`}
+              </h2>
               <div style={{
-                display: 'flex',
-                gap: '0.25rem',
+                display: 'inline-flex',
+                alignItems: 'center',
                 backgroundColor: 'var(--bg-surface)',
-                padding: '0.25rem',
-                borderRadius: '8px',
+                padding: '2px',
+                borderRadius: '6px',
                 border: '1px solid var(--border-color)',
-                flexWrap: 'wrap'
+                gap: '2px',
               }}>
                 <button
-                  onClick={() => {
-                    setSelectedLectureFilter('all');
-                    setSelectedCategory('all');
-                  }}
+                  type="button"
+                  onClick={() => handleTermChange('mid')}
                   style={{
-                    padding: '0.35rem 0.65rem',
-                    fontSize: '0.78rem',
-                    fontWeight: 600,
-                    borderRadius: '6px',
+                    padding: '0.18rem 0.55rem',
+                    fontSize: '0.7rem',
+                    fontWeight: 700,
+                    borderRadius: '4px',
                     border: 'none',
                     cursor: 'pointer',
-                    backgroundColor: selectedLectureFilter === 'all' ? 'var(--accent-secondary, #6366f1)' : 'transparent',
-                    color: selectedLectureFilter === 'all' ? '#ffffff' : 'var(--text-secondary)',
-                    transition: 'all 0.15s ease',
+                    backgroundColor: isMidterm ? 'var(--accent-primary)' : 'transparent',
+                    color: isMidterm ? '#ffffff' : 'var(--text-secondary)',
+                    transition: 'all 0.18s ease',
+                    letterSpacing: '0.03em',
+                    textTransform: 'uppercase'
                   }}
+                  title="Switch to Mid-term Cheatsheet (Python Basics)"
                 >
-                  All
+                  Mid-term
                 </button>
-                {Object.keys(currentSource).map(id => (
-                  <button
-                    key={id}
-                    onClick={() => {
-                      setSelectedLectureFilter(id);
-                      setSelectedCategory('all');
-                    }}
-                    style={{
-                      padding: '0.35rem 0.65rem',
-                      fontSize: '0.78rem',
-                      fontWeight: 600,
-                      borderRadius: '6px',
-                      border: 'none',
-                      cursor: 'pointer',
-                      backgroundColor: selectedLectureFilter === id ? 'var(--accent-secondary, #6366f1)' : 'transparent',
-                      color: selectedLectureFilter === id ? '#ffffff' : 'var(--text-secondary)',
-                      transition: 'all 0.15s ease',
-                    }}
-                  >
-                    {TOPIC_SHORT_NAMES[id] || (isMidterm ? id.replace('Topic', 'Topic ') : id.replace('Lecture', 'Lec '))}
-                  </button>
-                ))}
+                <button
+                  type="button"
+                  onClick={() => handleTermChange('last')}
+                  style={{
+                    padding: '0.18rem 0.55rem',
+                    fontSize: '0.7rem',
+                    fontWeight: 700,
+                    borderRadius: '4px',
+                    border: 'none',
+                    cursor: 'pointer',
+                    backgroundColor: !isMidterm ? 'var(--accent-primary)' : 'transparent',
+                    color: !isMidterm ? '#ffffff' : 'var(--text-secondary)',
+                    transition: 'all 0.18s ease',
+                    letterSpacing: '0.03em',
+                    textTransform: 'uppercase'
+                  }}
+                  title="Switch to Last-term Cheatsheet (Data Science & ML)"
+                >
+                  Last-term
+                </button>
               </div>
-            )}
+            </div>
+            <p style={{
+              margin: '0.08rem 0 0',
+              fontSize: '0.72rem',
+              color: 'var(--text-secondary)',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              maxWidth: '850px'
+            }}>
+              {isMaster 
+                ? (selectedLectureFilter !== 'all' && currentSource[selectedLectureFilter]
+                    ? `${currentSource[selectedLectureFilter].title}: ${currentSource[selectedLectureFilter].subtitle}`
+                    : (isMidterm 
+                        ? 'Python Mid-term Reference: 1. Types & Strings | 2. Lists | 3. Tuples | 4. Sets | 5. Dicts | 6. Loops & Functions | 7. Math & Algorithms' 
+                        : 'Data Science Reference: Data I/O, SQL, Wrangling, EDA, Visualization, Machine Learning')) 
+                : currentSingleLecture?.subtitle}
+            </p>
+          </div>
 
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', flexShrink: 0 }}>
             <button
               onClick={exportToCSV}
               style={{
                 width: 'auto',
-                padding: '0 0.8rem',
-                height: '34px',
-                fontSize: '0.82rem',
+                padding: '0 0.65rem',
+                height: '30px',
+                fontSize: '0.76rem',
                 fontWeight: 500,
-                borderRadius: '8px',
+                borderRadius: '6px',
                 border: '1px solid var(--border-color)',
                 backgroundColor: 'var(--bg-surface)',
                 color: 'var(--text-secondary)',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.4rem',
+                gap: '0.35rem',
                 cursor: 'pointer',
                 transition: 'all 0.15s ease',
               }}
@@ -425,7 +382,7 @@ export function CheatsheetModal({
               onMouseOut={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; }}
               title="Export to CSV"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                 <polyline points="7 10 12 15 17 10"></polyline>
                 <line x1="12" y1="15" x2="12" y2="3"></line>
@@ -436,9 +393,9 @@ export function CheatsheetModal({
             <button
               onClick={() => setIsFullscreen(!isFullscreen)}
               style={{
-                width: '34px',
-                height: '34px',
-                borderRadius: '8px',
+                width: '30px',
+                height: '30px',
+                borderRadius: '6px',
                 border: '1px solid var(--border-color)',
                 backgroundColor: 'var(--bg-surface)',
                 color: 'var(--text-secondary)',
@@ -453,11 +410,11 @@ export function CheatsheetModal({
               title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
             >
               {isFullscreen ? (
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
                 </svg>
               ) : (
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
                 </svg>
               )}
@@ -467,11 +424,11 @@ export function CheatsheetModal({
               onClick={onClose}
               style={{
                 width: 'auto',
-                padding: '0 0.8rem',
-                height: '34px',
-                fontSize: '0.82rem',
+                padding: '0 0.65rem',
+                height: '30px',
+                fontSize: '0.76rem',
                 fontWeight: 500,
-                borderRadius: '8px',
+                borderRadius: '6px',
                 border: '1px solid var(--border-color)',
                 backgroundColor: 'var(--bg-surface)',
                 color: 'var(--text-secondary)',
@@ -490,15 +447,78 @@ export function CheatsheetModal({
           </div>
         </div>
 
+        {/* Dedicated Topic switcher bar in Master mode */}
+        {isMaster && (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.3rem',
+            backgroundColor: 'var(--bg-surface)',
+            padding: '0.22rem 1.25rem',
+            borderBottom: '1px solid var(--border-color)',
+            overflowX: 'auto',
+            scrollbarWidth: 'none',
+          }}>
+            <button
+              onClick={() => {
+                setSelectedLectureFilter('all');
+                setSelectedCategory('all');
+              }}
+              style={{
+                padding: '0.22rem 0.55rem',
+                fontSize: '0.74rem',
+                fontWeight: 600,
+                borderRadius: '6px',
+                border: 'none',
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+                flexShrink: 0,
+                backgroundColor: selectedLectureFilter === 'all' ? 'var(--accent-secondary, #6366f1)' : 'transparent',
+                color: selectedLectureFilter === 'all' ? '#ffffff' : 'var(--text-secondary)',
+                transition: 'all 0.15s ease',
+              }}
+            >
+              All
+            </button>
+            {Object.keys(currentSource).map(id => {
+              const isSel = selectedLectureFilter === id;
+              const topicColor = LECTURE_COLORS[id] || 'var(--accent-secondary, #6366f1)';
+              return (
+                <button
+                  key={id}
+                  onClick={() => {
+                    setSelectedLectureFilter(id);
+                    setSelectedCategory('all');
+                  }}
+                  style={{
+                    padding: '0.22rem 0.55rem',
+                    fontSize: '0.74rem',
+                    fontWeight: 600,
+                    borderRadius: '6px',
+                    border: 'none',
+                    cursor: 'pointer',
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0,
+                    backgroundColor: isSel ? topicColor : 'transparent',
+                    color: isSel ? '#ffffff' : 'var(--text-secondary)',
+                    transition: 'all 0.15s ease',
+                  }}
+                >
+                  {TOPIC_SHORT_NAMES[id] || (isMidterm ? id.replace('Topic', 'Topic ') : id.replace('Lecture', 'Lec '))}
+                </button>
+              );
+            })}
+          </div>
+        )}
 
         {/* Search & Category Filter Bar */}
         <div style={{
-          padding: '0.85rem 1.5rem',
+          padding: '0.3rem 1.25rem',
           borderBottom: '1px solid var(--border-color)',
           display: 'flex',
           flexDirection: 'column',
-          gap: '0.75rem',
-          backgroundColor: 'var(--bg-surface)',
+          gap: '0.25rem',
+          backgroundColor: 'var(--bg-surface-elevated)',
         }}>
           {/* Search Box */}
           <div style={{
@@ -512,16 +532,17 @@ export function CheatsheetModal({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={isMaster 
-                ? (isMidterm ? "Search commands (e.g. split, dict, math.gcd, prime)..." : "Search commands across all lectures (e.g. read_excel, dropna)...") 
+                ? (isMidterm ? "Search commands (e.g. append, get, add, slice, prime)..." : "Search commands across all lectures (e.g. read_excel, dropna)...") 
                 : `Search commands in ${currentSingleLecture?.title || ''}...`}
               style={{
                 width: '100%',
-                padding: '0.55rem 0.85rem',
-                backgroundColor: 'var(--bg-surface-elevated)',
+                height: '30px',
+                padding: '0.25rem 0.75rem',
+                backgroundColor: 'var(--bg-surface)',
                 border: '1px solid var(--border-color)',
-                borderRadius: '8px',
+                borderRadius: '6px',
                 color: 'var(--text-primary)',
-                fontSize: '0.86rem',
+                fontSize: '0.8rem',
                 outline: 'none',
                 transition: 'border-color 0.2s ease',
               }}
@@ -533,12 +554,13 @@ export function CheatsheetModal({
                 onClick={() => setSearchQuery('')}
                 style={{
                   position: 'absolute',
-                  right: '0.75rem',
+                  right: '0.6rem',
                   background: 'none',
                   border: 'none',
                   cursor: 'pointer',
                   color: 'var(--text-tertiary)',
-                  padding: '0.2rem',
+                  padding: '0.15rem 0.3rem',
+                  fontSize: '0.75rem',
                 }}
               >
                 Clear
@@ -550,26 +572,28 @@ export function CheatsheetModal({
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '0.45rem',
+            gap: '0.35rem',
             overflowX: 'auto',
-            paddingBottom: '0.25rem',
+            padding: '0.1rem 0',
+            scrollbarWidth: 'none',
           }}>
-            <span style={{ fontSize: '0.78rem', color: 'var(--text-tertiary)', fontWeight: 600, flexShrink: 0 }}>
+            <span style={{ fontSize: '0.74rem', color: 'var(--text-tertiary)', fontWeight: 600, flexShrink: 0 }}>
               Categories:
             </span>
             <button
               onClick={() => setSelectedCategory('all')}
               style={{
-                padding: '0.25rem 0.75rem',
-                fontSize: '0.78rem',
-                borderRadius: '20px',
+                padding: '0.18rem 0.55rem',
+                fontSize: '0.73rem',
+                borderRadius: '14px',
                 border: '1px solid',
                 borderColor: selectedCategory === 'all' ? 'var(--accent-primary)' : 'var(--border-color)',
-                backgroundColor: selectedCategory === 'all' ? 'color-mix(in srgb, var(--accent-primary) 12%, transparent)' : 'var(--bg-surface-elevated)',
+                backgroundColor: selectedCategory === 'all' ? 'color-mix(in srgb, var(--accent-primary) 12%, transparent)' : 'var(--bg-surface)',
                 color: selectedCategory === 'all' ? 'var(--accent-primary)' : 'var(--text-secondary)',
                 cursor: 'pointer',
                 fontWeight: selectedCategory === 'all' ? 600 : 500,
                 whiteSpace: 'nowrap',
+                flexShrink: 0,
                 transition: 'all 0.15s ease',
               }}
             >
@@ -582,16 +606,17 @@ export function CheatsheetModal({
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
                   style={{
-                    padding: '0.25rem 0.75rem',
-                    fontSize: '0.78rem',
-                    borderRadius: '20px',
+                    padding: '0.18rem 0.55rem',
+                    fontSize: '0.73rem',
+                    borderRadius: '14px',
                     border: '1px solid',
                     borderColor: isSelected ? 'var(--accent-primary)' : 'var(--border-color)',
-                    backgroundColor: isSelected ? 'color-mix(in srgb, var(--accent-primary) 12%, transparent)' : 'var(--bg-surface-elevated)',
+                    backgroundColor: isSelected ? 'color-mix(in srgb, var(--accent-primary) 12%, transparent)' : 'var(--bg-surface)',
                     color: isSelected ? 'var(--accent-primary)' : 'var(--text-secondary)',
                     cursor: 'pointer',
                     fontWeight: isSelected ? 600 : 500,
                     whiteSpace: 'nowrap',
+                    flexShrink: 0,
                     transition: 'all 0.15s ease',
                   }}
                 >
@@ -604,12 +629,12 @@ export function CheatsheetModal({
 
         {/* Categorized Content in Table Format (1 row = 1 command) */}
         <div className="smooth-scroll" style={{
-          padding: '1.25rem 1.5rem',
+          padding: '0.6rem 1.25rem',
           overflowY: 'auto',
           flex: 1,
           display: 'flex',
           flexDirection: 'column',
-          gap: '2.5rem',
+          gap: '1rem',
         }}>
           {groupedByCategory.length === 0 ? (
             <div style={{
@@ -703,11 +728,11 @@ export function CheatsheetModal({
                             letterSpacing: '0.04em',
                             fontWeight: 700
                           }}>
-                            <th style={{ padding: '0.75rem 1rem', width: '17%' }}>Command</th>
-                            <th style={{ padding: '0.75rem 1rem', width: '23%' }}>Syntax</th>
-                            <th style={{ padding: '0.75rem 1rem', width: '26%' }}>What it does</th>
-                            <th style={{ padding: '0.75rem 1rem', width: '29%' }}>Example</th>
-                            <th style={{ padding: '0.75rem 0.75rem', width: '5%', textAlign: 'center' }}>Copy</th>
+                            <th style={{ padding: '0.55rem 0.85rem', width: '17%' }}>Command</th>
+                            <th style={{ padding: '0.55rem 0.85rem', width: '23%' }}>Syntax</th>
+                            <th style={{ padding: '0.55rem 0.85rem', width: '26%' }}>What it does</th>
+                            <th style={{ padding: '0.55rem 0.85rem', width: '29%' }}>Example</th>
+                            <th style={{ padding: '0.55rem 0.5rem', width: '5%', textAlign: 'center' }}>Copy</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -726,14 +751,14 @@ export function CheatsheetModal({
                                 onMouseOut={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
                               >
                                 {/* Col 1: Command */}
-                                <td style={{ padding: '0.85rem 1rem', verticalAlign: 'top' }}>
-                                  <div style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.86rem', lineHeight: 1.35 }}>
+                                <td style={{ padding: '0.55rem 0.85rem', verticalAlign: 'top' }}>
+                                  <div style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.84rem', lineHeight: 1.35 }}>
                                     {item.title}
                                   </div>
                                 </td>
 
                                 {/* Col 2: Syntax */}
-                                <td style={{ padding: '0.85rem 1rem', verticalAlign: 'top' }}>
+                                <td style={{ padding: '0.55rem 0.85rem', verticalAlign: 'top' }}>
                                   <div style={{ display: 'inline-flex', flexDirection: 'column', gap: '0.25rem', maxWidth: '100%' }}>
                                     <code 
                                       onClick={() => handleCopy(item.syntax, `${copyId}_syn`)}
@@ -743,13 +768,13 @@ export function CheatsheetModal({
                                         fontSize: '0.78rem',
                                         color: 'var(--accent-primary)',
                                         backgroundColor: 'var(--bg-base)',
-                                        padding: '0.3rem 0.55rem',
+                                        padding: '0.25rem 0.5rem',
                                         borderRadius: '5px',
                                         border: '1px solid var(--border-color)',
                                         wordBreak: 'break-word',
                                         display: 'inline-block',
                                         fontWeight: 600,
-                                        lineHeight: 1.4,
+                                        lineHeight: 1.35,
                                         cursor: 'pointer',
                                       }}
                                     >
@@ -762,28 +787,28 @@ export function CheatsheetModal({
                                 </td>
 
                                 {/* Col 3: What it does */}
-                                <td style={{ padding: '0.85rem 1rem', verticalAlign: 'top' }}>
-                                  <div style={{ color: 'var(--text-primary)', fontSize: '0.83rem', lineHeight: 1.45 }}>
+                                <td style={{ padding: '0.55rem 0.85rem', verticalAlign: 'top' }}>
+                                  <div style={{ color: 'var(--text-primary)', fontSize: '0.82rem', lineHeight: 1.4 }}>
                                     {item.description}
                                   </div>
                                   {item.note && (
-                                    <div style={{ marginTop: '0.35rem', fontSize: '0.75rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
+                                    <div style={{ marginTop: '0.25rem', fontSize: '0.74rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
                                       💡 {item.note}
                                     </div>
                                   )}
                                 </td>
 
                                 {/* Col 4: Example */}
-                                <td style={{ padding: '0.85rem 1rem', verticalAlign: 'top' }}>
+                                <td style={{ padding: '0.55rem 0.85rem', verticalAlign: 'top' }}>
                                   <pre style={{
                                     margin: 0,
                                     backgroundColor: 'var(--bg-base)',
                                     border: '1px solid var(--border-color)',
                                     borderRadius: '6px',
-                                    padding: '0.45rem 0.65rem',
+                                    padding: '0.35rem 0.55rem',
                                     fontFamily: 'var(--font-mono, monospace)',
-                                    fontSize: '0.76rem',
-                                    lineHeight: 1.45,
+                                    fontSize: '0.75rem',
+                                    lineHeight: 1.4,
                                     color: 'var(--text-primary)',
                                     whiteSpace: 'pre',
                                     overflowX: 'auto'
@@ -793,7 +818,7 @@ export function CheatsheetModal({
                                 </td>
 
                                 {/* Col 5: Copy button */}
-                                <td style={{ padding: '0.85rem 0.75rem', verticalAlign: 'middle', textAlign: 'center' }}>
+                                <td style={{ padding: '0.55rem 0.5rem', verticalAlign: 'middle', textAlign: 'center' }}>
                                   <button
                                     onClick={() => handleCopy(item.code, copyId)}
                                     style={{
@@ -828,7 +853,7 @@ export function CheatsheetModal({
 
         {/* Footer */}
         <div style={{
-          padding: '0.85rem 1.5rem',
+          padding: '0.45rem 1.25rem',
           borderTop: '1px solid var(--border-color)',
           backgroundColor: 'var(--bg-surface-elevated)',
           display: 'flex',
