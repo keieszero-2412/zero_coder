@@ -56,6 +56,16 @@ export default function FeedbackWidget({ iconOnly = false }) {
     return () => unsub();
   }, [currentUser, isOpen]);
 
+  // Keyboard Escape listener
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
+
   const handleSendUserReply = async (feedbackId) => {
     const text = userReplyDrafts[feedbackId]?.trim();
     if (!text) return;
@@ -246,36 +256,17 @@ export default function FeedbackWidget({ iconOnly = false }) {
     <>
       <button
         onClick={handleOpen}
-        className={`button-secondary ${iconOnly ? '' : 'header-btn'}`}
-        style={iconOnly ? { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', padding: 0, position: 'relative', borderRadius: '6px', overflow: 'visible' } : { position: 'relative', overflow: 'visible' }}
+        className={`button-secondary header-btn zc-utility-btn ${iconOnly ? 'zc-utility-icon-only' : ''}`}
+        style={{ position: 'relative', overflow: 'visible' }}
         title="Send Feedback / Report Bug"
+        aria-label="Send Feedback or Report Bug"
       >
-        <MessageSquare size={16} />
+        <MessageSquare size={15} />
         {!iconOnly && <span className="header-btn-label">Feedback</span>}
         
         {/* Unread Notification Badge */}
         {unreadCount > 0 && (
-          <span style={{
-            position: 'absolute',
-            top: '-5px',
-            right: '-5px',
-            backgroundColor: 'var(--error)',
-            color: 'white',
-            fontSize: '0.65rem',
-            fontWeight: 'bold',
-            minWidth: '18px',
-            height: '18px',
-            borderRadius: '9999px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '0 4px',
-            border: '2px solid var(--bg-surface)',
-            zIndex: 10,
-            pointerEvents: 'none',
-            boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
-            lineHeight: 1
-          }}>
+          <span className="zc-utility-badge">
             {unreadCount}
           </span>
         )}
@@ -295,6 +286,9 @@ export default function FeedbackWidget({ iconOnly = false }) {
             overflowY: 'auto'
           }}
           className="smooth-scroll"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsOpen(false);
+          }}
           onPaste={(e) => {
             if (viewMode === 'form' && e.clipboardData.files && e.clipboardData.files.length > 0) {
               const files = Array.from(e.clipboardData.files).filter(f => f.type.startsWith('image/'));
@@ -312,18 +306,25 @@ export default function FeedbackWidget({ iconOnly = false }) {
             }
           }}
         >
-          <div className="glass-panel" style={{
-            width: '100%',
-            maxWidth: '550px',
-            margin: 'auto',
-            backgroundColor: 'var(--bg-surface)',
-            border: '1px solid var(--border-color)',
-            borderRadius: 'var(--radius-lg)',
-            display: 'flex',
-            flexDirection: 'column',
-            maxHeight: '85vh',
-            overflow: 'hidden'
-          }}>
+          <div 
+            className="glass-panel" 
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="feedback-widget-title"
+            style={{
+              width: '100%',
+              maxWidth: '550px',
+              margin: 'auto',
+              backgroundColor: 'var(--bg-surface)',
+              border: '1px solid var(--border-color)',
+              borderRadius: 'var(--radius-lg)',
+              display: 'flex',
+              flexDirection: 'column',
+              maxHeight: '85vh',
+              overflow: 'hidden'
+            }}
+            onClick={e => e.stopPropagation()}
+          >
             {/* Header */}
             <div style={{
               padding: '1.25rem 1.5rem',
@@ -337,17 +338,19 @@ export default function FeedbackWidget({ iconOnly = false }) {
                 {viewMode === 'form' && myFeedbacks.length > 0 && (
                   <button
                     onClick={() => { setViewMode('list'); setDescription(''); setEditingFeedbackId(null); }}
+                    aria-label="Back to feedbacks list"
                     style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)' }}
                   >
                     <ArrowLeft size={20} />
                   </button>
                 )}
-                <h2 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 600 }}>
+                <h2 id="feedback-widget-title" style={{ margin: 0, fontSize: '1.25rem', fontWeight: 600 }}>
                   {viewMode === 'list' ? 'My Feedbacks' : 'Send Feedback'}
                 </h2>
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
+                aria-label="Close feedback dialog"
                 style={{
                   background: 'none', border: 'none',
                   color: 'var(--text-secondary)',

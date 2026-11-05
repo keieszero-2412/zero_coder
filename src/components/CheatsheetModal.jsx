@@ -11,7 +11,7 @@ const LECTURE_COLORS = {
   Topic5: '#8b5cf6', // Purple
   Topic6: '#ec4899', // Pink
   Topic7: '#06b6d4', // Cyan
-  // Last-term Lectures
+  // Final-term Lectures
   Lecture5: '#3b82f6', // Blue
   Lecture6: '#10b981', // Emerald
   Lecture7: '#f59e0b', // Amber
@@ -31,7 +31,7 @@ export const TOPIC_SHORT_NAMES = {
   Topic5: 'Topic 5: Dicts',
   Topic6: 'Topic 6: Loops & Functions',
   Topic7: 'Topic 7: Math & Algorithms',
-  // Last-term Lectures
+  // Final-term Lectures
   Lecture5: 'Lec 5: Data I/O & SQL',
   Lecture6: 'Lec 6: Data Wrangling',
   Lecture7: 'Lec 7: EDA & Stats',
@@ -47,9 +47,9 @@ export function CheatsheetModal({
   onClose, 
   initialLectureId = null, 
   mode = 'single', // 'master' | 'single'
-  term = 'last' // 'mid' | 'last'
+  term = 'final' // 'mid' | 'final'
 }) {
-  const [activeTerm, setActiveTerm] = useState(term || 'last');
+  const [activeTerm, setActiveTerm] = useState((term === 'last' || term === 'final') ? 'final' : (term || 'final'));
   const isMidterm = activeTerm === 'mid';
   const currentSource = isMidterm ? MIDTERM_CHEATSHEETS : CHEATSHEETS;
   const defaultInitialId = isMidterm ? 'Topic1' : 'Lecture5';
@@ -65,7 +65,7 @@ export function CheatsheetModal({
   // Sync activeTerm when modal opens or term prop changes
   useEffect(() => {
     if (isOpen) {
-      setActiveTerm(term || 'last');
+      setActiveTerm((term === 'last' || term === 'final') ? 'final' : (term || 'final'));
     }
   }, [term, isOpen]);
 
@@ -226,7 +226,7 @@ export function CheatsheetModal({
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `cheatsheet_${isMaster ? (isMidterm ? 'midterm' : 'lastterm') : currentSingleLecture.lectureId}.csv`;
+    link.download = `cheatsheet_${isMaster ? (isMidterm ? 'midterm' : 'finalterm') : currentSingleLecture.lectureId}.csv`;
     link.click();
     URL.revokeObjectURL(url);
   };
@@ -252,6 +252,9 @@ export function CheatsheetModal({
     >
       <div 
         className="glass-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-label={isMaster ? (isMidterm ? 'Mid-term Python Cheatsheet' : 'Data Science Cheatsheet') : `Cheatsheet: ${currentSingleLecture?.title || ''}`}
         style={{
           width: '100%',
           maxWidth: isFullscreen ? '100vw' : '1320px',
@@ -320,7 +323,7 @@ export function CheatsheetModal({
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleTermChange('last')}
+                  onClick={() => handleTermChange('final')}
                   style={{
                     padding: '0.18rem 0.55rem',
                     fontSize: '0.7rem',
@@ -334,9 +337,10 @@ export function CheatsheetModal({
                     letterSpacing: '0.03em',
                     textTransform: 'uppercase'
                   }}
-                  title="Switch to Last-term Cheatsheet (Data Science & ML)"
+                  title="Switch to Final-term Cheatsheet (Data Science & ML)"
+                  aria-label="Final-term Cheatsheet"
                 >
-                  Last-term
+                  Final-term
                 </button>
               </div>
             </div>
@@ -441,6 +445,7 @@ export function CheatsheetModal({
               onMouseOver={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; }}
               onMouseOut={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; }}
               title="Close (Esc)"
+              aria-label="Close cheatsheet"
             >
               Close
             </button>

@@ -9,8 +9,15 @@ export function SettingsModal({ onClose }) {
 
   useEffect(() => {
     setMounted(true);
-    return () => setMounted(false);
-  }, []);
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      setMounted(false);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [onClose]);
 
   if (!mounted) return null;
 
@@ -30,6 +37,9 @@ export function SettingsModal({ onClose }) {
     >
       <div 
         className="glass-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="settings-modal-title"
         style={{
           width: '100%',
           maxWidth: '500px',
@@ -42,6 +52,7 @@ export function SettingsModal({ onClose }) {
       >
         <button 
           onClick={onClose}
+          aria-label="Close settings"
           style={{
             position: 'absolute',
             top: '1.25rem', right: '1.25rem',
@@ -53,7 +64,7 @@ export function SettingsModal({ onClose }) {
           <X size={20} />
         </button>
 
-        <h2 style={{ marginTop: 0, marginBottom: '1.5rem', fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <h2 id="settings-modal-title" style={{ marginTop: 0, marginBottom: '1.5rem', fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           Settings
         </h2>
 

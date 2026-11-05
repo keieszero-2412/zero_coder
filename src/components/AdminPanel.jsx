@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { db } from '../config/firebase';
-import { collection, query, where, getDocs, doc, setDoc, deleteDoc, updateDoc, onSnapshot, orderBy } from 'firebase/firestore';
-import { X, Check, Trash2, Mail, Plus, MessageSquare, ImageIcon, Settings, Key, Shield, Database, Send, User } from 'lucide-react';
+import { collection, query, where, getDocs, doc, setDoc, deleteDoc, updateDoc, onSnapshot } from 'firebase/firestore';
+import { X, Check, Trash2, Mail, MessageSquare, ImageIcon, Settings, Shield, Database, Send, User } from 'lucide-react';
 import { useNotification } from '../context/NotificationContext';
 import '../index.css';
 
@@ -245,6 +245,14 @@ export function AdminPanel({ onClose }) {
     };
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
   const handleApprove = async (email, requestId, requestedCode = 'Gray') => {
     try {
       // Authorize email globally with the requested code
@@ -366,27 +374,39 @@ export function AdminPanel({ onClose }) {
   };
 
   return createPortal(
-    <div style={{
-      position: 'fixed',
-      top: 0, left: 0, right: 0, bottom: 0,
-      backgroundColor: 'rgba(0,0,0,0.5)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 1000,
-      padding: '1rem'
-    }}>
-      <div className="glass-panel" style={{
-        width: '100%',
-        maxWidth: '900px',
-        height: '85vh',
+    <div 
+      style={{
+        position: 'fixed',
+        top: 0, left: 0, right: 0, bottom: 0,
+        backgroundColor: 'rgba(0,0,0,0.5)',
         display: 'flex',
-        borderRadius: 'var(--radius-lg)',
-        overflow: 'hidden',
-        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
-        backdropFilter: 'none',
-        WebkitBackdropFilter: 'none'
-      }}>
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 1000,
+        padding: '1rem'
+      }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div 
+        className="glass-panel" 
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="admin-panel-title"
+        style={{
+          width: '100%',
+          maxWidth: '900px',
+          height: '85vh',
+          display: 'flex',
+          borderRadius: 'var(--radius-lg)',
+          overflow: 'hidden',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+          backdropFilter: 'none',
+          WebkitBackdropFilter: 'none'
+        }}
+        onClick={e => e.stopPropagation()}
+      >
         {/* Sidebar */}
         <div style={{
           width: '240px',
@@ -395,16 +415,19 @@ export function AdminPanel({ onClose }) {
           display: 'flex',
           flexDirection: 'column'
         }}>
-          <div style={{
-            padding: '1.5rem',
-            borderBottom: '1px solid var(--border-color)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.75rem',
-            fontWeight: 700,
-            fontSize: '1.1rem',
-            color: 'var(--text-primary)'
-          }}>
+          <div 
+            id="admin-panel-title"
+            style={{
+              padding: '1.5rem',
+              borderBottom: '1px solid var(--border-color)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              fontWeight: 700,
+              fontSize: '1.1rem',
+              color: 'var(--text-primary)'
+            }}
+          >
             <Shield size={22} color="var(--accent-primary)" />
             Admin Panel
           </div>
@@ -452,6 +475,7 @@ export function AdminPanel({ onClose }) {
             </h2>
             <button 
               onClick={onClose}
+              aria-label="Close Admin Panel"
               style={{ background: 'var(--bg-surface-elevated)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)', cursor: 'pointer', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}
               onMouseOver={(e) => { e.currentTarget.style.backgroundColor = 'var(--bg-surface-highlight)'; e.currentTarget.style.color = 'var(--text-primary)'; }}
               onMouseOut={(e) => { e.currentTarget.style.backgroundColor = 'var(--bg-surface-elevated)'; e.currentTarget.style.color = 'var(--text-secondary)'; }}

@@ -9,7 +9,7 @@ export function TerminalOutput({ output, isLoaded, error }) {
         <span>Terminal Output</span>
         {!isLoaded && !error && <span style={{ marginLeft: 'auto', color: 'var(--text-tertiary)' }}>Loading Python Env...</span>}
       </div>
-      <div className="terminal-output">
+      <div className="terminal-output" role="region" aria-label="Terminal Output" aria-live="polite">
         {error ? (
           <div className="terminal-error">{error}</div>
         ) : output.length === 0 ? (

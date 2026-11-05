@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Loader2, X, Send, Check, Copy, BookOpen, Wand2, Lock, Sparkles, Trash2 } from 'lucide-react';
+import { Loader2, X, Send, Check, Copy, BookOpen, Lock, Trash2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
@@ -114,7 +114,6 @@ export function LearningAIChat({ isOpen, onClose, notebookTitle, activeCellCode,
   };
 
   const uid = currentUser?.uid || 'anonymous';
-  const storageKey = `zerocoder_learning_chat_${uid}_${notebookTitle || 'default'}`;
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState(() => {
     try {

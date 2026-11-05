@@ -5,16 +5,15 @@ import { MultipleChoiceViewer, isOrderingQuestion, getOrderingCorrectOrder } fro
 import { TerminalOutput } from '../components/TerminalOutput';
 import { ProblemDescription } from '../components/ProblemDescription';
 import { TestResults } from '../components/TestResults';
-import FeedbackWidget from '../components/FeedbackWidget';
 import { AIAssistant } from '../components/AIAssistant';
-import { askAIForHelp } from '../config/aiService';
 import { usePython } from '../hooks/usePython';
 import { useProblems } from '../context/ProblemsContext';
-import { Play, CheckCircle, ArrowLeft, Trophy, Loader2, RotateCcw, LogOut, Zap, ChevronLeft, ChevronRight, Flag, Settings, Info, FileCode } from 'lucide-react';
+import { Play, CheckCircle, ArrowLeft, Trophy, Loader2, RotateCcw, ChevronLeft, ChevronRight, Flag, FileCode } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { SettingsModal } from '../components/SettingsModal';
 import { AboutModal } from '../components/AboutModal';
 import { CheatsheetModal } from '../components/CheatsheetModal';
+import { recordRecentActivity } from '../context/TermContext';
 import { useNotification } from '../context/NotificationContext';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
@@ -24,14 +23,14 @@ export function Workspace() {
   const { id } = useParams();
   const { problems, isLoading, isFetching } = useProblems();
   const navigate = useNavigate();
-  const { currentUser, logout, loading: authLoading } = useAuth();
+  const { currentUser, loading: authLoading } = useAuth();
   const { showConfirm, showToast } = useNotification();
   
   // Find problem based on URL param
   const currentProblem = useMemo(() => {
     const found = problems.find(p => p.id === id || p.id === Number(id));
     if (!found) return null;
-    if (found.category === 'Last-term Summer Course Test') {
+    if (found.category === 'Last-term Summer Course Test' || found.category === 'Final-term Summer Course Test') {
       let title = found.title;
       if (found.defaultCode?.includes('max_profit')) title = 'Bài 1';
       else if (found.defaultCode?.includes('kelly_fractions')) title = 'Bài 2';
@@ -48,6 +47,22 @@ export function Workspace() {
     if (cat.includes('final') || cat.includes('last-term') || cat.includes('last')) return 'final';
     return 'mid';
   }, [currentProblem]);
+
+  useEffect(() => {
+    if (currentProblem) {
+      const cleanCat = (currentProblem.category || 'Practice').replace(/^(Last-term|Final-term)\s+/i, '');
+      recordRecentActivity({
+        id: `problem:${currentProblem.id}`,
+        title: currentProblem.title || `Problem ${currentProblem.id}`,
+        subtitle: `${cleanCat}${currentProblem.subcategory ? ` • ${currentProblem.subcategory}` : ''}`,
+        course: 'programming',
+        term: currentTerm,
+        tool: 'tests',
+        type: currentProblem.type === 'multiple_choice' ? 'Quiz / MCQ' : 'Coding Test',
+        path: `/workspace/${currentProblem.id}`
+      });
+    }
+  }, [currentProblem, currentTerm]);
 
   const orderedProblems = useMemo(() => {
     if (!problems || problems.length === 0) return [];
@@ -68,10 +83,10 @@ export function Workspace() {
       if (currentTerm === 'final' && !isFinal) continue;
       
       let catName = p.category || '';
-      if (catName === 'FTDS coding practice' || catName === 'Mid-term practice' || catName === "Last-term practice") {
+      if (catName === 'FTDS coding practice' || catName === 'Mid-term practice' || catName === "Last-term practice" || catName === "Final-term practice") {
         catName = "Coding practice";
-      } else if (catName.startsWith("Last-term ")) {
-        const remaining = catName.replace("Last-term ", "");
+      } else if (catName.startsWith("Last-term ") || catName.startsWith("Final-term ")) {
+        const remaining = catName.replace(/^(Last-term|Final-term)\s+/, "");
         if (remaining.toLowerCase().includes("mock")) {
           catName = "Mock test";
         } else if (remaining.toLowerCase().includes("quiz")) {
@@ -81,7 +96,7 @@ export function Workspace() {
         } else {
           catName = "Coding practice";
         }
-      } else if (catName.toLowerCase() === "quiz" || catName.toLowerCase() === "last-term quiz") {
+      } else if (catName.toLowerCase() === "quiz" || catName.toLowerCase() === "last-term quiz" || catName.toLowerCase() === "final-term quiz") {
         catName = "Quiz";
       }
 
@@ -547,7 +562,7 @@ export function Workspace() {
     <div className="app-container">
       <header className="header">
         <div className="workspace-header-top" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-          <Link to="/" state={{ returnToId: currentProblem?.id }} className="button-secondary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: 0, textDecoration: 'none' }} title="Back to Dashboard">
+          <Link to="/" state={{ returnToId: currentProblem?.id }} className="button-secondary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', padding: 0, textDecoration: 'none' }} title="Back to Dashboard" aria-label="Back to Dashboard">
             <ArrowLeft size={16} />
           </Link>
         </div>
@@ -562,7 +577,7 @@ export function Workspace() {
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginRight: '0.5rem', paddingRight: '1rem', borderRight: '1px solid var(--border-color)' }}>
             {prevProblem ? (
-              <Link to={`/workspace/${prevProblem.id}`} className="button-secondary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', padding: '0.4rem 0.75rem', textDecoration: 'none', fontSize: '0.85rem' }} title="Previous Problem">
+              <Link to={`/workspace/${prevProblem.id}`} className="button-secondary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', padding: '0.4rem 0.75rem', textDecoration: 'none', fontSize: '0.85rem' }} title="Previous Problem" aria-label="Previous Problem">
                 <ChevronLeft size={16} />
                 <span className="hide-on-mobile">Prev</span>
               </Link>
@@ -570,14 +585,14 @@ export function Workspace() {
               <div style={{ width: '74px' }} className="hide-on-mobile"></div>
             )}
             {nextProblem ? (
-              <Link to={`/workspace/${nextProblem.id}`} className="button-secondary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', padding: '0.4rem 0.75rem', textDecoration: 'none', fontSize: '0.85rem', whiteSpace: 'nowrap' }} title="Next Problem">
+              <Link to={`/workspace/${nextProblem.id}`} className="button-secondary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', padding: '0.4rem 0.75rem', textDecoration: 'none', fontSize: '0.85rem', whiteSpace: 'nowrap' }} title="Next Problem" aria-label={nextProblem.category !== currentProblem.category ? `Next: ${nextProblem.category}` : 'Next Problem'}>
                 <span className="hide-on-mobile">
                   {nextProblem.category !== currentProblem.category ? `Next: ${nextProblem.category}` : 'Next'}
                 </span>
                 <ChevronRight size={16} />
               </Link>
             ) : (
-              <Link to="/" state={{ returnToId: currentProblem?.id }} className="button-secondary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', padding: '0.4rem 0.75rem', textDecoration: 'none', fontSize: '0.85rem', whiteSpace: 'nowrap' }} title="Finish and go back">
+              <Link to="/" state={{ returnToId: currentProblem?.id }} className="button-secondary" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', padding: '0.4rem 0.75rem', textDecoration: 'none', fontSize: '0.85rem', whiteSpace: 'nowrap' }} title="Finish and go back" aria-label="Finish and return to Dashboard">
                 <span className="hide-on-mobile">Finish</span>
                 <ChevronRight size={16} />
               </Link>
@@ -594,6 +609,8 @@ export function Workspace() {
             }}
             onClick={handleToggleFlag}
             title={isFlagged ? "Unflag Problem" : "Flag for Review"}
+            aria-label={isFlagged ? "Unflag Problem" : "Flag for Review"}
+            aria-pressed={isFlagged}
           >
             <Flag size={16} fill={isFlagged ? '#fbbf24' : 'none'} />
             <span className="hide-on-mobile" style={{ width: '56px', textAlign: 'left' }}>{isFlagged ? 'Flagged' : 'Flag'}</span>
@@ -604,6 +621,7 @@ export function Workspace() {
             style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
             onClick={handleResetAll}
             title={currentProblem?.type === 'multiple_choice' ? "Reset Answers" : "Reset Code"}
+            aria-label={currentProblem?.type === 'multiple_choice' ? "Reset Answers" : "Reset Code"}
           >
             <RotateCcw size={16} />
             <span className="hide-on-mobile">Reset</span>
@@ -614,6 +632,7 @@ export function Workspace() {
             onClick={handleRun}
             disabled={!isLoaded || isRunning}
             title="Run Code"
+            aria-label={isRunning ? 'Running code...' : 'Run Code'}
           >
             <Play size={16} />
             <span className="hide-on-mobile">{isRunning ? 'Running...' : 'Run'}</span>
@@ -624,6 +643,7 @@ export function Workspace() {
             onClick={handleSubmit}
             disabled={!isLoaded || isRunning}
             title="Check Solution"
+            aria-label="Check Solution"
           >
             <CheckCircle size={16} />
             <span className="hide-on-mobile">Check</span>
@@ -635,6 +655,7 @@ export function Workspace() {
               onClick={() => setShowAIInEditor(true)}
               style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
               title="Ask AI"
+              aria-label="Ask AI Assistant"
             >
               <div style={{ 
                 width: 20, 
@@ -807,7 +828,7 @@ export function Workspace() {
         isOpen={showCheatsheet}
         onClose={() => setShowCheatsheet(false)}
         mode="master"
-        term={currentTerm === 'final' ? 'last' : 'mid'}
+        term={currentTerm === 'final' ? 'final' : 'mid'}
       />
     </div>
   );

@@ -26,15 +26,25 @@ export function NotificationProvider({ children }) {
     setConfirmModal({ message, onConfirm, onCancel });
   }, []);
 
-  const closeConfirm = () => {
+  const closeConfirm = useCallback(() => {
     if (confirmModal?.onCancel) confirmModal.onCancel();
     setConfirmModal(null);
-  };
+  }, [confirmModal]);
 
   const handleConfirmClick = () => {
     if (confirmModal?.onConfirm) confirmModal.onConfirm();
     setConfirmModal(null);
   };
+
+  // Keyboard Escape listener for confirm modal
+  useEffect(() => {
+    if (!confirmModal) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') closeConfirm();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [confirmModal, closeConfirm]);
 
   return (
     <NotificationContext.Provider value={{ showToast, showConfirm }}>
@@ -42,29 +52,34 @@ export function NotificationProvider({ children }) {
       
       {/* Toast UI */}
       {toast && (
-        <div style={{
-          position: 'fixed',
-          top: '1.5rem',
-          right: '1.5rem',
-          zIndex: 9999,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.75rem',
-          padding: '1rem 1.25rem',
-          backgroundColor: toast.type === 'error' ? 'var(--error)' : toast.type === 'success' ? 'var(--success)' : 'var(--bg-surface-elevated)',
-          color: toast.type === 'info' ? 'var(--text-primary)' : '#fff',
-          borderRadius: 'var(--radius-md)',
-          boxShadow: '0 10px 25px -5px rgba(0,0,0,0.2)',
-          animation: 'slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-          border: toast.type === 'info' ? '1px solid var(--border-color)' : 'none',
-          maxWidth: '350px'
-        }}>
+        <div 
+          role="status"
+          aria-live="polite"
+          style={{
+            position: 'fixed',
+            top: '1.5rem',
+            right: '1.5rem',
+            zIndex: 9999,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.75rem',
+            padding: '1rem 1.25rem',
+            backgroundColor: toast.type === 'error' ? 'var(--error)' : toast.type === 'success' ? 'var(--success)' : 'var(--bg-surface-elevated)',
+            color: toast.type === 'info' ? 'var(--text-primary)' : '#fff',
+            borderRadius: 'var(--radius-md)',
+            boxShadow: '0 10px 25px -5px rgba(0,0,0,0.2)',
+            animation: 'slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+            border: toast.type === 'info' ? '1px solid var(--border-color)' : 'none',
+            maxWidth: '350px'
+          }}
+        >
           {toast.type === 'success' && <CheckCircle size={20} />}
           {toast.type === 'error' && <AlertCircle size={20} />}
           {toast.type === 'info' && <Info size={20} color="var(--accent-primary)" />}
           <span style={{ fontSize: '0.95rem', fontWeight: 500, lineHeight: 1.4 }}>{toast.message}</span>
           <button 
             onClick={() => setToast(null)}
+            aria-label="Dismiss notification"
             style={{ marginLeft: 'auto', background: 'transparent', border: 'none', color: 'inherit', opacity: 0.8, cursor: 'pointer', padding: '0.2rem' }}
           >
             <X size={16} />
@@ -74,34 +89,46 @@ export function NotificationProvider({ children }) {
 
       {/* Confirm Modal UI */}
       {confirmModal && (
-        <div style={{
-          position: 'fixed',
-          top: 0, left: 0, right: 0, bottom: 0,
-          backgroundColor: 'rgba(0,0,0,0.6)',
-          backdropFilter: 'blur(4px)',
-          zIndex: 10000,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '1rem'
-        }}>
-          <div style={{
-            backgroundColor: 'var(--bg-surface)',
-            borderRadius: 'var(--radius-lg)',
-            width: '100%',
-            maxWidth: '400px',
-            padding: '1.5rem',
-            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)',
-            border: '1px solid var(--border-color)',
-            animation: 'zoomIn 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
-          }}>
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0, left: 0, right: 0, bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.6)',
+            backdropFilter: 'blur(4px)',
+            zIndex: 10000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1rem'
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) closeConfirm();
+          }}
+        >
+          <div 
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="confirm-modal-title"
+            aria-describedby="confirm-modal-desc"
+            style={{
+              backgroundColor: 'var(--bg-surface)',
+              borderRadius: 'var(--radius-lg)',
+              width: '100%',
+              maxWidth: '400px',
+              padding: '1.5rem',
+              boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)',
+              border: '1px solid var(--border-color)',
+              animation: 'zoomIn 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
+            }}
+            onClick={e => e.stopPropagation()}
+          >
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem', color: 'var(--text-primary)' }}>
               <div style={{ backgroundColor: 'rgba(239, 68, 68, 0.1)', padding: '0.5rem', borderRadius: '50%', display: 'flex' }}>
                 <AlertCircle size={24} color="var(--error)" />
               </div>
-              <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 600 }}>Confirmation Required</h3>
+              <h3 id="confirm-modal-title" style={{ margin: 0, fontSize: '1.1rem', fontWeight: 600 }}>Confirmation Required</h3>
             </div>
-            <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', lineHeight: 1.5, fontSize: '0.95rem' }}>
+            <p id="confirm-modal-desc" style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', lineHeight: 1.5, fontSize: '0.95rem' }}>
               {confirmModal.message}
             </p>
             <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end' }}>

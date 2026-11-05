@@ -11,8 +11,15 @@ export function UserNotificationModal({ onClose, notifications }) {
 
   useEffect(() => {
     setMounted(true);
-    return () => setMounted(false);
-  }, []);
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      setMounted(false);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [onClose]);
 
   const handleDismiss = async (notification) => {
     if (notification.type === 'access_request_rejected' && currentUser?.email) {
@@ -44,6 +51,9 @@ export function UserNotificationModal({ onClose, notifications }) {
     >
       <div 
         className="glass-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="user-notification-title"
         style={{
           width: '100%',
           maxWidth: '500px',
@@ -56,6 +66,7 @@ export function UserNotificationModal({ onClose, notifications }) {
       >
         <button 
           onClick={onClose}
+          aria-label="Close notifications"
           style={{
             position: 'absolute',
             top: '1.25rem', right: '1.25rem',
@@ -67,7 +78,7 @@ export function UserNotificationModal({ onClose, notifications }) {
           <X size={20} />
         </button>
 
-        <h2 style={{ marginTop: 0, marginBottom: '1.5rem', fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <h2 id="user-notification-title" style={{ marginTop: 0, marginBottom: '1.5rem', fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <Bell size={20} />
           Notifications
         </h2>

@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
-import { Bot, Sparkles, Loader2, X, Send, Cpu, Check, Copy, Wand2, Zap, Lock, RotateCcw, Trash2 } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Loader2, X, Send, Check, Copy, Wand2, Lock, Trash2 } from 'lucide-react';
 import { askAIForHelp } from '../config/aiService';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -10,7 +10,7 @@ import { preprocessMarkdown } from '../utils/latexHelper';
 import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
 import { db } from '../config/firebase';
-import { addDoc, collection, serverTimestamp, setDoc, doc } from 'firebase/firestore';
+import { serverTimestamp, setDoc, doc } from 'firebase/firestore';
 
 
 
@@ -27,7 +27,7 @@ const CodeBlock = ({ inline, className, children, onProposeFix, ...props }) => {
   if (!inline && match) {
     return (
       <div className="code-block-wrapper" style={{ position: 'relative', margin: '1rem 0', borderRadius: '0.5rem', overflow: 'hidden', border: '1px solid var(--border-color)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'var(--surface-color)', padding: '0.4rem 1rem', fontSize: '0.75rem', color: 'var(--text-secondary)', borderBottom: '1px solid var(--border-color)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'var(--bg-surface-elevated)', padding: '0.4rem 1rem', fontSize: '0.75rem', color: 'var(--text-secondary)', borderBottom: '1px solid var(--border-color)' }}>
           <span style={{ textTransform: 'uppercase', fontWeight: 600 }}>{match[1]}</span>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             {onProposeFix && match[1] === 'python' && (
@@ -35,16 +35,22 @@ const CodeBlock = ({ inline, className, children, onProposeFix, ...props }) => {
                 onClick={() => onProposeFix(String(children).replace(/\n$/, ''))} 
                 style={{ background: 'none', border: 'none', color: 'var(--accent-primary)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.3rem', fontWeight: 600 }}
                 title="Apply fix to editor"
+                aria-label="Apply fix to editor"
               >
                 <Wand2 size={16} /> Apply Fix
               </button>
             )}
-            <button onClick={handleCopy} style={{ background: 'none', border: 'none', color: copied ? 'var(--success-color)' : 'var(--text-secondary)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.3rem', transition: 'color 0.2s' }} title="Copy code">
+            <button 
+              onClick={handleCopy} 
+              style={{ background: 'none', border: 'none', color: copied ? 'var(--success)' : 'var(--text-secondary)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.3rem', transition: 'color 0.2s' }} 
+              title="Copy code"
+              aria-label="Copy code block"
+            >
               {copied ? <Check size={16} /> : <Copy size={16} />}
             </button>
           </div>
         </div>
-        <pre style={{ margin: 0, padding: '1rem', backgroundColor: 'var(--bg-color)', overflowX: 'auto' }} {...props}>
+        <pre style={{ margin: 0, padding: '1rem', backgroundColor: 'var(--bg-base)', overflowX: 'auto' }} {...props}>
           <code className={className} style={{ fontFamily: 'monospace', fontSize: '0.85rem' }}>
             {children}
           </code>
@@ -52,7 +58,7 @@ const CodeBlock = ({ inline, className, children, onProposeFix, ...props }) => {
       </div>
     );
   }
-  return <code className={className} style={{ backgroundColor: 'var(--surface-color)', padding: '0.2rem 0.4rem', borderRadius: '0.25rem', fontSize: '0.85rem', fontFamily: 'monospace' }} {...props}>{children}</code>;
+  return <code className={className} style={{ backgroundColor: 'var(--bg-surface-elevated)', padding: '0.2rem 0.4rem', borderRadius: '0.25rem', fontSize: '0.85rem', fontFamily: 'monospace' }} {...props}>{children}</code>;
 };
 
 const MessageBubble = React.memo(({ msg, onProposeFix }) => {
@@ -150,7 +156,6 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
   };
   const problemId = problem?.id;
   const uid = currentUser?.uid || 'anonymous';
-  const storageKey = `zerocoder_ai_chat_${uid}_${problemId || 'default'}`;
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState(() => {
     try {
@@ -225,7 +230,7 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
     setMessages(prev => [...prev, { role: 'user', content: displayLabel }]);
     
     try {
-      const { text, providerName, modelName } = await askAIForHelp(problem, userCode, testResults, [...messages, intentMessage], false);
+      const { text, providerName } = await askAIForHelp(problem, userCode, testResults, [...messages, intentMessage], false);
       setCurrentProvider(providerName || 'AI');
       setIsLoading(false);
       setMessages(prev => [...prev, { role: 'assistant', content: text, isNew: true }]);
@@ -250,7 +255,7 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
     };
     
     try {
-      const { text: response, providerName, modelName } = await askAIForHelp(problem, userCode, testResults, [intentMessage], true);
+      const { text: response, providerName } = await askAIForHelp(problem, userCode, testResults, [intentMessage], true);
       setCurrentProvider(providerName || 'AI');
       
       // Extract python code from response
@@ -284,24 +289,6 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
     }
   };
 
-  const handleAskAI = async () => {
-    if (isLoading) return;
-    setIsLoading(true);
-    setError('');
-    
-    try {
-      // For initial request, we don't send any user text, the AI will use the system prompt
-      const { text, providerName, modelName } = await askAIForHelp(problem, userCode, testResults, []);
-      setCurrentProvider(providerName || 'AI');
-      setIsLoading(false);
-      setMessages([{ role: 'assistant', content: text, isNew: true }]);
-    } catch (err) {
-      setError(err.message || 'An error occurred while communicating with the AI.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const handleSendMessage = async (e) => {
     e?.preventDefault();
     if (!inputValue.trim() || isLoading) return;
@@ -316,7 +303,7 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
 
     try {
       // Send the entire chat history
-      const { text, providerName, modelName } = await askAIForHelp(problem, userCode, testResults, updatedMessages);
+      const { text, providerName } = await askAIForHelp(problem, userCode, testResults, updatedMessages);
       setCurrentProvider(providerName || 'AI');
       setIsLoading(false);
       setMessages(prev => [...prev, { role: 'assistant', content: text, isNew: true }]);
@@ -422,6 +409,7 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
               onClick={onClose}
               style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: '0.25rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
               title="Close AI Assistant"
+              aria-label="Close AI Assistant"
             >
               <X size={16} />
             </button>
@@ -583,6 +571,7 @@ LƯU Ý QUAN TRỌNG CHO BẠN (AI):
               <button 
                 type="submit" 
                 disabled={!inputValue.trim() || isLoading}
+                aria-label="Send message to AI"
                 style={{
                   backgroundColor: inputValue.trim() && !isLoading ? 'var(--accent-primary)' : 'transparent',
                   color: inputValue.trim() && !isLoading ? 'white' : 'var(--text-tertiary)',

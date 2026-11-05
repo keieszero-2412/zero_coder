@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
 import { Mail, KeyRound, User, ArrowRight, ShieldAlert, LogIn, UserPlus, ArrowLeft, Send, CheckCircle2, XCircle } from 'lucide-react';
@@ -95,7 +95,7 @@ export function Auth() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      setError('');
+      setError(''); try { sessionStorage.setItem('zc_login_boot_transition', '1'); } catch {}
       if (emailStatus.accountExists) {
         // Log in
         await login(email, password, rememberMe);
@@ -166,7 +166,7 @@ export function Auth() {
     try {
       await resetPassword(email);
       setResetStatus('email');
-      setError('');
+      setError(''); try { sessionStorage.setItem('zc_login_boot_transition', '1'); } catch {}
     } catch (err) {
       setError("Could not send reset email. If your email is not real, please contact admin.");
     } finally {
@@ -186,7 +186,7 @@ export function Auth() {
         
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <h1 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', fontSize: '1.75rem', marginBottom: '0.5rem' }}>
-            <img src="/zerocoder-logo-transparent.png" alt="Logo" style={{ width: '36px', height: '36px', marginTop: '2px' }} />
+            <img src="/zerocoder-logo-transparent.png" alt="ZeroCoder Logo" style={{ width: '36px', height: '36px', marginTop: '2px' }} />
             zerocoder
           </h1>
           <p style={{ color: 'var(--text-secondary)' }}>

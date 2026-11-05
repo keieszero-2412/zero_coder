@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-01T01:13:45Z",
+  "title": "Design System: ZeroCoder",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Atelier Emerald-Teal",
+        "canonical": "#14b8a6",
+        "tonalRamp": ["#042f2e", "#115e59", "#0f766e", "#0d9488", "#14b8a6", "#2dd4bf", "#5eead4", "#99f6e4"]
+      },
+      "secondary": {
+        "role": "secondary",
+        "displayName": "Indigo Accent",
+        "canonical": "#6366f1",
+        "tonalRamp": ["#1e1b4b", "#312e81", "#3730a3", "#4338ca", "#4f46e5", "#6366f1", "#818cf8", "#a5b4fc"]
+      },
+      "neutral-bg": {
+        "role": "neutral",
+        "displayName": "Abyssal Slate",
+        "canonical": "#0f1115",
+        "tonalRamp": ["#060709", "#0b0c0f", "#0f1115", "#16191f", "#1f232b", "#2c313c", "#404654", "#61687a"]
+      },
+      "neutral-surface": {
+        "role": "neutral",
+        "displayName": "Atelier Obsidian",
+        "canonical": "#1a1d24",
+        "tonalRamp": ["#0b0d10", "#121419", "#1a1d24", "#242831", "#313642", "#434958", "#5b6274", "#7b8296"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Workspace banners and primary titles" },
+      "headline": { "displayName": "Headline", "purpose": "Lecture titles and problem headings" },
+      "title": { "displayName": "Title", "purpose": "Section dividers and card titles" },
+      "body": { "displayName": "Body", "purpose": "General reading text, markdown problems, and code notes" },
+      "label": { "displayName": "Label", "purpose": "Micro tags, uppercase chips, and badge indicators" }
+    },
+    "shadows": [
+      {
+        "name": "glass-panel",
+        "value": "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+        "purpose": "Soft depth on frosted glass panels and cards"
+      },
+      {
+        "name": "button-primary-lift",
+        "value": "0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
+        "purpose": "Tactile elevated rest state for primary pill buttons"
+      },
+      {
+        "name": "modal-depth",
+        "value": "0 20px 25px -5px rgba(0, 0, 0, 0.5)",
+        "purpose": "Elevated overlay for settings and cheatsheet dialogs"
+      }
+    ],
+    "motion": [
+      {
+        "name": "spring-snappy",
+        "value": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "purpose": "Tactile bounce for primary button hover/active states"
+      },
+      {
+        "name": "ease-precise",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Crisp 120-180ms micro-transition for utility buttons and tabs"
+      }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "768px" },
+      { "name": "container-collapse", "value": "660px" },
+      { "name": "desktop-compact", "value": "1600px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Action Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "High-intent primary trigger for Run, Submit, and Check actions.",
+      "html": "<button class=\"ds-btn-primary\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><polygon points=\"5 3 19 12 5 21 5 3\"/></svg><span>Run Code</span></button>",
+      "css": ".ds-btn-primary { background: var(--accent-primary, #14b8a6); color: var(--text-on-accent, #042f2e); border: none; padding: 6px 16px; border-radius: 9999px; font-weight: 600; font-size: 0.85rem; font-family: 'Inter', sans-serif; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.2); transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); } .ds-btn-primary:hover { background: var(--accent-primary-hover, #0d9488); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3); } .ds-btn-primary:active { transform: translateY(1px); }"
+    },
+    {
+      "name": "Secondary Action Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Ghost action button for resets, toggles, and alternative actions.",
+      "html": "<button class=\"ds-btn-secondary\"><span>Reset Solution</span></button>",
+      "css": ".ds-btn-secondary { background: rgba(255, 255, 255, 0.04); color: var(--text-secondary, #94a3b8); border: 1px solid var(--border-color, #334155); padding: 6px 16px; border-radius: 9999px; font-weight: 500; font-size: 0.85rem; font-family: 'Inter', sans-serif; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-secondary:hover { background: rgba(255, 255, 255, 0.08); color: var(--text-primary, #f8fafc); border-color: var(--text-secondary, #94a3b8); transform: translateY(-1px); }"
+    },
+    {
+      "name": "Header Utility Button",
+      "kind": "button",
+      "refersTo": "button-utility",
+      "description": "Compact 32px utility control designed to collapse seamlessly to icon-only at container width < 660px.",
+      "html": "<button class=\"ds-btn-utility\"><svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/></svg><span>Settings</span></button>",
+      "css": ".ds-btn-utility { height: 32px; padding: 0 12px; background: transparent; color: var(--text-secondary, #94a3b8); border: 1px solid var(--border-color, #334155); border-radius: 6px; font-size: 0.85rem; font-weight: 500; font-family: 'Inter', sans-serif; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-utility:hover { background: rgba(255, 255, 255, 0.05); color: var(--text-primary, #f8fafc); border-color: var(--text-secondary, #94a3b8); }"
+    },
+    {
+      "name": "Status Badge (Passed)",
+      "kind": "chip",
+      "refersTo": "badge-pass",
+      "description": "Assertion and test suite success indicator.",
+      "html": "<span class=\"ds-badge-pass\">PASSED</span>",
+      "css": ".ds-badge-pass { padding: 4px 8px; border-radius: 9999px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; font-family: 'Inter', sans-serif; background: rgba(16, 185, 129, 0.2); color: var(--success, #10b981); display: inline-block; }"
+    },
+    {
+      "name": "Glass Panel Container",
+      "kind": "card",
+      "refersTo": "glass-panel",
+      "description": "Core layout surface for lecture cards, modal bodies, and floating tools.",
+      "html": "<div class=\"ds-glass-panel\"><h3>Topic 1: Python Fundamentals</h3><p>Variables, control flow, functions, and list operations.</p></div>",
+      "css": ".ds-glass-panel { background: rgba(26, 29, 36, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); padding: 24px; color: var(--text-primary, #f8fafc); font-family: 'Inter', sans-serif; }"
+    },
+    {
+      "name": "Segmented Pill Tab",
+      "kind": "nav",
+      "refersTo": "segmented-pill-track",
+      "description": "Sliding pill navigation for toggling between Learning and Exam views.",
+      "html": "<div class=\"ds-segmented-pill\"><button class=\"ds-pill-btn active\">Interactive Learning</button><button class=\"ds-pill-btn\">Your Exams</button></div>",
+      "css": ".ds-segmented-pill { display: inline-flex; background: var(--bg-surface-elevated, #232730); padding: 4px; border-radius: 9999px; border: 1px solid var(--border-color, #334155); } .ds-pill-btn { padding: 6px 16px; border-radius: 9999px; border: none; background: transparent; color: var(--text-secondary, #94a3b8); font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease; } .ds-pill-btn.active { background: var(--bg-surface, #1a1d24); color: var(--text-primary, #f8fafc); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Focused Learning Atelier",
+    "overview": "The Focused Learning Atelier represents a refined fusion of a professional coding IDE and a calm academic learning environment. Designed specifically for university students mastering Python and preparing for coursework exams, the interface balances dense algorithmic feedback with peaceful reading typography. The system rejects both the visual clutter of utilitarian developer consoles and the infantilizing candy-colors of casual learning apps, choosing instead an understated, high-craft atmosphere where code clarity commands full attention.\n\nVisual structure is anchored by disciplined typography, subtle glassmorphic surfaces, and a low-glare dark-mode canvas. The experience remains fluid across 6 synchronized color themes (Midnight, Daylight, Blush, Oceanic, Carbon, Amber), dynamically adapting contrast for long study sessions while maintaining identical structural ergonomics. Controls and toolbars remain compact and keyboard-friendly, elevating tactile pill buttons only for decisive primary actions (Run, Check, Submit).",
+    "keyCharacteristics": [
+      "Distraction-Free Discipline: Clean layout partitions, transparent editor gutter integration, and zero layout shift or letterboxing.",
+      "Tonal Depth Hierarchy: Subtle 1px borders and progressive surface steps (Base -> Surface -> Elevated) replacing heavy muddy drop shadows.",
+      "Selective Tactility: Compact 6px radius utility controls for toolbars paired with springy pill-shaped primary triggers.",
+      "Complete Theme Parity: Pure Vanilla CSS tokenization ensuring flawless rendering across 6 dark and light palettes."
+    ],
+    "rules": [
+      {
+        "name": "The 10% Focus Accent Rule",
+        "body": "The primary Emerald-Teal accent is used on ≤10% of any viewport. Surfaces, gutter panels, and editor chrome remain strictly neutral. Its rarity is what gives it immediate navigational authority.",
+        "section": "colors"
+      },
+      {
+        "name": "The Theme Parity Rule",
+        "body": "Every UI element must resolve colors through semantic CSS custom properties (var(--bg-base), var(--accent-primary), etc.). Never write hardcoded hex values in component inline styles or new markup.",
+        "section": "colors"
+      },
+      {
+        "name": "The Code Legibility Rule",
+        "body": "All Python source code, cell inputs, test assertions, and virtual terminal output must strictly render in JetBrains Mono with 1.5 line-height and proportional character spacing.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tonal Surface Rule",
+        "body": "Elevation is communicated through progressive surface luminance and subtle 1px translucent borders (border-color), never through opaque or exaggerated box-shadows.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do honor the Translucent Editor Doctrine: CodeMirror must remain 100% transparent and seamlessly blend into the active theme canvas without black letterboxes.",
+      "Do write all CSS rules in src/index.css using established design tokens (var(--bg-base), var(--text-primary), var(--accent-primary)).",
+      "Do verify visual hierarchy and contrast across all 6 themes (Midnight, Daylight, Blush, Oceanic, Carbon, Amber) for any UI modification.",
+      "Do ensure responsive collapse: header buttons must collapse cleanly to 32x32 icon buttons on compact widths, and mobile buttons must offer 36x36 circular touch targets.",
+      "Do use the custom modal and toast system in NotificationContext for all user alerts and confirmation dialogues."
+    ],
+    "donts": [
+      "Don't introduce Tailwind CSS or utility-first CSS frameworks into the project.",
+      "Don't use pure #000000 black for dark mode backgrounds; use #0f1115 (Abyssal Slate) to prevent harsh contrast glare.",
+      "Don't create nested scrollbars (never place multiple overflow: auto containers inside the same layout hierarchy).",
+      "Don't use browser-native window.alert() or window.confirm().",
+      "Don't allow accent colors to bleed onto large layout surfaces; reserve Emerald-Teal strictly for key interactive elements (≤10% of viewport)."
+    ]
+  }
+}

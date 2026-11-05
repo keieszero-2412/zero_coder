@@ -385,9 +385,6 @@ export const NotebookViewer = React.forwardRef(function NotebookViewer(
       const isWarning = isStderr && /(UserWarning|DeprecationWarning|FutureWarning|RuntimeWarning|SyntaxWarning|ImportWarning):/i.test(text) && !/Traceback \(most recent call last\):/i.test(text);
       const isError = isStderr && !isWarning;
       
-      // Detect DataFrame-like table output (has header separator like ---+---)
-      const lines = text.split('\n').filter(l => l.trim());
-      const looksLikeTable = lines.length >= 2 && lines.some(l => /^\s*[\d\s]+/.test(l)) && lines[0].includes('  ');
 
       if (isError) {
         return (

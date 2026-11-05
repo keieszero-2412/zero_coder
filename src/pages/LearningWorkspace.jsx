@@ -11,6 +11,7 @@ import rehypeRaw from 'rehype-raw';
 import rehypeKatex from 'rehype-katex';
 import { preprocessMarkdown } from '../utils/latexHelper';
 import { CheatsheetModal } from '../components/CheatsheetModal';
+import { recordRecentActivity } from '../context/TermContext';
 import { getLecturesManifest, getCachedLecturesManifest } from '../utils/lecturesCache';
 
 export function LearningWorkspace() {
@@ -78,6 +79,22 @@ export function LearningWorkspace() {
   const lectureTitle = currentNotebookItem?.lectureTitle || '';
   const notebookTitle = currentNotebookItem?.notebookTitle || '';
   const guideContent = currentNotebookItem?.guide || null;
+  const inferredCourse = 'programming';
+
+  useEffect(() => {
+    if (currentNotebookItem) {
+      recordRecentActivity({
+        id: `notebook:${currentNotebookItem.lectureId}:${currentNotebookItem.notebookId}`,
+        title: currentNotebookItem.notebookTitle,
+        subtitle: currentNotebookItem.lectureTitle,
+        course: inferredCourse,
+        term: 'final',
+        tool: 'interactive',
+        type: 'Interactive Lab',
+        path: `/learn/${currentNotebookItem.lectureId}/${currentNotebookItem.notebookId}`
+      });
+    }
+  }, [currentNotebookItem, inferredCourse]);
 
   const [showAI, setShowAI] = useState(false);
   const [showFiles, setShowFiles] = useState(false);
@@ -235,6 +252,7 @@ export function LearningWorkspace() {
             className="button-secondary"
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', padding: 0, border: 'none', cursor: 'pointer' }}
             title="Back to Dashboard"
+            aria-label="Back to Dashboard"
           >
             <ArrowLeft size={16} />
           </button>
@@ -276,6 +294,7 @@ export function LearningWorkspace() {
             className={showFiles ? 'button-primary' : 'button-secondary'}
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', padding: 0, border: 'none', cursor: 'pointer' }}
             title="Toggle File Browser"
+            aria-label="Toggle File Browser"
           >
             <Folder size={16} />
           </button>
@@ -339,6 +358,7 @@ export function LearningWorkspace() {
               cursor: (isNotebookRunning || loading) ? 'not-allowed' : 'pointer',
             }}
             title="Run all code cells in this notebook"
+            aria-label="Run all code cells in this notebook"
           >
             {isNotebookRunning ? (
               <Loader2 size={15} className="spin" />
@@ -353,6 +373,7 @@ export function LearningWorkspace() {
             className="button-ai"
             style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
             title="Ask AI"
+            aria-label="Toggle AI Assistant"
           >
             <div style={{ 
               width: 20, 

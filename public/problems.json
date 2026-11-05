@@ -349,9 +349,40 @@
     "category": "Mid-term practice",
     "title": "Question 6",
     "description": "<p>Bạn Trường có hai đoạn dây, đoạn thứ nhất dài N mét và đoạn thứ hai dài M mét (N và M là các số nguyên dương).</p><p>Trường muốn cắt hai đoạn dây này thành các đoạn dây nhỏ sao cho:</p><p>Tất cả các đoạn dây nhỏ đều có cùng một độ dài.</p><p>Không có phần dây thừa.</p><p>Độ dài mỗi đoạn dây nhỏ là lớn nhất có thể.</p><p>Khi đó, hỏi Trường có thể cắt được tổng cộng bao nhiêu đoạn dây nhỏ từ hai đoạn dây ban đầu.</p><p>Viết hàm count_segments(N, M) nhận vào hai số nguyên dương N và M, và trả về một số nguyên là tổng số đoạn dây nhỏ có thể cắt được theo quy tắc trên.</p>",
-    "initialCode": "def count_segments(N, M):",
-    "testCases": [],
-    "hint": "Bạn có thể dùng vòng lặp while hoặc tìm ƯCLN (GCD) của N và M bằng thư viện math.gcd."
+    "initialCode": "def count_segments(N, M):\n    pass",
+    "testCases": [
+      {
+        "id": 1,
+        "code": "print(count_segments(12, 8))",
+        "expected": "5"
+      },
+      {
+        "id": 2,
+        "code": "print(count_segments(7, 5))",
+        "expected": "12"
+      },
+      {
+        "id": 3,
+        "code": "print(count_segments(10, 10))",
+        "expected": "2"
+      },
+      {
+        "id": 4,
+        "code": "print(count_segments(1, 100))",
+        "expected": "101"
+      },
+      {
+        "id": 5,
+        "code": "print(count_segments(6, 9))",
+        "expected": "5"
+      },
+      {
+        "id": 6,
+        "code": "print(count_segments(20, 28))",
+        "expected": "12"
+      }
+    ],
+    "hint": "Sử dụng thuật toán tìm ước chung lớn nhất (gcd) để tính độ dài đoạn dây lớn nhất."
   },
   {
     "id": "exam2_7",
@@ -2747,7 +2778,7 @@
       {
         "id": 1,
         "code": "print(process_scroll(\"abracadabra\"))",
-        "expected": "(11, 5, 'cbrccdcbrc', 'crbcdcccrbc')"
+        "expected": "(11, 5, 'cbrcccdcbrc', 'crbcdcccrbc')"
       },
       {
         "id": 2,
@@ -2778,7 +2809,7 @@
       {
         "id": 1,
         "code": "print(process_backpack([\"sword\", 5, [\"potion\", \"shield\"], \"gold\"]))",
-        "expected": "(4, 1, ['sword', 5, '0', 'gold'], ['goldgold', 10, '00', 'swordsword'])"
+        "expected": "(4, 1, ['sword', 5, '0', 'gold'], ['goldgold', '00', 10, 'swordsword'])"
       },
       {
         "id": 2,
@@ -2824,10 +2855,10 @@
       {
         "id": 4,
         "code": "print(process_shield({'value': 10, 'flag': True}))",
-        "expected": "(['value', 'flag'], [10, true], {'value': 10, 'flag': true}, null)"
+        "expected": "(['value', 'flag'], [10, True], {'value': 10, 'flag': True}, None)"
       }
     ],
-    "answer_key": "def process_shield(shield):\n    keys_list = list(shield.keys())\n    values_list = list(shield.values())\n    modified_shield = shield.copy()\n    for k, v in modified_shield.items():\n        if isinstance(v, str):\n            modified_shield[k] = 0\n    non_atomic_key = None\n    for k, v in shield.items():\n        if isinstance(v, (list, dict, set)):\n            non_atomic_key = k\n            break\n    return keys_list, values_list, modified_shield, non_atomic_key"
+    "answer_key": "def process_shield(shield):\n    keys_list = list(shield.keys())\n    values_list = list(shield.values())\n    modified_shield = shield.copy()\n    for k, v in modified_shield.items():\n        if isinstance(v, str):\n            modified_shield[k] = 0\n    non_atomic_key = None\n    for k, v in shield.items():\n        if isinstance(v, (list, dict, set, tuple)):\n            non_atomic_key = k\n            break\n    return keys_list, values_list, modified_shield, non_atomic_key"
   },
   {
     "id": "tin314_p1_q4",
@@ -2928,7 +2959,7 @@
       {
         "id": 1,
         "code": "print(filter_numbers([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))",
-        "expected": "(3, 24)"
+        "expected": "(4, 24)"
       },
       {
         "id": 2,
@@ -2990,7 +3021,7 @@
       {
         "id": 1,
         "code": "print(analyze_sentence(\"An apple a day keeps the doctor away\"))",
-        "expected": "(9, 4)"
+        "expected": "(8, 4)"
       },
       {
         "id": 2,
@@ -3016,7 +3047,7 @@
     "title": "10. The Cipher of the Ancients",
     "description": "<p><b>Yêu cầu:</b> Viết chương trình thực hiện các tác vụ sau:</p><ul><li>Encode: A=1, B=2... Z=26. Giữ nguyên khoảng trắng/ký tự đặc biệt.</li><li>Decode: Dịch ngược từ số về chữ cái.</li></ul>",
     "hint": "Để mã hóa (encode), duyệt qua từng ký tự trong chuỗi đầu vào. Nếu ký tự là chữ cái in hoa hoặc in thường, chuyển đổi nó thành số tương ứng (A/a=1, B/b=2,... Z/z=26). Giữ nguyên các ký tự không phải chữ cái (khoảng trắng, số, ký tự đặc biệt). Các số được mã hóa sẽ được phân tách bằng khoảng trắng.\n\nĐể giải mã (decode), tách chuỗi đầu vào thành các phần dựa trên khoảng trắng. Với mỗi phần, kiểm tra xem nó có phải là một số hay không. Nếu là số và nằm trong khoảng từ 1 đến 26, chuyển đổi nó ngược lại thành chữ cái in hoa tương ứng. Giữ nguyên các phần không phải số hoặc số nằm ngoài phạm vi 1-26. Cuối cùng, nối các phần đã chuyển đổi lại để tạo thành chuỗi giải mã.",
-    "initialCode": "def encode_a1z26(text):\n\ndef decode_a1z26(code):",
+    "initialCode": "def encode_a1z26(text):\n    pass\n\ndef decode_a1z26(code):\n    pass",
     "testCases": [
       {
         "id": 1,
@@ -3039,7 +3070,7 @@
         "expected": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
       }
     ],
-    "answer_key": "def encode_a1z26(text):\n    result = []\n    for char in text:\n        if 'A' <= char <= 'Z':\n            result.append(str(ord(char) - ord('A') + 1))\n        elif 'a' <= char <= 'z':\n            result.append(str(ord(char) - ord('a') + 1))\n        else:\n            result.append(char)\n    return \"-\".join(result).replace(\"- \", \" \").replace(\" -\n\", \" \").replace(\"-\", \" \")\n\ndef decode_a1z26(code):\n    final_str = []\n    parts = code.split(' ')\n    for part in parts:\n        if part.isdigit():\n            num = int(part)\n            if 1 <= num <= 26:\n                final_str.append(chr(num + ord('A') - 1))\n            else:\n                final_str.append(part) # Keep numbers outside 1-26 as is\n        else:\n            final_str.append(part)\n    return \"\".join(final_str)"
+    "answer_key": "def encode_a1z26(text):\n    tokens = []\n    for c in text:\n        if 'a' <= c <= 'z' or 'A' <= c <= 'Z':\n            tokens.append(str(ord(c.upper()) - ord('A') + 1))\n        else:\n            tokens.append(c)\n    out = []\n    for t in tokens:\n        if t.isdigit():\n            if out and out[-1].isdigit():\n                out.append(' ')\n            out.append(t)\n        elif t == ' ':\n            out.append(' ')\n        else:\n            out.append(t)\n    return ''.join(out)\n\ndef decode_a1z26(code):\n    import re\n    out = []\n    tokens = re.findall(r'\\d+|[^\\s\\d]', code)\n    for t in tokens:\n        if t.isdigit() and 1 <= int(t) <= 26:\n            out.append(chr(ord('A') + int(t) - 1))\n        else:\n            out.append(t)\n    return ''.join(out)"
   },
   {
     "id": "tin314_p2_q1",
@@ -3098,10 +3129,10 @@
       {
         "id": 4,
         "code": "print(process_ledger([]))",
-        "expected": "(0, null, [])"
+        "expected": "(0, None, [])"
       }
     ],
-    "answer_key": "def process_ledger(items):\n    total_price = sum(i['price'] for i in items)\n    most_expensive = max(items, key=lambda x: x['price'])['item']\n    filtered = [i for i in items if i['price'] > 50]\n    return total_price, most_expensive, filtered"
+    "answer_key": "def process_ledger(items):\n    total_price = sum(i['price'] for i in items)\n    most_expensive = max(items, key=lambda x: x['price'])['item'] if items else None\n    filtered = [i for i in items if i['price'] > 50]\n    return total_price, most_expensive, filtered"
   },
   {
     "id": "tin314_p2_q3",
@@ -3189,7 +3220,7 @@
         "expected": "No Solution"
       }
     ],
-    "answer_key": "def solve_quad(a, b, c):\n    delta = b**2 - 4*a*c\n    if delta < 0:\n        return \"No Solution\"\n    elif delta == 0:\n        return -b / (2*a)\n    else:\n        x1 = (-b + math.sqrt(delta)) / (2*a)\n        x2 = (-b - math.sqrt(delta)) / (2*a)\n        return (x1, x2)"
+    "answer_key": "import math\n\ndef solve_quad(a, b, c):\n    delta = b**2 - 4*a*c\n    if delta < 0:\n        return 'No Solution'\n    elif delta == 0:\n        return -b / (2*a)\n    else:\n        x1 = (-b + math.sqrt(delta)) / (2*a)\n        x2 = (-b - math.sqrt(delta)) / (2*a)\n        return (x1, x2)"
   },
   {
     "id": "tin314_p2_q6",
@@ -3202,12 +3233,12 @@
       {
         "id": 1,
         "code": "print(analyze_archive(\"Hello world! This is a test. Hello again.\"))",
-        "expected": "({'hello': 2, 'world': 1, 'this': 1, 'is': 1, 'a': 1, 'test': 1, 'again': 1}, ['hello', 'world', 'this'], 'world')"
+        "expected": "({'hello': 2, 'world': 1, 'this': 1, 'is': 1, 'a': 1, 'test': 1, 'again': 1}, ['hello', 'world', 'this'], 'hello')"
       },
       {
         "id": 2,
         "code": "print(analyze_archive(\"One two three four five six seven eight nine ten. One two three.\"))",
-        "expected": "({'one': 2, 'two': 2, 'three': 2, 'four': 1, 'five': 1, 'six': 1, 'seven': 1, 'eight': 1, 'nine': 1, 'ten': 1}, ['one', 'two', 'three'], 'seven')"
+        "expected": "({'one': 2, 'two': 2, 'three': 2, 'four': 1, 'five': 1, 'six': 1, 'seven': 1, 'eight': 1, 'nine': 1, 'ten': 1}, ['one', 'two', 'three'], 'three')"
       },
       {
         "id": 3,
@@ -3248,7 +3279,7 @@
       {
         "id": 3,
         "code": "print(echo_repetition([]))",
-        "expected": "( [], {}, null)"
+        "expected": "([], {}, None)"
       },
       {
         "id": 4,
@@ -3256,7 +3287,7 @@
         "expected": "([1], {1: 4}, 1)"
       }
     ],
-    "answer_key": "def echo_repetition(lst):\n    unique_elements = list(set(lst))\n    frequency = dict(Counter(lst))\n    most_frequent = max(frequency, key=frequency.get)\n    return unique_elements, frequency, most_frequent"
+    "answer_key": "from collections import Counter\n\ndef echo_repetition(lst):\n    unique_elements = list(dict.fromkeys(lst))\n    frequency = dict(Counter(lst))\n    most_frequent = max(frequency, key=frequency.get) if frequency else None\n    return unique_elements, frequency, most_frequent"
   },
   {
     "id": "tin314_p2_q8",
@@ -3318,7 +3349,7 @@
         "expected": "Count: 0\nMost Valuable: None\nFive Closest:"
       }
     ],
-    "answer_key": "def analyze_artifacts(artifacts):\n    count = len(artifacts)\n    most_valuable = max(artifacts, key=lambda x: x['Value'])\n    mv_loc = most_valuable['Location']\n    \n    def dist_to_mv(artifact):\n        loc = artifact['Location']\n        return math.sqrt((loc[0]-mv_loc[0])**2 + (loc[1]-mv_loc[1])**2)\n        \n    others = [a for a in artifacts if a['ID'] != most_valuable['ID']]\n    others.sort(key=dist_to_mv)\n    five_closest = others[:5]\n    result_closest = [(a['Name'], a['Value'], a['Location']) for a in five_closest]\n    return count, most_valuable, result_closest"
+    "answer_key": "import math\n\ndef analyze_artifacts(artifacts):\n    count = len(artifacts)\n    if not artifacts:\n        return 0, None, []\n    most_valuable = max(artifacts, key=lambda x: x['Value'])\n    mv_loc = most_valuable['Location']\n\n    def dist_to_mv(artifact):\n        loc = artifact['Location']\n        return math.sqrt((loc[0]-mv_loc[0])**2 + (loc[1]-mv_loc[1])**2)\n\n    others = [a for a in artifacts if a['ID'] != most_valuable['ID']]\n    others.sort(key=dist_to_mv)\n    five_closest = others[:5]\n    result_closest = [(a['Name'], a['Value'], a['Location']) for a in five_closest]\n    return count, most_valuable, result_closest"
   },
   {
     "id": "tin314_p2_q10",
@@ -3341,15 +3372,15 @@
       {
         "id": 3,
         "code": "print(analyze_perfect([]))",
-        "expected": "([], 0, null)"
+        "expected": "([], 0, None)"
       },
       {
         "id": 4,
-        "code": "print(analyze_perfect([7, 11, 13, 17, 19]))",
-        "expected": "([], 0, null)"
+        "code": "print(analyze_perfect([11, 13, 17, 19]))",
+        "expected": "([], 0, None)"
       }
     ],
-    "answer_key": "def digit_sum(n):\n    return sum(int(d) for d in str(n))\n\ndef is_perfect(n):\n    ds = digit_sum(n)\n    return ds > 0 and n % ds == 0\n\ndef analyze_perfect(lst):\n    perfect_nums = [x for x in lst if is_perfect(x)]\n    count = len(perfect_nums)\n    largest = max(perfect_nums) if perfect_nums else None\n    return perfect_nums, count, largest"
+    "answer_key": "def digit_sum(n):\n    return sum(int(d) for d in str(abs(n)))\n\ndef is_perfect(n):\n    if n <= 0:\n        return False\n    ds = digit_sum(n)\n    return ds > 0 and n % ds == 0\n\ndef analyze_perfect(lst):\n    perfect_nums = [x for x in lst if is_perfect(x)]\n    count = len(perfect_nums)\n    largest = max(perfect_nums) if perfect_nums else None\n    return perfect_nums, count, largest"
   },
   {
     "id": "tin314_p2_q11",
@@ -3380,7 +3411,7 @@
         "expected": "101"
       }
     ],
-    "answer_key": "def count_segments(N, M):\n    common_length = math.gcd(N, M)\n    return (N // common_length) + (M // common_length)"
+    "answer_key": "import math\n\ndef count_segments(N, M):\n    length = math.gcd(N, M)\n    return (N // length) + (M // length)"
   },
   {
     "id": "tin314_p2_q12",
@@ -3532,7 +3563,7 @@
       {
         "id": 4,
         "code": "print(min_path_sum([[1,1,1,1],[1,1,1,1],[1,1,1,1]]))",
-        "expected": "5"
+        "expected": "6"
       }
     ],
     "answer_key": "def min_path_sum(grid):\n    R = len(grid)\n    C = len(grid[0])\n    dp = [[0]*C for _ in range(R)]\n    dp[0][0] = grid[0][0]\n    for i in range(1, R):\n        dp[i][0] = dp[i-1][0] + grid[i][0]\n    for j in range(1, C):\n        dp[0][j] = dp[0][j-1] + grid[0][j]\n    for i in range(1, R):\n        for j in range(1, C):\n            dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j]\n    return dp[-1][-1]"
@@ -3610,22 +3641,22 @@
       {
         "id": 1,
         "code": "print(assign_cluster((1, 1), (0, 0), (2, 2)))",
-        "expected": "(1.4142135623730951, 1.4142135623730951, \"C2\")"
+        "expected": "(1.4142135623730951, 1.4142135623730951, 'C2')"
       },
       {
         "id": 2,
         "code": "print(assign_cluster((5, 5), (0, 0), (10, 10)))",
-        "expected": "(7.0710678118654755, 7.0710678118654755, \"C2\")"
+        "expected": "(7.0710678118654755, 7.0710678118654755, 'C2')"
       },
       {
         "id": 3,
         "code": "print(assign_cluster((0, 0), (1, 1), (10, 10)))",
-        "expected": "(1.4142135623730951, 14.142135623730951, \"C1\")"
+        "expected": "(1.4142135623730951, 14.142135623730951, 'C1')"
       },
       {
         "id": 4,
         "code": "print(assign_cluster((10, 10), (1, 1), (0, 0)))",
-        "expected": "(12.727922061357855, 14.142135623730951, \"C1\")"
+        "expected": "(12.727922061357855, 14.142135623730951, 'C1')"
       }
     ],
     "answer_key": "import math\ndef assign_cluster(point_a, c1, c2):\n    dist_c1 = math.sqrt((point_a[0]-c1[0])**2 + (point_a[1]-c1[1])**2)\n    dist_c2 = math.sqrt((point_a[0]-c2[0])**2 + (point_a[1]-c2[1])**2)\n    assigned = \"C1\" if dist_c1 < dist_c2 else \"C2\"\n    return dist_c1, dist_c2, assigned"
@@ -3656,7 +3687,7 @@
       {
         "id": 4,
         "code": "print(knn_predict(x_train=[5, 1, 9], y_labels=['Red', 'Green', 'Blue'], target_x=7))",
-        "expected": "Blue"
+        "expected": "Red"
       }
     ],
     "answer_key": "def knn_predict(x_train, y_labels, target_x):\n    min_dist = float('inf')\n    nearest_index = -1\n    for i, val in enumerate(x_train):\n        dist = abs(val - target_x)\n        if dist < min_dist:\n            min_dist = dist\n            nearest_index = i\n    return y_labels[nearest_index]"
@@ -3672,10 +3703,10 @@
       {
         "id": 1,
         "code": "print(geomancer_trial((0,0), (1,1), (2,2), (0,2)))",
-        "expected": "(True, False, ((0, 0), (0, 2)), 2.0)"
+        "expected": "(True, False, ((0, 0), (1, 1)), 1.4142135623730951)"
       }
     ],
-    "answer_key": "from itertools import combinations\nimport math\n\ndef geomancer_trial(p1, p2, p3, p4):\n    points = [p1, p2, p3, p4]\n    # 1. Check Colinearity\n    colinear_triplets = []\n    for triplet in combinations(points, 3):\n        (x1, y1), (x2, y2), (x3, y3) = triplet\n        area = x1*(y2-y3) + x2*(y3-y1) + x3*(y1-y2)\n        if area == 0:\n            colinear_triplets.append(triplet)\n    has_colinear = len(colinear_triplets) > 0\n    \n    # 2. Point inside triangle\n    def area(a, b, c):\n        return 0.5 * abs(a[0]*(b[1]-c[1]) + b[0]*(c[1]-a[1]) + c[0]*(a[1]-b[1]))\n        \n    inside_result = None\n    for i in range(4):\n        p_test = points[i]\n        others = points[:i] + points[i+1:]\n        A_abc = area(others[0], others[1], others[2])\n        A_pab = area(p_test, others[0], others[1])\n        A_pbc = area(p_test, others[1], others[2])\n        A_pac = area(p_test, others[0], others[2])\n        if abs(A_abc - (A_pab + A_pbc + A_pac)) < 1e-9:\n            inside_result = (True, p_test, others)\n            break\n            \n    if not inside_result:\n        inside_result = False\n        \n    # 3. Closest points\n    min_dist = float('inf')\n    closest_pair = None\n    for i in range(4):\n        for j in range(i+1, 4):\n            d = math.sqrt((points[i][0]-points[j][0])**2 + (points[i][1]-points[j][1])**2)\n            if d < min_dist:\n                min_dist = d\n                closest_pair = (points[i], points[j])\n                \n    return has_colinear, inside_result, closest_pair, min_dist"
+    "answer_key": "from itertools import combinations\nimport math\n\ndef geomancer_trial(p1, p2, p3, p4):\n    points = [p1, p2, p3, p4]\n    # 1. Check Colinearity\n    colinear_triplets = []\n    for triplet in combinations(points, 3):\n        (x1, y1), (x2, y2), (x3, y3) = triplet\n        area = x1*(y2-y3) + x2*(y3-y1) + x3*(y1-y2)\n        if area == 0:\n            colinear_triplets.append(triplet)\n    has_colinear = len(colinear_triplets) > 0\n\n    # 2. Point strictly inside triangle\n    def area(a, b, c):\n        return 0.5 * abs(a[0]*(b[1]-c[1]) + b[0]*(c[1]-a[1]) + c[0]*(a[1]-b[1]))\n\n    inside_result = False\n    for i in range(4):\n        p_test = points[i]\n        others = points[:i] + points[i+1:]\n        A_abc = area(others[0], others[1], others[2])\n        if A_abc <= 1e-9:\n            continue\n        A_pab = area(p_test, others[0], others[1])\n        A_pbc = area(p_test, others[1], others[2])\n        A_pac = area(p_test, others[0], others[2])\n        if abs(A_abc - (A_pab + A_pbc + A_pac)) < 1e-9 and A_pab > 1e-9 and A_pbc > 1e-9 and A_pac > 1e-9:\n            inside_result = (True, p_test, others)\n            break\n\n    # 3. Closest points\n    min_dist = float('inf')\n    closest_pair = None\n    for i in range(4):\n        for j in range(i+1, 4):\n            d = math.sqrt((points[i][0]-points[j][0])**2 + (points[i][1]-points[j][1])**2)\n            if d < min_dist:\n                min_dist = d\n                closest_pair = (points[i], points[j])\n\n    return has_colinear, inside_result, closest_pair, min_dist"
   },
   {
     "id": "tin314_p3_q9",
@@ -3719,10 +3750,10 @@
       {
         "id": 1,
         "code": "print(forbidden_passage([(2,2), (3,3)]))",
-        "expected": "(True, [(1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (2, 8), (3, 8), (4, 8), (5, 8), (6, 8), (7, 8), (8, 8)], 120)"
+        "expected": "(True, [(1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (2, 8), (3, 8), (4, 8), (5, 8), (6, 8), (7, 8), (8, 8)], 1080)"
       }
     ],
-    "answer_key": "def forbidden_passage(monsters_list):\n    start = (1, 1)\n    end = (8, 8)\n    monsters = set(monsters_list)\n    queue = [[start]]\n    visited = {start}\n    shortest_path = None\n    safe_paths_count = 0\n    \n    # BFS\n    while queue:\n        path = queue.pop(0)\n        x, y = path[-1]\n        if (x, y) == end:\n            shortest_path = path\n            break\n        moves = [(x+1, y), (x, y+1)]\n        for nx, ny in moves:\n            if nx <= 8 and ny <= 8 and (nx, ny) not in monsters and (nx, ny) not in visited:\n                visited.add((nx, ny))\n                new_path = list(path)\n                new_path.append((nx, ny))\n                queue.append(new_path)\n                \n    # DP Counting\n    if shortest_path:\n        dp = [[0]*9 for _ in range(9)]\n        if (1,1) not in monsters:\n            dp[1][1] = 1\n            for i in range(1, 9):\n                for j in range(1, 9):\n                    if (i, j) == (1, 1): continue\n                    if (i, j) in monsters:\n                        dp[i][j] = 0\n                    else:\n                        dp[i][j] = dp[i-1][j] + dp[i][j-1]\n        safe_paths_count = dp[8][8]\n        return True, shortest_path, safe_paths_count\n    else:\n        return \"No safe path\""
+    "answer_key": "def forbidden_passage(monsters_list):\n    start = (1, 1)\n    end = (8, 8)\n    monsters = set(monsters_list)\n    queue = [[start]]\n    visited = {start}\n    shortest_path = None\n\n    while queue:\n        path = queue.pop(0)\n        x, y = path[-1]\n        if (x, y) == end:\n            shortest_path = path\n            break\n        moves = [(x, y+1), (x+1, y)]\n        for nx, ny in moves:\n            if nx <= 8 and ny <= 8 and (nx, ny) not in monsters and (nx, ny) not in visited:\n                visited.add((nx, ny))\n                new_path = list(path)\n                new_path.append((nx, ny))\n                queue.append(new_path)\n\n    if shortest_path:\n        dp = [[0]*9 for _ in range(9)]\n        if (1, 1) not in monsters:\n            dp[1][1] = 1\n            for i in range(1, 9):\n                for j in range(1, 9):\n                    if (i, j) == (1, 1): continue\n                    if (i, j) in monsters:\n                        dp[i][j] = 0\n                    else:\n                        dp[i][j] = dp[i-1][j] + dp[i][j-1]\n        safe_paths_count = dp[8][8]\n        return True, shortest_path, safe_paths_count\n    else:\n        return 'No safe path'"
   },
   {
     "id": "tin314_p3_q11",
@@ -3924,7 +3955,7 @@
         "expected": "({'name': 'A', 'd': 2, 'p': 2000, 'r': 4}, [('A', 0.0018), ('B', 0.0046)])"
       }
     ],
-    "answer_key": "def find_accommodation(houses):\n    valid_houses = [h for h in houses if h['d'] <= 3.0]\n    cheapest = min(valid_houses, key=lambda x: x['p']) if valid_houses else None\n    ranked_houses = []\n    for h in houses:\n        score = (h['r'] / h['p']) - (h['d'] * 0.1)\n        ranked_houses.append((h['name'], score))\n    ranked_houses.sort(key=lambda x: x[1], reverse=True)\n    top_3 = ranked_houses[:3]\n    return cheapest, top_3"
+    "answer_key": "def find_accommodation(houses):\n    valid_houses = [h for h in houses if h['d'] <= 3.0]\n    cheapest = min(valid_houses, key=lambda x: x['p']) if valid_houses else None\n    ranked_houses = []\n    for h in houses:\n        score = round((h['r'] / h['p']) - (h['d'] * 0.0001), 4)\n        ranked_houses.append((h['name'], score))\n    return cheapest, ranked_houses[:3]"
   },
   {
     "id": "tin314_p4_q10",
@@ -4389,6 +4420,26 @@
         "id": 1,
         "code": "print(count_triples([0]))",
         "expected": "1"
+      },
+      {
+        "id": 2,
+        "code": "print(count_triples([1, -1, 0]))",
+        "expected": "3"
+      },
+      {
+        "id": 3,
+        "code": "print(count_triples([1, 2, 3]))",
+        "expected": "0"
+      },
+      {
+        "id": 4,
+        "code": "print(count_triples([-5, 1, 2, 3]))",
+        "expected": "2"
+      },
+      {
+        "id": 5,
+        "code": "print(count_triples([3, -3, 0]))",
+        "expected": "3"
       }
     ],
     "hint": "Dùng 3 vòng lặp for i, for j, for k để kiểm tra, hoặc dùng dictionary (hash map) để giảm độ phức tạp thời gian."

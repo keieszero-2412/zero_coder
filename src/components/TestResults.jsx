@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CheckCircle2, XCircle, Activity, ChevronDown, ChevronRight } from 'lucide-react';
+import { CheckCircle2, XCircle, Activity } from 'lucide-react';
 
 function TestCaseResult({ res, index }) {
   const [showDiff, setShowDiff] = useState(false);

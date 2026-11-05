@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { collection, getDocs, query, orderBy, writeBatch, doc } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { db } from '../config/firebase';
 
 const ProblemsContext = createContext();
@@ -8,7 +8,7 @@ export function useProblems() {
   return useContext(ProblemsContext);
 }
 
-const CACHE_VERSION = 'v17_2809_test_renamed';
+const CACHE_VERSION = 'v18_debug_problems';
 
 export function ProblemsProvider({ children }) {
   // Initialize from localStorage for instant load (SWR pattern)

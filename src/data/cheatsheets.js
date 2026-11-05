@@ -1469,7 +1469,7 @@ export const MIDTERM_CHEATSHEETS = {
   }
 };
 
-export function getAllCheatsheetItems(term = 'last') {
+export function getAllCheatsheetItems(term = 'final') {
   const source = term === 'mid' ? MIDTERM_CHEATSHEETS : CHEATSHEETS;
   const items = [];
   Object.values(source).forEach(lecture => {

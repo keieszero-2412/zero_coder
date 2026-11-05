@@ -619,7 +619,14 @@ json.dumps({"got": mystdout.getvalue().strip(), "error": err_msg})
           } else {
             const expNorm = String(test.expected ?? '').trim();
             const gotNorm = String(resultObj.got ?? '').trim();
-            const passed = (gotNorm === expNorm) || (gotNorm.replace(/"/g, "'") === expNorm.replace(/"/g, "'"));
+            let passed = (gotNorm === expNorm) || (gotNorm.replace(/"/g, "'") === expNorm.replace(/"/g, "'"));
+            if (!passed) {
+              const numGot = Number(gotNorm);
+              const numExp = Number(expNorm);
+              if (!Number.isNaN(numGot) && !Number.isNaN(numExp) && gotNorm !== '' && expNorm !== '') {
+                passed = Math.abs(numGot - numExp) < 1e-5;
+              }
+            }
             results.push({ ...test, passed, got: resultObj.got });
           }
         } catch (err) {
