@@ -45,7 +45,7 @@ checkout and reports nothing changed, which reads as a verified refactor.
 4. Plan update order: interfaces → implementations → callers → tests
 ```
 
-> If "Index is stale" → run `node .gitnexus/run.cjs analyze` in terminal.
+> If "Index is stale" → run `node C:/Users/zero/GitNexusIndexes/ZEROCODER-e5d1603dc0bc/run.cjs analyze --index-only` in terminal.
 
 ## Checklists
 

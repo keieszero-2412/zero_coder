@@ -1,7 +1,6 @@
 ---
-trigger: always_on
-glob: "**/*"
-description: "Core project knowledge, architecture and history for ZeroCoder"
+trigger: model_decision
+description: "Detailed architecture and UI history; load only for relevant ZeroCoder changes"
 ---
 
 # ZERO CODER - Project Overview & Guidelines
