@@ -1,4 +1,5 @@
 import { GlobalHeader } from './GlobalHeader';
+import { Notes } from '../pages/Notes';
 
 export function Layout({ children }) {
   return (
@@ -7,6 +8,7 @@ export function Layout({ children }) {
       <div className="zc-layout-scroll" style={{ flex: 1, overflow: 'auto', position: 'relative' }}>
         {children}
       </div>
+      <Notes />
     </div>
   );
 }

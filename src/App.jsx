@@ -70,6 +70,7 @@ function App() {
                           <Route path="/workspace/:id" element={<ProtectedRoute><Workspace /></ProtectedRoute>} />
                           <Route path="/learn/:lectureId/:notebookId" element={<ProtectedRoute><LearningWorkspace /></ProtectedRoute>} />
                           <Route path="/learning" element={<ProtectedRoute><Learning /></ProtectedRoute>} />
+                          <Route path="/notes" element={<Navigate to="/" replace />} />
                           <Route path="*" element={<Navigate to="/" replace />} />
                         </Routes>
                       </Layout>
