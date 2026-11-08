@@ -25,6 +25,10 @@ dist-ssr
 .env
 admin_backups/
 
+# Local agent/tool state; keep shared Impeccable design/config files tracked.
+/.impeccable/config.local.json
+/tools/firebase/.runtime/
+
 # Python
 __pycache__/
 *.py[cod]

@@ -6,7 +6,8 @@ conflicting instructions. Record the resolution in the active phase report.
 
 - **One phase at a time:** Phase 0 → 1 → 2 → 3 → 4 → 5 → 6. Follow the full
   [execution rule](.agents/rules/phase-execution.md). Report the current phase
-  **before** doing any work for the next one. Do not invent missing phase scopes.
+  **before** doing any work for the next one. Phase 0B cleanup is required before
+  Phase 1. Do not invent missing phase scopes.
 - **Architecture:** Firebase Authentication + Spark + Cloud Firestore for structured
   data; Cloudflare R2 for all persistent user images. No Firebase Cloud Storage,
   Blaze, additional databases, or image binaries/Base64 in Firestore. Preserve
@@ -29,3 +30,4 @@ conflicting instructions. Record the resolution in the active phase report.
 Do not routinely reread D:/PROJECT/Agent instructions. Consult a source only if
 missing context, changed guidance or a concrete unresolved conflict requires it.
 Use version-controlled rules and phase reports to recover across sessions.
+See [configuration layout and verification](docs/agents/README.md).

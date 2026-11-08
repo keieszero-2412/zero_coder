@@ -13,6 +13,7 @@ duplicate their instructions. Choose only skills relevant to the current task.
 - Detailed custom project context: [zerocoder-rules.md](../rules/zerocoder-rules.md).
 - Sequential phase contract: [phase-execution.md](../rules/phase-execution.md).
 - Task gates and conflict decisions: [agent-workflow.md](../rules/agent-workflow.md).
+- Configuration paths/checks and phase history: [docs/agents/](../../docs/agents/README.md).
 
 ## Automatic selection by task
 

@@ -52,7 +52,7 @@ Pure client-side Python execution via Pyodide WebAssembly paired with Firebase B
 
 - Problem banks and test cases: `public/problems.json` and Firestore collections.
 - Lecture notebooks and datasets: `public/lectures/` containing real `.ipynb` files, CSV datasets, and index `lectures.json`.
-- System documentation: [README.md](file:///d:/PROJECT/ZEROCODER/README.md), [WIKI.md](file:///d:/PROJECT/ZEROCODER/WIKI.md), and [.agents/rules/zerocoder-rules.md](file:///d:/PROJECT/ZEROCODER/.agents/rules/zerocoder-rules.md).
+- System documentation: [README.md](README.md), [WIKI.md](WIKI.md), and [.agents/rules/zerocoder-rules.md](.agents/rules/zerocoder-rules.md).
 
 ## Product Principles
 

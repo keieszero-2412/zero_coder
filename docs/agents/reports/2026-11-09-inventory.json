@@ -1,0 +1,985 @@
+{
+  "baseline": "f7d05c8",
+  "scope": "One-time repository inventory including relevant hidden and ignored files; excluded vendor/build/cache trees classified separately. No secret contents included.",
+  "policies": {
+    "entry": {
+      "purpose": "Shared project entry point",
+      "consumers": "Codex/Antigravity workspace discovery; Claude native import",
+      "requiredPath": true,
+      "action": "retain; add Phase 0B and canonical documentation link"
+    },
+    "claudeEntry": {
+      "purpose": "Claude compatibility entry point",
+      "consumers": "Claude instruction loader",
+      "requiredPath": true,
+      "action": "replace prose pointer with native @AGENTS.md import"
+    },
+    "sharedRules": {
+      "purpose": "Shared project constraints",
+      "consumers": "AGENTS references and Antigravity flat rule discovery",
+      "requiredPath": true,
+      "action": "retain flat paths; repair activation frontmatter; preserve custom body"
+    },
+    "canonicalSkills": {
+      "purpose": "Canonical GitNexus workflows and task index",
+      "consumers": "AGENTS task routing; .agents workspace skill discovery; Claude wrappers",
+      "requiredPath": true,
+      "action": "retain; no duplicate skill implementation or global install"
+    },
+    "claudeSkills": {
+      "purpose": "Six compatibility skill entries",
+      "consumers": "Claude .claude/skills discovery",
+      "requiredPath": true,
+      "action": "retain thin metadata/reference wrappers"
+    },
+    "impeccableConfig": {
+      "purpose": "Impeccable project build preference",
+      "consumers": "Installed impeccable context and doctor",
+      "requiredPath": true,
+      "action": "retain code buildPath; local override ignored"
+    },
+    "impeccableSidecar": {
+      "purpose": "Design extensions beyond normative Markdown token primitives",
+      "consumers": "Installed Impeccable design panel/doctor",
+      "requiredPath": true,
+      "action": "retain schema v2; timestamp-stale warning reported, no unverified regeneration"
+    },
+    "design": {
+      "purpose": "Canonical root product/design context",
+      "consumers": "Installed impeccable context/doctor resolves these root files",
+      "requiredPath": true,
+      "action": "retain root paths/content; normalize only PRODUCT local Markdown links"
+    },
+    "ledger": {
+      "purpose": "Phase history and current blockers",
+      "consumers": "Future agents; no tool-mandated old path found",
+      "requiredPath": false,
+      "action": "move to docs/agents/phase-ledger.md and update references"
+    },
+    "editor": {
+      "purpose": "Local editor/runtime task preferences",
+      "consumers": "VS Code; tasks are not executed by this audit",
+      "requiredPath": true,
+      "action": "retain ignored files; existing Firebase task is not verified as emulator-only"
+    },
+    "backups": {
+      "purpose": "Backup, migration fixtures and historical verification evidence",
+      "consumers": "Manual recovery/history; not authoritative for the current checkout",
+      "requiredPath": false,
+      "action": "retain byte-for-byte in ignored admin_backups; do not publish private data"
+    },
+    "scratch": {
+      "purpose": "Existing manual app/content tooling, tests or snapshots; not an agent configuration source",
+      "consumers": "Manual scripts; package test:offline invokes run_offline_tests.cjs; other live consumers unverified",
+      "requiredPath": false,
+      "action": "retain byte-for-byte; do not execute cloud/migration scripts or consolidate application files"
+    },
+    "projectDocs": {
+      "purpose": "Existing user/application documentation",
+      "consumers": "Developers; PRODUCT references and README-to-WIKI link",
+      "requiredPath": false,
+      "action": "retain; no parallel authoritative agent instructions added"
+    },
+    "ignore": {
+      "purpose": "Exclude local machine state from source control",
+      "consumers": "Git",
+      "requiredPath": true,
+      "action": "retain existing patterns; add only local Impeccable override and Firebase test runtime"
+    },
+    "secrets": {
+      "purpose": "Private environment configuration",
+      "consumers": "Application/local tools; content not read",
+      "requiredPath": false,
+      "action": "retain ignored; no content or secret hashes published"
+    }
+  },
+  "excludedTrees": [
+    {
+      "path": ".git",
+      "action": "retain; Git metadata or third-party/build/cache tree, not canonical agent configuration"
+    },
+    {
+      "path": "dist",
+      "action": "retain; Git metadata or third-party/build/cache tree, not canonical agent configuration"
+    },
+    {
+      "path": "node_modules",
+      "action": "retain; Git metadata or third-party/build/cache tree, not canonical agent configuration"
+    },
+    {
+      "path": "public/pyodide",
+      "action": "retain; Git metadata or third-party/build/cache tree, not canonical agent configuration"
+    },
+    {
+      "path": "tools/firebase/node_modules",
+      "action": "retain; Git metadata or third-party/build/cache tree, not canonical agent configuration"
+    }
+  ],
+  "items": [
+    {
+      "path": ".agents/rules/agent-workflow.md",
+      "policy": "sharedRules",
+      "tracked": true
+    },
+    {
+      "path": ".agents/rules/phase-execution.md",
+      "policy": "sharedRules",
+      "tracked": true
+    },
+    {
+      "path": ".agents/rules/zerocoder-rules.md",
+      "policy": "sharedRules",
+      "tracked": true
+    },
+    {
+      "path": ".agents/skills/gitnexus-cli/SKILL.md",
+      "policy": "canonicalSkills",
+      "tracked": true
+    },
+    {
+      "path": ".agents/skills/gitnexus-debugging/SKILL.md",
+      "policy": "canonicalSkills",
+      "tracked": true
+    },
+    {
+      "path": ".agents/skills/gitnexus-exploring/SKILL.md",
+      "policy": "canonicalSkills",
+      "tracked": true
+    },
+    {
+      "path": ".agents/skills/gitnexus-guide/SKILL.md",
+      "policy": "canonicalSkills",
+      "tracked": true
+    },
+    {
+      "path": ".agents/skills/gitnexus-impact-analysis/SKILL.md",
+      "policy": "canonicalSkills",
+      "tracked": true
+    },
+    {
+      "path": ".agents/skills/gitnexus-refactoring/SKILL.md",
+      "policy": "canonicalSkills",
+      "tracked": true
+    },
+    {
+      "path": ".agents/skills/INDEX.md",
+      "policy": "canonicalSkills",
+      "tracked": true
+    },
+    {
+      "path": ".claude/skills/gitnexus-cli/SKILL.md",
+      "policy": "claudeSkills",
+      "tracked": true
+    },
+    {
+      "path": ".claude/skills/gitnexus-debugging/SKILL.md",
+      "policy": "claudeSkills",
+      "tracked": true
+    },
+    {
+      "path": ".claude/skills/gitnexus-exploring/SKILL.md",
+      "policy": "claudeSkills",
+      "tracked": true
+    },
+    {
+      "path": ".claude/skills/gitnexus-guide/SKILL.md",
+      "policy": "claudeSkills",
+      "tracked": true
+    },
+    {
+      "path": ".claude/skills/gitnexus-impact-analysis/SKILL.md",
+      "policy": "claudeSkills",
+      "tracked": true
+    },
+    {
+      "path": ".claude/skills/gitnexus-refactoring/SKILL.md",
+      "policy": "claudeSkills",
+      "tracked": true
+    },
+    {
+      "path": ".impeccable/config.json",
+      "policy": "impeccableConfig",
+      "tracked": true
+    },
+    {
+      "path": ".impeccable/design.json",
+      "policy": "impeccableSidecar",
+      "tracked": true
+    },
+    {
+      "path": ".vscode/settings.json",
+      "policy": "editor",
+      "tracked": false
+    },
+    {
+      "path": ".vscode/tasks.json",
+      "policy": "editor",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/feedback-migration/demo-zerocoder/1b988444658290e44bd14fe2b2491d35a27b5940ea2da0c42d1d84f9750a4b5d.json",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/feedback-migration/demo-zerocoder/209563bd077c1263e6d8ede4c68a0ca2e2616a0a6e101d6f1febdb2fe112463d.json",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/feedback-migration/demo-zerocoder/79ff3c8f2f741d66828830cfab201d397f47de90b8acded7039cbeed7233d34a.json",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/feedback-migration/demo-zerocoder/8ea985deeff0bf0548319b5a6bf5dec45b89db281b31fe8f463b0cbd6cdfc852.json",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/feedback-migration/demo-zerocoder/927eda1d8bc47fb10a8f378713e12eadcc0e90cd9c13f8ab618b86ea760b90a7.json",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/feedback-migration/demo-zerocoder/da341d706ba4dbb950964ac0370b589df59201bc2f5f8d812f08ec07a2ef9c69.json",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/feedback-migration/demo-zerocoder/efa436f40ee2cbd23d9dc3cc841dbefc8325c80438255ccbe68cac900a9b5f70.json",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/feedback-migration/demo-zerocoder/fb2251feff9b99558f7eb03044c0c9b128231508467520de833c10ef5bf17879.json",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/package.json",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase1-build.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase1-lint.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase2-build-final.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase2-build.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase2-emulator-final.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase2-emulator.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase2-lint-final.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase2-lint.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase3-build-final.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase3-build.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase3-emulator-final.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase3-emulator.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase3-lint-final.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase3-lint.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase3-restart-red.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase4-build-final.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase4-build.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase4-emulator-final.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase4-emulator.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase4-lint-final.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase4-lint.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase5-build-final.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase5-build.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase5-emulator.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase5-lint-final.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase5-lint.log",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/phase5-ui-source-audit.json",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/src/App.jsx",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/src/components/GlobalHeader.jsx",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/src/components/Layout.jsx",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/src/hooks/python.worker.js",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/src/index.css",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/src/pages/Notes.jsx",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/src/utils/notesExport.js",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/src/utils/notesImages.js",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/src/utils/notesImages.test.js",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/firebase-architecture-baseline/tracked-before.patch",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "admin_backups/problems.json",
+      "policy": "backups",
+      "tracked": false
+    },
+    {
+      "path": "AGENTS.md",
+      "policy": "entry",
+      "tracked": true
+    },
+    {
+      "path": "CLAUDE.md",
+      "policy": "claudeEntry",
+      "tracked": true
+    },
+    {
+      "path": "DESIGN.md",
+      "policy": "design",
+      "tracked": true
+    },
+    {
+      "path": "docs/agent-phase-ledger.md",
+      "policy": "ledger",
+      "tracked": false
+    },
+    {
+      "path": "PRODUCT.md",
+      "policy": "design",
+      "tracked": true
+    },
+    {
+      "path": "scratch/add_2809_problem.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/add_midterm_cheatsheets.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/add_mocktest2.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/aiService_test.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/analyze_answers.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/append_mobile_css.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/apply_quizzes.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/apply_sort_questions.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/audit_all_problems.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/audit_quiz_answers.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/build_quizzes.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/check_answers.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/check_dataset_paths.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/check_localstorage.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/check_missing_def.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/check_pyodide_pkgs.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/check_sessions.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/clean_all_initial_code.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/clean_problems.js",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/dashboard_old.jsx",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/dedupe.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/deep_scan_edge.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/diff_plus.txt",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/extract_quizzes.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/fast_scan_cache.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/find_mismatches.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/fix_all_missing_defs.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/fix_css.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/full_quizzes.txt",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/generated_quizzes.json",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/insert_ai_hints.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/insert_ftds_hints.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/inspect_edge_cache.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/inspect_l9_12.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/inspect_ldb.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/inspect_q1_q5.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/inspect_quiz.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/inspect_quizzes.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/inspect_quiz_details.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/inspect_tabs.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/make_favicon.py",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/mock_test.json",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/offline_guard.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/prepare_lectures.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/quiz_details.txt",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/quiz_summary.txt",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/quiz_summary_utf8.txt",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/recover.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/run_offline_tests.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/scan_cache_blocks.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/scan_cache_files.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/search_edge_data.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_ai_apis.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_all_apis.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_all_problems.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_api.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_att.png",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_chat.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_clean_initial.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_coding_models.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_empty.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_format.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_fromHtml.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_gemini.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_gemini_chat.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_gptoss.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_katex.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_katex2.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_katex_align.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_katex_direct.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_l12_cells.py",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_l12_ex2_ex3.py",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_l12_fast.py",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_l9_12_exec.py",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_latex.txt",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_latexHelper.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_markdown_offline.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_openrouter.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_provider_responses.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_qwen_think.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_real_ai.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_render.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/test_unified.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/update_2809.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/update_mock1_1.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/update_mock2_5.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/update_mocktest2.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/update_mocktest3.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/update_mocktest3_full.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/update_mocktest4.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/update_mocktest4_full.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/update_mock_hints.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/update_specific_hints.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/upload_quizzes_to_firestore.mjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/verify_about_redesign.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/verify_button_typography.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "scratch/write_quiz_details.cjs",
+      "policy": "scratch",
+      "tracked": true
+    },
+    {
+      "path": "README.md",
+      "policy": "projectDocs",
+      "tracked": true
+    },
+    {
+      "path": "WIKI.md",
+      "policy": "projectDocs",
+      "tracked": true
+    },
+    {
+      "path": ".gitignore",
+      "policy": "ignore",
+      "tracked": true
+    },
+    {
+      "path": ".env",
+      "policy": "secrets",
+      "tracked": false
+    }
+  ]
+}

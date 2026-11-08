@@ -1,3 +1,8 @@
+---
+trigger: model_decision
+description: "Use when planning, implementing, debugging, reviewing, or verifying a ZeroCoder change, or resolving instruction conflicts."
+---
+
 # Task workflow and instruction decisions
 
 ## Loading and conflicts

@@ -2,8 +2,8 @@
 
 ## Current instructions
 
-- Entry point: [AGENTS.md](../AGENTS.md).
-- Execution contract: [phase-execution.md](../.agents/rules/phase-execution.md).
+- Entry point: [AGENTS.md](../../AGENTS.md).
+- Execution contract: [phase-execution.md](../../.agents/rules/phase-execution.md).
 - Architecture: Firebase Authentication, Spark and Firestore for structured data;
   Cloudflare R2 for persistent user images. No Firebase Cloud Storage, Blaze, or
   additional databases. Original image bytes and existing user data must survive.
@@ -49,8 +49,34 @@ and staged scope must pass before checkpoint. No application build, Emulator run
 or production verification is claimed for this documentation-only phase.
 
 Checkpoint: the commit containing this report. Retrieve with
-`git log -1 --format=%h -- docs/agent-phase-ledger.md`.
+`git log --follow --format=%h -- docs/agents/phase-ledger.md`.
+
+Historical Phase 0 checkpoint: `f7d05c8`. Phase 0B relocates this ledger;
+the command above follows the rename rather than identifying Phase 0 alone.
 
 Remaining work: obtain the actual Phase 1–6 plan, define Phase 1 acceptance criteria,
 and implement only Phase 1 after delivering the Phase 0 report. The specific plan
 question has been asked; missing phase definitions block dependent implementation.
+
+## Phase 0B — Configuration consolidation
+
+Status: local cleanup VERIFIED; interactive Claude/Antigravity host smoke tests
+BLOCKED. No overall PASS or production verification is claimed.
+
+Scope: agent/tool configuration, documentation organization, ignored local state
+and a configuration verifier. No application-source or database implementation.
+
+Acceptance: one authoritative entry point, tool-required discovery paths preserved,
+working local references and rule/skill metadata, root design context preserved,
+safe history retention, phase-only commit, and explicit host-test limitations.
+
+Changes: required Antigravity rule frontmatter, Claude native shared import,
+canonical agent documentation under this directory, portable product-document
+links, targeted ignore rules, and a dependency-free structural checker. Six Claude
+skill wrappers and Impeccable configuration/design sidecar remain at required paths.
+
+See the [Phase 0B report](reports/2026-11-09-phase-0b.md) and its per-item inventory
+for evidence, retention decisions and the final layout. The inventory is one-time;
+normal sessions use the entry point/index, not a repeated full scan.
+
+Phase 1 remains unstarted. The user's Phase 1–6 definitions are still required.

@@ -1,7 +1,16 @@
+---
+trigger: always_on
+description: "Execute one ZeroCoder phase at a time; verify and report it before the next phase."
+---
+
 # Strict sequential phase execution
 
 Execute exactly ONE Phase at a time, in order:
 **Phase 0 → Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5 → Phase 6.**
+
+The user's required **Phase 0B configuration cleanup** is an additional gate
+after Phase 0 and before Phase 1. Complete, verify, commit and report Phase 0B
+under the same contract; it does not renumber or authorize Phase 1–6.
 
 For each Phase:
 
