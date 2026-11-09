@@ -75,15 +75,15 @@ until owner-provisioned resources/secrets and explicit release approval exist.
 
 ## Phase 3 — Application integration
 
-- [ ] Feedback saves originals through the shared R2 service and only references in
+- [x] Feedback saves originals through the shared R2 service and only references in
   Firestore; preserve legacy Base64 rendering, admin viewing/replies/notifications.
-- [ ] Preserve floating/draggable Notes and image paste/upload/preview/edit controls,
+- [x] Preserve floating/draggable Notes and image paste/upload/preview/edit controls,
   tags and source context. Store structured Notes in UID-owned Firestore documents.
-- [ ] Add UID synchronization, IndexedDB cache/queue, offline edits/retries,
+- [x] Add UID synchronization, IndexedDB cache/queue, offline edits/retries,
   revision/conflict protection and strict account switching/isolation.
-- [ ] Classify other image producers; integrate persistent user uploads, preserving
+- [x] Classify other image producers; integrate persistent user uploads, preserving
   bundled static/notebook assets and temporary execution output appropriately.
-- [ ] Add component/integration tests and browser checks. Production-ready flags
+- [x] Add component/integration tests and browser checks. Production-ready flags
   remain off until actual Firebase/Worker/R2 verification succeeds.
 
 Acceptance: reference-only new image records, original hash preservation, Notes UI

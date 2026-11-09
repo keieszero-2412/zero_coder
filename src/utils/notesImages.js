@@ -1,3 +1,6 @@
+import { prepareOriginal } from './imageOriginal.js';
+import { imageStorage, isImagesConfigured } from './imageService.js';
+
 const MAX_BYTES = 10 * 1024 * 1024;
 const TYPES = { 'image/png': 'png', 'image/jpeg': 'jpg', 'image/webp': 'webp', 'image/gif': 'gif' };
 
@@ -16,7 +19,7 @@ export async function validateImage(file) {
 }
 
 let database;
-function openDatabase() {
+export function openImageDatabase() {
   if (!database) database = new Promise((resolve, reject) => {
     const request = indexedDB.open('zerocoder-note-images', 1);
     request.onupgradeneeded = () => request.result.createObjectStore('images', { keyPath: 'id' });
@@ -26,8 +29,8 @@ function openDatabase() {
   return database;
 }
 
-async function imageRecord(id, record) {
-  const db = await openDatabase();
+export async function imageRecord(id, record) {
+  const db = await openImageDatabase();
   return new Promise((resolve, reject) => {
     const transaction = db.transaction('images', record ? 'readwrite' : 'readonly');
     const store = transaction.objectStore('images');
@@ -53,41 +56,80 @@ export async function decodeImage(blob) {
 export async function storeNoteImage(file, uid, onProgress = () => {}, onStored = () => {}) {
   const extension = await validateImage(file);
   const decoded = await decodeImage(file);
-  const id = crypto.randomUUID();
-  const record = { id, blob: file, extension, width: decoded.naturalWidth, height: decoded.naturalHeight, createdAt: Date.now(), owner: uid || 'guest' };
-  onProgress({ percent: 5, message: 'Saving image locally' });
+  const now = Date.now();
+
+  let originalMeta;
+  let id;
+  try {
+    originalMeta = await prepareOriginal(file, { ownerUid: uid || 'guest', feature: 'notes', parentId: `local-${now}` });
+    id = originalMeta.id;
+  } catch {
+    id = typeof crypto.randomUUID === 'function' ? crypto.randomUUID() : `img-${now}-${Math.random().toString(36).slice(2, 8)}`;
+  }
+
+  const record = {
+    id,
+    blob: file,
+    extension,
+    width: decoded.naturalWidth,
+    height: decoded.naturalHeight,
+    createdAt: now,
+    owner: uid || 'guest',
+    sha256: originalMeta?.sha256 || null
+  };
+
+  onProgress({ percent: 10, message: 'Saving image locally' });
   await imageRecord(id, record);
   await onStored(record);
-  // Local bytes are durable before any cloud request; denied/offline uploads never lose the image.
-  if (uid && navigator.onLine) {
-    let task;
-    let timer;
+
+  // Cloudflare R2 synchronization via imageStorage
+  if (uid && isImagesConfigured() && navigator.onLine) {
     try {
-      const [{ storage }, { ref, uploadBytesResumable }] = await Promise.all([import('../config/firebase'), import('firebase/storage')]);
-      if (storage.app.options.storageBucket) {
-        const path = `notes/${uid}/images/${id}.${extension}`;
-        task = uploadBytesResumable(ref(storage, path), file, { contentType: file.type });
-        await new Promise((resolve, reject) => {
-          timer = setTimeout(() => { task.cancel(); reject(new Error('Cloud upload timed out')); }, 8000);
-          task.on('state_changed', (snapshot) => onProgress({ percent: Math.round(10 + snapshot.bytesTransferred / snapshot.totalBytes * 85), message: 'Uploading image' }), reject, resolve);
-        });
-        record.cloudPath = path;
-        await imageRecord(id, record);
-      }
-    } catch {
-      onProgress({ percent: 100, message: 'Saved locally — cloud storage unavailable' });
+      onProgress({ percent: 40, message: 'Uploading to Cloudflare R2' });
+      const ready = await imageStorage.save(file, {
+        feature: 'notes',
+        parentId: id,
+        ownerUid: uid
+      });
+      record.cloudSynced = true;
+      record.objectKey = ready.objectKey;
+      await imageRecord(id, record);
+      onProgress({ percent: 100, message: 'Image saved and synced to R2' });
       return record;
-    } finally { clearTimeout(timer); }
+    } catch {
+      onProgress({ percent: 100, message: 'Saved locally — R2 sync pending' });
+      return record;
+    }
   }
-  onProgress({ percent: 100, message: 'Image saved' });
+
+  onProgress({
+    percent: 100,
+    message: isImagesConfigured() ? 'Image saved' : 'Saved locally (cloud storage pending configuration)'
+  });
   return record;
 }
 
-export async function getNoteImage(id) {
-  if (!/^[a-f0-9-]{36}$/i.test(id || '')) throw new Error('Invalid image reference.');
+export async function getNoteImage(id, ownerUid = null) {
+  if (!/^([a-f0-9-]{36}|[a-f0-9]{64}|img-[a-z0-9_-]+)$/i.test(id || '')) {
+    throw new Error('Invalid image reference.');
+  }
   const record = await imageRecord(id);
-  if (!record?.blob) throw new Error('Image is missing from this browser. Restore the original image to insert it again.');
-  return record;
+  if (record?.blob) return record;
+
+  // Try to download from Cloudflare R2 if missing locally and configured
+  if (ownerUid && isImagesConfigured() && navigator.onLine) {
+    try {
+      const downloaded = await imageStorage.download({ id, ownerUid, feature: 'notes' });
+      if (downloaded?.blob) {
+        await imageRecord(id, downloaded);
+        return downloaded;
+      }
+    } catch {
+      // Fall through to missing error
+    }
+  }
+
+  throw new Error('Image is missing from this browser. Restore the original image to insert it again.');
 }
 
 export async function rasterImage(record, type = 'image/png') {

@@ -3,7 +3,8 @@ import { createPortal } from 'react-dom';
 import { MessageSquare, X, Upload, Loader2, CheckCircle2, Plus, ArrowLeft, ImageIcon, Send, Shield, Pencil } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { db } from '../config/firebase';
-import { collection, addDoc, updateDoc, serverTimestamp, query, where, onSnapshot, doc, writeBatch } from 'firebase/firestore';
+import { collection, updateDoc, serverTimestamp, query, where, onSnapshot, doc, setDoc, writeBatch } from 'firebase/firestore';
+import { imageStorage, isImagesConfigured } from '../utils/imageService';
 
 export default function FeedbackWidget({ iconOnly = false }) {
   const { currentUser } = useAuth();
@@ -186,6 +187,19 @@ export default function FeedbackWidget({ iconOnly = false }) {
     }
   };
 
+  const handleViewImage = async (imageId, ownerUid) => {
+    try {
+      if (!isImagesConfigured()) {
+        setError('Cloudflare R2 is not configured yet. Screenshot cannot be downloaded.');
+        return;
+      }
+      const preview = await imageStorage.preview({ id: imageId, ownerUid: ownerUid || currentUser.uid, feature: 'feedback' });
+      setSelectedImage(preview.url);
+    } catch (err) {
+      setError(err.message || 'Failed to load screenshot preview.');
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!description.trim()) {
@@ -197,7 +211,7 @@ export default function FeedbackWidget({ iconOnly = false }) {
     setError('');
 
     try {
-      let imageUrls = [];
+      let imageIds = [];
 
       if (imageFiles.length > 0) {
         if (imageFiles.length > 3) {
@@ -205,12 +219,22 @@ export default function FeedbackWidget({ iconOnly = false }) {
           setIsSubmitting(false);
           return;
         }
-        
-        const uploadPromises = imageFiles.map(async (file) => {
-          return await compressImage(file);
-        });
 
-        imageUrls = await Promise.all(uploadPromises);
+        if (!isImagesConfigured()) {
+          setError('Image uploads require Cloudflare R2 storage to be configured. Please remove images or submit text feedback.');
+          setIsSubmitting(false);
+          return;
+        }
+
+        const targetId = editingFeedbackId || doc(collection(db, 'feedbacks')).id;
+        for (const file of imageFiles) {
+          const record = await imageStorage.save(file, {
+            feature: 'feedback',
+            parentId: targetId,
+            ownerUid: currentUser.uid
+          });
+          imageIds.push(record.id);
+        }
       }
 
       if (editingFeedbackId) {
@@ -219,17 +243,19 @@ export default function FeedbackWidget({ iconOnly = false }) {
           status: 'new', // Reset status back to pending after edit
           updatedAt: serverTimestamp()
         };
-        if (imageUrls.length > 0) {
-          updateData.imageUrls = imageUrls;
+        if (imageIds.length > 0) {
+          updateData.imageIds = imageIds;
         }
         await updateDoc(doc(db, 'feedbacks', editingFeedbackId), updateData);
       } else {
-        await addDoc(collection(db, 'feedbacks'), {
+        const newRef = doc(collection(db, 'feedbacks'));
+        await setDoc(newRef, {
           userId: currentUser.uid,
-          username: currentUser.username,
+          username: currentUser.username || currentUser.email?.split('@')[0] || 'User',
           email: currentUser.email,
           description: description,
-          imageUrls: imageUrls,
+          imageIds: imageIds,
+          imageUrls: [],
           status: 'new', // new, replied, read
           createdAt: serverTimestamp()
         });
@@ -424,11 +450,16 @@ export default function FeedbackWidget({ iconOnly = false }) {
                             )}
                           </div>
 
-                          {(fb.imageUrls?.length > 0 || fb.imageUrl) && (
+                          {(fb.imageUrls?.length > 0 || fb.imageUrl || fb.imageIds?.length > 0) && (
                             <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.25rem' }}>
-                              {(fb.imageUrls || [fb.imageUrl]).map((url, i) => (
-                                <button key={i} onClick={() => setSelectedImage(url)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.75rem', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', cursor: 'pointer', padding: '0.3rem 0.6rem', backgroundColor: 'transparent', borderRadius: 'var(--radius-sm)', transition: 'all 0.2s' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(59, 130, 246, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                              {(fb.imageUrls || (fb.imageUrl ? [fb.imageUrl] : [])).map((url, i) => (
+                                <button key={`legacy-${i}`} onClick={() => setSelectedImage(url)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.75rem', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', cursor: 'pointer', padding: '0.3rem 0.6rem', backgroundColor: 'transparent', borderRadius: 'var(--radius-sm)', transition: 'all 0.2s' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(59, 130, 246, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
                                   <ImageIcon size={14} /> Image {i + 1}
+                                </button>
+                              ))}
+                              {fb.imageIds?.map((id, i) => (
+                                <button key={`r2-${i}`} onClick={() => handleViewImage(id, fb.userId)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.75rem', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', cursor: 'pointer', padding: '0.3rem 0.6rem', backgroundColor: 'transparent', borderRadius: 'var(--radius-sm)', transition: 'all 0.2s' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(59, 130, 246, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                                  <ImageIcon size={14} /> Screenshot {i + 1}
                                 </button>
                               ))}
                             </div>

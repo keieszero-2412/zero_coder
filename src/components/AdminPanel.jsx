@@ -4,6 +4,7 @@ import { db } from '../config/firebase';
 import { collection, query, where, getDocs, doc, setDoc, deleteDoc, updateDoc, onSnapshot } from 'firebase/firestore';
 import { X, Check, Trash2, Mail, MessageSquare, ImageIcon, Settings, Shield, Database, Send, User } from 'lucide-react';
 import { useNotification } from '../context/NotificationContext';
+import { imageStorage, isImagesConfigured } from '../utils/imageService';
 import '../index.css';
 
 const TabButton = ({ label, icon: Icon, active, badge, onClick }) => (
@@ -104,6 +105,19 @@ export function AdminPanel({ onClose }) {
   };
   const [selectedImage, setSelectedImage] = useState(null);
   const [replyDrafts, setReplyDrafts] = useState({});
+
+  const handleViewAdminImage = async (imageId, ownerUid) => {
+    try {
+      if (!isImagesConfigured()) {
+        showToast('Cloudflare R2 storage is not configured yet.', 'error');
+        return;
+      }
+      const preview = await imageStorage.preview({ id: imageId, ownerUid, feature: 'feedback' });
+      setSelectedImage(preview.url);
+    } catch (err) {
+      showToast(err.message || 'Failed to load screenshot preview from R2.', 'error');
+    }
+  };
 
   const handleSendReply = async (feedbackId) => {
     const replyText = replyDrafts[feedbackId]?.trim();
@@ -717,19 +731,23 @@ export function AdminPanel({ onClose }) {
                               {fb.description}
                             </div>
 
-                            {(fb.imageUrls && fb.imageUrls.length > 0) ? (
+                            {((fb.imageUrls && fb.imageUrls.length > 0) || (fb.imageIds && fb.imageIds.length > 0) || fb.imageUrl) ? (
                               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                                {fb.imageUrls.map((url, i) => (
-                                  <button key={i} onClick={() => setSelectedImage(url)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', cursor: 'pointer', padding: '0.4rem 0.75rem', backgroundColor: 'transparent', borderRadius: 'var(--radius-sm)', transition: 'all 0.2s' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(59, 130, 246, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                                {fb.imageUrls?.map((url, i) => (
+                                  <button key={`legacy-${i}`} onClick={() => setSelectedImage(url)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', cursor: 'pointer', padding: '0.4rem 0.75rem', backgroundColor: 'transparent', borderRadius: 'var(--radius-sm)', transition: 'all 0.2s' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(59, 130, 246, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
                                     <ImageIcon size={16} /> Screenshot {i + 1}
                                   </button>
                                 ))}
-                              </div>
-                            ) : fb.imageUrl ? (
-                              <div>
-                                <button onClick={() => setSelectedImage(fb.imageUrl)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', cursor: 'pointer', padding: '0.4rem 0.75rem', backgroundColor: 'transparent', borderRadius: 'var(--radius-sm)', transition: 'all 0.2s' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(59, 130, 246, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
-                                  <ImageIcon size={16} /> View Screenshot
-                                </button>
+                                {fb.imageUrl && !fb.imageUrls?.length && (
+                                  <button onClick={() => setSelectedImage(fb.imageUrl)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', cursor: 'pointer', padding: '0.4rem 0.75rem', backgroundColor: 'transparent', borderRadius: 'var(--radius-sm)', transition: 'all 0.2s' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(59, 130, 246, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                                    <ImageIcon size={16} /> View Screenshot
+                                  </button>
+                                )}
+                                {fb.imageIds?.map((id, i) => (
+                                  <button key={`r2-${i}`} onClick={() => handleViewAdminImage(id, fb.userId)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', cursor: 'pointer', padding: '0.4rem 0.75rem', backgroundColor: 'transparent', borderRadius: 'var(--radius-sm)', transition: 'all 0.2s' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(59, 130, 246, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                                    <ImageIcon size={16} /> Screenshot {i + 1} (R2)
+                                  </button>
+                                ))}
                               </div>
                             ) : null}
 

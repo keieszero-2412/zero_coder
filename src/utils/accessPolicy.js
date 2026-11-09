@@ -7,5 +7,8 @@ export function resolveAccess(claims = {}, uidGrant = null, emailGrant = null, b
   if (!code && bypass === true) return { role: 'User', colorCode: 'Gray' };
   return { role: 'Unauthorized', colorCode: 'Red' };
 }
+export function evaluateAccessPolicy({ claims = {}, userAccess = null, authorizedEmail = null, bypass = false } = {}) {
+  return resolveAccess(claims, userAccess, authorizedEmail, bypass);
+}
 export const basicAccessEnabled = (canonical, legacy) => canonical?.schemaVersion === 2
   ? canonical.bypassBlueCode === true : legacy?.bypassBlueCode === true;

@@ -1,6 +1,9 @@
 import { resolveAccess, basicAccessEnabled } from '../../../src/utils/accessPolicy.js';
+import { assertImageContext } from '../../../src/utils/imageOriginal.js';
 const tokens = new WeakMap();
 const fail = (status,message) => Object.assign(new Error(message),{status});
+const validOwner = owner => typeof owner === 'string' && /^[A-Za-z0-9_-]{1,128}$/.test(owner);
+const validId = id => typeof id === 'string' && /^[a-f0-9]{64}$/.test(id);
 const base64url = bytes => btoa(typeof bytes === 'string' ? bytes : String.fromCharCode(...bytes)).replace(/=/g,'').replace(/\+/g,'-').replace(/\//g,'_');
 const encode = value => value === null ? {nullValue:null} : Array.isArray(value) ? {arrayValue:{values:value.map(encode)}}
   : typeof value === 'string' ? {stringValue:value} : typeof value === 'boolean' ? {booleanValue:value}
@@ -82,7 +85,7 @@ export function createFirestoreMetadata(env, fetcher = fetch) {
     throw fail(503,'Feedback reference scan incomplete. No original deleted.');
   }
   return {
-    get:(owner,id)=>get(imagePath(owner,id)),
+    get:(owner,id)=>{if(!validOwner(owner)||!validId(id))throw fail(400,'Invalid owner or image identity.');return get(imagePath(owner,id));},
     async authorize(claims) {
       const authHost=env.FIREBASE_AUTH_EMULATOR_HOST||'127.0.0.1:9099';
       if(host&&!/^127\.0\.0\.1:\d+$/.test(authHost))throw fail(503,'Auth test endpoint must be loopback.');
@@ -94,6 +97,8 @@ export function createFirestoreMetadata(env, fetcher = fetch) {
       return {...effective,...resolveAccess(effective,uidGrant,emailGrant,basicAccessEnabled(canonical,legacy))};
     },
     async reserve(record) {
+      if(!record||!validOwner(record.ownerUid)||!validId(record.id))throw fail(400,'Invalid image owner or identity.');
+      assertImageContext({ownerUid:record.ownerUid,feature:record.feature,parentId:record.parentId});
       await transaction(async tx=>{
         const path=imagePath(record.ownerUid,record.id);
         const [previous,quota,global,lock]=await Promise.all([tx.get(path),tx.get(`image_quotas/${record.ownerUid}`),tx.get('image_budgets/global'),tx.get(lockPath(record.ownerUid))]);
@@ -109,6 +114,7 @@ export function createFirestoreMetadata(env, fetcher = fetch) {
       });
     },
     async ready(record) {
+      if(!record||!validOwner(record.ownerUid)||!validId(record.id))throw fail(400,'Invalid image owner or identity.');
       await transaction(async tx=>{
         const [current,lock]=await Promise.all([tx.get(imagePath(record.ownerUid,record.id)),tx.get(lockPath(record.ownerUid))]);
         if(lock?.active||!current||!['pending','ready'].includes(current.state))throw fail(409,'Upload verification interrupted by cleanup. Retry with the original.');
@@ -116,11 +122,13 @@ export function createFirestoreMetadata(env, fetcher = fetch) {
       });
     },
     async cleanup(owner,id,remove) {
+      if(!validOwner(owner)||!validId(id))throw fail(400,'Invalid owner or image identity.');
       const runId=crypto.randomUUID(),lock=lockPath(owner),path=imagePath(owner,id);
       await transaction(async tx=>{const old=await tx.get(lock);if(old?.active&&old.runId!==runId)throw fail(409,'Cleanup active or interrupted. Owner must verify the old job before releasing its lock.');tx.set(lock,{active:true,runId,startedAt:Date.now()});});
       let preserveLock=false;
       try {
         const current=await get(path);if(!current)throw fail(404,'Image not found.');if(current.state==='deleted')return {state:'deleted'};
+        if(current.ownerUid&&current.ownerUid!==owner)throw fail(403,'Image belongs to another account.');
         if(await referenced(owner,id))throw fail(409,'Image is referenced by current data, history or migration recovery.');
         const now=Date.now();if(now-(current.reservedAt||current.createdAt||now)<86400000)throw fail(409,'Recent original/upload is retained for recovery.');
         if(current.state!=='detached'){

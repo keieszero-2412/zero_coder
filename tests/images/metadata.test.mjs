@@ -10,3 +10,12 @@ test('demo metadata transport is loopback-only and resolves typed Firestore reco
  assert.equal((await repository.get('alice','a'.repeat(64))).size,8);assert.equal(calls,1);
  assert.throws(()=>createFirestoreMetadata({FIREBASE_PROJECT_ID:'demo-zerocoder-r2',FIRESTORE_EMULATOR_HOST:'attacker:8080'}),/loopback/i);
 });
+test('server-side metadata operations strictly enforce UID ownership and reject path traversals',async()=>{
+ const repository=createFirestoreMetadata({FIREBASE_PROJECT_ID:'demo-zerocoder-r2',FIRESTORE_EMULATOR_HOST:'127.0.0.1:8080'},async()=>Response.json({fields:{}}));
+ await assert.rejects(async()=>repository.get('../evil','a'.repeat(64)),/invalid owner/i);
+ await assert.rejects(async()=>repository.get('alice','not-a-hash'),/invalid owner/i);
+ await assert.rejects(async()=>repository.reserve({ownerUid:'../evil',id:'a'.repeat(64)}),/invalid image owner/i);
+ await assert.rejects(async()=>repository.reserve({ownerUid:'alice',id:'a'.repeat(64),feature:'illegal',parentId:'p1'}),/invalid image owner or relationship/i);
+ await assert.rejects(async()=>repository.ready({ownerUid:'../evil',id:'a'.repeat(64)}),/invalid image owner/i);
+ await assert.rejects(async()=>repository.cleanup('../evil','a'.repeat(64),async()=>{}),/invalid owner/i);
+});

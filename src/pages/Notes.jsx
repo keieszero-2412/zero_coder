@@ -27,96 +27,27 @@ import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
 import { useTerm } from '../context/TermContext';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { db } from '../config/firebase';
 import { exportDocx, exportMarkdown, exportPdf } from '../utils/notesExport';
 import { getNoteImage, storeNoteImage } from '../utils/notesImages';
+import {
+  EMPTY_CONTENT,
+  sanitizeNoteHtml,
+  normalizeNote,
+  makeNote,
+  loadLocalNotes,
+  saveLocalNotes,
+  syncNoteToFirestore,
+  deleteNoteInFirestore,
+  subscribeNotesFromFirestore,
+  noteStorageKey
+} from '../utils/notesStorage';
 import '../index.css';
 
-const EMPTY_CONTENT = '<p><br></p>';
-const STORAGE_PREFIX = 'zerocoder_notes_';
+export { sanitizeNoteHtml };
+
 const POSITION_PREFIX = 'zerocoder_notes_position_';
 const DEFAULT_POSITION = { right: 24, bottom: 24 };
-const ALLOWED_TAGS = new Set(['P', 'BR', 'H1', 'H2', 'H3', 'STRONG', 'B', 'EM', 'I', 'U', 'S', 'CODE', 'PRE', 'BLOCKQUOTE', 'UL', 'OL', 'LI', 'A', 'HR', 'FIGURE', 'FIGCAPTION', 'IMG']);
-
-export function sanitizeNoteHtml(value) {
-  if (typeof document === 'undefined') return EMPTY_CONTENT;
-  const parser = new DOMParser();
-  const source = parser.parseFromString(String(value || EMPTY_CONTENT), 'text/html');
-  const clean = document.createElement('div');
-
-  const walk = (node, parent) => {
-    if (node.nodeType === Node.TEXT_NODE) {
-      parent.appendChild(document.createTextNode(node.nodeValue));
-      return;
-    }
-    if (node.nodeType !== Node.ELEMENT_NODE) return;
-    const tag = node.tagName.toUpperCase();
-    if (!ALLOWED_TAGS.has(tag)) {
-      [...node.childNodes].forEach((child) => walk(child, parent));
-      return;
-    }
-    const next = document.createElement(tag.toLowerCase());
-    if (tag === 'IMG') {
-      const id = node.getAttribute('data-image-id');
-      if (!/^[a-f0-9-]{36}$/i.test(id || '')) return;
-      next.setAttribute('data-image-id', id);
-      next.setAttribute('alt', (node.getAttribute('alt') || 'Note image').slice(0, 500));
-      // Runtime blob URLs are deliberately excluded from saved HTML.
-    }
-    if (tag === 'FIGURE') {
-      next.setAttribute('contenteditable', 'false');
-      const align = node.getAttribute('data-align');
-      next.setAttribute('data-align', ['left', 'center', 'right'].includes(align) ? align : 'center');
-      const width = Math.max(10, Math.min(100, Number(node.getAttribute('data-width')) || 100));
-      next.setAttribute('data-width', String(width));
-      next.style.width = `${width}%`;
-    }
-    if (tag === 'A') {
-      const href = node.getAttribute('href') || '';
-      if (/^(https?:|mailto:)/i.test(href)) {
-        next.setAttribute('href', href);
-        next.setAttribute('target', '_blank');
-        next.setAttribute('rel', 'noopener noreferrer');
-      }
-    }
-    [...node.childNodes].forEach((child) => walk(child, next));
-    parent.appendChild(next);
-  };
-
-  [...source.body.childNodes].forEach((node) => walk(node, clean));
-  return clean.innerHTML || EMPTY_CONTENT;
-}
-
-function noteStorageKey(uid) {
-  return `${STORAGE_PREFIX}${uid || 'guest'}`;
-}
-
-function normalizeNote(note) {
-  const now = Date.now();
-  return {
-    id: note.id || `note-${now}-${Math.random().toString(36).slice(2, 8)}`,
-    title: typeof note.title === 'string' ? note.title : 'New note',
-    content: sanitizeNoteHtml(note.content || EMPTY_CONTENT),
-    createdAt: Number(note.createdAt) || now,
-    updatedAt: Number(note.updatedAt) || Number(note.createdAt) || now,
-    tags: Array.isArray(note.tags) ? [...new Set(note.tags.filter(Boolean).map((tag) => String(tag).trim().slice(0, 32)))].slice(0, 20) : [],
-    source: note.source && typeof note.source === 'object' ? { ...note.source } : null
-  };
-}
-
-function makeNote() {
-  const now = Date.now();
-  return normalizeNote({ id: `note-${now}-${Math.random().toString(36).slice(2, 8)}`, title: 'New note', content: EMPTY_CONTENT, createdAt: now, updatedAt: now, tags: [], source: null });
-}
-
-function loadNotes(uid) {
-  try {
-    const raw = localStorage.getItem(noteStorageKey(uid));
-    const notes = raw ? JSON.parse(raw) : [];
-    return Array.isArray(notes) && notes.length ? notes.map(normalizeNote) : [makeNote()];
-  } catch {
-    return [makeNote()];
-  }
-}
 
 function loadPosition(uid) {
   try {
@@ -183,7 +114,7 @@ export function Notes() {
   const saveTimerRef = useRef(null);
   const dragRef = useRef(null);
   const suppressTriggerClickRef = useRef(false);
-  const [notes, setNotes] = useState(() => loadNotes(currentUser?.uid));
+  const [notes, setNotes] = useState(() => loadLocalNotes(currentUser?.uid));
   const [selectedId, setSelectedId] = useState(null);
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState('updated');
@@ -329,7 +260,7 @@ export function Notes() {
         const id = image.dataset.imageId;
         let url = imageUrlsRef.current.get(id);
         if (!url) {
-          const record = await getNoteImage(id);
+          const record = await getNoteImage(id, currentUser?.uid);
           if (cancelled) return;
           url = URL.createObjectURL(record.blob);
           imageUrlsRef.current.set(id, url);
@@ -339,20 +270,60 @@ export function Notes() {
       } catch (error) { if (!cancelled) setImageError(error.message); }
     });
     return () => { cancelled = true; };
-  }, [selectedNote]);
+  }, [selectedNote, currentUser?.uid]);
 
   useEffect(() => { setSelectedImage(null); setImageError(''); }, [selectedNote?.id]);
   useEffect(() => () => { imageUrlsRef.current.forEach((url) => URL.revokeObjectURL(url)); }, []);
 
   const persist = useCallback((nextNotes) => {
     try {
-      localStorage.setItem(noteStorageKey(currentUser?.uid), JSON.stringify(nextNotes));
+      saveLocalNotes(currentUser?.uid, nextNotes);
       setSaveState('Saved');
     } catch {
       setSaveState('Storage unavailable');
       showToast('Notes could not be saved in this browser.', 'error');
     }
-  }, [currentUser?.uid, showToast]);
+
+    if (currentUser?.uid && currentUser?.role !== 'Unauthorized' && db && navigator.onLine) {
+      const active = nextNotes.find((n) => n.id === currentNotesRef.current?.id) || nextNotes[0];
+      if (active) {
+        syncNoteToFirestore(db, currentUser.uid, active)
+          .then((synced) => {
+            setSaveState('Synced');
+            setNotes((prev) => prev.map((item) => (item.id === synced.id ? { ...item, revision: synced.revision, updatedAt: synced.updatedAt } : item)));
+          })
+          .catch((err) => {
+            console.warn('Firestore note sync error:', err);
+            setSaveState('Saved locally');
+          });
+      }
+    }
+  }, [currentUser?.uid, currentUser?.role, showToast]);
+
+  useEffect(() => {
+    const loaded = loadLocalNotes(currentUser?.uid);
+    setNotes(loaded);
+    setSelectedId(loaded[0]?.id || null);
+
+    if (currentUser?.uid && currentUser?.role !== 'Unauthorized' && db) {
+      const unsub = subscribeNotesFromFirestore(db, currentUser.uid, (remoteNotes) => {
+        setNotes((prevLocal) => {
+          const merged = [...prevLocal];
+          remoteNotes.forEach((remote) => {
+            const index = merged.findIndex((l) => l.id === remote.id);
+            if (index === -1) {
+              merged.push(remote);
+            } else if ((remote.updatedAt || 0) > (merged[index].updatedAt || 0)) {
+              merged[index] = remote;
+            }
+          });
+          saveLocalNotes(currentUser.uid, merged);
+          return merged;
+        });
+      });
+      return () => unsub();
+    }
+  }, [currentUser?.uid, currentUser?.role]);
 
   useEffect(() => () => clearTimeout(saveTimerRef.current), []);
   useEffect(() => {
@@ -603,13 +574,17 @@ export function Notes() {
 
   const deleteNote = () => {
     if (!selectedNote) return;
+    const targetId = selectedNote.id;
     showConfirm(`Delete “${selectedNote.title || 'Untitled note'}”? This cannot be undone.`, () => {
       clearTimeout(saveTimerRef.current);
-      const remaining = notes.filter((note) => note.id !== selectedNote.id);
+      const remaining = notes.filter((note) => note.id !== targetId);
       const next = remaining.length ? remaining : [makeNote()];
       setNotes(next);
       setSelectedId(next[0].id);
       persist(next);
+      if (currentUser?.uid && db) {
+        void deleteNoteInFirestore(db, currentUser.uid, targetId);
+      }
     });
   };
 

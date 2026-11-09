@@ -135,3 +135,32 @@ External gates:
 - Google Cloud IAM service account credentials for production Firestore metadata
 Next: Phase 3 application integration.
 
+## Phase 3 — Application integration
+
+Status: **PASS for local application integration, Notes Firestore synchronization, and dual legacy/R2 image support**.
+Live Cloudflare deployment and R2 bucket provisioning remain BLOCKED.
+
+Deliverables:
+- Notes Firestore synchronization: `src/utils/notesStorage.js`, updated `src/pages/Notes.jsx`
+- Feedback R2 integration: `src/components/FeedbackWidget.jsx`, `src/components/AdminPanel.jsx`
+- Shared image service & cache: `src/utils/imageService.js`, updated `src/utils/notesImages.js`
+- Firebase Storage removal: removed from `src/config/firebase.js` and `src/utils/notesImages.js`
+- Phase 2 hardening: server-side UID & traversal checks in `workers/images/src/metadata.js`
+- Test suites: `tests/integration/phase3-app.test.mjs` (7 tests), `tests/images/metadata.test.mjs` (regression)
+- Documentation: [Phase 3 report](reports/2026-11-10-phase-3-application-integration.md)
+
+Verification:
+- App integration tests: 7/7 passed
+- Image storage and token tests: 15/15 passed
+- Offline regression tests: 15/15 passed
+- Config link verification: 28 files, 77 links verified (0 errors)
+- Linter (`oxlint`) and production build (`vite build`): passed with 0 errors
+The checkpoint is the commit containing the Phase 3 report; retrieve its hash with
+`git log -1 --format=%h -- docs/agents/reports/2026-11-10-phase-3-application-integration.md`.
+
+External gates:
+- Cloudflare R2 bucket and Worker deployment authorization
+- Google Cloud IAM service account credentials for production Firestore metadata
+Next: Phase 4 legacy data migration.
+
+
