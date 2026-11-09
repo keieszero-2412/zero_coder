@@ -1,0 +1,9 @@
+{
+  "name": "zerocoder-security-tests",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^5.0.2",
+    "firebase": "^12.18.0"
+  }
+}

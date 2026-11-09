@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "zerocoder-images-worker",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-09",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "IMAGES_ENABLED": "true",
+    "FIREBASE_PROJECT_ID": "zerocoder-8cb6b",
+    "ALLOWED_ORIGINS": "https://zerocoder.pages.dev,http://localhost:5173"
+  },
+  "r2_buckets": [
+    {
+      "binding": "PRIVATE_R2",
+      "bucket_name": "zerocoder-images-private"
+    }
+  ]
+}
+

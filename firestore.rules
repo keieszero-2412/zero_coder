@@ -1,0 +1,124 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function admin() { return signedIn() && request.auth.token.get('admin', false) == true; }
+    function owner(uid) { return signedIn() && request.auth.uid == uid; }
+    function emailOwner(email) { return signedIn() && request.auth.token.get('email_verified', false) == true && request.auth.token.get('email', '').lower() == email.lower(); }
+    function text(value, limit) { return value is string && value.size() <= limit; }
+    function cleanupActive(uid) {
+      let path = /databases/$(database)/documents/users/$(uid)/maintenance/image_cleanup;
+      return exists(path) && get(path).data.get('active', false) == true;
+    }
+    function member() {
+      let uidPath = /databases/$(database)/documents/user_access/$(request.auth.uid);
+      let emailPath = /databases/$(database)/documents/authorized_emails/$(request.auth.token.get('email', '').lower());
+      let canonical = /databases/$(database)/documents/settings/auth;
+      let legacy = /databases/$(database)/documents/authorized_emails/bypass@zerocoder.admin;
+      let claim = request.auth.token.get('accessCode', '');
+      let issued = exists(uidPath) ? get(uidPath).data.get('code', 'Red') : claim != '' ? claim
+        : request.auth.token.get('email_verified', false) && exists(emailPath) ? get(emailPath).data.get('code', 'Blue') : '';
+      let bypass = exists(canonical) && get(canonical).data.get('schemaVersion', 1) == 2 ? get(canonical).data.get('bypassBlueCode', false)
+        : exists(legacy) && get(legacy).data.get('bypassBlueCode', false);
+      return admin() || issued in ['Gray', 'Blue'] || (issued == '' && bypass == true);
+    }
+    match /users/{uid} {
+      allow get: if owner(uid) || admin();
+      allow list: if admin();
+      allow create: if owner(uid) && request.resource.data.keys().hasOnly(['username','email','role','colorCode','createdAt'])
+        && request.resource.data.email == request.auth.token.email && text(request.resource.data.username,80)
+        && request.resource.data.role == 'User' && request.resource.data.colorCode == 'Red' && request.resource.data.createdAt == request.time;
+      allow update: if admin() || (owner(uid) && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['username','adminLastViewedAt'])
+        && text(request.resource.data.username,80));
+      allow delete: if false;
+      match /images/{id} {
+        allow get: if owner(uid) || (admin() && resource.data.feature == 'feedback');
+        allow list: if owner(uid);
+        allow write: if false; // Only the Worker IAM identity manages verified R2 metadata.
+      }
+      match /notes/{id} {
+        function valid() { let d=request.resource.data; return d.keys().hasOnly(['id','ownerUid','title','content','tags','source','createdAt','updatedAt','revision','imageIds','deleted','conflictOf','migrationId'])
+          && d.ownerUid == uid && d.id == id && text(d.title,500) && text(d.content,800000)
+          && d.tags is list && d.tags.size() <= 20 && d.imageIds is list && d.imageIds.size() <= 200
+          && d.revision is int && d.revision >= 1; }
+        allow read: if owner(uid);
+        allow create: if owner(uid) && member() && !cleanupActive(uid) && valid() && request.resource.data.revision == 1;
+        allow update: if owner(uid) && member() && !cleanupActive(uid) && valid() && request.resource.data.revision == resource.data.revision + 1;
+        allow delete: if false;
+      }
+      match /note_revisions/{id} {
+        allow read: if owner(uid);
+        allow create: if owner(uid) && member() && !cleanupActive(uid) && request.resource.data.ownerUid == uid;
+        allow update, delete: if false;
+      }
+      match /migrations/{id} { allow read: if owner(uid); allow write: if false; }
+      match /maintenance/{id} { allow read: if owner(uid); allow write: if false; }
+      match /image_cleanup_history/{id} { allow read: if owner(uid); allow write: if false; }
+    }
+    match /user_access/{uid} { allow get: if owner(uid) || admin(); allow list, write: if admin(); }
+    match /authorized_emails/{email} {
+      allow get: if admin() || emailOwner(email) || (signedIn() && email == 'bypass@zerocoder.admin');
+      allow list, write: if admin();
+    }
+    match /settings/{id} { allow get: if admin() || (signedIn() && id == 'auth'); allow list, write: if admin(); }
+    match /access_requests/{id} {
+      function mine() { return owner(id) || (emailOwner(resource.data.get('email',''))); }
+      allow read: if admin() || mine();
+      allow create, update: if admin() || (owner(id) && request.auth.token.get('email_verified',false) == true
+        && request.resource.data.keys().hasOnly(['uid','email','username','requestedCode','status','requestedAt'])
+        && request.resource.data.uid == request.auth.uid && request.resource.data.email == request.auth.token.email
+        && text(request.resource.data.username,80) && request.resource.data.requestedCode in ['Gray','Blue']
+        && request.resource.data.status == 'pending' && request.resource.data.requestedAt == request.time)
+        || (mine() && resource.data.status == 'rejected' && request.resource.data.status == 'dismissed_rejected'
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']));
+      allow delete: if admin();
+    }
+    match /problems/{id} { allow read: if signedIn() && member(); allow write: if admin(); }
+    match /code_drafts/{id} {
+      allow read: if signedIn() && resource.data.uid == request.auth.uid;
+      allow create, update: if signedIn() && member() && request.resource.data.uid == request.auth.uid
+        && request.resource.data.keys().hasOnly(['uid','problemId','code']) && text(request.resource.data.code,500000)
+        && id == request.auth.uid + '_' + request.resource.data.problemId;
+      allow delete: if signedIn() && resource.data.uid == request.auth.uid;
+    }
+    match /user_progress/{uid} {
+      allow read: if owner(uid);
+      allow create, update: if owner(uid) && member() && request.resource.data.size() <= 2000;
+      allow delete: if false; // Client-reported practice only; trusted assessment records are denied below.
+    }
+    match /feedbacks/{id} {
+      function mine() { return signedIn() && resource.data.userId == request.auth.uid; }
+      function ready(asset) { let image=get(/databases/$(database)/documents/users/$(request.auth.uid)/images/$(asset)).data;
+        return image.ownerUid == request.auth.uid && image.feature == 'feedback' && image.parentId == id && image.state == 'ready'; }
+      function validImages() { let ids=request.resource.data.get('imageIds',[]); return ids is list && ids.size() <= 3
+        && (ids.size() < 1 || ready(ids[0])) && (ids.size() < 2 || ready(ids[1])) && (ids.size() < 3 || ready(ids[2])); }
+      function validReply() {
+        let previous=resource.data.get('replies',[]);
+        let replies=request.resource.data.get('replies',[]);
+        let last=replies[replies.size()-1];
+        let seeded=previous.size()==0 && resource.data.get('adminReply','') != '';
+        let base=seeded ? [replies[0]] : previous;
+        return replies is list && replies.size() <= 1000 && replies == base.concat([last])
+          && (!seeded || (replies[0].sender == 'admin' && replies[0].text == resource.data.adminReply && replies[0].senderName == 'Admin'))
+          && last.keys().hasOnly(['sender','senderName','text','createdAt']) && last.sender == 'user'
+          && text(last.senderName,80) && text(last.text,10000) && last.createdAt is timestamp
+          && last.createdAt <= request.time + duration.value(1,'m') && last.createdAt >= request.time - duration.value(5,'m');
+      }
+      allow read: if admin() || mine();
+      allow create: if signedIn() && member() && !cleanupActive(request.auth.uid)
+        && request.resource.data.userId == request.auth.uid && request.resource.data.email == request.auth.token.email
+        && request.resource.data.keys().hasOnly(['userId','username','email','description','imageIds','imageUrls','status','createdAt'])
+        && text(request.resource.data.username,80) && text(request.resource.data.description,20000)
+        && request.resource.data.get('imageUrls',[]) == [] && validImages() && request.resource.data.status == 'new'
+        && request.resource.data.createdAt == request.time;
+      allow update: if (admin() && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['imageIds','imageMigration']) || !cleanupActive(resource.data.userId)))
+        || (mine() && text(request.resource.data.description,20000)
+          && ((request.resource.data.diff(resource.data).affectedKeys().hasOnly(['description','updatedAt','status']) && request.resource.data.updatedAt == request.time)
+            || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['description','imageIds','updatedAt','status']) && !cleanupActive(request.auth.uid) && validImages() && request.resource.data.updatedAt == request.time)
+            || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']) && ((resource.data.status == 'replied' && request.resource.data.status == 'read') || (resource.data.status == 'resolved' && request.resource.data.status == 'resolved_read')))
+            || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['replies','status','updatedAt']) && validReply() && request.resource.data.status == 'user_replied' && request.resource.data.updatedAt == request.time)));
+      allow delete: if false; // Preserve attachments/history until reference-aware cleanup is explicitly requested.
+    }
+    match /{document=**} { allow read, write: if false; }
+  }
+}

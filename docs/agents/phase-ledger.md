@@ -107,3 +107,31 @@ The checkpoint is the commit containing the Phase 1 report; retrieve its hash wi
 External gates: approved production administrator UID/claim bootstrap, reviewed
 historical grants, Cloudflare R2/Worker provisioning and explicit release approval.
 Next: Phase 2 local security/R2 foundation, only after the Phase 1 report is delivered.
+
+## Phase 2 — Security foundation and R2 infrastructure
+
+Status: **PASS for local security foundation, Worker infrastructure and emulator-verified rules**.
+Live Cloudflare deployment and production Firestore rule updates remain BLOCKED.
+
+Deliverables:
+- Deployed configuration: `firestore.rules`, `firestore.indexes.json`, `firebase.json`
+- Authenticated Cloudflare Worker: `workers/images/src/firebaseToken.js`, `metadata.js`, `index.js`
+- Client utilities: `src/utils/imageOriginal.js`, `imageStorage.js`, `accessPolicy.js`, `authActions.js`
+- Configuration templates: `workers/images/wrangler.jsonc.example`, `workers/images/.env.example`
+- Test suites: `tests/images/` (14 unit tests), `tests/firebase/` (11 emulator tests)
+- Documentation: [Phase 2 report](reports/2026-11-10-phase-2-security-r2.md)
+
+Verification:
+- Image storage and token tests: 14/14 passed
+- Firebase Auth & Firestore security emulator tests: 11/11 passed
+- Offline regression tests: 15/15 passed
+- Config link verification: 27 files, 75 links verified (0 errors)
+- Linter (`oxlint`) and production build (`vite build`): passed with 0 errors
+The checkpoint is the commit containing the Phase 2 report; retrieve its hash with
+`git log -1 --format=%h -- docs/agents/reports/2026-11-10-phase-2-security-r2.md`.
+
+External gates:
+- Cloudflare R2 bucket and Worker deployment authorization
+- Google Cloud IAM service account credentials for production Firestore metadata
+Next: Phase 3 application integration.
+

@@ -1,0 +1,16 @@
+import { spawn } from 'node:child_process';
+import { existsSync, readdirSync, readFileSync, mkdirSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+const root=fileURLToPath(new URL('../../',import.meta.url));
+const runtime=join(root,'tools/firebase/.runtime');mkdirSync(runtime,{recursive:true});
+const java=readdirSync(runtime).map(name=>join(runtime,name,'bin')).find(path=>existsSync(join(path,'java.exe')));
+const cli=process.env.FIREBASE_CLI_PATH||join(process.env.APPDATA||'','npm/node_modules/firebase-tools/lib/bin/firebase.js');
+if(!existsSync(cli))throw new Error('Use the installed Firebase CLI; set FIREBASE_CLI_PATH if needed.');
+const red=process.argv.includes('--red'),start=process.argv.includes('--start');
+const rulePath=join(runtime,'emulator.rules');writeFileSync(rulePath,red?'rules_version = "2"; service cloud.firestore { match /databases/{database}/documents { match /{d=**} { allow read, write: if true; } } }':readFileSync(join(root,'firestore.rules'),'utf8'));
+const config=join(runtime,'emulators.json');writeFileSync(config,JSON.stringify({firestore:{rules:rulePath},emulators:{auth:{host:'127.0.0.1',port:9099},firestore:{host:'127.0.0.1',port:8080},ui:{enabled:false},singleProjectMode:true}}));
+const args=[cli,start?'emulators:start':'emulators:exec','--config',config,'--project','demo-zerocoder-r2','--only','auth,firestore'];
+if(!start)args.push('node --test --test-concurrency=1 tests/firebase/*.test.mjs');
+const child=spawn(process.execPath,args,{cwd:root,stdio:'inherit',env:{...process.env,...(java?{PATH:`${java};${process.env.PATH||process.env.Path}`}:{ }),FIREBASE_CLI_DISABLE_UPDATE_CHECK:'true',...(red?{FIREBASE_BASELINE:'true'}:{})}});
+child.on('error',error=>{console.error(error.message);process.exitCode=1;});child.on('exit',code=>{process.exitCode=code??1;});
