@@ -7,8 +7,8 @@
 - Architecture: Firebase Authentication, Spark and Firestore for structured data;
   Cloudflare R2 for persistent user images. No Firebase Cloud Storage, Blaze, or
   additional databases. Original image bytes and existing user data must survive.
-- Phase 1–6 definitions: **awaiting the user's plan or its path**. Do not infer
-  six phase boundaries from the former five-phase Firebase Storage conversation.
+- Phase 1–6 definitions: the [definitive implementation plan](plans/2026-11-09-firebase-r2-implementation.md),
+  supplied by the user after Phase 0B. The former Firebase Storage proposal is superseded.
 
 ## Phase 0 — Agent rules and skills synchronization
 
@@ -79,4 +79,31 @@ See the [Phase 0B report](reports/2026-11-09-phase-0b.md) and its per-item inven
 for evidence, retention decisions and the final layout. The inventory is one-time;
 normal sessions use the entry point/index, not a repeated full scan.
 
-Phase 1 remains unstarted. The user's Phase 1–6 definitions are still required.
+Phase 0B checkpoint: `763f0c1`. Phase definitions were subsequently supplied by the
+user; the linked definitive plan now resolves that input blocker.
+
+## Phase 1 — Database and storage audit
+
+Status: PASS for read-only audit deliverables; implementation and activation are
+not included in this status. Scope and acceptance follow the definitive plan.
+
+Deliverables: the definitive Phase 1–6 plan, source/deployed storage inventory,
+four-code access map, dependency analysis, current/target architecture diagrams,
+data-loss/concurrency risks and migration acceptance requirements in the
+[Phase 1 report](reports/2026-11-09-phase-1-storage-audit.md).
+
+Production read evidence: active Firebase project, billing disabled, one free-tier
+Firestore database, eight root collection counts and sampled schemas, deployed
+permissive rules, no Storage buckets, Storage API disabled, and 17 Auth accounts
+with zero custom-admin claims. GET and read-only query POST only; no data changes.
+Actual browser stores and Cloudflare resources were not inspected.
+
+Verification: documentation checker passed (27 Markdown files, 75 local links,
+12 skill entries); existing image validation tests passed 2/2. No application
+build, Emulator execution, browser workflow or live upload success is claimed.
+The checkpoint is the commit containing the Phase 1 report; retrieve its hash with
+`git log -1 --format=%h -- docs/agents/reports/2026-11-09-phase-1-storage-audit.md`.
+
+External gates: approved production administrator UID/claim bootstrap, reviewed
+historical grants, Cloudflare R2/Worker provisioning and explicit release approval.
+Next: Phase 2 local security/R2 foundation, only after the Phase 1 report is delivered.
