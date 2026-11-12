@@ -421,10 +421,11 @@ export function Notes() {
   const exportCurrent = async (type) => {
     if (!selectedNote) return;
     setExportOpen(false);
+    const payload = { ...selectedNote, ownerUid: currentUser?.uid };
     try {
-      if (type === 'md') await exportMarkdown(selectedNote);
-      if (type === 'pdf') await exportPdf(selectedNote);
-      if (type === 'docx') await exportDocx(selectedNote);
+      if (type === 'md') await exportMarkdown(payload);
+      if (type === 'pdf') await exportPdf(payload);
+      if (type === 'docx') await exportDocx(payload);
     } catch (error) { showToast(`Export failed: ${error.message}`, 'error'); }
   };
 

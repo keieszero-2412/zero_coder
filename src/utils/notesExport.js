@@ -104,7 +104,7 @@ export async function exportMarkdown(note) {
   if (!images.length) { downloadBlob(new Blob([markdown], { type: 'text/markdown;charset=utf-8' }), `${name}.md`); return; }
   const files = {};
   for (const image of images) {
-    const record = await getNoteImage(image.id);
+    const record = await getNoteImage(image.id, note.ownerUid);
     const path = `assets/${image.id}.${record.extension}`;
     files[path] = new Uint8Array(await record.blob.arrayBuffer());
     markdown = markdown.replaceAll(`](assets/${image.id})`, `](${path})`);
@@ -170,7 +170,7 @@ async function makeImagePdf(note) {
   if (note.source) textLine(`Source: ${note.source.label || note.source.category || ''}`);
   for (const block of htmlToBlocks(note.content)) {
     if (block.type === 'image') {
-      const image = await rasterImage(await getNoteImage(block.id), 'image/jpeg');
+      const image = await rasterImage(await getNoteImage(block.id, note.ownerUid), 'image/jpeg');
       const scale = Math.min((512 * block.width / 100) / image.width, 620 / image.height);
       const width = image.width * scale, height = image.height * scale;
       if (y - height < 50) flush();
@@ -263,7 +263,7 @@ function docxXml(note, images = []) {
 export async function exportDocx(note) {
   const images = [];
   for (const block of htmlToBlocks(note.content).filter((item) => item.type === 'image')) {
-    images.push({ id: block.id, ...await rasterImage(await getNoteImage(block.id)) });
+    images.push({ id: block.id, ...await rasterImage(await getNoteImage(block.id, note.ownerUid)) });
   }
   const files = {
     '[Content_Types].xml': '<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>',

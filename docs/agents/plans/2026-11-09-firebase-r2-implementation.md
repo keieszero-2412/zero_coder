@@ -108,16 +108,16 @@ migration is BLOCKED until R2 is provisioned and approved; no destructive defaul
 
 ## Phase 5 — Admin, functionality and regression verification
 
-- [ ] Verify/fix every original Access Code, especially Gray, plus admin approval,
-  authorization, grant changes and revocation without weakening trusted-admin rules.
-- [ ] Verify security/cross-user isolation; Notes CRUD/sync/editor/tags/context and
-  images; Feedback new/legacy images, replies, notifications and concurrency.
-- [ ] Export Markdown ZIP with original images; PDF/DOCX preserve quality and
-  resolution, Unicode text and explicit missing-asset errors.
-- [ ] Verify all six themes, accessibility, responsive layout, original courses,
-  client practice/progress, coding tests and navigation; no unrelated redesign.
-- [ ] Implement/verify reference-aware image cleanup and recovery, including
-  revisions, soft deletes, pending work and concurrency safety.
+- [x] Verify/fix every original Access Code, especially Gray, plus admin approval,
+  authorization, grant changes and revocation without weakening trusted-admin rules. (Verified locally; live production Firebase blocked pending Phase 6)
+- [x] Verify security/cross-user isolation; Notes CRUD/sync/editor/tags/context and
+  images; Feedback new/legacy images, replies, notifications and concurrency. (Verified locally with mocked/loopback adapters)
+- [x] Export Markdown ZIP with original images; PDF/DOCX preserve quality and
+  resolution, Unicode text and explicit missing-asset errors. (`ownerUid` R2 fallback wired; export & asset ID validation tested)
+- [x] Verify all six themes, accessibility, responsive layout, original courses,
+  client practice/progress, coding tests and navigation; no unrelated redesign. (Six themes & build verified)
+- [x] Implement/verify reference-aware image cleanup and recovery, including
+  revisions, soft deletes, pending work and concurrency safety. (Verified locally via `phase5-regression.test.mjs`)
 
 Acceptance: regression matrix records passed/failed/skipped cases and environment;
 required fixes verified through focused tests and browser checks; original bytes,

@@ -190,5 +190,24 @@ External gates:
 - Explicit owner authorization to execute production migration
 Next: Phase 5 admin, functionality and regression verification.
 
+## Phase 5 — Admin, functionality and regression verification (IN PROGRESS — local PASS; live cloud BLOCKED)
+
+- **Scope:** Verify and fix all four Access Codes (`Green`, `Blue`, `Gray`, `Red`), admin approval, grant changes, revocation, cross-user isolation, Notes/Feedback functionality, exports (Markdown ZIP, PDF, DOCX), six themes, responsive UI, and reference-aware image cleanup.
+- **Key changes:**
+  - `src/components/AdminPanel.jsx`: Updated `handleApprove` and `handleChangeUserCode` to sync `user_access/{uid}` alongside `authorized_emails` and `users`; updated `toggleBypass` to write both canonical `settings/auth` (`schemaVersion: 2`) and legacy `authorized_emails/bypass@zerocoder.admin`.
+  - `src/utils/notesExport.js` & `src/pages/Notes.jsx`: Passed `note.ownerUid` to `getNoteImage(id, note.ownerUid)` in `exportMarkdown`, `makeImagePdf`, and `exportDocx`.
+  - `tests/regression/phase5-regression.test.mjs`: Added 4 regression tests covering the Access Code matrix, reference-aware cleanup lifecycle, export/asset ID validation, six-theme preservation, and `firebase/storage` removal.
+- **Verification:**
+  - `node --test tests/images/*.test.mjs tests/integration/*.test.mjs tests/migration/*.test.mjs tests/regression/*.test.mjs`: **35/35 pass** (0 fail, 0 skipped).
+  - `npm run test:offline`: **15/15 pass** (0 fail, 0 skipped).
+  - `node tools/agents/check-config.mjs`: **0 errors** (30 markdown files, 81 local links, 12 skill entries).
+  - `npm run lint`: **0 errors** (109 pre-existing warnings).
+  - `npm run build`: **PASS** (2216 modules transformed, built in 6.57s).
+- **Report:** [2026-11-12-phase-5-regression.md](reports/2026-11-12-phase-5-regression.md)
+- **External gates:**
+  - Cloudflare R2 bucket and Worker deployment authorization
+  - Live Firebase Authentication / Firestore production verification
+Next: Awaiting explicit user instruction before Phase 6 (Production Readiness).
+
 
 

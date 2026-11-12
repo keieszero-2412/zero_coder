@@ -282,11 +282,16 @@ export function AdminPanel({ onClose }) {
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) {
-        // Update colorCode to requestedCode for all matching users (usually just 1)
+        // Update colorCode and authoritative user_access/{uid} grant for all matching users
         for (const userDoc of querySnapshot.docs) {
           await updateDoc(doc(db, 'users', userDoc.id), {
             colorCode: requestedCode
           });
+          await setDoc(doc(db, 'user_access', userDoc.id), {
+            code: requestedCode,
+            updatedAt: new Date(),
+            updatedBy: 'Admin (Request Approval)'
+          }, { merge: true });
         }
       } else {
         // If user not found in 'users' collection yet, we could potentially just show a warning
@@ -342,7 +347,11 @@ export function AdminPanel({ onClose }) {
 
   const toggleBypass = async () => {
     try {
-      await setDoc(doc(db, 'authorized_emails', 'bypass@zerocoder.admin'), { bypassBlueCode: !bypassAuth }, { merge: true });
+      const nextValue = !bypassAuth;
+      await Promise.all([
+        setDoc(doc(db, 'settings', 'auth'), { schemaVersion: 2, bypassBlueCode: nextValue, updatedAt: new Date() }, { merge: true }),
+        setDoc(doc(db, 'authorized_emails', 'bypass@zerocoder.admin'), { bypassBlueCode: nextValue }, { merge: true })
+      ]);
       showToast(bypassAuth ? "Bypass disabled." : "Bypass enabled.", "info");
     } catch (err) {
       console.error("Failed to toggle bypass:", err);
@@ -364,7 +373,7 @@ export function AdminPanel({ onClose }) {
         code: changeCodeValue
       });
 
-      // 2. Update existing user in 'users' collection if they already registered
+      // 2. Update existing user in 'users' and authoritative 'user_access/{uid}' collection
       const usersRef = collection(db, 'users');
       const q = query(usersRef, where('email', '==', emailLower));
       const querySnapshot = await getDocs(q);
@@ -374,6 +383,11 @@ export function AdminPanel({ onClose }) {
           await updateDoc(doc(db, 'users', userDoc.id), {
             colorCode: changeCodeValue
           });
+          await setDoc(doc(db, 'user_access', userDoc.id), {
+            code: changeCodeValue,
+            updatedAt: new Date(),
+            updatedBy: 'Admin (Code Change/Grant)'
+          }, { merge: true });
         }
       }
 
