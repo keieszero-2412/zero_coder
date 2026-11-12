@@ -2,6 +2,9 @@ import { prepareOriginal } from '../imageOriginal.js';
 import { extractImageIds, normalizeNote, noteStorageKey } from '../notesStorage.js';
 import { parseImageDataUrl } from './dataUrl.js';
 
+const BACKUP_PREFIX = 'zerocoder_migration_backup_';
+const BACKUP_INDEX_PREFIX = 'zerocoder_migration_backups_';
+
 /**
  * Creates a safe, idempotent, resumable migration engine for legacy Feedback Base64
  * images, IndexedDB note images, and localStorage structured Notes.
@@ -25,12 +28,14 @@ export function createMigrationEngine({
   }
 
   /**
-   * Builds an immutable pre-migration backup snapshot without modifying any source or target data.
+   * Builds and durably persists an immutable pre-migration backup snapshot
+   * so snapshots survive page reloads, browser crashes, and interrupted runs.
    */
   function createBackupSnapshot(uid, feedbacks = [], localNotes = []) {
     assertSession(uid);
-    return Object.freeze({
-      runId: `mig-${now()}-${Math.random().toString(36).slice(2, 8)}`,
+    const runId = `mig-${now()}-${Math.random().toString(36).slice(2, 8)}`;
+    const snapshot = Object.freeze({
+      runId,
       ownerUid: uid,
       createdAt: now(),
       feedbacks: feedbacks
@@ -44,6 +49,41 @@ export function createMigrationEngine({
         })),
       notes: localNotes.map((n) => Object.freeze({ ...n }))
     });
+
+    if (localStore) {
+      const key = `${BACKUP_PREFIX}${uid}_${runId}`;
+      if (localStore.getItem(key)) {
+        throw new Error(`Immutable backup ${runId} already exists.`);
+      }
+      localStore.setItem(key, JSON.stringify(snapshot));
+      const indexKey = `${BACKUP_INDEX_PREFIX}${uid}`;
+      const existing = JSON.parse(localStore.getItem(indexKey) || '[]');
+      if (!existing.includes(runId)) {
+        existing.push(runId);
+        localStore.setItem(indexKey, JSON.stringify(existing));
+      }
+    }
+
+    return snapshot;
+  }
+
+  function loadBackupSnapshot(uid, runId) {
+    assertSession(uid);
+    if (!localStore) return null;
+    const raw = localStore.getItem(`${BACKUP_PREFIX}${uid}_${runId}`);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (parsed.ownerUid !== uid || parsed.runId !== runId) {
+      throw new Error('Backup snapshot ownership or identity mismatch.');
+    }
+    return Object.freeze(parsed);
+  }
+
+  function listBackupSnapshots(uid) {
+    assertSession(uid);
+    if (!localStore) return [];
+    const raw = localStore.getItem(`${BACKUP_INDEX_PREFIX}${uid}`);
+    return raw ? JSON.parse(raw) : [];
   }
 
   /**
@@ -123,7 +163,6 @@ export function createMigrationEngine({
           });
           assertSession(uid);
 
-          // Strict integrity verification
           if (
             saved.sha256 !== expected.sha256 ||
             saved.size !== expected.size ||
@@ -149,7 +188,6 @@ export function createMigrationEngine({
           report.failed++;
           report.pending.push({ feedbackId: fb.id, index: i, error: err.message });
           report.errors.push({ feedbackId: fb.id, index: i, message: err.message });
-          // Preserve partial progress if any earlier images in this feedback succeeded
           break;
         }
       }
@@ -166,11 +204,9 @@ export function createMigrationEngine({
               verifiedCount: sha256s.length,
               sha256s
             }
-            // Legacy imageUrls are intentionally preserved untouched
           });
           report.migrated++;
         } else if (newIds.length > existingIds.length) {
-          // Record partial resumable progress without marking verified
           await firestore.updateFeedback(fb.id, {
             imageIds: newIds,
             imageMigration: {
@@ -218,7 +254,7 @@ export function createMigrationEngine({
 
   /**
    * Migrates localStorage Notes to Firestore and IndexedDB note images to Cloudflare R2.
-   * Respects concurrent edits (never overwrites newer remote notes).
+   * Uses revision + timestamp preconditions and transactional writes when available.
    */
   async function migrateNotes(uid, { dryRun = false, adoptGuest = false, runId = `mig-${now()}` } = {}) {
     assertSession(uid);
@@ -306,7 +342,6 @@ export function createMigrationEngine({
           report.failedImages++;
           report.pendingImages.push({ noteId: note.id, imageId: imgId, error: err.message });
           report.errors.push({ noteId: note.id, imageId: imgId, message: err.message });
-          // Keep original reference in content when upload fails
           migratedImageIds.push(imgId);
         }
       }
@@ -316,23 +351,7 @@ export function createMigrationEngine({
         continue;
       }
 
-      // Concurrent edit precondition check
-      const remote = await firestore.getNote(uid, note.id);
-      assertSession(uid);
-
-      if (remote) {
-        if ((remote.updatedAt || 0) > (note.updatedAt || 0)) {
-          report.skippedConflicts++;
-          continue;
-        }
-        if (remote.migrationId === runId || ((remote.updatedAt || 0) === (note.updatedAt || 0) && remote.content === content)) {
-          report.skippedUpToDate++;
-          continue;
-        }
-      }
-
-      const nextRevision = remote ? (Number(remote.revision) || 1) + 1 : 1;
-      await firestore.saveNote(uid, note.id, {
+      const buildPayload = (nextRevision) => ({
         id: note.id,
         ownerUid: uid,
         title: note.title,
@@ -345,6 +364,36 @@ export function createMigrationEngine({
         imageIds: migratedImageIds,
         migrationId: noteImageFailed ? undefined : runId
       });
+
+      if (typeof firestore.saveNoteIfUnchanged === 'function') {
+        const outcome = await firestore.saveNoteIfUnchanged(uid, note.id, { ...note, migrationId: runId }, buildPayload);
+        assertSession(uid);
+        if (outcome.status === 'conflict') {
+          report.skippedConflicts++;
+        } else if (outcome.status === 'up_to_date') {
+          report.skippedUpToDate++;
+        } else {
+          report.migratedNotes++;
+        }
+        continue;
+      }
+
+      const remote = await firestore.getNote(uid, note.id);
+      assertSession(uid);
+
+      if (remote) {
+        if ((remote.revision || 1) > (note.revision || 1) || (remote.updatedAt || 0) > (note.updatedAt || 0)) {
+          report.skippedConflicts++;
+          continue;
+        }
+        if (remote.migrationId === runId || ((remote.updatedAt || 0) === (note.updatedAt || 0) && remote.content === content)) {
+          report.skippedUpToDate++;
+          continue;
+        }
+      }
+
+      const nextRevision = remote ? (Number(remote.revision) || 1) + 1 : 1;
+      await firestore.saveNote(uid, note.id, buildPayload(nextRevision));
       report.migratedNotes++;
     }
 
@@ -353,12 +402,16 @@ export function createMigrationEngine({
 
   /**
    * Image-only rollback that restores pre-migration feedback imageIds/imageMigration
-   * without overwriting any later user edits (checks updatedAt precondition).
+   * using transactional/precondition checks without overwriting later user edits.
    */
-  async function rollbackFeedbackImages(uid, backupSnapshot) {
+  async function rollbackFeedbackImages(uid, backupOrRunId) {
     assertSession(uid);
+    const backupSnapshot = typeof backupOrRunId === 'string'
+      ? loadBackupSnapshot(uid, backupOrRunId)
+      : backupOrRunId;
+
     if (!backupSnapshot || backupSnapshot.ownerUid !== uid) {
-      throw new Error('Backup snapshot does not match current account.');
+      throw new Error('Backup snapshot does not match current account or is missing.');
     }
 
     const result = {
@@ -369,20 +422,33 @@ export function createMigrationEngine({
 
     for (const entry of backupSnapshot.feedbacks) {
       assertSession(uid);
+      const patch = {
+        imageIds: entry.imageIds,
+        imageMigration: entry.imageMigration
+      };
+
+      if (typeof firestore.rollbackFeedbackIfUnchanged === 'function') {
+        const outcome = await firestore.rollbackFeedbackIfUnchanged(
+          entry.id,
+          backupSnapshot.runId,
+          backupSnapshot.createdAt,
+          patch
+        );
+        if (outcome.status === 'conflict') result.skippedNewerEdits++;
+        else if (outcome.status === 'restored') result.restored++;
+        continue;
+      }
+
       const current = await firestore.getFeedback(entry.id);
       if (!current) continue;
 
-      // Do not overwrite if user or admin edited the feedback after backup was taken
       const currentUpdated = current.updatedAt || current.createdAt || 0;
       if (currentUpdated > backupSnapshot.createdAt && current.imageMigration?.runId !== backupSnapshot.runId) {
         result.skippedNewerEdits++;
         continue;
       }
 
-      await firestore.updateFeedback(entry.id, {
-        imageIds: entry.imageIds,
-        imageMigration: entry.imageMigration
-      });
+      await firestore.updateFeedback(entry.id, patch);
       result.restored++;
     }
 
@@ -391,6 +457,8 @@ export function createMigrationEngine({
 
   return {
     createBackupSnapshot,
+    loadBackupSnapshot,
+    listBackupSnapshots,
     migrateFeedbacks,
     migrateNotes,
     readLocalNotesForUid,

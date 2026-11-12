@@ -309,3 +309,60 @@ test('Image-only rollback restores pre-migration state without overwriting later
   const preservedFb2 = await f.firestore.getFeedback('fb-2');
   assert.equal(preservedFb2.description, 'User updated description later');
 });
+
+test('Backup snapshots persist durably across simulated page reload and support runId rollback', async () => {
+  const f = createFixture({ uid: 'alice' });
+  const fb = { id: 'fb-durable', userId: 'alice', imageUrls: [PNG_DATA_URL], imageIds: [], updatedAt: 1000 };
+  f.feedbacksDb.set('fb-durable', fb);
+
+  const backup = f.engine.createBackupSnapshot('alice', [fb], []);
+  await f.engine.migrateFeedbacks('alice', [fb], { runId: backup.runId });
+  assert.equal(f.feedbacksDb.get('fb-durable').imageIds.length, 1);
+
+  // Simulate page reload / new engine instance reading from the same localStore
+  const reloadedEngine = createMigrationEngine({
+    auth: f.auth,
+    imageStorage: null,
+    firestore: f.firestore,
+    localStore: f.localStore,
+    now: () => 1700000099999
+  });
+
+  const list = reloadedEngine.listBackupSnapshots('alice');
+  assert.equal(list.includes(backup.runId), true);
+
+  const loaded = reloadedEngine.loadBackupSnapshot('alice', backup.runId);
+  assert.equal(loaded.ownerUid, 'alice');
+  assert.equal(loaded.feedbacks.length, 1);
+
+  const rollback = await reloadedEngine.rollbackFeedbackImages('alice', backup.runId);
+  assert.equal(rollback.restored, 1);
+  assert.deepEqual(f.feedbacksDb.get('fb-durable').imageIds, []);
+});
+
+test('Notes migration enforces revision-based concurrent-write protection even with skewed timestamps', async () => {
+  const f = createFixture({ uid: 'alice' });
+  f.localStore.setItem('zerocoder_notes_alice', JSON.stringify([{
+    id: 'note-rev',
+    title: 'Local Rev 1',
+    content: '<p>Local content</p>',
+    updatedAt: 5000,
+    revision: 1
+  }]));
+
+  // Remote note has higher revision (revision: 2) even if its clock timestamp is older/equal
+  await f.firestore.saveNote('alice', 'note-rev', {
+    id: 'note-rev',
+    ownerUid: 'alice',
+    title: 'Remote Rev 2',
+    content: '<p>Remote content</p>',
+    updatedAt: 4000,
+    revision: 2
+  });
+
+  const report = await f.engine.migrateNotes('alice', { runId: 'rev-check' });
+  assert.equal(report.skippedConflicts, 1);
+  assert.equal(report.migratedNotes, 0);
+  assert.equal((await f.firestore.getNote('alice', 'note-rev')).title, 'Remote Rev 2');
+});
+

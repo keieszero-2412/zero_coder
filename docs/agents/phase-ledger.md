@@ -165,18 +165,18 @@ Next: Phase 4 legacy data migration.
 
 ## Phase 4 — Legacy data migration
 
-Status: **PASS for local migration tooling, dry-run, idempotency, conflict protection, and rollback tests**.
+Status: **PASS for local migration tooling, durable backups, dry-run, idempotency, transactional/revision conflict protection, and rollback tests**.
 Actual production data migration remains BLOCKED pending Cloudflare R2 provisioning and owner authorization.
 
 Deliverables:
 - Data URL parser & magic-byte validator: `src/utils/migration/dataUrl.js`
-- Idempotent, resumable migration engine & rollback: `src/utils/migration/legacyMigration.js`
-- Firestore migration adapter: `src/utils/migration/firestoreAdapter.js`
-- Migration regression test suite: `tests/migration/phase4-migration.test.mjs` (7 tests)
+- Idempotent, resumable migration engine, durable backups & rollback: `src/utils/migration/legacyMigration.js`
+- Transactional Firestore migration adapter: `src/utils/migration/firestoreAdapter.js`
+- Migration regression test suite: `tests/migration/phase4-migration.test.mjs` (9 tests)
 - Documentation: [Phase 4 report](reports/2026-11-12-phase-4-migration.md)
 
 Verification:
-- Migration regression tests: 7/7 passed
+- Migration regression tests: 9/9 passed
 - App integration tests: 7/7 passed
 - Image storage and token tests: 15/15 passed
 - Offline regression tests: 15/15 passed
