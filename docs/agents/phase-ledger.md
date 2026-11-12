@@ -163,4 +163,32 @@ External gates:
 - Google Cloud IAM service account credentials for production Firestore metadata
 Next: Phase 4 legacy data migration.
 
+## Phase 4 — Legacy data migration
+
+Status: **PASS for local migration tooling, dry-run, idempotency, conflict protection, and rollback tests**.
+Actual production data migration remains BLOCKED pending Cloudflare R2 provisioning and owner authorization.
+
+Deliverables:
+- Data URL parser & magic-byte validator: `src/utils/migration/dataUrl.js`
+- Idempotent, resumable migration engine & rollback: `src/utils/migration/legacyMigration.js`
+- Firestore migration adapter: `src/utils/migration/firestoreAdapter.js`
+- Migration regression test suite: `tests/migration/phase4-migration.test.mjs` (7 tests)
+- Documentation: [Phase 4 report](reports/2026-11-12-phase-4-migration.md)
+
+Verification:
+- Migration regression tests: 7/7 passed
+- App integration tests: 7/7 passed
+- Image storage and token tests: 15/15 passed
+- Offline regression tests: 15/15 passed
+- Config link verification: 30 files, 81 links verified (0 errors)
+- Linter (`oxlint`) and production build (`vite build`): passed with 0 errors
+The checkpoint is the commit containing the Phase 4 report; retrieve its hash with
+`git log -1 --format=%h -- docs/agents/reports/2026-11-12-phase-4-migration.md`.
+
+External gates:
+- Cloudflare R2 bucket and Worker deployment authorization
+- Explicit owner authorization to execute production migration
+Next: Phase 5 admin, functionality and regression verification.
+
+
 

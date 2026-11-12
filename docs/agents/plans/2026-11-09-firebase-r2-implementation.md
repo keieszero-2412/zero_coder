@@ -92,14 +92,14 @@ Browser/component tests and build/lint pass. Mock/Emulator results are labelled.
 
 ## Phase 4 — Legacy data migration
 
-- [ ] Feedback Base64 → private R2; Notes IndexedDB originals → R2; localStorage
+- [x] Feedback Base64 → private R2; Notes IndexedDB originals → R2; localStorage
   structured Notes → Firestore, retaining tags/source/editor relationships.
-- [ ] Implement dry-run, immutable backup, resumable/idempotent operation identity,
+- [x] Implement dry-run, immutable backup, resumable/idempotent operation identity,
   per-object integrity/reference verification, concurrent-update preconditions,
   retry/recovery and rollback. Preserve legacy source until complete verification.
-- [ ] Explicit guest adoption only; never import another account's local records.
+- [x] Explicit guest adoption only; never import another account's local records.
   Interrupted uploads must leave recoverable originals and a pending operation.
-- [ ] Test interrupted/repeated/conflicting migration and image-only rollback
+- [x] Test interrupted/repeated/conflicting migration and image-only rollback
   without overwriting later user edits. Document backup and operator procedures.
 
 Acceptance: migration regressions pass locally, repeated runs do not duplicate or
