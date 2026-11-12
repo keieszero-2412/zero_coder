@@ -191,24 +191,35 @@ External gates:
 - Explicit owner authorization to execute production migration
 Next: Phase 5 admin, functionality and regression verification.
 
-## Phase 5 — Admin, functionality and regression verification (IN PROGRESS — local PASS; live cloud BLOCKED)
+## Phase 5 — Staging infrastructure, least-privilege IAM, and integration verification
 
-- **Scope:** Verify and fix all four Access Codes (`Green`, `Blue`, `Gray`, `Red`), admin approval, grant changes, revocation, cross-user isolation, Notes/Feedback functionality, exports (Markdown ZIP, PDF, DOCX), six themes, responsive UI, and reference-aware image cleanup.
-- **Key changes:**
-  - `src/components/AdminPanel.jsx`: Updated `handleApprove` and `handleChangeUserCode` to sync `user_access/{uid}` alongside `authorized_emails` and `users`; updated `toggleBypass` to write both canonical `settings/auth` (`schemaVersion: 2`) and legacy `authorized_emails/bypass@zerocoder.admin`.
-  - `src/utils/notesExport.js` & `src/pages/Notes.jsx`: Passed `note.ownerUid` to `getNoteImage(id, note.ownerUid)` in `exportMarkdown`, `makeImagePdf`, and `exportDocx`.
-  - `tests/regression/phase5-regression.test.mjs`: Added 4 regression tests covering the Access Code matrix, reference-aware cleanup lifecycle, export/asset ID validation, six-theme preservation, and `firebase/storage` removal.
+Status: **PASS for staging infrastructure, least-privilege IAM, Worker deployment, and 14 live smoke tests**.
+Production deployment remains gated for Phase 6.
+
+- **Scope:** Provision isolated staging Firebase (`zerocoder-staging`, Spark, `nam5`) and private Cloudflare R2 bucket (`zerocoder-images-staging`, APAC); create custom least-privilege Google IAM roles (6 exact permissions; 0 delete permissions); deploy staging Cloudflare Worker (`zerocoder-images-staging.zerocoder-dev.workers.dev`); execute 14 real integration smoke tests covering upload, download, SHA-256 byte equality, cross-user isolation, admin-only feedback, quota, global budget, cleanup locks, and production isolation.
+- **Key deliverables:**
+  - Staging Worker configuration: `workers/images/wrangler.staging.jsonc`, `workers/images/wrangler.staging.jsonc.example`, `workers/images/.env.staging.example`.
+  - Staging integration test suite: `tests/integration/phase5-staging-smoke.test.mjs` (14 real integration smoke tests against live staging infrastructure).
+  - Least-privilege IAM audit & staging reports: `docs/agents/reports/2026-11-12-iam-staging-audit.md`, `docs/agents/reports/2026-11-12-phase-5-staging-report.md`.
+  - Runtime compatibility fixes: `workers/images/src/firebaseToken.js` (`redirect: 'manual'`), `workers/images/src/metadata.js` (support `zerocoder-staging`).
+  - Hardening: `.gitignore` protects `.dev.vars`, `workers/images/.dev.vars`, and `.wrangler/`.
 - **Verification:**
-  - `node --test tests/images/*.test.mjs tests/integration/*.test.mjs tests/migration/*.test.mjs tests/regression/*.test.mjs`: **35/35 pass** (0 fail, 0 skipped).
-  - `npm run test:offline`: **15/15 pass** (0 fail, 0 skipped).
-  - `node tools/agents/check-config.mjs`: **0 errors** (30 markdown files, 81 local links, 12 skill entries).
-  - `npm run lint`: **0 errors** (109 pre-existing warnings).
-  - `npm run build`: **PASS** (2216 modules transformed, built in 6.57s).
-- **Report:** [2026-11-12-phase-5-regression.md](reports/2026-11-12-phase-5-regression.md)
-- **External gates:**
-  - Cloudflare R2 bucket and Worker deployment authorization
-  - Live Firebase Authentication / Firestore production verification
-Next: Awaiting explicit user instruction before Phase 6 (Production Readiness).
+  - Real integration smoke tests (`tests/integration/phase5-staging-smoke.test.mjs`): **14/14 PASS** (0 fail, 59.56s).
+  - Unit, integration & regression tests: **40/40 PASS** (0 fail, 4.22s).
+  - Offline test suite (`npm run test:offline`): **15/15 PASS** (0 fail, 2.62s).
+  - Config link verification (`node tools/agents/check-config.mjs`): **0 errors** (33 markdown files, 92 local links, 12 skill entries).
+  - Linter (`npm run lint`): **0 errors** (111 pre-existing warnings).
+  - Production build (`npm run build`): **PASS** (built in 18.37s).
+  - GitNexus `detect_changes(scope: "all")`: **low risk**, 0 changed symbols, 0 affected processes.
+  - Production isolation: verified 404 on `zerocoder-8cb6b`, zero credentials tracked or leaked.
+- **Reports:**
+  - [2026-11-12-iam-staging-audit.md](reports/2026-11-12-iam-staging-audit.md)
+  - [2026-11-12-phase-5-staging-report.md](reports/2026-11-12-phase-5-staging-report.md)
+  - [2026-11-12-phase-5-regression.md](reports/2026-11-12-phase-5-regression.md)
+The checkpoint is the commit containing this report.
+
+Next: Phase 6 — Production Readiness, Migration Run & Cutover Plan.
+
 
 
 

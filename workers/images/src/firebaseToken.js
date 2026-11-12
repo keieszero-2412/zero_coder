@@ -4,7 +4,7 @@ export function createTokenVerifier({ fetcher = fetch, now = () => Date.now() } 
   let keys = [], expires = 0, lastRefresh = 0, inFlight;
   async function refresh() {
     if (!inFlight) inFlight = (async () => {
-      const response = await fetcher(publicKeys, { signal: AbortSignal.timeout(5000), redirect: 'error' });
+      const response = await fetcher(publicKeys, { signal: AbortSignal.timeout(5000), redirect: 'manual' });
       if (!response.ok) throw new Error('Firebase signing keys unavailable.');
       const text = await response.text();
       if (text.length > 65536) throw new Error('Invalid signing-key response.');

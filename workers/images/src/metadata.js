@@ -24,7 +24,7 @@ export function createFirestoreMetadata(env, fetcher = fetch) {
   const project=env.FIREBASE_PROJECT_ID,host=env.FIRESTORE_EMULATOR_HOST;
   if (host && project !== 'demo-zerocoder-r2') throw new Error('Production/emulator configuration is refused.');
   if (host && !/^127\.0\.0\.1:\d+$/.test(host)) throw new Error('Demo transport requires loopback.');
-  if (!host && (project !== 'zerocoder-8cb6b' || !env.FIREBASE_CLIENT_EMAIL || !env.FIREBASE_PRIVATE_KEY)) throw new Error('Trusted Firestore IAM configuration is missing.');
+  if (!host && (!['zerocoder-8cb6b', 'zerocoder-staging'].includes(project) || !env.FIREBASE_CLIENT_EMAIL || !env.FIREBASE_PRIVATE_KEY)) throw new Error('Trusted Firestore IAM configuration is missing.');
   const resource=`projects/${project}/databases/(default)/documents`,base=`${host?`http://${host}`:'https://firestore.googleapis.com'}/v1/${resource}`;
   async function accessToken() {
     if (host) return 'owner';

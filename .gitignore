@@ -36,3 +36,9 @@ __pycache__/
 
 # Database / Binary files
 *.db
+
+# Cloudflare Wrangler local environment variables & secrets & state
+.dev.vars
+workers/images/.dev.vars
+.wrangler/
+workers/images/.wrangler/
