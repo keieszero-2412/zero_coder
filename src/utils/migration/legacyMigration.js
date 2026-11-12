@@ -28,11 +28,14 @@ export function createMigrationEngine({
   }
 
   /**
-   * Builds and durably persists an immutable pre-migration backup snapshot
+   * Builds and durably persists an immutable pre-migration Feedback backup snapshot
    * so snapshots survive page reloads, browser crashes, and interrupted runs.
    */
-  function createBackupSnapshot(uid, feedbacks = [], localNotes = []) {
+  function createBackupSnapshot(uid, feedbacks = []) {
     assertSession(uid);
+    if (!localStore) {
+      throw new Error('Persistent localStore is required to create a durable backup snapshot.');
+    }
     const runId = `mig-${now()}-${Math.random().toString(36).slice(2, 8)}`;
     const snapshot = Object.freeze({
       runId,
@@ -46,22 +49,36 @@ export function createMigrationEngine({
           imageUrls: Array.isArray(fb.imageUrls) ? [...fb.imageUrls] : (fb.imageUrl ? [fb.imageUrl] : []),
           imageMigration: fb.imageMigration ? { ...fb.imageMigration } : null,
           updatedAt: fb.updatedAt || fb.createdAt || 0
-        })),
-      notes: localNotes.map((n) => Object.freeze({ ...n }))
+        }))
     });
 
-    if (localStore) {
-      const key = `${BACKUP_PREFIX}${uid}_${runId}`;
-      if (localStore.getItem(key)) {
-        throw new Error(`Immutable backup ${runId} already exists.`);
+    const key = `${BACKUP_PREFIX}${uid}_${runId}`;
+    if (localStore.getItem(key)) {
+      throw new Error(`Immutable backup ${runId} already exists.`);
+    }
+
+    const indexKey = `${BACKUP_INDEX_PREFIX}${uid}`;
+    const existing = JSON.parse(localStore.getItem(indexKey) || '[]');
+    if (!existing.includes(runId)) {
+      existing.push(runId);
+    }
+
+    const serialized = JSON.stringify(snapshot);
+    try {
+      localStore.setItem(key, serialized);
+    } catch (err) {
+      throw new Error(`Failed to persist backup snapshot ${runId}: ${err.message}`);
+    }
+
+    try {
+      localStore.setItem(indexKey, JSON.stringify(existing));
+    } catch (err) {
+      try {
+        localStore.removeItem?.(key);
+      } catch {
+        // Best-effort cleanup of unindexed backup key
       }
-      localStore.setItem(key, JSON.stringify(snapshot));
-      const indexKey = `${BACKUP_INDEX_PREFIX}${uid}`;
-      const existing = JSON.parse(localStore.getItem(indexKey) || '[]');
-      if (!existing.includes(runId)) {
-        existing.push(runId);
-        localStore.setItem(indexKey, JSON.stringify(existing));
-      }
+      throw new Error(`Failed to update backup index for ${runId}: ${err.message}`);
     }
 
     return snapshot;
@@ -342,13 +359,16 @@ export function createMigrationEngine({
           report.failedImages++;
           report.pendingImages.push({ noteId: note.id, imageId: imgId, error: err.message });
           report.errors.push({ noteId: note.id, imageId: imgId, message: err.message });
-          migratedImageIds.push(imgId);
         }
       }
 
       if (dryRun) {
         report.migratedNotes++;
         continue;
+      }
+
+      if (typeof firestore?.saveNoteIfUnchanged !== 'function') {
+        throw new Error('Transactional firestore.saveNoteIfUnchanged adapter is required for note migration.');
       }
 
       const buildPayload = (nextRevision) => ({
@@ -362,39 +382,18 @@ export function createMigrationEngine({
         updatedAt: note.updatedAt,
         revision: nextRevision,
         imageIds: migratedImageIds,
-        migrationId: noteImageFailed ? undefined : runId
+        migrationId: noteImageFailed ? null : runId
       });
 
-      if (typeof firestore.saveNoteIfUnchanged === 'function') {
-        const outcome = await firestore.saveNoteIfUnchanged(uid, note.id, { ...note, migrationId: runId }, buildPayload);
-        assertSession(uid);
-        if (outcome.status === 'conflict') {
-          report.skippedConflicts++;
-        } else if (outcome.status === 'up_to_date') {
-          report.skippedUpToDate++;
-        } else {
-          report.migratedNotes++;
-        }
-        continue;
-      }
-
-      const remote = await firestore.getNote(uid, note.id);
+      const outcome = await firestore.saveNoteIfUnchanged(uid, note.id, note, buildPayload, migratedImageIds);
       assertSession(uid);
-
-      if (remote) {
-        if ((remote.revision || 1) > (note.revision || 1) || (remote.updatedAt || 0) > (note.updatedAt || 0)) {
-          report.skippedConflicts++;
-          continue;
-        }
-        if (remote.migrationId === runId || ((remote.updatedAt || 0) === (note.updatedAt || 0) && remote.content === content)) {
-          report.skippedUpToDate++;
-          continue;
-        }
+      if (outcome.status === 'conflict') {
+        report.skippedConflicts++;
+      } else if (outcome.status === 'up_to_date') {
+        report.skippedUpToDate++;
+      } else {
+        report.migratedNotes++;
       }
-
-      const nextRevision = remote ? (Number(remote.revision) || 1) + 1 : 1;
-      await firestore.saveNote(uid, note.id, buildPayload(nextRevision));
-      report.migratedNotes++;
     }
 
     return report;
@@ -406,6 +405,10 @@ export function createMigrationEngine({
    */
   async function rollbackFeedbackImages(uid, backupOrRunId) {
     assertSession(uid);
+    if (typeof firestore?.rollbackFeedbackIfUnchanged !== 'function') {
+      throw new Error('Transactional firestore.rollbackFeedbackIfUnchanged adapter is required for rollback.');
+    }
+
     const backupSnapshot = typeof backupOrRunId === 'string'
       ? loadBackupSnapshot(uid, backupOrRunId)
       : backupOrRunId;
@@ -427,29 +430,13 @@ export function createMigrationEngine({
         imageMigration: entry.imageMigration
       };
 
-      if (typeof firestore.rollbackFeedbackIfUnchanged === 'function') {
-        const outcome = await firestore.rollbackFeedbackIfUnchanged(
-          entry.id,
-          backupSnapshot.runId,
-          backupSnapshot.createdAt,
-          patch
-        );
-        if (outcome.status === 'conflict') result.skippedNewerEdits++;
-        else if (outcome.status === 'restored') result.restored++;
-        continue;
-      }
-
-      const current = await firestore.getFeedback(entry.id);
-      if (!current) continue;
-
-      const currentUpdated = current.updatedAt || current.createdAt || 0;
-      if (currentUpdated > backupSnapshot.createdAt && current.imageMigration?.runId !== backupSnapshot.runId) {
-        result.skippedNewerEdits++;
-        continue;
-      }
-
-      await firestore.updateFeedback(entry.id, patch);
-      result.restored++;
+      const outcome = await firestore.rollbackFeedbackIfUnchanged(
+        entry.id,
+        backupSnapshot.createdAt,
+        patch
+      );
+      if (outcome.status === 'conflict') result.skippedNewerEdits++;
+      else if (outcome.status === 'restored') result.restored++;
     }
 
     return result;

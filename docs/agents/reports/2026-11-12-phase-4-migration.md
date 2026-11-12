@@ -43,13 +43,21 @@ Baseline: `3f5956b` (Phase 3 application integration). Definitive [Phase 1–6 p
 
 | Test Suite / Tool | Environment | Cases | Result |
 |---|---|---:|---|
-| `tests/migration/phase4-migration.test.mjs` | Node test runner (isolated mock R2 & Firestore fixtures) | 9 / 9 | **PASS** |
+| `tests/migration/phase4-migration.test.mjs` | Node test runner (transactional mock R2 & Firestore fixtures) | 14 / 14 | **PASS** |
 | `tests/integration/phase3-app.test.mjs` | Node test runner | 7 / 7 | **PASS** |
 | `tests/images/*.test.mjs` | Node test runner | 15 / 15 | **PASS** |
+| `tests/regression/phase5-regression.test.mjs` | Node test runner | 4 / 4 | **PASS** |
 | `scratch/run_offline_tests.cjs` | Offline test runner | 15 / 15 | **PASS** |
-| `tools/agents/check-config.mjs` | Structural link & metadata checker | 30 files, 81 links | **PASS** (0 errors) |
-| `npm run lint` (`oxlint`) | Source linter | 75 files | **PASS** (0 errors, 109 warnings in legacy code) |
+| `tools/agents/check-config.mjs` | Structural link & metadata checker | 31 files, 84 links | **PASS** (0 errors) |
+| `npm run lint` (`oxlint`) | Source linter | 76 files | **PASS** (0 errors, 109 warnings in legacy code) |
 | `npm run build` (`vite build`) | Production Vite compiler | 2,216 modules | **PASS** |
+
+## Post-Audit Hardening (Phase 4)
+- **Feedback Rollback Concurrency Guard:** Made `evaluateFeedbackRollback` / `rollbackFeedbackIfUnchanged` independent of `imageMigration.runId`, blocking rollback whenever `currentUpdated > backupCreatedAt`.
+- **Transactional Adapter Enforcement & Coverage:** Removed non-transactional fallback branches in `legacyMigration.js`; extracted shared `evaluateFeedbackRollback` and `evaluateNoteWrite` helpers in `firestoreAdapter.js` and updated `phase4-migration.test.mjs` fixtures to exercise `saveNoteIfUnchanged` and `rollbackFeedbackIfUnchanged` directly.
+- **Notes Partial Image Failure:** `migrateNotes` no longer appends failed local UUIDs to `imageIds` and records `migrationId: null` while preserving retryable `pendingImages`.
+- **Backup Reliability:** `createBackupSnapshot` now requires persistent `localStore`, drops unused `notes` payload, surfaces quota errors explicitly, and rolls back orphan snapshot keys if index updates fail.
+- **Up-to-Date Detection:** `evaluateNoteWrite` never treats matching `migrationId` alone as `up_to_date`; verifies `updatedAt`, `content`, `title`, `tags`, and `imageIds`.
 
 ## External Blockers
 

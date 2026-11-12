@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { parseImageDataUrl } from '../../src/utils/migration/dataUrl.js';
 import { createMigrationEngine } from '../../src/utils/migration/legacyMigration.js';
+import { evaluateFeedbackRollback, evaluateNoteWrite } from '../../src/utils/migration/firestoreAdapter.js';
 import { createImageStorage } from '../../src/utils/imageStorage.js';
 import { sha256 } from '../../src/utils/imageOriginal.js';
 
@@ -71,18 +72,36 @@ function createFixture({ uid = 'alice', failOnCall = -1 } = {}) {
       const prev = feedbacksDb.get(id) || { id };
       feedbacksDb.set(id, { ...prev, ...patch });
     },
+    async rollbackFeedbackIfUnchanged(id, backupCreatedAt, patch) {
+      const current = feedbacksDb.get(id);
+      if (!current) return { status: 'missing' };
+      const decision = evaluateFeedbackRollback(current, backupCreatedAt);
+      if (decision.status !== 'ok') return decision;
+      feedbacksDb.set(id, { ...current, ...patch });
+      return { status: 'restored' };
+    },
     async getNote(ownerUid, noteId) {
       return notesDb.get(`${ownerUid}/${noteId}`) || null;
     },
     async saveNote(ownerUid, noteId, data) {
       notesDb.set(`${ownerUid}/${noteId}`, { ...data });
+    },
+    async saveNoteIfUnchanged(ownerUid, noteId, localNote, buildPayload, expectedImageIds = null) {
+      const key = `${ownerUid}/${noteId}`;
+      const remote = notesDb.get(key) || null;
+      const decision = evaluateNoteWrite(remote, localNote, expectedImageIds);
+      if (decision.status !== 'write') return decision;
+      const payload = buildPayload(decision.nextRevision);
+      notesDb.set(key, { ...payload });
+      return { status: 'migrated', revision: decision.nextRevision };
     }
   };
 
   const localMap = new Map();
   const localStore = {
     getItem: (k) => localMap.get(k) ?? null,
-    setItem: (k, v) => localMap.set(k, v)
+    setItem: (k, v) => localMap.set(k, v),
+    removeItem: (k) => localMap.delete(k)
   };
 
   const cacheMap = new Map();
@@ -364,5 +383,147 @@ test('Notes migration enforces revision-based concurrent-write protection even w
   assert.equal(report.skippedConflicts, 1);
   assert.equal(report.migratedNotes, 0);
   assert.equal((await f.firestore.getNote('alice', 'note-rev')).title, 'Remote Rev 2');
+});
+
+test('Feedback rollback never overwrites post-snapshot edits even when imageMigration.runId is unchanged', async () => {
+  const f = createFixture({ uid: 'alice' });
+  const fb = { id: 'fb-same-runid', userId: 'alice', imageUrls: [PNG_DATA_URL], imageIds: [], updatedAt: 1000 };
+  f.feedbacksDb.set('fb-same-runid', fb);
+
+  const backup = f.engine.createBackupSnapshot('alice', [fb]);
+  await f.engine.migrateFeedbacks('alice', [fb], { runId: backup.runId });
+
+  // Simulate user editing feedback text after backup without altering imageMigration.runId
+  const after = f.feedbacksDb.get('fb-same-runid');
+  f.feedbacksDb.set('fb-same-runid', {
+    ...after,
+    description: 'Post-migration user edit',
+    updatedAt: backup.createdAt + 1000
+  });
+
+  const rollback = await f.engine.rollbackFeedbackImages('alice', backup.runId);
+  assert.equal(rollback.restored, 0);
+  assert.equal(rollback.skippedNewerEdits, 1);
+  assert.equal(f.feedbacksDb.get('fb-same-runid').imageIds.length, 1);
+  assert.equal(f.feedbacksDb.get('fb-same-runid').description, 'Post-migration user edit');
+});
+
+test('Migration fails closed if transactional adapter methods are missing', async () => {
+  const f = createFixture({ uid: 'alice' });
+  f.localStore.setItem('zerocoder_notes_alice', JSON.stringify([
+    { id: 'n1', title: 'T', content: '<p>Hi</p>', updatedAt: 1000 }
+  ]));
+  const nonTxEngine = createMigrationEngine({
+    auth: f.auth,
+    imageStorage: null,
+    firestore: { getNote: async () => null, saveNote: async () => {} },
+    localStore: f.localStore
+  });
+
+  await assert.rejects(() => nonTxEngine.migrateNotes('alice'), /saveNoteIfUnchanged/i);
+  await assert.rejects(() => nonTxEngine.rollbackFeedbackImages('alice', 'missing-run'), /rollbackFeedbackIfUnchanged/i);
+});
+
+test('Notes partial image failure (missing cache or failed R2 upload) omits local UUIDs from imageIds and retries cleanly', async () => {
+  const f = createFixture({ uid: 'alice', failOnCall: 2 });
+  const uuid1 = '11111111-1111-1111-1111-111111111111';
+  const uuid2 = '22222222-2222-2222-2222-222222222222';
+  const uuidMissing = '33333333-3333-3333-3333-333333333333';
+
+  f.cacheMap.set(`alice/${uuid1}`, { id: uuid1, blob: new Blob([PNG_BYTES], { type: 'image/png' }) });
+  f.cacheMap.set(`alice/${uuid2}`, { id: uuid2, blob: new Blob([JPG_BYTES], { type: 'image/jpeg' }) });
+
+  f.localStore.setItem('zerocoder_notes_alice', JSON.stringify([{
+    id: 'note-partial',
+    title: 'Partial Images',
+    content: `<img data-image-id="${uuid1}"><img data-image-id="${uuid2}"><img data-image-id="${uuidMissing}">`,
+    updatedAt: 1000
+  }]));
+
+  const report = await f.engine.migrateNotes('alice', { runId: 'partial-run' });
+  assert.equal(report.migratedImages, 1);
+  assert.equal(report.failedImages, 2);
+  assert.equal(report.pendingImages.length, 2);
+
+  const saved = await f.firestore.getNote('alice', 'note-partial');
+  assert.equal(saved.imageIds.length, 1);
+  assert.match(saved.imageIds[0], /^[a-f0-9]{64}$/);
+  assert.equal(saved.imageIds.includes(uuid2), false);
+  assert.equal(saved.imageIds.includes(uuidMissing), false);
+  assert.equal(saved.migrationId, null);
+});
+
+test('Backup creation rolls back orphan snapshot key on index quota error and omits unused notes payload', () => {
+  const storeMap = new Map();
+  let throwOnIndex = true;
+  const quotaStore = {
+    getItem: (k) => storeMap.get(k) ?? null,
+    setItem: (k, v) => {
+      if (throwOnIndex && k.startsWith('zerocoder_migration_backups_')) {
+        throw new Error('QuotaExceededError');
+      }
+      storeMap.set(k, v);
+    },
+    removeItem: (k) => storeMap.delete(k)
+  };
+  const auth = { currentUser: { uid: 'alice' } };
+  const engine = createMigrationEngine({ auth, firestore: {}, localStore: quotaStore, now: () => 1700000000000 });
+
+  assert.throws(
+    () => engine.createBackupSnapshot('alice', [{ id: 'fb-1', userId: 'alice', imageUrls: [PNG_DATA_URL] }]),
+    /QuotaExceededError/i
+  );
+  // Orphan snapshot key must be cleaned up
+  assert.equal(storeMap.size, 0);
+
+  // Successful backup excludes unused notes payload
+  throwOnIndex = false;
+  const snap = engine.createBackupSnapshot('alice', [{ id: 'fb-1', userId: 'alice', imageUrls: [PNG_DATA_URL] }]);
+  assert.equal('notes' in snap, false);
+});
+
+test('Notes up-to-date detection never trusts migrationId alone when remote content or metadata changed', async () => {
+  const f = createFixture({ uid: 'alice' });
+  f.localStore.setItem('zerocoder_notes_alice', JSON.stringify([{
+    id: 'note-up',
+    title: 'Note Title',
+    content: '<p>Local v1</p>',
+    tags: ['a'],
+    updatedAt: 2000,
+    revision: 2
+  }]));
+
+  // Remote has the SAME migrationId ('same-run') but different content/revision
+  await f.firestore.saveNote('alice', 'note-up', {
+    id: 'note-up',
+    ownerUid: 'alice',
+    title: 'Note Title',
+    content: '<p>Remote edited</p>',
+    tags: ['a'],
+    updatedAt: 2000,
+    revision: 3,
+    migrationId: 'same-run'
+  });
+
+  const conflictReport = await f.engine.migrateNotes('alice', { runId: 'same-run' });
+  assert.equal(conflictReport.skippedUpToDate, 0);
+  assert.equal(conflictReport.skippedConflicts, 1);
+  assert.equal((await f.firestore.getNote('alice', 'note-up')).content, '<p>Remote edited</p>');
+
+  // Now align remote to exact local content/tags/updatedAt/revision -> true up_to_date
+  await f.firestore.saveNote('alice', 'note-up', {
+    id: 'note-up',
+    ownerUid: 'alice',
+    title: 'Note Title',
+    content: '<p>Local v1</p>',
+    tags: ['a'],
+    updatedAt: 2000,
+    revision: 2,
+    imageIds: []
+  });
+
+  const upToDateReport = await f.engine.migrateNotes('alice', { runId: 'another-run' });
+  assert.equal(upToDateReport.skippedUpToDate, 1);
+  assert.equal(upToDateReport.migratedNotes, 0);
 });
 

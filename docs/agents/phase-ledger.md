@@ -172,15 +172,16 @@ Deliverables:
 - Data URL parser & magic-byte validator: `src/utils/migration/dataUrl.js`
 - Idempotent, resumable migration engine, durable backups & rollback: `src/utils/migration/legacyMigration.js`
 - Transactional Firestore migration adapter: `src/utils/migration/firestoreAdapter.js`
-- Migration regression test suite: `tests/migration/phase4-migration.test.mjs` (9 tests)
+- Migration regression test suite: `tests/migration/phase4-migration.test.mjs` (14 tests, transactional fixtures & post-audit hardening)
 - Documentation: [Phase 4 report](reports/2026-11-12-phase-4-migration.md)
 
 Verification:
-- Migration regression tests: 9/9 passed
+- Migration regression tests: 14/14 passed (hardened post-audit)
 - App integration tests: 7/7 passed
 - Image storage and token tests: 15/15 passed
+- Phase 5 regression tests: 4/4 passed
 - Offline regression tests: 15/15 passed
-- Config link verification: 30 files, 81 links verified (0 errors)
+- Config link verification: 31 files, 84 links verified (0 errors)
 - Linter (`oxlint`) and production build (`vite build`): passed with 0 errors
 The checkpoint is the commit containing the Phase 4 report; retrieve its hash with
 `git log -1 --format=%h -- docs/agents/reports/2026-11-12-phase-4-migration.md`.
