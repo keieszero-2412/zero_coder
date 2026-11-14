@@ -22,7 +22,7 @@ import {
   FolderGit2
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { AdminPanel } from '../components/AdminPanel';
+import { SOLE_ADMIN_UID } from '../utils/accessPolicy';
 import { SettingsModal } from '../components/SettingsModal';
 import { CheatsheetModal } from '../components/CheatsheetModal';
 import { highlightMatch } from '../components/GlobalHeader';
@@ -123,7 +123,6 @@ export function Dashboard() {
 
   const [completedProblems, setCompletedProblems] = useState({});
   const [flaggedProblems, setFlaggedProblems] = useState({});
-  const [showAdminPanel, setShowAdminPanel] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
   // Home Central Search state
@@ -245,7 +244,7 @@ export function Dashboard() {
     term: currentTerm
   });
 
-  const has2809Access = currentUser?.role === 'Admin' || currentUser?.colorCode === 'Blue';
+  const has2809Access = (currentUser?.role === 'Admin' && currentUser?.uid === SOLE_ADMIN_UID) || currentUser?.colorCode === 'Blue';
 
   // Build shared Path-Grouped Search Index
   const allSearchItems = useMemo(() => {
@@ -1198,7 +1197,6 @@ export function Dashboard() {
       className="app-container zc-dashboard-container"
       style={{ height: 'auto', minHeight: '100%', overflow: 'visible' }}
     >
-      {showAdminPanel && <AdminPanel onClose={() => setShowAdminPanel(false)} />}
       {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
 
       <main className="dashboard-main zc-hub-main">

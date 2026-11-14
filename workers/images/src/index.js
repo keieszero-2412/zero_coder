@@ -1,4 +1,5 @@
 import { MAX_ORIGINAL_BYTES, prepareOriginal, verifyOriginal, assertImageContext } from '../../../src/utils/imageOriginal.js';
+import { SOLE_ADMIN_UID } from '../../../src/utils/accessPolicy.js';
 import { createTokenVerifier } from './firebaseToken.js';
 import { createFirestoreMetadata } from './metadata.js';
 
@@ -53,6 +54,7 @@ export function createImageWorker({ verifyToken = createTokenVerifier(), makeRep
       try { claims = await verifyToken(bearer, env.FIREBASE_PROJECT_ID); } catch { throw failure(401, 'Firebase session is invalid or expired.'); }
       if (!/^[A-Za-z0-9_-]{1,128}$/.test(claims.sub || '')) throw failure(400, 'Unsupported account identity.');
       const repository = makeRepository(env), identity = await repository.authorize(claims);
+      if (identity.role === 'Admin' && claims.sub !== SOLE_ADMIN_UID) throw failure(403, 'Administrator access is restricted to the sole project owner.');
       if (!['Admin','User'].includes(identity.role)) throw failure(403, 'Workspace access is required.');
       const owner = url.searchParams.get('owner') || claims.sub, id = match[1];
       if (!/^[A-Za-z0-9_-]{1,128}$/.test(owner)) throw failure(400, 'Invalid owner.');
@@ -68,8 +70,8 @@ export function createImageWorker({ verifyToken = createTokenVerifier(), makeRep
         const { blob: omitted, ...metadata } = original; void omitted;
         await repository.reserve(metadata);
         const bucket = env.PRIVATE_R2, previous = await bucket.head(original.objectKey);
-        if (!previous) await bucket.put(original.objectKey,new Uint8Array(await blob.arrayBuffer()),{
-          onlyIf:new Headers({ 'If-None-Match':'*' }), httpMetadata:{contentType:original.contentType},
+        if (!previous || !previous.customMetadata?.sha256) await bucket.put(original.objectKey,new Uint8Array(await blob.arrayBuffer()),{
+          ...(previous ? {} : { onlyIf:new Headers({ 'If-None-Match':'*' }) }), httpMetadata:{contentType:original.contentType},
           customMetadata:{ ownerUid:original.ownerUid,assetId:id,sha256:original.sha256 }
         });
         const uploaded = await bucket.get(original.objectKey);
@@ -95,8 +97,18 @@ export function createImageWorker({ verifyToken = createTokenVerifier(), makeRep
       if (metadata.state !== 'ready') throw failure(409, 'Original is pending, detached or deleted. Retry or recover it from the owning account.');
       if (url.searchParams.get('metadata') === '1') return json(metadata);
       const object = await env.PRIVATE_R2.get(metadata.objectKey);
-      if (!object || object.size !== metadata.size || object.customMetadata?.sha256 !== metadata.sha256) throw failure(409, 'Original requires integrity recovery.');
-      return new Response(object.body,{headers:{...headers,'Content-Type':metadata.contentType,'Content-Length':String(metadata.size),'X-Image-SHA256':metadata.sha256,
+      if (!object || object.size !== metadata.size || (object.customMetadata?.sha256 && object.customMetadata.sha256 !== metadata.sha256)) throw failure(409, 'Original requires integrity recovery.');
+      let responseBody = object.body;
+      if (!object.customMetadata?.sha256) {
+        const rawBytes = new Uint8Array(await object.arrayBuffer());
+        try { await verifyOriginal(new Blob([rawBytes], { type: metadata.contentType }), metadata); } catch { throw failure(409, 'Original requires integrity recovery.'); }
+        await env.PRIVATE_R2.put(metadata.objectKey, rawBytes, {
+          httpMetadata: { contentType: metadata.contentType },
+          customMetadata: { ownerUid: metadata.ownerUid, assetId: metadata.id, sha256: metadata.sha256 }
+        });
+        responseBody = rawBytes;
+      }
+      return new Response(responseBody,{headers:{...headers,'Content-Type':metadata.contentType,'Content-Length':String(metadata.size),'X-Image-SHA256':metadata.sha256,
         'Content-Disposition':`inline; filename*=UTF-8''${encodeURIComponent(metadata.filename || `original.${metadata.extension}`)}`}});
     } catch (error) {
       const status = Number.isInteger(error.status) && error.status >= 400 && error.status <= 599 ? error.status : 503;

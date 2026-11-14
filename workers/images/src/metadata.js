@@ -1,4 +1,4 @@
-import { resolveAccess, basicAccessEnabled } from '../../../src/utils/accessPolicy.js';
+import { resolveAccess, basicAccessEnabled, SOLE_ADMIN_UID } from '../../../src/utils/accessPolicy.js';
 import { assertImageContext } from '../../../src/utils/imageOriginal.js';
 const tokens = new WeakMap();
 const fail = (status,message) => Object.assign(new Error(message),{status});
@@ -92,7 +92,7 @@ export function createFirestoreMetadata(env, fetcher = fetch) {
       const account=await call(`${host?`http://${authHost}/identitytoolkit.googleapis.com`:'https://identitytoolkit.googleapis.com'}/v1/projects/${project}/accounts:lookup`,{localId:[claims.sub]});
       const current=account?.users?.[0];if(!current||current.disabled||claims.auth_time<Number(current.validSince||0))throw fail(401,'Session was revoked or disabled.');
       let custom={};try{custom=JSON.parse(current.customAttributes||'{}');}catch{/* Invalid current claims never confer administrator rights. */}
-      const effective={...claims,admin:claims.admin===true&&custom.admin===true,email_verified:claims.email_verified===true&&current.emailVerified===true&&current.email?.toLowerCase()===claims.email?.toLowerCase()};
+      const effective={...claims,admin:claims.sub===SOLE_ADMIN_UID&&claims.admin===true&&custom.admin===true,email_verified:claims.email_verified===true&&current.emailVerified===true&&current.email?.toLowerCase()===claims.email?.toLowerCase()};
       const [uidGrant,emailGrant,canonical,legacy]=await Promise.all([get(`user_access/${claims.sub}`),effective.email_verified&&claims.email?get(`authorized_emails/${encodeURIComponent(claims.email.toLowerCase())}`):null,get('settings/auth'),get('authorized_emails/bypass@zerocoder.admin')]);
       return {...effective,...resolveAccess(effective,uidGrant,emailGrant,basicAccessEnabled(canonical,legacy))};
     },

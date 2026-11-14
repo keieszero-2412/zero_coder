@@ -1,4 +1,4 @@
-import { getNoteImage, rasterImage } from './notesImages';
+import { getNoteImage, rasterImage } from './notesImages.js';
 
 const escapeXml = (value) => String(value ?? '')
   .replace(/&/g, '&amp;')
@@ -33,7 +33,18 @@ function walkHtml(node, blocks) {
   if (node.nodeType !== Node.ELEMENT_NODE) return;
   const tag = node.tagName.toLowerCase();
   if (tag === 'img') {
-    blocks.push({ type: 'image', id: node.dataset.imageId, text: node.alt || 'Image', width: Number(node.closest('figure')?.dataset.width) || 100, align: node.closest('figure')?.dataset.align || 'center' });
+    const figure = node.closest('figure');
+    const widthPx = Number(figure?.dataset.widthPx);
+    const heightPx = Number(figure?.dataset.heightPx);
+    blocks.push({
+      type: 'image',
+      id: node.dataset.imageId,
+      text: node.alt || 'Image',
+      width: Number(figure?.dataset.width) || 100,
+      widthPx: Number.isFinite(widthPx) && widthPx >= 48 ? Math.round(widthPx) : null,
+      heightPx: Number.isFinite(heightPx) && heightPx >= 32 ? Math.round(heightPx) : null,
+      align: figure?.dataset.align || 'center'
+    });
     return;
   }
   if (tag === 'figure' || node.querySelector('img')) {
@@ -171,8 +182,11 @@ async function makeImagePdf(note) {
   for (const block of htmlToBlocks(note.content)) {
     if (block.type === 'image') {
       const image = await rasterImage(await getNoteImage(block.id, note.ownerUid), 'image/jpeg');
-      const scale = Math.min((512 * block.width / 100) / image.width, 620 / image.height);
-      const width = image.width * scale, height = image.height * scale;
+      const targetWidth = 512 * block.width / 100;
+      const ratio = block.widthPx && block.heightPx ? (block.heightPx / block.widthPx) : (image.height / image.width);
+      const scale = Math.min(targetWidth / image.width, 620 / Math.max(1, image.width * ratio));
+      const width = image.width * scale;
+      const height = Math.min(620, width * ratio);
       if (y - height < 50) flush();
       const id = add(joinBytes([encoder.encode(`<< /Type /XObject /Subtype /Image /Width ${image.width} /Height ${image.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${image.bytes.length} >>\nstream\n`), image.bytes, encoder.encode('\nendstream')]));
       const name = `Im${id}`;
@@ -181,7 +195,7 @@ async function makeImagePdf(note) {
       commands.push(`q ${width.toFixed(2)} 0 0 ${height.toFixed(2)} ${x.toFixed(2)} ${(y - height).toFixed(2)} cm /${name} Do Q`);
       y -= height + 16;
     } else {
-      const size = /^h[1-3]$/.test(block.type) ? 15 : 11;
+      const size = block.type === 'h1' ? 17 : block.type === 'h2' ? 15 : block.type === 'h3' ? 13 : 11;
       const prefix = block.type === 'bullet' ? '- ' : block.type === 'number' ? '• ' : '';
       for (const line of `${prefix}${block.text}`.split('\n')) {
         for (let i = 0; i < Math.max(1, line.length); i += 85) textLine(line.slice(i, i + 85), size);
@@ -249,8 +263,9 @@ function docxXml(note, images = []) {
     if (block.type === 'image') {
       const index = imageIndex++;
       const image = images[index];
-      const width = Math.round(Math.min(5486400 * Math.min(100, block.width) / 100, 7772400 * image.width / image.height));
-      const height = Math.round(width * image.height / image.width);
+      const ratio = block.widthPx && block.heightPx ? (block.heightPx / block.widthPx) : (image.height / image.width);
+      const width = Math.round(Math.min(5486400 * Math.min(100, block.width) / 100, 7772400 / Math.max(0.1, ratio)));
+      const height = Math.round(width * ratio);
       paragraphs.push(`<w:p><w:pPr><w:jc w:val="${block.align}"/></w:pPr><w:r><w:drawing><wp:inline xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"><wp:extent cx="${width}" cy="${height}"/><wp:docPr id="${index + 1}" name="Image ${index + 1}" descr="${escapeXml(block.text)}"/><a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:nvPicPr><pic:cNvPr id="${index + 1}" name="Image ${index + 1}"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:embed="image${index + 1}"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${width}" cy="${height}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r></w:p>`);
       return;
     }

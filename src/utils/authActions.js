@@ -18,8 +18,9 @@ export function createAuthActions({ auth, db }) {
       }
       const cred = await createUserWithEmailAndPassword(auth, email, password);
       const user = cred.user;
+      const safeUsername = String(username || user.email?.split('@')[0] || 'User').slice(0, 80);
       await setDoc(doc(db, 'users', user.uid), {
-        username,
+        username: safeUsername,
         email: user.email,
         role: 'User',
         colorCode: 'Red',
@@ -58,10 +59,11 @@ export function createAuthActions({ auth, db }) {
       if (!username) {
         username = user.email ? user.email.split('@')[0] : 'User';
       }
+      const safeUsername = String(username).slice(0, 80);
       await setDoc(doc(db, 'access_requests', user.uid), {
         uid: user.uid,
         email: user.email,
-        username,
+        username: safeUsername,
         requestedCode,
         status: 'pending',
         requestedAt: serverTimestamp()

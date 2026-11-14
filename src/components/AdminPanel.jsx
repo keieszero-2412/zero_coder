@@ -4,7 +4,9 @@ import { db } from '../config/firebase';
 import { collection, query, where, getDocs, doc, setDoc, deleteDoc, updateDoc, onSnapshot } from 'firebase/firestore';
 import { X, Check, Trash2, Mail, MessageSquare, ImageIcon, Settings, Shield, Database, Send, User } from 'lucide-react';
 import { useNotification } from '../context/NotificationContext';
+import { useAuth } from '../context/AuthContext';
 import { imageStorage, isImagesConfigured } from '../utils/imageService';
+import { basicAccessEnabled, SOLE_ADMIN_UID } from '../utils/accessPolicy';
 import '../index.css';
 
 const TabButton = ({ label, icon: Icon, active, badge, onClick }) => (
@@ -52,6 +54,8 @@ const TabButton = ({ label, icon: Icon, active, badge, onClick }) => (
 );
 
 export function AdminPanel({ onClose }) {
+  const { currentUser } = useAuth();
+  const isSoleAdmin = currentUser?.uid === SOLE_ADMIN_UID && currentUser?.role === 'Admin';
   const { showToast, showConfirm } = useNotification();
   const [activeTab, setActiveTab] = useState('requests');
   const [accessRequests, setAccessRequests] = useState([]);
@@ -106,6 +110,26 @@ export function AdminPanel({ onClose }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [replyDrafts, setReplyDrafts] = useState({});
 
+  useEffect(() => () => {
+    if (typeof selectedImage === 'string' && selectedImage.startsWith('blob:')) {
+      URL.revokeObjectURL(selectedImage);
+    }
+  }, [selectedImage]);
+
+  const openImagePreview = (url) => {
+    if (typeof selectedImage === 'string' && selectedImage.startsWith('blob:') && selectedImage !== url) {
+      URL.revokeObjectURL(selectedImage);
+    }
+    setSelectedImage(url);
+  };
+
+  const closeSelectedImage = () => {
+    if (typeof selectedImage === 'string' && selectedImage.startsWith('blob:')) {
+      URL.revokeObjectURL(selectedImage);
+    }
+    setSelectedImage(null);
+  };
+
   const handleViewAdminImage = async (imageId, ownerUid) => {
     try {
       if (!isImagesConfigured()) {
@@ -113,7 +137,7 @@ export function AdminPanel({ onClose }) {
         return;
       }
       const preview = await imageStorage.preview({ id: imageId, ownerUid, feature: 'feedback' });
-      setSelectedImage(preview.url);
+      openImagePreview(preview.url);
     } catch (err) {
       showToast(err.message || 'Failed to load screenshot preview from R2.', 'error');
     }
@@ -211,17 +235,19 @@ export function AdminPanel({ onClose }) {
   };
 
   useEffect(() => {
+    if (!isSoleAdmin) {
+      setLoading(false);
+      return undefined;
+    }
+
     const qAccess = query(collection(db, 'access_requests'), where('status', '==', 'pending'));
     const unsubscribeAccess = onSnapshot(qAccess, (snapshot) => {
       const reqs = [];
-      snapshot.forEach((doc) => {
-        reqs.push({ id: doc.id, ...doc.data() });
+      snapshot.forEach((docSnap) => {
+        reqs.push({ id: docSnap.id, ...docSnap.data() });
       });
-      reqs.sort((a, b) => {
-        if (!a.requestedAt) return 1;
-        if (!b.requestedAt) return -1;
-        return b.requestedAt.toMillis() - a.requestedAt.toMillis();
-      });
+      const reqTime = (r) => (r.requestedAt?.toMillis ? r.requestedAt.toMillis() : (r.requestedAt ? new Date(r.requestedAt).getTime() || 0 : 0));
+      reqs.sort((a, b) => reqTime(b) - reqTime(a));
       setAccessRequests(reqs);
     });
 
@@ -244,20 +270,35 @@ export function AdminPanel({ onClose }) {
       setLoading(false); // Ensure loading stops on error
     });
 
+    let canonicalAuthDoc = null;
+    let legacyBypassDoc = null;
+    const syncBypassState = () => {
+      setBypassAuth(basicAccessEnabled(canonicalAuthDoc, legacyBypassDoc));
+    };
+
+    const unsubscribeCanonicalSettings = onSnapshot(doc(db, 'settings', 'auth'), (docSnap) => {
+      canonicalAuthDoc = docSnap.exists() ? docSnap.data() : null;
+      syncBypassState();
+    }, () => {
+      canonicalAuthDoc = null;
+      syncBypassState();
+    });
+
     const unsubscribeSettings = onSnapshot(doc(db, 'authorized_emails', 'bypass@zerocoder.admin'), (docSnap) => {
-      if (docSnap.exists()) {
-        setBypassAuth(docSnap.data().bypassBlueCode || false);
-      } else {
-        setBypassAuth(false);
-      }
+      legacyBypassDoc = docSnap.exists() ? docSnap.data() : null;
+      syncBypassState();
+    }, () => {
+      legacyBypassDoc = null;
+      syncBypassState();
     });
 
     return () => {
       unsubscribeAccess();
       unsubscribeFeedback();
+      unsubscribeCanonicalSettings();
       unsubscribeSettings();
     };
-  }, []);
+  }, [isSoleAdmin]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -267,36 +308,45 @@ export function AdminPanel({ onClose }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onClose]);
 
-  const handleApprove = async (email, requestId, requestedCode = 'Gray') => {
+  const handleApprove = async (email, requestId, requestedCode = 'Gray', requestUid = null) => {
     try {
+      const normalizedEmail = (email || '').trim().toLowerCase();
       // Authorize email globally with the requested code
-      await setDoc(doc(db, 'authorized_emails', email.toLowerCase()), {
-        addedAt: new Date(),
-        addedBy: 'Admin (Request Approval)',
-        code: requestedCode
-      });
+      if (normalizedEmail) {
+        await setDoc(doc(db, 'authorized_emails', normalizedEmail), {
+          addedAt: new Date(),
+          addedBy: 'Admin (Request Approval)',
+          code: requestedCode
+        });
+      }
 
-      // 1. Find user by email
-      const usersRef = collection(db, 'users');
-      const q = query(usersRef, where('email', '==', email));
-      const querySnapshot = await getDocs(q);
+      // 1. Resolve matching UID(s) from requestUid / non-email requestId / users email query
+      const targetUids = new Set();
+      if (requestUid) targetUids.add(requestUid);
+      if (requestId && !requestId.includes('@')) targetUids.add(requestId);
 
-      if (!querySnapshot.empty) {
-        // Update colorCode and authoritative user_access/{uid} grant for all matching users
+      if (normalizedEmail) {
+        const usersRef = collection(db, 'users');
+        const q = query(usersRef, where('email', '==', email));
+        const querySnapshot = await getDocs(q);
         for (const userDoc of querySnapshot.docs) {
-          await updateDoc(doc(db, 'users', userDoc.id), {
+          targetUids.add(userDoc.id);
+        }
+      }
+
+      for (const uid of targetUids) {
+        try {
+          await updateDoc(doc(db, 'users', uid), {
             colorCode: requestedCode
           });
-          await setDoc(doc(db, 'user_access', userDoc.id), {
-            code: requestedCode,
-            updatedAt: new Date(),
-            updatedBy: 'Admin (Request Approval)'
-          }, { merge: true });
+        } catch {
+          // User profile may not exist yet; authoritative grant still lands in user_access/{uid}
         }
-      } else {
-        // If user not found in 'users' collection yet, we could potentially just show a warning
-        // but for safety, we could also log it.
-        console.warn("Approved request but user not found in users collection.");
+        await setDoc(doc(db, 'user_access', uid), {
+          code: requestedCode,
+          updatedAt: new Date(),
+          updatedBy: 'Admin (Request Approval)'
+        }, { merge: true });
       }
 
       // 2. Delete the request
@@ -340,7 +390,11 @@ export function AdminPanel({ onClose }) {
         showToast("Feedback deleted.", "info");
       } catch (err) {
         console.error("Failed to delete feedback:", err);
-        showToast("Error deleting feedback.", "error");
+        if (err?.code === 'permission-denied') {
+          showToast("Deleting feedback is disabled by security rules to preserve attachment references.", "warning");
+        } else {
+          showToast("Error deleting feedback.", "error");
+        }
       }
     });
   };
@@ -400,6 +454,8 @@ export function AdminPanel({ onClose }) {
       setIsChangingCode(false);
     }
   };
+
+  if (!isSoleAdmin) return null;
 
   return createPortal(
     <div 
@@ -638,7 +694,9 @@ export function AdminPanel({ onClose }) {
                                 Requested: {req.requestedCode || 'Gray'} Code
                               </div>
                               <div style={{ fontSize: '0.85rem', color: 'var(--text-tertiary)', marginTop: '0.25rem' }}>
-                                {req.requestedAt ? new Date(req.requestedAt.toMillis()).toLocaleString() : 'Just now'}
+                                {req.requestedAt?.toMillis
+                                  ? new Date(req.requestedAt.toMillis()).toLocaleString()
+                                  : (req.requestedAt ? new Date(req.requestedAt).toLocaleString() : 'Just now')}
                               </div>
                             </div>
                             <div style={{ display: 'flex', gap: '0.5rem' }}>
@@ -664,7 +722,7 @@ export function AdminPanel({ onClose }) {
                                 Reject
                               </button>
                               <button 
-                                onClick={() => handleApprove(req.email, req.id, req.requestedCode || 'Gray')}
+                                onClick={() => handleApprove(req.email, req.id, req.requestedCode || 'Gray', req.uid || null)}
                                 className="button-primary"
                                 style={{ padding: '0.6rem 1.25rem' }}
                               >
@@ -745,25 +803,24 @@ export function AdminPanel({ onClose }) {
                               {fb.description}
                             </div>
 
-                            {((fb.imageUrls && fb.imageUrls.length > 0) || (fb.imageIds && fb.imageIds.length > 0) || fb.imageUrl) ? (
-                              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                                {fb.imageUrls?.map((url, i) => (
-                                  <button key={`legacy-${i}`} onClick={() => setSelectedImage(url)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', cursor: 'pointer', padding: '0.4rem 0.75rem', backgroundColor: 'transparent', borderRadius: 'var(--radius-sm)', transition: 'all 0.2s' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(59, 130, 246, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
-                                    <ImageIcon size={16} /> Screenshot {i + 1}
-                                  </button>
-                                ))}
-                                {fb.imageUrl && !fb.imageUrls?.length && (
-                                  <button onClick={() => setSelectedImage(fb.imageUrl)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', cursor: 'pointer', padding: '0.4rem 0.75rem', backgroundColor: 'transparent', borderRadius: 'var(--radius-sm)', transition: 'all 0.2s' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(59, 130, 246, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
-                                    <ImageIcon size={16} /> View Screenshot
-                                  </button>
-                                )}
-                                {fb.imageIds?.map((id, i) => (
-                                  <button key={`r2-${i}`} onClick={() => handleViewAdminImage(id, fb.userId)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', cursor: 'pointer', padding: '0.4rem 0.75rem', backgroundColor: 'transparent', borderRadius: 'var(--radius-sm)', transition: 'all 0.2s' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(59, 130, 246, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
-                                    <ImageIcon size={16} /> Screenshot {i + 1} (R2)
-                                  </button>
-                                ))}
-                              </div>
-                            ) : null}
+                            {((fb.imageUrls && fb.imageUrls.length > 0) || (fb.imageIds && fb.imageIds.length > 0) || fb.imageUrl) ? (() => {
+                              const hasVerifiedR2Migration = fb.imageMigration?.status === 'verified' && fb.imageIds?.length > 0 && isImagesConfigured();
+                              const legacyUrls = hasVerifiedR2Migration ? [] : (fb.imageUrls?.length > 0 ? fb.imageUrls : (fb.imageUrl ? [fb.imageUrl] : []));
+                              return (
+                                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                                  {legacyUrls.map((url, i) => (
+                                    <button key={`legacy-${i}`} onClick={() => openImagePreview(url)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', cursor: 'pointer', padding: '0.4rem 0.75rem', backgroundColor: 'transparent', borderRadius: 'var(--radius-sm)', transition: 'all 0.2s' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(59, 130, 246, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                                      <ImageIcon size={16} /> Screenshot {i + 1}
+                                    </button>
+                                  ))}
+                                  {fb.imageIds?.map((id, i) => (
+                                    <button key={`r2-${i}`} onClick={() => handleViewAdminImage(id, fb.userId)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', cursor: 'pointer', padding: '0.4rem 0.75rem', backgroundColor: 'transparent', borderRadius: 'var(--radius-sm)', transition: 'all 0.2s' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(59, 130, 246, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                                      <ImageIcon size={16} /> Screenshot {i + 1} (R2)
+                                    </button>
+                                  ))}
+                                </div>
+                              );
+                            })() : null}
 
                             {/* Thread Conversation */}
                             {(() => {
@@ -890,7 +947,7 @@ export function AdminPanel({ onClose }) {
           backgroundColor: 'rgba(0,0,0,0.85)', zIndex: 11000,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           padding: '2rem'
-        }} onClick={() => setSelectedImage(null)}>
+        }} onClick={closeSelectedImage}>
           <img 
             src={selectedImage} 
             alt="Feedback Screenshot" 
@@ -898,7 +955,7 @@ export function AdminPanel({ onClose }) {
             onClick={(e) => e.stopPropagation()}
           />
           <button 
-            onClick={() => setSelectedImage(null)}
+            onClick={closeSelectedImage}
             style={{ position: 'absolute', top: '2rem', right: '2rem', background: 'var(--bg-surface)', color: 'var(--text-primary)', border: 'none', borderRadius: '50%', width: '48px', height: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
             onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-surface-highlight)'}
             onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'var(--bg-surface)'}

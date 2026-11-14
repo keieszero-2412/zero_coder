@@ -287,16 +287,26 @@ test('Notes migration isolates accounts, respects concurrent remote edits, and p
   assert.equal(conflictRemote.title, 'Newer Remote Edit');
   assert.equal(conflictRemote.revision, 3);
 
-  // Verify note-local retained tags, source, and imageIds
+  // Verify note-local retained tags, source, imageIds, and rewritten canonical SHA-256 content
   const localRemote = await f.firestore.getNote('alice', 'note-local');
   assert.equal(localRemote.title, 'Alice Study Note');
   assert.deepEqual(localRemote.tags, ['sql', 'midterm']);
   assert.deepEqual(localRemote.source, { category: 'Learn', course: 'database' });
   assert.equal(localRemote.imageIds.length, 1);
+  assert.match(localRemote.imageIds[0], /^[a-f0-9]{64}$/);
+  assert.equal(localRemote.content.includes(`data-image-id="${localRemote.imageIds[0]}"`), true);
+  assert.equal(localRemote.content.includes(imgUuid), false);
+
+  // Repeat migration run must recognize note-local as up-to-date without re-uploading
+  const callsBefore = f.getUploadCalls();
+  const repeatReport = await f.engine.migrateNotes('alice', { adoptGuest: false, runId: 'notes-run-2' });
+  assert.equal(repeatReport.skippedConflicts, 1);
 
   // Verify localStorage was NOT deleted
   assert.ok(f.localStore.getItem('zerocoder_notes_alice'));
   assert.ok(f.cacheMap.get(`alice/${imgUuid}`));
+  assert.ok(f.cacheMap.get(`alice/${localRemote.imageIds[0]}`));
+  assert.ok(callsBefore >= 1);
 });
 
 test('Image-only rollback restores pre-migration state without overwriting later user edits', async () => {

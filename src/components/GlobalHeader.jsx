@@ -46,6 +46,7 @@ import { useNotification } from '../context/NotificationContext';
 import { CHEATSHEETS, MIDTERM_CHEATSHEETS } from '../data/cheatsheets';
 import { getLecturesManifest, getCachedLecturesManifest } from '../utils/lecturesCache';
 import FeedbackWidget from './FeedbackWidget';
+import { SOLE_ADMIN_UID } from '../utils/accessPolicy';
 import { db } from '../config/firebase';
 import { collection, query, where, onSnapshot, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 
@@ -129,6 +130,7 @@ export function highlightMatch(text, rawQuery) {
 
 export function GlobalHeader() {
   const { currentUser, logout } = useAuth();
+  const isSoleAdmin = currentUser?.role === 'Admin' && currentUser?.uid === SOLE_ADMIN_UID;
   const {
     activeCourse,
     setActiveCourse,
@@ -364,7 +366,7 @@ export function GlobalHeader() {
 
   // Sync last viewed time from Firestore if available
   useEffect(() => {
-    if (currentUser?.adminLastViewedAt) {
+    if (isSoleAdmin && currentUser?.adminLastViewedAt) {
       const fsTime = currentUser.adminLastViewedAt.toMillis
         ? currentUser.adminLastViewedAt.toMillis()
         : new Date(currentUser.adminLastViewedAt).getTime();
@@ -375,7 +377,7 @@ export function GlobalHeader() {
         } catch {}
       }
     }
-  }, [currentUser, lastViewedNoti]);
+  }, [isSoleAdmin, currentUser, lastViewedNoti]);
 
   const markAdminNotificationsAsSeen = () => {
     const now = Date.now();
@@ -384,7 +386,7 @@ export function GlobalHeader() {
     try {
       localStorage.setItem('admin_last_viewed_noti', String(now));
     } catch {}
-    if (currentUser?.uid) {
+    if (isSoleAdmin && currentUser?.uid) {
       updateDoc(doc(db, 'users', currentUser.uid), {
         adminLastViewedAt: serverTimestamp()
       }).catch(() => {});
@@ -392,6 +394,7 @@ export function GlobalHeader() {
   };
 
   const handleOpenAdminPanel = () => {
+    if (!isSoleAdmin) return;
     setShowAdminPanel(true);
     markAdminNotificationsAsSeen();
   };
@@ -402,7 +405,7 @@ export function GlobalHeader() {
   };
 
   useEffect(() => {
-    if (!currentUser || currentUser.role !== 'Admin') {
+    if (!isSoleAdmin) {
       setAdminNotificationCount(0);
       return;
     }
@@ -464,37 +467,67 @@ export function GlobalHeader() {
       unsubscribeAccess();
       unsubscribeFeedback();
     };
-  }, [currentUser, lastViewedNoti]);
+  }, [isSoleAdmin, lastViewedNoti]);
 
   useEffect(() => {
-    if (!currentUser || currentUser.role === 'Admin') return;
+    if (!currentUser || isSoleAdmin) return;
 
-    const unsubscribe = onSnapshot(
-      doc(db, 'access_requests', currentUser.email),
-      (docSnap) => {
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          if (data.status === 'rejected') {
-            setUserNotifications([
-              {
-                type: 'access_request_rejected',
-                title: 'Access Request Rejected',
-                message: `Your request for ${data.requestedCode || 'Blue'} Code access was declined by the admin.`,
-                timestamp: data.requestedAt
-              }
-            ]);
-          } else {
-            setUserNotifications([]);
+    let uidReq = null;
+    const emailReqs = new Map();
+    const syncNotification = () => {
+      const legacyActive = Array.from(emailReqs.values()).find(Boolean) || null;
+      const active = uidReq || legacyActive;
+      if (active) {
+        setUserNotifications([
+          {
+            type: 'access_request_rejected',
+            title: 'Access Request Rejected',
+            message: `Your request for ${active.requestedCode || 'Blue'} Code access was declined by the admin.`,
+            timestamp: active.requestedAt,
+            requestDocId: active.requestDocId
           }
-        } else {
-          setUserNotifications([]);
-        }
+        ]);
+      } else {
+        setUserNotifications([]);
+      }
+    };
+
+    const unsubUid = onSnapshot(
+      doc(db, 'access_requests', currentUser.uid),
+      (docSnap) => {
+        const data = docSnap.exists() ? docSnap.data() : null;
+        uidReq = data?.status === 'rejected' ? { ...data, requestDocId: docSnap.id } : null;
+        syncNotification();
       },
-      () => {}
+      () => {
+        uidReq = null;
+        syncNotification();
+      }
     );
 
-    return () => unsubscribe();
-  }, [currentUser]);
+    const legacyEmailKeys = currentUser.email && currentUser.email !== currentUser.uid
+      ? Array.from(new Set([currentUser.email, currentUser.email.toLowerCase()]))
+      : [];
+    const unsubEmails = legacyEmailKeys.map((emailKey) =>
+      onSnapshot(
+        doc(db, 'access_requests', emailKey),
+        (docSnap) => {
+          const data = docSnap.exists() ? docSnap.data() : null;
+          emailReqs.set(emailKey, data?.status === 'rejected' ? { ...data, requestDocId: docSnap.id } : null);
+          syncNotification();
+        },
+        () => {
+          emailReqs.set(emailKey, null);
+          syncNotification();
+        }
+      )
+    );
+
+    return () => {
+      unsubUid();
+      unsubEmails.forEach((unsub) => unsub());
+    };
+  }, [currentUser, isSoleAdmin]);
 
   // Determine visually active course, term, and tool based on current route or context
   const visualCourse = urlCourseParam || normalizeCourse(activeCourse) || 'programming';
@@ -645,7 +678,7 @@ export function GlobalHeader() {
     }
   };
 
-  const has2809Access = currentUser?.role === 'Admin' || currentUser?.colorCode === 'Blue';
+  const has2809Access = isSoleAdmin || currentUser?.colorCode === 'Blue';
 
   const allSearchItems = useMemo(() => {
     return buildSearchIndex({
@@ -886,7 +919,7 @@ export function GlobalHeader() {
     action();
   };
 
-  const statusLabel = `Code: ${currentUser?.colorCode || 'Green'}`;
+  const statusLabel = `Code: ${currentUser?.colorCode || 'Red'}`;
 
   return (
     <header ref={headerRef} className="header global-header zc-command-header" data-hstate="full">
@@ -1059,7 +1092,7 @@ export function GlobalHeader() {
               <kbd className="zc-cmd-kbd">Ctrl K</kbd>
             </button>
 
-            {currentUser.role === 'Admin' ? (
+            {isSoleAdmin ? (
               <button
                 type="button"
                 onClick={handleOpenAdminPanel}
@@ -1550,7 +1583,7 @@ export function GlobalHeader() {
           document.body
         )}
 
-      {showAdminPanel && <AdminPanel onClose={handleCloseAdminPanel} />}
+      {isSoleAdmin && showAdminPanel && <AdminPanel onClose={handleCloseAdminPanel} />}
       {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
       <AboutModal isOpen={showAbout} onClose={() => setShowAbout(false)} />
       {showUserNotif && (

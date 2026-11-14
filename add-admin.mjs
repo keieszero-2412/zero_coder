@@ -1,39 +1,23 @@
-import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import { SOLE_ADMIN_UID, SOLE_ADMIN_EMAIL } from './src/utils/accessPolicy.js';
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyByZiS5X6HxWd94WdzA_bnM5u_9F5XfCpM',
-  authDomain: 'zerocoder-8cb6b.firebaseapp.com',
-  projectId: 'zerocoder-8cb6b',
-  storageBucket: 'zerocoder-8cb6b.firebasestorage.app',
-  messagingSenderId: '907038293031',
-  appId: '1:907038293031:web:76386f1ce69b2b936a6202',
-  measurementId: 'G-ZHS3V82WX7'
-};
+/**
+ * Single-Admin Policy Verification Notice:
+ * Client-editable Firestore documents (`authorized_emails` or `users/{uid}.role`)
+ * NEVER grant trusted administrator privileges in ZeroCoder.
+ *
+ * Trusted Admin status requires server-side Firebase Auth Custom Claims (`admin: true`)
+ * bound exclusively to the sole project owner UID.
+ */
+const targetEmail = (process.argv[2] || SOLE_ADMIN_EMAIL).trim().toLowerCase();
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-// THÊM EMAIL CỦA BẠN VÀO ĐÂY
-const YOUR_EMAIL = "keieszero2412@gmail.com"; 
-
-async function grantAdminAccess() {
-  console.log(`Đang cấp quyền Admin cho: ${YOUR_EMAIL}...`);
-  try {
-    const authRef = doc(db, 'authorized_emails', YOUR_EMAIL.toLowerCase());
-    await setDoc(authRef, {
-      role: 'Admin',
-      colorCode: 'Blue',
-      addedAt: new Date(),
-      addedBy: 'Manual Script'
-    });
-    console.log("✅ Thành công! Bạn đã có quyền Admin.");
-    console.log("Bây giờ bạn có thể quay lại trang web, F5 lại và đăng nhập!");
-    process.exit(0);
-  } catch (error) {
-    console.error("❌ Lỗi cấp quyền:", error.message);
-    process.exit(1);
-  }
+if (targetEmail !== SOLE_ADMIN_EMAIL) {
+  console.error(`Refusing to configure Admin for "${targetEmail}".`);
+  console.error(`Single-Admin Policy permits only ${SOLE_ADMIN_EMAIL} (UID: ${SOLE_ADMIN_UID}).`);
+  process.exit(1);
 }
 
-grantAdminAccess();
+console.log('ZeroCoder Single-Admin Policy Check:');
+console.log(`- Sole Admin Email : ${SOLE_ADMIN_EMAIL}`);
+console.log(`- Sole Admin UID   : ${SOLE_ADMIN_UID}`);
+console.log('- Client-SDK Firestore role escalation is permanently disabled.');
+console.log('- To apply trusted Admin Custom Claims via Firebase Admin / Identity Toolkit, run the approved Phase 6.4 server-side procedure.');

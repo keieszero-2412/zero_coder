@@ -142,9 +142,10 @@ export function AIAssistant({ problem, userCode, testResults, onClose, onPropose
   
   const handleRequestBlueCode = async () => {
     try {
-      await setDoc(doc(db, 'access_requests', currentUser.email), {
+      await setDoc(doc(db, 'access_requests', currentUser.uid), {
+        uid: currentUser.uid,
         email: currentUser.email,
-        username: currentUser.username,
+        username: (currentUser.username || currentUser.email?.split('@')[0] || 'User').slice(0, 80),
         requestedCode: 'Blue',
         requestedAt: serverTimestamp(),
         status: 'pending'

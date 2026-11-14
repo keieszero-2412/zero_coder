@@ -111,16 +111,21 @@ export function Auth() {
             // The AuthContext onAuthStateChanged will handle the missing Firestore doc by creating it? 
             // Actually let's manually heal it here to be safe.
             const { db } = await import('../config/firebase');
-            const { doc, setDoc } = await import('firebase/firestore');
+            const { doc, getDoc, setDoc, serverTimestamp } = await import('firebase/firestore');
             const { getAuth } = await import('firebase/auth');
             const auth = getAuth();
             if (auth.currentUser) {
-              await setDoc(doc(db, 'users', auth.currentUser.uid), {
-                username: username || email.split('@')[0],
-                email: email,
-                role: emailStatus.role,
-                colorCode: emailStatus.colorCode
-              });
+              const userDocRef = doc(db, 'users', auth.currentUser.uid);
+              const existingProfile = await getDoc(userDocRef).catch(() => null);
+              if (!existingProfile?.exists()) {
+                await setDoc(userDocRef, {
+                  username: (username || email.split('@')[0] || 'User').slice(0, 80),
+                  email: auth.currentUser.email || email,
+                  role: 'User',
+                  colorCode: 'Red',
+                  createdAt: serverTimestamp()
+                });
+              }
             }
           } else {
             throw regErr; // rethrow other errors
@@ -142,12 +147,22 @@ export function Auth() {
 
   const handleRequestAccess = async () => {
     try {
-      const { db } = await import('../config/firebase');
+      const { db, auth } = await import('../config/firebase');
       const { doc, setDoc, serverTimestamp } = await import('firebase/firestore');
-      
-      const requestRef = doc(db, 'access_requests', email);
+      const activeUser = auth.currentUser;
+      if (!activeUser) {
+        showToast("Please sign in first before requesting access.", "error");
+        return;
+      }
+      if (!activeUser.emailVerified) {
+        showToast("Please verify your email address before requesting access.", "error");
+        return;
+      }
+      const requestRef = doc(db, 'access_requests', activeUser.uid);
       await setDoc(requestRef, {
-        email: email,
+        uid: activeUser.uid,
+        email: activeUser.email || email,
+        username: (username || email.split('@')[0] || 'User').slice(0, 80),
         requestedCode: requestedCode,
         requestedAt: serverTimestamp(),
         status: 'pending'
@@ -271,7 +286,9 @@ export function Auth() {
                 <span style={{ fontWeight: 600 }}>Access Code: {emailStatus.colorCode}</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', fontWeight: 500 }}>
-                {emailStatus.colorCode !== 'Red' ? (
+                {emailStatus.preAuthLookupRestricted ? (
+                  <><CheckCircle2 size={16} /> Sign In or Create Account</>
+                ) : emailStatus.colorCode !== 'Red' ? (
                   <><CheckCircle2 size={16} /> Access Authorized</>
                 ) : (
                   <><XCircle size={16} /> Access Denied</>
@@ -387,7 +404,9 @@ export function Auth() {
               <form onSubmit={handleAuthSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginTop: '0.5rem' }}>
                 {!emailStatus.accountExists && (
                   <div>
-                    <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>Choose a Username</label>
+                    <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, marginBottom: '0.5rem', color: 'var(--text-secondary)' }}>
+                      {emailStatus.preAuthLookupRestricted ? 'Username (new accounts only)' : 'Choose a Username'}
+                    </label>
                     <div style={{ position: 'relative' }}>
                       <div style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-tertiary)' }}>
                         <User size={18} />
@@ -396,9 +415,10 @@ export function Auth() {
                         type="text" 
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        required
+                        required={!emailStatus.preAuthLookupRestricted}
+                        maxLength={80}
                         style={{ width: '100%', padding: '0.625rem 0.75rem 0.625rem 2.5rem', backgroundColor: 'var(--bg-surface-elevated)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', color: 'var(--text-primary)', outline: 'none' }}
-                        placeholder="Username"
+                        placeholder={emailStatus.preAuthLookupRestricted ? 'Leave blank if signing in' : 'Username'}
                       />
                     </div>
                   </div>
@@ -433,7 +453,7 @@ export function Auth() {
                     Remember me
                   </label>
                   
-                  {emailStatus.accountExists && (
+                  {(emailStatus.accountExists || emailStatus.preAuthLookupRestricted) && (
                     <button 
                       type="button" 
                       onClick={() => setShowForgotPwd(true)}
@@ -458,7 +478,7 @@ export function Auth() {
                   ) : (
                     <>
                       {emailStatus.accountExists ? <LogIn size={20} /> : <UserPlus size={20} />}
-                      {emailStatus.accountExists ? 'Sign In' : 'Create Account'}
+                      {emailStatus.accountExists ? 'Sign In' : emailStatus.preAuthLookupRestricted ? 'Continue' : 'Create Account'}
                     </>
                   )}
                 </button>

@@ -1,6 +1,6 @@
 import { prepareOriginal, verifyOriginal, MAX_ORIGINAL_BYTES } from './imageOriginal.js';
 
-export function createImageStorage({ auth, baseUrl = '', enabled = false, fetcher = fetch, allowLoopback = false, cache = null }) {
+export function createImageStorage({ auth, baseUrl = '', enabled = false, fetcher = (...args) => globalThis.fetch(...args), allowLoopback = false, cache = null }) {
   if (baseUrl) {
     const parsed=new URL(baseUrl);
     if(parsed.protocol!=='https:' && !(allowLoopback&&parsed.protocol==='http:'&&['127.0.0.1','localhost'].includes(parsed.hostname))) throw new Error('Image API requires HTTPS (or an explicit local demo endpoint).');

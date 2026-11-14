@@ -7,8 +7,8 @@ function fixture() {
  const records=new Map(),objects=new Map();let writes=0,locked=false,metadataReads=0;
  const repository={authorize:async claims=>({...claims,role:claims.admin?'Admin':'User'}),get:async(owner,id)=>{metadataReads++;return records.get(`${owner}/${id}`);},reserve:async record=>{if(locked)throw new Error('locked');records.set(`${record.ownerUid}/${record.id}`,{...record,blob:undefined,state:'pending'});},ready:async record=>records.set(`${record.ownerUid}/${record.id}`,{...record,blob:undefined,state:'ready'}),
   cleanup:async(owner,id,remove)=>{locked=true;try{const r=records.get(`${owner}/${id}`);if(r.linked)throw Object.assign(new Error('Referenced'),{status:409});if(r.state==='ready'){r.state='detached';r.detachedAt=Date.now();return {state:'detached'};}if(Date.now()-r.detachedAt<7*86400000)throw Object.assign(new Error('Recovery grace period'),{status:409});await remove(r);r.state='deleted';return {state:'deleted'};}finally{locked=false;}}};
- const bucket={head:async key=>objects.get(key)||null,put:async(key,data,options)=>{if(objects.has(key))return null;writes++;objects.set(key,{size:data.byteLength,customMetadata:options.customMetadata,body:new Blob([data]).stream(),arrayBuffer:async()=>data.buffer.slice(data.byteOffset,data.byteOffset+data.byteLength)});return objects.get(key);},get:async key=>{const o=objects.get(key);return o?{...o,body:new Blob([await o.arrayBuffer()]).stream()}:null;},delete:async key=>objects.delete(key)};
- const worker=createImageWorker({verifyToken:async token=>{if(token==='invalid')throw new Error('bad token');return {sub:token==='bob'?'bob':token==='admin'?'support':'alice',admin:token==='admin'};},makeRepository:()=>repository});
+ const bucket={head:async key=>objects.get(key)||null,put:async(key,data,options)=>{if(options?.onlyIf&&objects.has(key))return null;writes++;objects.set(key,{size:data.byteLength,customMetadata:options.customMetadata,body:new Blob([data]).stream(),arrayBuffer:async()=>data.buffer.slice(data.byteOffset,data.byteOffset+data.byteLength)});return objects.get(key);},get:async key=>{const o=objects.get(key);return o?{...o,body:new Blob([await o.arrayBuffer()]).stream()}:null;},delete:async key=>objects.delete(key)};
+ const worker=createImageWorker({verifyToken:async token=>{if(token==='invalid')throw new Error('bad token');return {sub:token==='bob'?'bob':token==='admin'?'y2umaD5NGygETtZEnuuUzus6j4i2':token==='rogueAdmin'?'support':'alice',admin:token==='admin'||token==='rogueAdmin'};},makeRepository:()=>repository});
  const env={IMAGES_ENABLED:'true',FIREBASE_PROJECT_ID:'demo-zerocoder',ALLOWED_ORIGINS:'https://app.example',PRIVATE_R2:bucket};
  const request=(path,options={})=>worker.fetch(new Request(`https://images.example/v1/images/${path}`,{...options,headers:{Origin:'https://app.example',Authorization:'Bearer alice',...options.headers}}),env);
  return {records,objects,request,env,worker,writes:()=>writes,metadataReads:()=>metadataReads};
@@ -27,12 +27,13 @@ test('missing/invalid auth, disallowed origins, malformed keys and hash mismatch
  assert.equal((await f.request('bad-key')).status,400);
  assert.equal((await f.request(`${image.id}?feature=notes&parentId=n1`,{method:'PUT',headers:{'Content-Type':'image/png','X-Image-SHA256':'0'.repeat(64)},body:blob})).status,400);assert.equal(f.writes(),0);
 });
-test('another user cannot read originals; trusted support admin reads Feedback only',async()=>{
+test('another user cannot read originals; only pinned sole admin reads Feedback only',async()=>{
  const f=fixture(),{image}=await upload(f);
  assert.equal((await f.request(`${image.id}?owner=alice`,{headers:{Authorization:'Bearer bob'}})).status,403);
  assert.equal(f.metadataReads(),0,'non-owner denial must precede privileged metadata lookup');
  assert.equal((await f.request(`${image.id}?owner=alice`,{headers:{Authorization:'Bearer admin'}})).status,403);
  const feedback=await upload(f,{ownerUid:'alice',feature:'feedback',parentId:'f1'});
+ assert.equal((await f.request(`${feedback.image.id}?owner=alice`,{headers:{Authorization:'Bearer rogueAdmin'}})).status,403);
  assert.equal((await f.request(`${feedback.image.id}?owner=alice`,{headers:{Authorization:'Bearer admin'}})).status,200);
 });
 test('delete detaches first, refuses linked/recent originals, then purges mature orphan under lock',async()=>{
@@ -41,4 +42,18 @@ test('delete detaches first, refuses linked/recent originals, then purges mature
  record.linked=false;assert.equal((await f.request(image.id,{method:'DELETE'})).status,202);assert.equal(f.objects.size,1);
  assert.equal((await f.request(image.id,{method:'DELETE'})).status,409);
  record.detachedAt=Date.now()-8*86400000;assert.equal((await f.request(image.id,{method:'DELETE'})).status,200);assert.equal(f.objects.size,0);
+});
+test('migrated R2 objects without customMetadata self-heal when bytes match and reject on corruption',async()=>{
+ const f=fixture();
+ const valid=await prepareOriginal(blob,{ownerUid:'alice',feature:'feedback',parentId:'fb1'});
+ const raw=new Uint8Array(await blob.arrayBuffer());
+ await f.records.set(`${valid.ownerUid}/${valid.id}`,{...valid,blob:undefined,state:'ready'});
+ f.objects.set(valid.objectKey,{size:raw.byteLength,customMetadata:{},body:new Blob([raw]).stream(),arrayBuffer:async()=>raw.buffer.slice(raw.byteOffset,raw.byteOffset+raw.byteLength)});
+ const healedRes=await f.request(valid.id);
+ assert.equal(healedRes.status,200);
+ assert.deepEqual(new Uint8Array(await healedRes.arrayBuffer()),raw);
+ assert.equal(f.objects.get(valid.objectKey).customMetadata.sha256,valid.sha256);
+ const corrupt=new Uint8Array([137,80,78,71,13,10,26,99]);
+ f.objects.set(valid.objectKey,{size:corrupt.byteLength,customMetadata:{},body:new Blob([corrupt]).stream(),arrayBuffer:async()=>corrupt.buffer.slice(corrupt.byteOffset,corrupt.byteOffset+corrupt.byteLength)});
+ assert.equal((await f.request(valid.id)).status,409);
 });

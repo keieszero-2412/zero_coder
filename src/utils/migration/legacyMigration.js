@@ -313,6 +313,11 @@ export function createMigrationEngine({
 
           if (dryRun) {
             migratedImageIds.push(expected.id);
+            if (expected.id !== imgId) {
+              content = content
+                .replaceAll(`data-image-id="${imgId}"`, `data-image-id="${expected.id}"`)
+                .replaceAll(`data-image-id='${imgId}'`, `data-image-id='${expected.id}'`);
+            }
             report.migratedImages++;
             report.verifiedObjects.push({
               noteId: note.id,
@@ -343,6 +348,25 @@ export function createMigrationEngine({
           }
 
           migratedImageIds.push(saved.id);
+          if (saved.id !== imgId) {
+            content = content
+              .replaceAll(`data-image-id="${imgId}"`, `data-image-id="${saved.id}"`)
+              .replaceAll(`data-image-id='${imgId}'`, `data-image-id='${saved.id}'`);
+          }
+          if (typeof imageCache?.put === 'function') {
+            await imageCache.put(uid, 'image', saved.id, {
+              ...cached,
+              id: saved.id,
+              owner: uid,
+              ownerUid: uid,
+              sha256: saved.sha256,
+              objectKey: saved.objectKey,
+              size: saved.size,
+              contentType: saved.contentType,
+              state: saved.state || 'ready',
+              cloudSynced: true
+            });
+          }
           report.migratedImages++;
           report.verifiedObjects.push({
             noteId: note.id,
@@ -385,7 +409,8 @@ export function createMigrationEngine({
         migrationId: noteImageFailed ? null : runId
       });
 
-      const outcome = await firestore.saveNoteIfUnchanged(uid, note.id, note, buildPayload, migratedImageIds);
+      const localForCheck = content === note.content ? note : { ...note, content };
+      const outcome = await firestore.saveNoteIfUnchanged(uid, note.id, localForCheck, buildPayload, migratedImageIds);
       assertSession(uid);
       if (outcome.status === 'conflict') {
         report.skippedConflicts++;

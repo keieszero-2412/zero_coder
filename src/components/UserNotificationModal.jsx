@@ -22,9 +22,10 @@ export function UserNotificationModal({ onClose, notifications }) {
   }, [onClose]);
 
   const handleDismiss = async (notification) => {
-    if (notification.type === 'access_request_rejected' && currentUser?.email) {
+    const docId = notification.requestDocId || currentUser?.uid || currentUser?.email;
+    if (notification.type === 'access_request_rejected' && docId) {
       try {
-        await updateDoc(doc(db, 'access_requests', currentUser.email), {
+        await updateDoc(doc(db, 'access_requests', docId), {
           status: 'dismissed_rejected'
         });
       } catch (err) {

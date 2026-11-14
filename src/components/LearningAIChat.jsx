@@ -9,7 +9,7 @@ import { preprocessMarkdown } from '../utils/latexHelper';
 import { useAuth } from '../context/AuthContext';
 import { useNotification } from '../context/NotificationContext';
 import { db } from '../config/firebase';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 const CodeBlock = ({ inline, className, children, ...props }) => {
   const [copied, setCopied] = useState(false);
@@ -101,9 +101,11 @@ export function LearningAIChat({ isOpen, onClose, notebookTitle, activeCellCode,
   
   const handleRequestBlueCode = async () => {
     try {
-      await addDoc(collection(db, 'access_requests'), {
+      await setDoc(doc(db, 'access_requests', currentUser.uid), {
+        uid: currentUser.uid,
         email: currentUser.email,
-        username: currentUser.username,
+        username: (currentUser.username || currentUser.email?.split('@')[0] || 'User').slice(0, 80),
+        requestedCode: 'Blue',
         requestedAt: serverTimestamp(),
         status: 'pending'
       });

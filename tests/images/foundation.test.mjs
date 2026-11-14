@@ -3,8 +3,13 @@ import assert from 'node:assert/strict';
 
 const policy = await import('../../src/utils/accessPolicy.js');
 const files = await import('../../src/utils/imageOriginal.js');
-test('four Access Codes preserve Gray with bypass off, deny Red and require a trusted admin claim', () => {
-  assert.equal(policy.resolveAccess({ admin: true }, { code: 'Red' }).colorCode, 'Green');
+test('four Access Codes preserve Gray with bypass off, deny Red and require a trusted pinned sole-admin claim', () => {
+  assert.equal(policy.resolveAccess({ sub: policy.SOLE_ADMIN_UID, admin: true }, { code: 'Red' }).colorCode, 'Green');
+  assert.equal(policy.resolveAccess({ sub: 'support', admin: true }, { code: 'Red' }).role, 'Unauthorized');
+  assert.equal(policy.resolveAccess({ admin: true }, { code: 'Red' }).role, 'Unauthorized');
+  assert.equal(policy.isTrustedSoleAdmin({ uid: policy.SOLE_ADMIN_UID, email: policy.SOLE_ADMIN_EMAIL }, { admin: true }), true);
+  assert.equal(policy.isTrustedSoleAdmin({ uid: policy.SOLE_ADMIN_UID, email: policy.SOLE_ADMIN_EMAIL }, { admin: false }), false);
+  assert.equal(policy.isTrustedSoleAdmin({ uid: 'forged-uid', email: policy.SOLE_ADMIN_EMAIL, role: 'Admin' }, { admin: true }), false);
   for (const code of ['Blue', 'Gray']) assert.deepEqual(policy.resolveAccess({}, { code }), { role: 'User', colorCode: code });
   assert.equal(policy.resolveAccess({}, { code: 'Red' }, { code: 'Blue' }, true).role, 'Unauthorized');
   assert.equal(policy.resolveAccess({ role: 'Admin', colorCode: 'Green' }).role, 'Unauthorized');

@@ -9,7 +9,14 @@ const imageCache = {
       return await new Promise((resolve) => {
         const tx = db.transaction('images', 'readonly');
         const req = tx.objectStore('images').get(id);
-        tx.oncomplete = () => resolve(req.result || null);
+        tx.oncomplete = () => {
+          const result = req.result || null;
+          if (result?.owner && result.owner !== 'guest' && uid && result.owner !== uid) {
+            resolve(null);
+            return;
+          }
+          resolve(result);
+        };
         tx.onerror = tx.onabort = () => resolve(null);
       });
     } catch {

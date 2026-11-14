@@ -10,6 +10,7 @@ import { usePython } from '../hooks/usePython';
 import { useProblems } from '../context/ProblemsContext';
 import { Play, CheckCircle, ArrowLeft, Trophy, Loader2, RotateCcw, ChevronLeft, ChevronRight, Flag, FileCode } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { SOLE_ADMIN_UID } from '../utils/accessPolicy';
 import { SettingsModal } from '../components/SettingsModal';
 import { AboutModal } from '../components/AboutModal';
 import { CheatsheetModal } from '../components/CheatsheetModal';
@@ -68,7 +69,7 @@ export function Workspace() {
     if (!problems || problems.length === 0) return [];
     
     const cats = {};
-    const has2809Access = currentUser?.role === 'Admin' || currentUser?.colorCode === 'Blue';
+    const has2809Access = (currentUser?.role === 'Admin' && currentUser?.uid === SOLE_ADMIN_UID) || currentUser?.colorCode === 'Blue';
 
     for (const p of problems) {
       const catLower = (p.category || '').toLowerCase();
@@ -262,7 +263,7 @@ export function Workspace() {
   useEffect(() => {
     if (currentProblem && !isLoading && !isFetching && !authLoading) {
       const is2809 = (currentProblem.category || '').toLowerCase().includes('2809');
-      const has2809Access = currentUser?.role === 'Admin' || currentUser?.colorCode === 'Blue';
+      const has2809Access = (currentUser?.role === 'Admin' && currentUser?.uid === SOLE_ADMIN_UID) || currentUser?.colorCode === 'Blue';
       if (is2809 && !has2809Access) {
         navigate('/');
       }
@@ -547,7 +548,7 @@ export function Workspace() {
   }
 
   const is2809 = (currentProblem.category || '').toLowerCase().includes('2809');
-  const has2809Access = currentUser?.role === 'Admin' || currentUser?.colorCode === 'Blue';
+  const has2809Access = (currentUser?.role === 'Admin' && currentUser?.uid === SOLE_ADMIN_UID) || currentUser?.colorCode === 'Blue';
   if (is2809 && !has2809Access) {
     return (
       <div className="app-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>

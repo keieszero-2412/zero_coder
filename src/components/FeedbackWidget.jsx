@@ -17,10 +17,25 @@ export default function FeedbackWidget({ iconOnly = false }) {
   const [description, setDescription] = useState('');
   const [editingFeedbackId, setEditingFeedbackId] = useState(null);
   const [imageFiles, setImageFiles] = useState([]);
+  const [filePreviews, setFilePreviews] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
+
+  useEffect(() => {
+    const urls = imageFiles.map((file) => URL.createObjectURL(file));
+    setFilePreviews(urls);
+    return () => {
+      urls.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [imageFiles]);
+
+  useEffect(() => () => {
+    if (typeof selectedImage === 'string' && selectedImage.startsWith('blob:')) {
+      URL.revokeObjectURL(selectedImage);
+    }
+  }, [selectedImage]);
 
   // User replies state
   const [userReplyDrafts, setUserReplyDrafts] = useState({});
@@ -87,7 +102,7 @@ export default function FeedbackWidget({ iconOnly = false }) {
 
       const newReply = {
         sender: 'user',
-        senderName: currentUser.displayName || currentUser.email?.split('@')[0] || 'You',
+        senderName: (currentUser.username || currentUser.displayName || currentUser.email?.split('@')[0] || 'You').slice(0, 80),
         text,
         createdAt: new Date()
       };
@@ -136,40 +151,18 @@ export default function FeedbackWidget({ iconOnly = false }) {
 
   if (!currentUser) return null;
 
-  const compressImage = (file) => {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const MAX_WIDTH = 800;
-          const MAX_HEIGHT = 800;
-          let width = img.width;
-          let height = img.height;
+  const openImagePreview = (url) => {
+    if (typeof selectedImage === 'string' && selectedImage.startsWith('blob:') && selectedImage !== url) {
+      URL.revokeObjectURL(selectedImage);
+    }
+    setSelectedImage(url);
+  };
 
-          if (width > height) {
-            if (width > MAX_WIDTH) {
-              height *= MAX_WIDTH / width;
-              width = MAX_WIDTH;
-            }
-          } else {
-            if (height > MAX_HEIGHT) {
-              width *= MAX_HEIGHT / height;
-              height = MAX_HEIGHT;
-            }
-          }
-
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, width, height);
-          resolve(canvas.toDataURL('image/jpeg', 0.6));
-        };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    });
+  const closeSelectedImage = () => {
+    if (typeof selectedImage === 'string' && selectedImage.startsWith('blob:')) {
+      URL.revokeObjectURL(selectedImage);
+    }
+    setSelectedImage(null);
   };
 
   const handleImageChange = (e) => {
@@ -194,7 +187,7 @@ export default function FeedbackWidget({ iconOnly = false }) {
         return;
       }
       const preview = await imageStorage.preview({ id: imageId, ownerUid: ownerUid || currentUser.uid, feature: 'feedback' });
-      setSelectedImage(preview.url);
+      openImagePreview(preview.url);
     } catch (err) {
       setError(err.message || 'Failed to load screenshot preview.');
     }
@@ -211,11 +204,14 @@ export default function FeedbackWidget({ iconOnly = false }) {
     setError('');
 
     try {
+      const editingFeedback = editingFeedbackId ? myFeedbacks.find((f) => f.id === editingFeedbackId) : null;
+      const existingImageIds = Array.isArray(editingFeedback?.imageIds) ? editingFeedback.imageIds : [];
+      const targetId = editingFeedbackId || doc(collection(db, 'feedbacks')).id;
       let imageIds = [];
 
       if (imageFiles.length > 0) {
-        if (imageFiles.length > 3) {
-          setError('You can only upload up to 3 images at once.');
+        if (existingImageIds.length + imageFiles.length > 3) {
+          setError('You can only attach up to 3 images per feedback.');
           setIsSubmitting(false);
           return;
         }
@@ -226,7 +222,6 @@ export default function FeedbackWidget({ iconOnly = false }) {
           return;
         }
 
-        const targetId = editingFeedbackId || doc(collection(db, 'feedbacks')).id;
         for (const file of imageFiles) {
           const record = await imageStorage.save(file, {
             feature: 'feedback',
@@ -238,17 +233,18 @@ export default function FeedbackWidget({ iconOnly = false }) {
       }
 
       if (editingFeedbackId) {
+        const mergedImageIds = Array.from(new Set([...existingImageIds, ...imageIds]));
         const updateData = {
           description: description,
           status: 'new', // Reset status back to pending after edit
           updatedAt: serverTimestamp()
         };
         if (imageIds.length > 0) {
-          updateData.imageIds = imageIds;
+          updateData.imageIds = mergedImageIds;
         }
         await updateDoc(doc(db, 'feedbacks', editingFeedbackId), updateData);
       } else {
-        const newRef = doc(collection(db, 'feedbacks'));
+        const newRef = doc(db, 'feedbacks', targetId);
         await setDoc(newRef, {
           userId: currentUser.uid,
           username: currentUser.username || currentUser.email?.split('@')[0] || 'User',
@@ -450,20 +446,24 @@ export default function FeedbackWidget({ iconOnly = false }) {
                             )}
                           </div>
 
-                          {(fb.imageUrls?.length > 0 || fb.imageUrl || fb.imageIds?.length > 0) && (
-                            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.25rem' }}>
-                              {(fb.imageUrls || (fb.imageUrl ? [fb.imageUrl] : [])).map((url, i) => (
-                                <button key={`legacy-${i}`} onClick={() => setSelectedImage(url)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.75rem', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', cursor: 'pointer', padding: '0.3rem 0.6rem', backgroundColor: 'transparent', borderRadius: 'var(--radius-sm)', transition: 'all 0.2s' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(59, 130, 246, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
-                                  <ImageIcon size={14} /> Image {i + 1}
-                                </button>
-                              ))}
-                              {fb.imageIds?.map((id, i) => (
-                                <button key={`r2-${i}`} onClick={() => handleViewImage(id, fb.userId)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.75rem', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', cursor: 'pointer', padding: '0.3rem 0.6rem', backgroundColor: 'transparent', borderRadius: 'var(--radius-sm)', transition: 'all 0.2s' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(59, 130, 246, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
-                                  <ImageIcon size={14} /> Screenshot {i + 1}
-                                </button>
-                              ))}
-                            </div>
-                          )}
+                          {(fb.imageUrls?.length > 0 || fb.imageUrl || fb.imageIds?.length > 0) && (() => {
+                            const hasVerifiedR2Migration = fb.imageMigration?.status === 'verified' && fb.imageIds?.length > 0 && isImagesConfigured();
+                            const legacyImages = hasVerifiedR2Migration ? [] : (fb.imageUrls || (fb.imageUrl ? [fb.imageUrl] : []));
+                            return (
+                              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.25rem' }}>
+                                {legacyImages.map((url, i) => (
+                                  <button key={`legacy-${i}`} onClick={() => openImagePreview(url)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.75rem', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', cursor: 'pointer', padding: '0.3rem 0.6rem', backgroundColor: 'transparent', borderRadius: 'var(--radius-sm)', transition: 'all 0.2s' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(59, 130, 246, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                                    <ImageIcon size={14} /> Image {i + 1}
+                                  </button>
+                                ))}
+                                {fb.imageIds?.map((id, i) => (
+                                  <button key={`r2-${i}`} onClick={() => handleViewImage(id, fb.userId)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.75rem', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', cursor: 'pointer', padding: '0.3rem 0.6rem', backgroundColor: 'transparent', borderRadius: 'var(--radius-sm)', transition: 'all 0.2s' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'rgba(59, 130, 246, 0.1)'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                                    <ImageIcon size={14} /> Screenshot {i + 1}
+                                  </button>
+                                ))}
+                              </div>
+                            );
+                          })()}
 
                           {/* Conversation Thread */}
                           {(() => {
@@ -693,7 +693,7 @@ export default function FeedbackWidget({ iconOnly = false }) {
                                     <X size={14} />
                                   </button>
                                   <img 
-                                    src={URL.createObjectURL(file)} 
+                                    src={filePreviews[idx] || ''} 
                                     alt={`Preview ${idx}`} 
                                     style={{ maxWidth: '100px', maxHeight: '100px', borderRadius: 'var(--radius-sm)', objectFit: 'cover' }} 
                                   />
@@ -753,9 +753,9 @@ export default function FeedbackWidget({ iconOnly = false }) {
           position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
           backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 10000,
           display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '2rem'
-        }} onClick={() => setSelectedImage(null)}>
+        }} onClick={closeSelectedImage}>
           <img src={selectedImage} alt="Feedback Screenshot" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: 'var(--radius-md)' }} onClick={e => e.stopPropagation()} />
-          <button onClick={() => setSelectedImage(null)} style={{
+          <button onClick={closeSelectedImage} style={{
             position: 'absolute', top: '1rem', right: '1rem', background: 'var(--bg-surface)', border: 'none',
             borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center',
             cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.2)'

@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "zerocoder-images",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-09",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "IMAGES_ENABLED": "true",
+    "FIREBASE_PROJECT_ID": "zerocoder-8cb6b",
+    "ALLOWED_ORIGINS": "https://www.zerocoder.me,https://zerocoder.me,https://zerocoder.vercel.app,https://zerocoder.pages.dev,https://zerocoder-8cb6b.web.app,https://zerocoder-8cb6b.firebaseapp.com,http://localhost:5173,http://127.0.0.1:5173"
+  },
+  "r2_buckets": [
+    {
+      "binding": "PRIVATE_R2",
+      "bucket_name": "zerocoder-images-private"
+    }
+  ]
+}
+
